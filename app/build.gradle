@@ -1,0 +1,132 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: "androidx.navigation.safeargs.kotlin"
+
+android {
+    compileSdkVersion rootProject.compileSdkVersion
+
+    defaultConfig {
+        applicationId "dev.kxxcn.maru"
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+        versionCode 1
+        versionName "1.1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled true
+            proguardFile getDefaultProguardFile('proguard-android-optimize.txt')
+            proguardFile 'proguard-rules.pro'
+            proguardFile 'proguard-firebase.pro'
+            proguardFile 'proguard-retrofit.pro'
+            proguardFile 'proguard-gson.pro'
+            proguardFile 'proguard-glide.pro'
+            proguardFile 'proguard-debug.pro'
+        }
+
+        release {
+            minifyEnabled true
+            proguardFile getDefaultProguardFile('proguard-android-optimize.txt')
+            proguardFile 'proguard-rules.pro'
+            proguardFile 'proguard-firebase.pro'
+            proguardFile 'proguard-retrofit.pro'
+            proguardFile 'proguard-gson.pro'
+            proguardFile 'proguard-glide.pro'
+        }
+    }
+
+    buildFeatures {
+        dataBinding = true
+    }
+
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+    gradle.projectsEvaluated {
+        tasks.withType(JavaCompile) {
+            options.compilerArgs << "-Xmaxerrs" << "500"
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation Dependencies.kotlin
+    implementation Dependencies.coroutinesPlayServices
+    implementation Dependencies.appCompat
+    implementation Dependencies.coreKtx
+    implementation Dependencies.cardView
+    implementation Dependencies.constraintLayout
+    implementation Dependencies.fragment
+    implementation Dependencies.recyclerView
+    implementation Dependencies.anko
+
+    implementation Dependencies.playServicesAd
+    implementation Dependencies.playServicesAuth
+    implementation Dependencies.firebaseAuth
+    implementation Dependencies.firebaseStore
+    implementation Dependencies.firebaseStoreKtx
+    implementation Dependencies.firebaseAnalytics
+    implementation Dependencies.firebaseMessaging
+    implementation Dependencies.firebaseCrashlytics
+    implementation Dependencies.gson
+
+    implementation Dependencies.retrofit
+    implementation Dependencies.gsonConverter
+    implementation Dependencies.loggingInterceptor
+
+    implementation Dependencies.billing
+    implementation Dependencies.billingKtx
+
+    implementation Dependencies.roomRuntime
+    kapt Dependencies.roomCompiler
+    implementation Dependencies.roomKtx
+
+    implementation Dependencies.lifecycleExtensions
+    implementation Dependencies.lifecycleViewModelKtx
+    implementation Dependencies.lifecycleLiveDataKtx
+
+    implementation Dependencies.navigationFragmentKtx
+    implementation Dependencies.navigationUiKtx
+
+    implementation Dependencies.glideRuntime
+    kapt Dependencies.glideCompiler
+
+    implementation Dependencies.dagger
+    kapt Dependencies.daggerCompiler
+    implementation Dependencies.daggerAndroidSupport
+    kapt Dependencies.daggerAndroidProcessor
+    implementation Dependencies.daggerAssistedAnnotations
+    kapt Dependencies.daggerAssistedProcessor
+
+    implementation Dependencies.viewPagerDotsIndicator
+    implementation Dependencies.smoothBottomBar
+    implementation Dependencies.roundCornerProgressBar
+    implementation Dependencies.waveView
+    implementation Dependencies.circleProgressView
+    implementation Dependencies.mpChart
+    implementation Dependencies.logger
+    implementation Dependencies.naverMap
+    implementation Dependencies.lottie
+    implementation Dependencies.toggle
+
+    implementation project(':nativetemplates')
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+}
+
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'

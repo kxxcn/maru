@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FED669</color>
+    <color name="colorPrimaryDark">#D1B158</color>
+    <color name="colorAccent">#FAC434</color>
+
+    <color name="colorPrimaryNight">#383C40</color>
+    <color name="colorPrimaryDarkNight">#272D33</color>
+    <color name="colorAccentNight">#2C3033</color>
+
+    <color name="colorSecondary">#CEDAF8</color>
+    <color name="colorTertiary">#FF86A4</color>
+
+    <color name="colorHighlight">#E6FED669</color>
+
+    <color name="maruBackGround">#FFFFFF</color>
+    <color name="maruBackGroundNight">#272D33</color>
+
+    <color name="maruFontColor">#000000</color>
+    <color name="maruFontColorNight">#E5E1DD</color>
+
+    <color name="registerNextButtonEnable">#CEDAF8</color>
+    <color name="registerNextButtonDisable">#E6E6E6</color>
+    <color name="registerHint">#C7C7C7</color>
+    <color name="registerIcon">#C7C7C7</color>
+
+    <color name="bottomIconTint">#C8FFFFFF</color>
+
+    <color name="onboardBackground">#FFFFFF</color>
+    <color name="onboardIndicatorDots">#FFD9E2</color>
+    <color name="onboardIndicatorSelectedDots">#FF86A4</color>
+    <color name="onboardNextButton">#CEDAF8</color>
+    <color name="onboardCompleteButton">#1DE9B6</color>
+
+    <color name="progressBarBackground">#6B799E</color>
+    <color name="progressBarForeground">#AAD4EC</color>
+    <color name="progressBarSecondaryForeground">#F5C9CA</color>
+
+    <color name="accountCardBudgetBackground">#ADBED2</color>
+    <color name="accountCardRemainBackground">#12406A</color>
+
+    <color name="cardBackground">#FFFFFF</color>
+
+    <color name="taskCardDivider">#B5B5B5</color>
+    <color name="taskCardAchievementRate">#FFFFFF</color>
+    <color name="taskCardProgressBar">#84A5F9</color>
+
+    <color name="taskCardBaseOval">#40CEDAF8</color>
+    <color name="taskCardRateOval">#40FFFFFF</color>
+
+    <color name="waveStroke">#FFEDF1</color>
+    <color name="waveBehind">#99FFD9E2</color>
+    <color name="waveFront">#3CFF86A4</color>
+    <color name="waveText">#424242</color>
+
+    <color name="tasksProgressBar">#FF86A4</color>
+    <color name="tasksProgressRim">#FFD9E2</color>
+    <color name="tasksProgressText">#424242</color>
+    <color name="tasksDefaultDivider">#000000</color>
+    <color name="tasksTargetHalfCircle1">#C7D6DB</color>
+    <color name="tasksTargetHalfCircle2">#EBEBE3</color>
+    <color name="tasksLockBackground">#EDEDED</color>
+    <color name="tasksLockTint">#C7C7C7</color>
+    <color name="tasksCompletedCardBackground">#E1F1E7</color>
+    <color name="tasksCompletedCheckBackground">#B1D3C5</color>
+    <color name="tasksCompletedTint">#4D4D4D</color>
+    <color name="tasksActiveCardBackground">#EDEEF0</color>
+    <color name="tasksActiveTint">#4D4D4D</color>
+    <color name="tasksActiveRemain">#0d000000</color>
+
+    <color name="rotateSelectionIcon">#AAD4EC</color>
+    <color name="rotateSelectionDefaultText">#D4D4D4</color>
+    <color name="rotateSelectionDefaultTextNight">#555B61</color>
+    <color name="rotateSelectionSelectText">#424242</color>
+    <color name="rotateSelectionSelectTextNight">#E5E1DD</color>
+
+    <color name="inputTint">#ADADAD</color>
+
+    <color name="statusProgressFinished">#CEDAF8</color>
+    <color name="statusProgressUnfinished">#EDEDED</color>
+
+    <color name="editBasicBackground">#FFFFFF</color>
+    <color name="editDeletableBackground">#80FED669</color>
+    <color name="editDeletableBackgroundNight">#80383C40</color>
+    <color name="editDeleteIconActiveTint">#FF4040</color>
+    <color name="editDeleteIconInActiveTint">#E0E0E0</color>
+    <color name="editItemSortIconTint">#ADADAD</color>
+
+    <color name="nativeAdTextCardBackground">#40000000</color>
+    <color name="nativeAdTextShadowEnd">#000000</color>
+
+    <color name="timelineCardBackground">#FDF2F0</color>
+    <color name="timelineLineBackground">#CB8A90</color>
+    <color name="timelineContentTint">#6B6B6B</color>
+
+    <color name="homeDayEmptyTint">#424242</color>
+
+    <color name="daysAddFontTint">#EC706C</color>
+    <color name="daysAddBorderTint">#D6CFCF</color>
+    <color name="daysAddBackgroundTint">#402E6B</color>
+    <color name="daysAddHintTint">#6B6B6B</color>
+
+    <color name="day_background0">#F8B4B7</color>
+    <color name="day_background1">#FFCAB5</color>
+    <color name="day_background2">#B0D3F3</color>
+    <color name="day_background3">#BFC4F6</color>
+    <color name="day_background4">#74D4D7</color>
+    <color name="day_background5">#FFBED2</color>
+    <color name="day_background6">#B9DF9A</color>
+    <color name="day_background7">#FFDB5F</color>
+    <color name="day_background8">#D2B4E6</color>
+    <color name="day_background9">#92D8E2</color>
+    <color name="day_background10">#C0E2F7</color>
+    <color name="day_background11">#B2A1BC</color>
+    <color name="day_background12">#EF404A</color>
+    <color name="day_background13">#27AAE1</color>
+    <color name="day_background14">#4EB8B9</color>
+    <color name="day_background15">#FFCC4E</color>
+    <color name="day_background16">#F79552</color>
+    <color name="day_background17">#F2728C</color>
+
+    <color name="noticeItemTint">#ADADAD</color>
+
+    <color name="toggleOff">#DADBDA</color>
+    <color name="toggleOn">#F0937A</color>
+
+    <color name="editDisableTint">#C7C7C7</color>
+    <color name="editEnableTint">#1DE9B6</color>
+</resources>

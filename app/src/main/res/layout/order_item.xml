@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.content.Context" />
+
+        <variable
+            name="position"
+            type="Integer" />
+
+        <variable
+            name="item"
+            type="dev.kxxcn.maru.view.order.OrderItem" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <dev.kxxcn.maru.view.custom.VerticalTextView
+            android:id="@+id/order_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@{@string/front_zero_format(position)}"
+            android:textColor="?maruFontColor"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@id/order_image"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/order_image"
+            app:textStyle="bold" />
+
+        <dev.kxxcn.maru.view.custom.VerticalTextView
+            android:id="@+id/order_text"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="5dp"
+            android:maxLines="3"
+            android:text="@{context.getString(item.textRes)}"
+            android:textColor="?maruFontColor"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/order_image"
+            app:layout_constraintEnd_toStartOf="@id/order_image"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/order_number" />
+
+        <ImageView
+            android:id="@+id/order_image"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:imageResource="@{item.imageRes}"
+            app:layout_constraintDimensionRatio="3:2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.8"
+            tools:ignore="ContentDescription" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="dev.kxxcn.maru.view.more.MoreViewModel" />
+
+        <variable
+            name="item"
+            type="dev.kxxcn.maru.view.more.contents.ContentsItem" />
+
+    </data>
+
+    <dev.kxxcn.maru.view.custom.DrawableTextView
+        android:id="@+id/contents_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:onClick="@{() -> viewModel.contents(item)}"
+        app:drawableIcon="@{item.iconRes}"
+        app:drawableText="@{item.textRes}" />
+
+</layout>

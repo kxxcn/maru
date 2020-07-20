@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="androidx.core.content.ContextCompat" />
+
+        <import type="dev.kxxcn.maru.view.input.InputFilterType" />
+
+        <import type="dev.kxxcn.maru.view.input.InputMoneyType" />
+
+        <variable
+            name="viewModel"
+            type="dev.kxxcn.maru.view.input.InputViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/input_close_icon"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_margin="10dp"
+            android:onClick="@{() -> viewModel.close()}"
+            android:padding="10dp"
+            android:src="@drawable/ic_close"
+            android:tint="?maruFontColor"
+            tools:ignore="ContentDescription" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <dev.kxxcn.maru.view.custom.MaruTextView
+                    android:id="@+id/input_task_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:text="@{viewModel.taskName}"
+                    android:textColor="?maruFontColor"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:textStyle="bold" />
+
+                <dev.kxxcn.maru.view.custom.MaruTextView
+                    android:id="@+id/input_task_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@{viewModel.taskTotal}"
+                    android:textColor="?maruFontColor"
+                    android:textSize="40sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/input_task_name" />
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginEnd="5dp"
+                    android:src="@drawable/ic_budget"
+                    android:tint="?maruFontColor"
+                    app:layout_constraintEnd_toStartOf="@id/input_task_money"
+                    app:layout_constraintTop_toTopOf="@id/input_task_money"
+                    tools:ignore="ContentDescription" />
+
+                <LinearLayout
+                    android:id="@+id/input_husband_parent"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toTopOf="@id/input_divider1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/input_task_money"
+                    app:layout_constraintVertical_chainStyle="packed">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <dev.kxxcn.maru.view.custom.MaruTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/home_account_card_accounts_husband"
+                            android:textColor="@color/inputTint"
+                            android:textSize="12sp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="10dp"
+                                android:layout_height="10dp"
+                                android:layout_marginTop="3dp"
+                                android:src="@drawable/ic_budget"
+                                android:tint="?maruFontColor"
+                                tools:ignore="ContentDescription" />
+
+                            <dev.kxxcn.maru.view.custom.MaruTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:text="@{viewModel.taskHusband}"
+                                android:textColor="?maruFontColor"
+                                android:textSize="20sp"
+                                tools:text="100,000" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:onClick="@{()->viewModel.decrement(InputMoneyType.HUSBAND)}"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_minus"
+                        android:tint="@color/inputTint"
+                        tools:ignore="ContentDescription" />
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:onClick="@{()->viewModel.increment(InputMoneyType.HUSBAND)}"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_plus"
+                        android:tint="@color/inputTint"
+                        tools:ignore="ContentDescription" />
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/input_divider1"
+                    android:layout_width="0dp"
+                    android:layout_height="0.3dp"
+                    android:background="@color/inputTint"
+                    app:layout_constraintBottom_toTopOf="@id/input_wife_parent"
+                    app:layout_constraintEnd_toEndOf="@id/input_husband_parent"
+                    app:layout_constraintStart_toStartOf="@id/input_husband_parent"
+                    app:layout_constraintTop_toBottomOf="@id/input_husband_parent" />
+
+                <LinearLayout
+                    android:id="@+id/input_wife_parent"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toTopOf="@id/input_divider2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/input_divider1">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <dev.kxxcn.maru.view.custom.MaruTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/home_account_card_accounts_wife"
+                            android:textColor="@color/inputTint"
+                            android:textSize="12sp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="10dp"
+                                android:layout_height="10dp"
+                                android:layout_marginTop="3dp"
+                                android:src="@drawable/ic_budget"
+                                android:tint="?maruFontColor"
+                                tools:ignore="ContentDescription" />
+
+                            <dev.kxxcn.maru.view.custom.MaruTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:text="@{viewModel.taskWife}"
+                                android:textColor="?maruFontColor"
+                                android:textSize="20sp"
+                                tools:text="100,000" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:onClick="@{()->viewModel.decrement(InputMoneyType.WIFE)}"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_minus"
+                        android:tint="@color/inputTint"
+                        tools:ignore="ContentDescription" />
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:onClick="@{()->viewModel.increment(InputMoneyType.WIFE)}"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_plus"
+                        android:tint="@color/inputTint"
+                        tools:ignore="ContentDescription" />
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/input_divider2"
+                    android:layout_width="0dp"
+                    android:layout_height="0.3dp"
+                    android:background="@color/inputTint"
+                    app:layout_constraintBottom_toTopOf="@id/input_remain_parent"
+                    app:layout_constraintEnd_toEndOf="@id/input_husband_parent"
+                    app:layout_constraintStart_toStartOf="@id/input_husband_parent"
+                    app:layout_constraintTop_toBottomOf="@id/input_wife_parent" />
+
+                <LinearLayout
+                    android:id="@+id/input_remain_parent"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toTopOf="@id/input_divider3"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/input_divider2">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <dev.kxxcn.maru.view.custom.MaruTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/input_remain_money"
+                            android:textColor="@color/inputTint"
+                            android:textSize="12sp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="10dp"
+                                android:layout_height="10dp"
+                                android:layout_marginTop="3dp"
+                                android:src="@drawable/ic_budget"
+                                android:tint="?maruFontColor"
+                                tools:ignore="ContentDescription" />
+
+                            <dev.kxxcn.maru.view.custom.MaruTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:text="@{viewModel.taskRemain}"
+                                android:textColor="?maruFontColor"
+                                android:textSize="20sp"
+                                tools:text="100,000" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:onClick="@{()->viewModel.decrement(InputMoneyType.REMAIN)}"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_minus"
+                        android:tint="@color/inputTint"
+                        tools:ignore="ContentDescription" />
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:onClick="@{()->viewModel.increment(InputMoneyType.REMAIN)}"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_plus"
+                        android:tint="@color/inputTint"
+                        tools:ignore="ContentDescription" />
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/input_divider3"
+                    android:layout_width="0dp"
+                    android:layout_height="0.3dp"
+                    android:background="@color/inputTint"
+                    app:layout_constraintBottom_toTopOf="@id/input_unit_desc"
+                    app:layout_constraintEnd_toEndOf="@id/input_husband_parent"
+                    app:layout_constraintStart_toStartOf="@id/input_husband_parent"
+                    app:layout_constraintTop_toBottomOf="@id/input_remain_parent" />
+
+                <dev.kxxcn.maru.view.custom.MaruTextView
+                    android:id="@+id/input_unit_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    android:text="@string/input_unit_desc"
+                    android:textColor="?maruFontColor"
+                    android:textSize="17sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/input_divider3" />
+
+                <LinearLayout
+                    android:id="@+id/input_unit_parent"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal"
+                    android:padding="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/input_unit_desc">
+
+                    <dev.kxxcn.maru.view.custom.MaruTextView
+                        android:id="@+id/input_unit_ten_thousand"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_weight="1"
+                        android:background="@{viewModel.unitType == InputFilterType.TEN_THOUSAND.id ? ContextCompat.getDrawable(context, viewModel.selectDrawableRes) : ContextCompat.getDrawable(context, viewModel.deselectDrawableRes)}"
+                        android:gravity="center"
+                        android:onClick="@{() -> viewModel.handleUnitSelection(InputFilterType.TEN_THOUSAND)}"
+                        android:padding="10dp"
+                        android:text="@string/input_unit1"
+                        android:textColor="@{viewModel.unitType == InputFilterType.TEN_THOUSAND.id ? ContextCompat.getColor(context, viewModel.selectedFontColorRes) : ContextCompat.getColor(context, viewModel.deselectedFontColorRes)}" />
+
+                    <dev.kxxcn.maru.view.custom.MaruTextView
+                        android:id="@+id/input_unit_one_hundred_thousand"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_weight="1"
+                        android:background="@{viewModel.unitType == InputFilterType.HUNDRED_THOUSAND.id ? ContextCompat.getDrawable(context, viewModel.selectDrawableRes) : ContextCompat.getDrawable(context, viewModel.deselectDrawableRes)}"
+                        android:gravity="center"
+                        android:onClick="@{() -> viewModel.handleUnitSelection(InputFilterType.HUNDRED_THOUSAND)}"
+                        android:padding="10dp"
+                        android:text="@string/input_unit2"
+                        android:textColor="@{viewModel.unitType == InputFilterType.HUNDRED_THOUSAND.id ? ContextCompat.getColor(context, viewModel.selectedFontColorRes) : ContextCompat.getColor(context, viewModel.deselectedFontColorRes)}" />
+
+                    <dev.kxxcn.maru.view.custom.MaruTextView
+                        android:id="@+id/input_unit_one_million"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_weight="1"
+                        android:background="@{viewModel.unitType == InputFilterType.ONE_MILLION.id ? ContextCompat.getDrawable(context, viewModel.selectDrawableRes) : ContextCompat.getDrawable(context, viewModel.deselectDrawableRes)}"
+                        android:gravity="center"
+                        android:onClick="@{() -> viewModel.handleUnitSelection(InputFilterType.ONE_MILLION)}"
+                        android:padding="10dp"
+                        android:text="@string/input_unit3"
+                        android:textColor="@{viewModel.unitType == InputFilterType.ONE_MILLION.id ? ContextCompat.getColor(context, viewModel.selectedFontColorRes) : ContextCompat.getColor(context, viewModel.deselectedFontColorRes)}" />
+
+                    <dev.kxxcn.maru.view.custom.MaruTextView
+                        android:id="@+id/input_unit_ten_million"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_weight="1"
+                        android:background="@{viewModel.unitType == InputFilterType.TEN_MILLION.id ? ContextCompat.getDrawable(context, viewModel.selectDrawableRes) : ContextCompat.getDrawable(context, viewModel.deselectDrawableRes)}"
+                        android:gravity="center"
+                        android:onClick="@{() -> viewModel.handleUnitSelection(InputFilterType.TEN_MILLION)}"
+                        android:padding="10dp"
+                        android:text="@string/input_unit4"
+                        android:textColor="@{viewModel.unitType == InputFilterType.TEN_MILLION.id ? ContextCompat.getColor(context, viewModel.selectedFontColorRes) : ContextCompat.getColor(context, viewModel.deselectedFontColorRes)}" />
+
+                </LinearLayout>
+
+                <dev.kxxcn.maru.view.custom.MaruTextView
+                    android:id="@+id/input_task_complete"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="?attr/inputButtonBackgroundDrawable"
+                    android:gravity="center"
+                    android:onClick="@{() -> viewModel.complete()}"
+                    android:padding="15dp"
+                    android:text="@string/input_complete"
+                    android:textColor="?maruSecondaryFontColor"
+                    android:textSize="17sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/input_unit_parent" />
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+</layout>

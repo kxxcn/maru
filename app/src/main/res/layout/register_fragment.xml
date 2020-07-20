@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="androidx.core.content.ContextCompat" />
+
+        <import type="android.text.InputType"/>
+
+        <import type="dev.kxxcn.maru.util.ConvertUtils" />
+
+        <variable
+            name="viewModel"
+            type="dev.kxxcn.maru.view.register.RegisterViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/register_motion"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        app:layoutDescription="@xml/scene_register">
+
+        <dev.kxxcn.maru.view.custom.MaruTextView
+            android:id="@+id/info_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{context.getString(viewModel.titleLabel)}"
+            android:textSize="20sp"
+            app:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/back_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> viewModel.backPressed()}"
+            android:padding="10dp"
+            android:src="@drawable/ic_arrow_left"
+            tools:ignore="ContentDescription" />
+
+        <EditText
+            android:id="@+id/info_edit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:clickable="@{!viewModel.isWedding}"
+            android:cursorVisible="false"
+            android:focusable="@{!viewModel.isWedding}"
+            android:focusableInTouchMode="@{!viewModel.isWedding}"
+            android:fontFamily="@font/nixgon"
+            android:gravity="center"
+            android:hint="@{context.getString(viewModel.currentHintLabel, viewModel.today)}"
+            android:inputType="@{viewModel.isBudget ? InputType.TYPE_CLASS_NUMBER : InputType.TYPE_CLASS_TEXT}"
+            android:maxLength="15"
+            android:maxLines="1"
+            android:textColor="@android:color/black"
+            android:textColorHint="@color/registerHint"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            app:infoText="@={ConvertUtils.INSTANCE.moneyFormat(viewModel.infoText)}"
+            tools:ignore="Autofill,TextFields" />
+
+        <dev.kxxcn.maru.view.custom.MaruTextView
+            android:id="@+id/money_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@{viewModel.moneyText}"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/info_edit"
+            app:visibility="@{viewModel.isBudget}" />
+
+        <dev.kxxcn.maru.view.custom.MaruTextView
+            android:id="@+id/next_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@{viewModel.empty ? ContextCompat.getDrawable(context, viewModel.disableTextRes) : ContextCompat.getDrawable(context, viewModel.enableTextRes)}"
+            android:enabled="@{!viewModel.empty}"
+            android:gravity="center"
+            android:onClick="@{() -> viewModel.startAnimation()}"
+            android:paddingStart="50dp"
+            android:paddingTop="35dp"
+            android:paddingEnd="50dp"
+            android:paddingBottom="35dp"
+            android:text="@{context.getString(viewModel.buttonLabel)}"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:textStyle="bold" />
+
+    </androidx.constraintlayout.motion.widget.MotionLayout>
+
+</layout>

@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="dev.kxxcn.maru.util.ConvertUtils" />
+
+        <variable
+            name="viewModel"
+            type="dev.kxxcn.maru.view.landmark.LandmarkViewModel" />
+
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/landmark_bottom_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?bottomSheetBackgroundDrawable"
+            android:paddingBottom="20dp"
+            app:behavior_peekHeight="0dp"
+            app:layout_behavior="@string/bottom_sheet_behavior">
+
+            <View
+                android:id="@+id/landmark_bottom_handle"
+                android:layout_width="60dp"
+                android:layout_height="5dp"
+                android:layout_marginTop="10dp"
+                android:background="?bottomSheetHandleBackgroundDrawable"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:id="@+id/landmark_bottom_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:text="@{viewModel.bottomTitle}"
+                android:textColor="?maruFontColor"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/landmark_bottom_handle"
+                app:textStyle="bold" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:id="@+id/landmark_bottom_distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:textColor="?maruFontColor"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@id/landmark_bottom_divider"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/landmark_bottom_title"
+                app:unitText="@{@string/landmark_distance(viewModel.bottomDistance)}" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:id="@+id/landmark_bottom_distance_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="@string/landmark_distance_desc"
+                android:textColor="@android:color/darker_gray"
+                app:layout_constraintEnd_toEndOf="@id/landmark_bottom_distance"
+                app:layout_constraintStart_toStartOf="@id/landmark_bottom_distance"
+                app:layout_constraintTop_toBottomOf="@id/landmark_bottom_distance" />
+
+            <View
+                android:id="@+id/landmark_bottom_divider"
+                android:layout_width="0.3dp"
+                android:layout_height="0dp"
+                android:layout_marginVertical="5dp"
+                android:background="@android:color/darker_gray"
+                app:layout_constraintBottom_toBottomOf="@id/landmark_bottom_distance_desc"
+                app:layout_constraintEnd_toStartOf="@id/landmark_bottom_time"
+                app:layout_constraintStart_toEndOf="@id/landmark_bottom_distance"
+                app:layout_constraintTop_toTopOf="@id/landmark_bottom_distance" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:id="@+id/landmark_bottom_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="?maruFontColor"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/landmark_bottom_divider"
+                app:layout_constraintTop_toTopOf="@id/landmark_bottom_distance"
+                app:unitText="@{@string/landmark_time(viewModel.bottomTime)}" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:id="@+id/landmark_bottom_time_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="@string/landmark_time_desc"
+                android:textColor="@android:color/darker_gray"
+                app:layout_constraintEnd_toEndOf="@id/landmark_bottom_time"
+                app:layout_constraintStart_toStartOf="@id/landmark_bottom_time"
+                app:layout_constraintTop_toBottomOf="@id/landmark_bottom_time" />
+
+            <ImageView
+                android:id="@+id/landmark_bottom_taxi_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="40dp"
+                android:src="@drawable/ic_landmark_taxi_fare"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/landmark_bottom_distance_desc"
+                tools:ignore="ContentDescription" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:id="@+id/landmark_bottom_taxi_fare"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="10dp"
+                android:text="@string/landmark_taxi_fare"
+                android:textColor="?maruFontColor"
+                app:layout_constraintBottom_toBottomOf="@id/landmark_bottom_taxi_icon"
+                app:layout_constraintStart_toEndOf="@id/landmark_bottom_taxi_icon"
+                app:layout_constraintTop_toTopOf="@id/landmark_bottom_taxi_icon" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:ellipsize="end"
+                android:gravity="end"
+                android:maxLines="1"
+                android:textColor="?maruFontColor"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@id/landmark_bottom_taxi_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/landmark_bottom_taxi_fare"
+                app:layout_constraintTop_toTopOf="@id/landmark_bottom_taxi_icon"
+                app:priceText="@{viewModel.bottomTaxiFare}"
+                app:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/landmark_bottom_toll_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/ic_landmark_toll_fare"
+                app:layout_constraintStart_toStartOf="@id/landmark_bottom_taxi_icon"
+                app:layout_constraintTop_toBottomOf="@id/landmark_bottom_taxi_icon"
+                tools:ignore="ContentDescription" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:id="@+id/landmark_bottom_toll_fare"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="10dp"
+                android:text="@string/landmark_toll_fare"
+                android:textColor="?maruFontColor"
+                app:layout_constraintBottom_toBottomOf="@id/landmark_bottom_toll_icon"
+                app:layout_constraintStart_toEndOf="@id/landmark_bottom_toll_icon"
+                app:layout_constraintTop_toTopOf="@id/landmark_bottom_toll_icon" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:ellipsize="end"
+                android:gravity="end"
+                android:maxLines="1"
+                android:textColor="?maruFontColor"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@id/landmark_bottom_toll_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/landmark_bottom_toll_fare"
+                app:layout_constraintTop_toTopOf="@id/landmark_bottom_toll_icon"
+                app:priceText="@{viewModel.bottomTollFare}"
+                app:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/landmark_bottom_fuel_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/ic_landmark_fuel_price"
+                app:layout_constraintStart_toStartOf="@id/landmark_bottom_taxi_icon"
+                app:layout_constraintTop_toBottomOf="@id/landmark_bottom_toll_icon"
+                tools:ignore="ContentDescription" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:id="@+id/landmark_bottom_fuel_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="10dp"
+                android:text="@string/landmark_fuel_price"
+                android:textColor="?maruFontColor"
+                app:layout_constraintBottom_toBottomOf="@id/landmark_bottom_fuel_icon"
+                app:layout_constraintStart_toEndOf="@id/landmark_bottom_fuel_icon"
+                app:layout_constraintTop_toTopOf="@id/landmark_bottom_fuel_icon" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:ellipsize="end"
+                android:gravity="end"
+                android:maxLines="1"
+                android:textColor="?maruFontColor"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@id/landmark_bottom_fuel_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/landmark_bottom_fuel_price"
+                app:layout_constraintTop_toTopOf="@id/landmark_bottom_fuel_icon"
+                app:priceText="@{viewModel.bottomFuelPrice}"
+                app:textStyle="bold" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>

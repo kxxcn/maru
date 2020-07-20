@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetEnd="@id/intro_end"
+        motion:constraintSetStart="@id/intro_start"
+        motion:duration="500"
+        motion:motionInterpolator="easeOut" />
+
+    <ConstraintSet android:id="@+id/intro_start">
+
+        <Constraint
+            android:id="@+id/top_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="40dp"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toTopOf="parent" />
+
+        <Constraint
+            android:id="@+id/line_view"
+            android:layout_width="70dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="80dp"
+            motion:layout_constraintStart_toStartOf="@id/top_text"
+            motion:layout_constraintTop_toBottomOf="@id/top_text" />
+
+        <Constraint
+            android:id="@+id/hello_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            motion:layout_constraintStart_toStartOf="@id/top_text"
+            motion:layout_constraintTop_toBottomOf="@id/line_view" />
+
+        <Constraint
+            android:id="@+id/welcome_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            motion:layout_constraintStart_toStartOf="@id/top_text"
+            motion:layout_constraintTop_toBottomOf="@id/hello_text" />
+
+        <Constraint
+            android:id="@+id/start_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintEnd_toEndOf="parent" />
+
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/intro_end">
+
+        <Constraint
+            android:id="@+id/top_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:alpha="0.0"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toTopOf="parent" />
+
+        <Constraint
+            android:id="@+id/line_view"
+            android:layout_width="70dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="20dp"
+            android:alpha="0.0"
+            motion:layout_constraintStart_toStartOf="@id/top_text"
+            motion:layout_constraintTop_toBottomOf="@id/top_text" />
+
+        <Constraint
+            android:id="@+id/hello_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:alpha="0.0"
+            motion:layout_constraintStart_toStartOf="@id/top_text"
+            motion:layout_constraintTop_toBottomOf="@id/line_view" />
+
+        <Constraint
+            android:id="@+id/welcome_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:alpha="0.0"
+            motion:layout_constraintStart_toStartOf="@id/top_text"
+            motion:layout_constraintTop_toBottomOf="@id/hello_text" />
+
+        <Constraint
+            android:id="@+id/start_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0.0"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintEnd_toEndOf="parent" />
+
+    </ConstraintSet>
+
+</MotionScene>

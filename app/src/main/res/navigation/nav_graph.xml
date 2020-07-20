@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_splash"
+    app:startDestination="@id/splash_fragment"
+    tools:ignore="UnusedNavigation">
+
+    <fragment
+        android:id="@+id/splash_fragment"
+        android:name="dev.kxxcn.maru.view.splash.SplashFragment"
+        android:label="@string/nav_label_splash">
+
+        <action
+            android:id="@+id/action_splashFragment_to_introFragment"
+            app:destination="@id/intro_fragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popUpTo="@id/splash_fragment"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_splashFragment_to_homeFragment"
+            app:destination="@id/home_fragment"
+            app:enterAnim="@anim/fade_in" />
+
+        <action
+            android:id="@+id/action_splashFragment_to_tasksFragment"
+            app:destination="@id/tasks_fragment"
+            app:enterAnim="@anim/fade_in" />
+
+        <action
+            android:id="@+id/action_splashFragment_to_settingsFragment"
+            app:destination="@id/more_fragment"
+            app:enterAnim="@anim/fade_in" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/register_fragment"
+        android:name="dev.kxxcn.maru.view.register.RegisterFragment"
+        android:label="@string/nav_label_register">
+
+        <action
+            android:id="@+id/action_registerFragment_to_homeFragment"
+            app:destination="@id/home_fragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popUpTo="@id/intro_fragment"
+            app:popUpToInclusive="true" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/intro_fragment"
+        android:name="dev.kxxcn.maru.view.intro.IntroFragment"
+        android:label="@string/nav_label_intro">
+
+        <action
+            android:id="@+id/action_introFragment_to_registerFragment"
+            app:destination="@id/register_fragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/home_fragment"
+        android:name="dev.kxxcn.maru.view.home.HomeFragment"
+        android:label="@string/nav_label_home">
+
+        <action
+            android:id="@+id/action_homeFragment_to_onboardFragment"
+            app:destination="@id/onboard_fragment"
+            app:enterAnim="@anim/slide_in_right_to_left"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/onboard_fragment"
+        android:name="dev.kxxcn.maru.view.onboard.OnboardFragment"
+        android:label="@string/nav_label_onboard" />
+
+    <fragment
+        android:id="@+id/tasks_fragment"
+        android:name="dev.kxxcn.maru.view.tasks.TasksFragment"
+        android:label="@string/nav_label_tasks">
+
+        <action
+            android:id="@+id/action_tasks_fragment_to_input_fragment"
+            app:destination="@id/input_fragment"
+            app:enterAnim="@anim/slide_in_right_to_left"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out">
+
+            <argument
+                android:name="task_id"
+                app:argType="string"
+                app:nullable="true" />
+
+        </action>
+
+        <action
+            android:id="@+id/action_tasks_fragment_to_editFragment"
+            app:destination="@id/sort_fragment"
+            app:enterAnim="@anim/slide_in_right_to_left"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/more_fragment"
+        android:name="dev.kxxcn.maru.view.more.MoreFragment"
+        android:label="@string/nav_label_more">
+
+        <action
+            android:id="@+id/action_more_fragment_to_orderFragment"
+            app:destination="@id/order_fragment"
+            app:enterAnim="@anim/slide_in_right_to_left"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+
+        <action
+            android:id="@+id/action_more_fragment_to_purchaseFragment"
+            app:destination="@id/purchase_fragment"
+            app:enterAnim="@anim/slide_in_right_to_left"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+
+        <action
+            android:id="@+id/action_more_fragment_to_presentFragment"
+            app:destination="@id/present_fragment"
+            app:enterAnim="@anim/slide_in_right_to_left"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out">
+
+            <argument
+                android:name="present_type"
+                android:defaultValue="RING"
+                app:argType=".view.present.PresentFilterType" />
+
+        </action>
+
+        <action
+            android:id="@+id/action_more_fragment_to_timelineFragment"
+            app:destination="@id/timeline_fragment"
+            app:enterAnim="@anim/slide_in_right_to_left"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+
+        <action
+            android:id="@+id/action_more_fragment_to_landmarkFragment"
+            app:destination="@id/landmark_fragment"
+            app:enterAnim="@anim/slide_in_right_to_left"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+
+        <action
+            android:id="@+id/action_more_fragment_to_dayFragment"
+            app:destination="@id/days_fragment"
+            app:enterAnim="@anim/slide_in_right_to_left"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+
+        <action
+            android:id="@+id/action_more_fragment_to_noticeFragment"
+            app:destination="@id/notice_fragment"
+            app:enterAnim="@anim/slide_in_right_to_left"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+
+        <action
+            android:id="@+id/action_more_fragment_to_settingFragment"
+            app:destination="@id/setting_fragment"
+            app:enterAnim="@anim/slide_in_right_to_left"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/input_fragment"
+        android:name="dev.kxxcn.maru.view.input.InputFragment"
+        android:label="@string/nav_label_input">
+
+        <action
+            android:id="@+id/action_inputFragment_to_statusFragment"
+            app:destination="@id/status_fragment"
+            app:enterAnim="@anim/fade_in"
+            app:popUpTo="@id/input_fragment"
+            app:popUpToInclusive="true" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/status_fragment"
+        android:name="dev.kxxcn.maru.view.status.StatusFragment"
+        android:label="@string/nav_label_status" />
+
+    <fragment
+        android:id="@+id/sort_fragment"
+        android:name="dev.kxxcn.maru.view.sort.SortFragment"
+        android:label="@string/nav_label_sort" />
+
+    <fragment
+        android:id="@+id/order_fragment"
+        android:name="dev.kxxcn.maru.view.order.OrderFragment"
+        android:label="@string/nav_label_order" />
+
+    <fragment
+        android:id="@+id/purchase_fragment"
+        android:name="dev.kxxcn.maru.view.purchase.PurchaseFragment"
+        android:label="@string/nav_label_purchase" />
+
+    <fragment
+        android:id="@+id/present_fragment"
+        android:name="dev.kxxcn.maru.view.present.PresentFragment"
+        android:label="@string/nav_label_present" />
+
+    <fragment
+        android:id="@+id/timeline_fragment"
+        android:name="dev.kxxcn.maru.view.timeline.TimelineFragment"
+        android:label="@string/nav_label_timeline" />
+
+    <fragment
+        android:id="@+id/landmark_fragment"
+        android:name="dev.kxxcn.maru.view.landmark.LandmarkFragment"
+        android:label="@string/nav_label_landmark" />
+
+    <fragment
+        android:id="@+id/days_fragment"
+        android:name="dev.kxxcn.maru.view.days.DaysFragment"
+        android:label="@string/nav_label_days">
+
+        <action
+            android:id="@+id/action_days_fragment_to_daysAddFragment"
+            app:destination="@id/days_add_fragment"
+            app:enterAnim="@anim/slide_in_right_to_left"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/days_add_fragment"
+        android:name="dev.kxxcn.maru.view.days.DaysAddFragment"
+        android:label="@string/nav_label_days_add" />
+
+    <fragment
+        android:id="@+id/notice_fragment"
+        android:name="dev.kxxcn.maru.view.notice.NoticeFragment"
+        android:label="@string/nav_label_notice" />
+
+    <fragment
+        android:id="@+id/setting_fragment"
+        android:name="dev.kxxcn.maru.view.setting.SettingFragment"
+        android:label="@string/nav_label_setting">
+
+        <action
+            android:id="@+id/action_setting_fragment_to_sort_fragment"
+            app:destination="@id/sort_fragment"
+            app:enterAnim="@anim/slide_in_right_to_left"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+
+        <action
+            android:id="@+id/action_setting_fragment_to_notificationFragment"
+            app:destination="@id/notification_fragment"
+            app:enterAnim="@anim/slide_in_right_to_left"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+
+        <action
+            android:id="@+id/action_setting_fragment_to_editFragment"
+            app:destination="@id/edit_fragment"
+            app:enterAnim="@anim/slide_in_right_to_left"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+
+        <action
+            android:id="@+id/action_setting_fragment_to_termsFragment"
+            app:destination="@id/terms_fragment"
+            app:enterAnim="@anim/slide_in_right_to_left"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out">
+
+            <argument
+                android:name="terms_type"
+                app:argType="integer" />
+
+            <argument
+                android:name="terms_title"
+                app:argType="integer" />
+
+        </action>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/notification_fragment"
+        android:name="dev.kxxcn.maru.view.notification.NotificationFragment"
+        android:label="@string/nav_label_notification" />
+
+    <fragment
+        android:id="@+id/edit_fragment"
+        android:name="dev.kxxcn.maru.view.edit.EditFragment"
+        android:label="@string/nav_label_edit" />
+
+    <dialog
+        android:id="@+id/edit_dialog_fragment"
+        android:name="dev.kxxcn.maru.view.edit.EditDialogFragment"
+        android:label="@string/nav_label_edit_dialog" />
+
+    <fragment
+        android:id="@+id/terms_fragment"
+        android:name="dev.kxxcn.maru.view.terms.TermsFragment"
+        android:label="@string/nav_label_terms" />
+
+</navigation>

@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="content"
+            type="dev.kxxcn.maru.data.Summary" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?maruBackgroundColor">
+
+        <dev.kxxcn.maru.view.custom.MaruTextView
+            android:id="@+id/task_title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="@string/home_task_card_title"
+            android:textColor="?maruFontColor"
+            android:textSize="@dimen/title_text_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:textStyle="bold" />
+
+        <dev.kxxcn.maru.view.custom.MaruTextView
+            android:id="@+id/task_total_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@{Long.toString(content.totalTasksCount)}"
+            android:textColor="?maruFontColor"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toStartOf="@id/task_divider_1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/task_title_text" />
+
+        <dev.kxxcn.maru.view.custom.MaruTextView
+            android:id="@+id/task_total_desc_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/home_task_card_total_desc"
+            android:textColor="?maruFontColor"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@id/task_total_text"
+            app:layout_constraintStart_toStartOf="@id/task_total_text"
+            app:layout_constraintTop_toBottomOf="@id/task_total_text" />
+
+        <View
+            android:id="@+id/task_divider_1"
+            android:layout_width="0.3dp"
+            android:layout_height="30dp"
+            android:background="@color/taskCardDivider"
+            app:layout_constraintBottom_toBottomOf="@id/task_total_desc_text"
+            app:layout_constraintEnd_toStartOf="@id/task_progress_text"
+            app:layout_constraintStart_toEndOf="@id/task_total_text"
+            app:layout_constraintTop_toTopOf="@id/task_total_text" />
+
+        <dev.kxxcn.maru.view.custom.MaruTextView
+            android:id="@+id/task_progress_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{Long.toString(content.progressTasksCount)}"
+            android:textColor="?maruFontColor"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toStartOf="@id/task_divider_2"
+            app:layout_constraintStart_toEndOf="@id/task_divider_1"
+            app:layout_constraintTop_toTopOf="@id/task_total_text" />
+
+        <dev.kxxcn.maru.view.custom.MaruTextView
+            android:id="@+id/task_progress_desc_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/home_task_card_progress_desc"
+            android:textColor="?maruFontColor"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@id/task_progress_text"
+            app:layout_constraintStart_toStartOf="@id/task_progress_text"
+            app:layout_constraintTop_toBottomOf="@id/task_progress_text" />
+
+        <View
+            android:id="@+id/task_divider_2"
+            android:layout_width="0.3dp"
+            android:layout_height="30dp"
+            android:background="@color/taskCardDivider"
+            app:layout_constraintBottom_toBottomOf="@id/task_total_desc_text"
+            app:layout_constraintEnd_toStartOf="@id/task_remain_text"
+            app:layout_constraintStart_toEndOf="@id/task_progress_text"
+            app:layout_constraintTop_toTopOf="@id/task_total_text" />
+
+        <dev.kxxcn.maru.view.custom.MaruTextView
+            android:id="@+id/task_remain_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{Long.toString(content.completedTasksCount)}"
+            android:textColor="?maruFontColor"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/task_divider_2"
+            app:layout_constraintTop_toTopOf="@id/task_total_text" />
+
+        <dev.kxxcn.maru.view.custom.MaruTextView
+            android:id="@+id/task_remain_desc_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/home_task_card_completed_desc"
+            android:textColor="?maruFontColor"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@id/task_remain_text"
+            app:layout_constraintStart_toStartOf="@id/task_remain_text"
+            app:layout_constraintTop_toBottomOf="@id/task_remain_text" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/task_achievement_rate_parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="10dp"
+            app:cardBackgroundColor="@color/colorSecondary"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="3dp"
+            app:layout_constraintBottom_toBottomOf="@id/task_transaction_parent"
+            app:layout_constraintEnd_toStartOf="@id/task_progress_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/task_progress_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp">
+
+                <dev.kxxcn.maru.view.custom.MaruTextView
+                    android:id="@+id/task_achievement_rate_title_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/home_task_card_complete"
+                    android:textColor="@color/taskCardAchievementRate"
+                    android:textSize="15sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/task_rate_oval"
+                    android:padding="6dp"
+                    android:src="@drawable/ic_task_rate"
+                    android:tint="@color/taskCardAchievementRate"
+                    app:layout_constraintBottom_toBottomOf="@id/task_achievement_rate_title_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/task_achievement_rate_title_text"
+                    tools:ignore="ContentDescription" />
+
+                <at.grabner.circleprogress.CircleProgressView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    app:circleProgress="@{content.taskProgress}"
+                    app:cpv_autoTextSize="true"
+                    app:cpv_barColor="@color/taskCardProgressBar"
+                    app:cpv_barWidth="10dp"
+                    app:cpv_innerContourSize="0dp"
+                    app:cpv_maxValue="100"
+                    app:cpv_outerContourSize="0dp"
+                    app:cpv_rimColor="@android:color/white"
+                    app:cpv_rimWidth="15dp"
+                    app:cpv_roundToBlock="false"
+                    app:cpv_seekMode="false"
+                    app:cpv_showUnit="true"
+                    app:cpv_textColor="@color/taskCardAchievementRate"
+                    app:cpv_textScale="1"
+                    app:cpv_unit="%"
+                    app:cpv_unitColor="@color/taskCardAchievementRate"
+                    app:cpv_unitPosition="right_bottom"
+                    app:cpv_unitScale="1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/task_achievement_rate_title_text"
+                    tools:cpv_value="50" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/task_transaction_parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            app:cardBackgroundColor="?maruSecondaryBackgroundColor"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="3dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/task_progress_parent"
+            app:layout_constraintTop_toBottomOf="@id/task_progress_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+                <dev.kxxcn.maru.view.custom.MaruTextView
+                    android:id="@+id/task_transaction_title_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/input_remain_money"
+                    android:textColor="?maruFontColor"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/task_base_oval"
+                    android:padding="6dp"
+                    android:src="@drawable/ic_task_transaction"
+                    android:tint="@color/colorSecondary"
+                    app:layout_constraintBottom_toBottomOf="@id/task_transaction_title_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/task_transaction_title_text"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="5dp"
+                    android:src="@drawable/ic_budget"
+                    android:tint="?maruFontColor"
+                    app:layout_constraintEnd_toStartOf="@id/task_transaction_text"
+                    app:layout_constraintTop_toTopOf="@id/task_transaction_text"
+                    tools:ignore="ContentDescription" />
+
+                <dev.kxxcn.maru.view.custom.MaruTextView
+                    android:id="@+id/task_transaction_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:textColor="?maruFontColor"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/task_transaction_title_text"
+                    app:moneyText="@{content.remainAccounts}"
+                    app:textStyle="bold"
+                    tools:text="0원" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/task_progress_parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="20dp"
+            app:cardBackgroundColor="@color/colorPrimary"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="3dp"
+            app:layout_constraintBottom_toTopOf="@id/task_transaction_parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/task_achievement_rate_parent"
+            app:layout_constraintTop_toBottomOf="@id/task_total_desc_text">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+                <dev.kxxcn.maru.view.custom.MaruTextView
+                    android:id="@+id/task_progress_title_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/home_task_card_progress_desc"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:textStyle="bold" />
+
+                <dev.kxxcn.maru.view.custom.MaruTextView
+                    android:id="@+id/task_progress_content_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:lineSpacingExtra="5dp"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toStartOf="@id/tasks_progress_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/task_progress_title_text"
+                    app:progressText="@{content.progressTaskName}"
+                    app:textStyle="bold"
+                    tools:text="@string/home_task_card_no_item" />
+
+                <View
+                    android:layout_width="30dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="15dp"
+                    android:background="#000000"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/task_progress_content_text"
+                    app:layout_constraintTop_toBottomOf="@id/task_progress_content_text" />
+
+                <ImageView
+                    android:id="@+id/tasks_progress_icon"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:resourceId="@{content.progressTaskIcon}"
+                    tools:ignore="ContentDescription"
+                    tools:src="@drawable/ic_empty" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/task_activity_parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="5dp"
+            app:cardBackgroundColor="?maruSecondaryBackgroundColor"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="3dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/task_achievement_rate_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+                <dev.kxxcn.maru.view.custom.MaruTextView
+                    android:id="@+id/task_activity_title_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/home_task_card_activity_title"
+                    android:textColor="?maruFontColor"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/task_base_oval"
+                    android:padding="6dp"
+                    android:src="@drawable/ic_task_activity"
+                    android:tint="@color/colorSecondary"
+                    app:layout_constraintBottom_toBottomOf="@id/task_activity_title_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/task_activity_title_text"
+                    tools:ignore="ContentDescription" />
+
+                <LinearLayout
+                    android:id="@+id/task_activity_list"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/task_activity_title_text"
+                    app:transaction="@{content.tasks}"
+                    tools:ignore="UselessLeaf" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

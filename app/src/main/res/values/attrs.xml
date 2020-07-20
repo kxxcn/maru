@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MaruTextView">
+        <attr name="textStyle" format="reference|integer">
+            <enum name="normal" value="0" />
+            <enum name="bold" value="1" />
+        </attr>
+        <attr name="highlight" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="RotateSelectionView">
+        <attr name="text" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="ArcProgress">
+        <attr name="arc_progress" format="integer" />
+        <attr name="arc_angle" format="float" />
+        <attr name="arc_stroke_width" format="dimension" />
+        <attr name="arc_max" format="integer" />
+
+        <attr name="arc_unfinished_color" format="color" />
+        <attr name="arc_finished_color" format="color" />
+
+        <attr name="arc_text_size" format="dimension" />
+        <attr name="arc_text_color" format="color" />
+
+        <attr name="arc_suffix_text" format="string" />
+        <attr name="arc_suffix_text_size" format="dimension" />
+        <attr name="arc_suffix_text_padding" format="dimension" />
+
+        <attr name="arc_bottom_text" format="string" />
+        <attr name="arc_bottom_text_size" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="DrawableTextView">
+        <attr name="drawable_text" format="string" />
+        <attr name="drawable_src" format="integer" />
+        <attr name="drawable_theme" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="UnderlineTextView">
+        <attr name="underline_text" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="MaruTheme">
+        <attr name="maruBackgroundColor" format="reference" />
+        <attr name="maruSecondaryBackgroundColor" format="reference" />
+        <attr name="maruFontColor" format="reference" />
+        <attr name="maruSecondaryFontColor" format="reference" />
+        <attr name="statusBarColor" format="reference" />
+        <attr name="splashBackgroundDrawable" format="reference" />
+        <attr name="navigatorBackgroundDrawable" format="reference" />
+        <attr name="navigatorTint" format="reference" />
+        <attr name="rotateDefaultTextColor" format="reference" />
+        <attr name="tasksBackgroundDrawable" format="reference" />
+        <attr name="waveFontColor" format="reference" />
+        <attr name="daysAddButtonBackgroundDrawable" format="reference" />
+        <attr name="daysAddHintColor" format="reference" />
+        <attr name="tasksNativeBackgroundColor" format="reference" />
+        <attr name="tasksNativeFontColor" format="reference" />
+        <attr name="inputButtonBackgroundDrawable" format="reference" />
+        <attr name="rotateSelectionSelectText" format="reference" />
+        <attr name="rotateSelectionDefaultText" format="reference" />
+        <attr name="descriptionDividerColor" format="reference" />
+        <attr name="bottomSheetBackgroundDrawable" format="reference" />
+        <attr name="bottomSheetHandleBackgroundDrawable" format="reference" />
+    </declare-styleable>
+</resources>

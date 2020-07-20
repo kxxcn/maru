@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="androidx.core.content.ContextCompat" />
+
+        <variable
+            name="viewModel"
+            type="dev.kxxcn.maru.view.tasks.TasksViewModel" />
+
+        <variable
+            name="item"
+            type="dev.kxxcn.maru.data.TaskDetail" />
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/tasks_items_card_margin_start"
+        android:layout_marginEnd="@dimen/tasks_items_card_margin_end"
+        app:cardBackgroundColor="@color/tasksCompletedCardBackground"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp">
+
+            <ImageView
+                android:id="@+id/tasks_check_icon"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/tasks_completed_check_background"
+                android:padding="7dp"
+                android:src="@drawable/ic_completed"
+                android:tint="@android:color/white"
+                app:layout_constraintBottom_toBottomOf="@id/tasks_date"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tasks_name"
+                tools:ignore="ContentDescription" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:id="@+id/tasks_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:includeFontPadding="false"
+                android:text="@{item.task.name}"
+                android:textColor="@color/tasksCompletedTint"
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="@id/tasks_check_icon"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="상견례" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:id="@+id/tasks_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="@{item.accountDate}"
+                android:textColor="@color/tasksCompletedTint"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="@id/tasks_name"
+                app:layout_constraintTop_toBottomOf="@id/tasks_name"
+                tools:text="2020년 5월 10일" />
+
+            <ImageView
+                android:id="@+id/tasks_money_icon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/ic_budget"
+                android:tint="@color/tasksCompletedTint"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tasks_date"
+                tools:ignore="ContentDescription" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColor="@color/tasksCompletedTint"
+                android:textSize="30sp"
+                app:layout_constraintBottom_toBottomOf="@id/tasks_money_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tasks_money_icon"
+                app:layout_constraintTop_toTopOf="@id/tasks_money_icon"
+                app:moneyFormat="@{item.totalAccounts}" />
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/tasks_chart"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="30dp"
+                app:initialize="@{item}"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tasks_money_icon"
+                app:layout_constraintWidth_percent="0.8" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:id="@+id/husband_accounts_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:textColor="@color/tasksCompletedTint"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tasks_chart"
+                app:moneyText="@{item.account.husband}"
+                app:textStyle="bold" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:id="@+id/wife_accounts_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:textColor="@color/tasksCompletedTint"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/husband_accounts_text"
+                app:moneyText="@{item.account.wife}"
+                app:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/husband_accounts_rect"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/account_husband_rect"
+                app:layout_constraintBottom_toBottomOf="@id/husband_accounts_desc_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/husband_accounts_desc_text"
+                tools:ignore="ContentDescription" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:id="@+id/husband_accounts_desc_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:includeFontPadding="false"
+                android:text="@string/home_account_card_accounts_husband"
+                android:textColor="@color/tasksCompletedTint"
+                app:layout_constraintBottom_toBottomOf="@id/husband_accounts_text"
+                app:layout_constraintStart_toEndOf="@id/husband_accounts_rect"
+                app:layout_constraintTop_toTopOf="@id/husband_accounts_text" />
+
+            <ImageView
+                android:id="@+id/wife_accounts_rect"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/account_wife_rect"
+                app:layout_constraintBottom_toBottomOf="@id/wife_accounts_desc_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/wife_accounts_desc_text"
+                tools:ignore="ContentDescription" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:id="@+id/wife_accounts_desc_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:includeFontPadding="false"
+                android:text="@string/home_account_card_accounts_wife"
+                android:textColor="@color/tasksCompletedTint"
+                app:layout_constraintBottom_toBottomOf="@id/wife_accounts_text"
+                app:layout_constraintStart_toEndOf="@id/wife_accounts_rect"
+                app:layout_constraintTop_toTopOf="@id/wife_accounts_text" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</layout>

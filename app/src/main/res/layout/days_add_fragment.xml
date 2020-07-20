@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="dev.kxxcn.maru.view.days.DaysFilterType" />
+
+        <import type="androidx.core.content.ContextCompat" />
+
+        <variable
+            name="viewModel"
+            type="dev.kxxcn.maru.view.days.DaysAddViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/days_add_register"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/back_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:onClick="@{() -> viewModel.close()}"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_arrow_left"
+                    android:tint="?maruFontColor"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
+
+                <dev.kxxcn.maru.view.custom.MaruTextView
+                    android:id="@+id/days_add_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:text="@string/more_contents_event"
+                    android:textColor="?maruFontColor"
+                    android:textSize="@dimen/title_text_size"
+                    app:highlight="true"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/back_icon"
+                    app:textStyle="bold" />
+
+                <dev.kxxcn.maru.view.custom.MaruTextView
+                    android:id="@+id/days_add_day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp"
+                    android:text="@{context.getString(viewModel.dayStringRes, viewModel.dayCount)}"
+                    android:textColor="@color/daysAddFontTint"
+                    android:textSize="25sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/days_add_title"
+                    tools:text="1일" />
+
+                <EditText
+                    android:id="@+id/days_add_content"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@android:color/transparent"
+                    android:ellipsize="end"
+                    android:hint="@string/days_add_hint"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:paddingHorizontal="20dp"
+                    android:text="@={viewModel.content}"
+                    android:textColor="?maruFontColor"
+                    android:textColorHint="?daysAddHintColor"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/days_add_day"
+                    tools:ignore="Autofill" />
+
+                <View
+                    android:id="@+id/view_divider"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/daysAddBorderTint"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/days_add_content"
+                    app:layout_constraintTop_toBottomOf="@id/days_add_content" />
+
+                <LinearLayout
+                    android:id="@+id/days_add_type_count"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/days_add_selector"
+                    android:gravity="center"
+                    android:onClick="@{() -> viewModel.setFiltering(DaysFilterType.COUNT)}"
+                    android:orientation="vertical"
+                    android:padding="20dp"
+                    app:layout_constraintBottom_toTopOf="@id/days_add_barrier"
+                    app:layout_constraintEnd_toStartOf="@id/days_add_type_remain"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/view_divider"
+                    app:selected="@{viewModel.selectCount}">
+
+                    <dev.kxxcn.maru.view.custom.MaruTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/days_add_count"
+                        android:textColor="@{viewModel.selectCount ? ContextCompat.getColor(context, viewModel.whiteColorRes) : ContextCompat.getColor(context, viewModel.blackColorRes)}"
+                        android:textSize="16sp" />
+
+                    <dev.kxxcn.maru.view.custom.MaruTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center"
+                        android:text="@string/days_add_desc_type_count"
+                        android:textColor="@{viewModel.selectCount ? ContextCompat.getColor(context, viewModel.whiteColorRes) : ContextCompat.getColor(context, viewModel.grayColorRes)}"
+                        android:textSize="10sp"
+                        tools:ignore="SmallSp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/days_add_type_remain"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/days_add_selector"
+                    android:gravity="center"
+                    android:onClick="@{() -> viewModel.setFiltering(DaysFilterType.REMAIN)}"
+                    android:orientation="vertical"
+                    android:padding="20dp"
+                    app:layout_constraintBottom_toTopOf="@id/days_add_barrier"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/days_add_type_count"
+                    app:layout_constraintTop_toBottomOf="@id/view_divider"
+                    app:selected="@{viewModel.selectRemain}">
+
+                    <dev.kxxcn.maru.view.custom.MaruTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/more_contents_event"
+                        android:textColor="@{viewModel.selectRemain ? ContextCompat.getColor(context, viewModel.whiteColorRes) : ContextCompat.getColor(context, viewModel.blackColorRes)}"
+                        android:textSize="16sp" />
+
+                    <dev.kxxcn.maru.view.custom.MaruTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center"
+                        android:lineSpacingExtra="3dp"
+                        android:text="@string/days_add_desc_type_remain"
+                        android:textColor="@{viewModel.selectRemain ? ContextCompat.getColor(context, viewModel.whiteColorRes) : ContextCompat.getColor(context, viewModel.grayColorRes)}"
+                        android:textSize="10sp"
+                        tools:ignore="SmallSp" />
+
+                </LinearLayout>
+
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/days_add_barrier"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:barrierDirection="bottom"
+                    app:constraint_referenced_ids="days_add_type_count, days_add_type_remain"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="20dp"
+                    android:background="@drawable/days_add_deselected_rect"
+                    android:gravity="center_vertical"
+                    android:onClick="@{() -> viewModel.datePicker()}"
+                    android:orientation="horizontal"
+                    android:padding="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/days_add_type_remain"
+                    app:layout_constraintStart_toStartOf="@id/days_add_type_count"
+                    app:layout_constraintTop_toBottomOf="@id/days_add_barrier">
+
+                    <dev.kxxcn.maru.view.custom.MaruTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/date"
+                        android:textColor="?maruFontColor"
+                        android:textSize="16sp" />
+
+                    <dev.kxxcn.maru.view.custom.MaruTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:text="@{viewModel.timeText}"
+                        android:textColor="?maruFontColor"
+                        android:textSize="14sp"
+                        tools:ignore="SmallSp" />
+
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_arrow_down"
+                        android:tint="?maruFontColor"
+                        tools:ignore="ContentDescription" />
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+
+        <dev.kxxcn.maru.view.custom.MaruTextView
+            android:id="@+id/days_add_register"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_margin="10dp"
+            android:background="?daysAddButtonBackgroundDrawable"
+            android:gravity="center"
+            android:onClick="@{() -> viewModel.register()}"
+            android:padding="20dp"
+            android:text="@string/register"
+            android:textColor="?maruSecondaryFontColor"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="notice"
+            type="dev.kxxcn.maru.data.Notice" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <dev.kxxcn.maru.view.custom.MaruTextView
+            android:id="@+id/notice_subject"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:text="@{notice.subject}"
+            android:textColor="?maruFontColor"
+            android:textSize="18sp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toStartOf="@id/notice_expand"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/notice_expand"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/ic_arrow_down"
+            android:tint="?maruFontColor"
+            app:layout_constraintBottom_toBottomOf="@id/notice_subject"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/notice_subject"
+            tools:ignore="ContentDescription" />
+
+        <LinearLayout
+            android:id="@+id/notice_content_parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/notice_subject">
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:id="@+id/notice_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:paddingHorizontal="20dp"
+                android:text="@{notice.content}"
+                android:textColor="?maruFontColor" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:padding="20dp"
+                android:text="@{notice.date}"
+                android:textColor="@color/noticeItemTint"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/notice_barrier"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="notice_subject, notice_content_parent" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0.3dp"
+            android:layout_marginHorizontal="20dp"
+            android:background="@color/noticeItemTint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/notice_barrier" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

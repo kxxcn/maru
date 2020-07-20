@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="dev.kxxcn.maru.view.order.OrderFilterType" />
+
+        <variable
+            name="viewModel"
+            type="dev.kxxcn.maru.view.order.OrderViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/back_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:onClick="@{() -> viewModel.close()}"
+            android:padding="10dp"
+            android:src="@drawable/ic_arrow_left"
+            android:tint="?maruFontColor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <dev.kxxcn.maru.view.custom.MaruTextView
+            android:id="@+id/order_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="@string/more_contents_order"
+            android:textColor="?maruFontColor"
+            android:textSize="@dimen/title_text_size"
+            app:highlight="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/back_icon"
+            app:textStyle="bold" />
+
+        <dev.kxxcn.maru.view.custom.UnderlineTextView
+            android:id="@+id/order_basic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:onClick="@{() -> viewModel.setFiltering(OrderFilterType.BASIC)}"
+            app:layout_constraintStart_toStartOf="@id/order_title"
+            app:layout_constraintTop_toBottomOf="@id/order_title"
+            app:underlineSelector="@{viewModel.filterType == OrderFilterType.BASIC}"
+            app:underline_text="@string/order_type_basic" />
+
+        <dev.kxxcn.maru.view.custom.UnderlineTextView
+            android:id="@+id/order_cathedral"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:onClick="@{() -> viewModel.setFiltering(OrderFilterType.CATHEDRAL)}"
+            app:layout_constraintBottom_toBottomOf="@id/order_basic"
+            app:layout_constraintStart_toEndOf="@id/order_basic"
+            app:layout_constraintTop_toTopOf="@id/order_basic"
+            app:underlineSelector="@{viewModel.filterType == OrderFilterType.CATHEDRAL}"
+            app:underline_text="@string/order_type_cathedral" />
+
+        <dev.kxxcn.maru.view.custom.UnderlineTextView
+            android:id="@+id/order_no_officiate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:onClick="@{() -> viewModel.setFiltering(OrderFilterType.NO_OFFICIATE)}"
+            app:layout_constraintBottom_toBottomOf="@id/order_basic"
+            app:layout_constraintStart_toEndOf="@id/order_cathedral"
+            app:layout_constraintTop_toTopOf="@id/order_basic"
+            app:underlineSelector="@{viewModel.filterType == OrderFilterType.NO_OFFICIATE}"
+            app:underline_text="@string/order_type_no_officiate" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/order_list"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layoutAnimation="@anim/layout_fall_down"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/order_basic"
+            app:orderItems="@{viewModel.items}" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

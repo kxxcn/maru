@@ -1,0 +1,59 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="maruBackgroundColor">@color/maruBackGround</item>
+        <item name="maruSecondaryBackgroundColor">@color/maruBackGround</item>
+        <item name="maruFontColor">@color/maruFontColor</item>
+        <item name="maruSecondaryFontColor">@color/maruBackGround</item>
+        <item name="statusBarColor">@color/colorPrimary</item>
+        <item name="splashBackgroundDrawable">@drawable/splash_background_rect</item>
+        <item name="navigatorBackgroundDrawable">@drawable/navigator_round_background</item>
+        <item name="navigatorTint">@android:color/black</item>
+        <item name="rotateDefaultTextColor">@color/rotateSelectionDefaultText</item>
+        <item name="tasksBackgroundDrawable">@drawable/tasks_round_background</item>
+        <item name="tasksNativeFontColor">@color/maruBackGround</item>
+        <item name="waveFontColor">@color/waveText</item>
+        <item name="daysAddButtonBackgroundDrawable">@drawable/days_add_round_button</item>
+        <item name="daysAddHintColor">@color/daysAddHintTint</item>
+        <item name="tasksNativeBackgroundColor">@color/colorPrimary</item>
+        <item name="inputButtonBackgroundDrawable">@drawable/input_register_button</item>
+        <item name="rotateSelectionSelectText">@color/rotateSelectionSelectText</item>
+        <item name="rotateSelectionDefaultText">@color/rotateSelectionDefaultText</item>
+        <item name="descriptionDividerColor">@color/colorSecondary</item>
+        <item name="bottomSheetBackgroundDrawable">@drawable/bottom_sheet_background</item>
+        <item name="bottomSheetHandleBackgroundDrawable">@drawable/bottom_sheet_round_handle</item>
+    </style>
+
+    <style name="AppDarkTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimaryNight</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="maruBackgroundColor">@color/maruBackGroundNight</item>
+        <item name="maruSecondaryBackgroundColor">@color/colorAccentNight</item>
+        <item name="maruFontColor">@color/maruFontColorNight</item>
+        <item name="maruSecondaryFontColor">@color/colorPrimaryDarkNight</item>
+        <item name="statusBarColor">@color/colorPrimaryDarkNight</item>
+        <item name="splashBackgroundDrawable">@drawable/splash_background_rect_night</item>
+        <item name="navigatorBackgroundDrawable">@drawable/navigator_round_background_night</item>
+        <item name="navigatorTint">@color/colorPrimary</item>
+        <item name="rotateDefaultTextColor">@color/rotateSelectionDefaultTextNight</item>
+        <item name="tasksBackgroundDrawable">@drawable/tasks_round_background_night</item>
+        <item name="tasksNativeFontColor">@color/maruFontColorNight</item>
+        <item name="waveFontColor">@color/maruFontColorNight</item>
+        <item name="daysAddButtonBackgroundDrawable">@drawable/days_add_round_button_night</item>
+        <item name="daysAddHintColor">@color/maruFontColorNight</item>
+        <item name="tasksNativeBackgroundColor">@color/colorPrimaryDarkNight</item>
+        <item name="inputButtonBackgroundDrawable">@drawable/input_register_button_night</item>
+        <item name="rotateSelectionSelectText">@color/rotateSelectionSelectTextNight</item>
+        <item name="rotateSelectionDefaultText">@color/rotateSelectionDefaultTextNight</item>
+        <item name="descriptionDividerColor">@color/maruFontColorNight</item>
+        <item name="bottomSheetBackgroundDrawable">@drawable/bottom_sheet_background_night</item>
+        <item name="bottomSheetHandleBackgroundDrawable">@drawable/bottom_sheet_round_handle_night</item>
+    </style>
+
+</resources>

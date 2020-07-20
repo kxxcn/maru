@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="dev.kxxcn.maru.view.more.MoreViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <dev.kxxcn.maru.view.custom.DrawableTextView
+            android:id="@+id/settings_icon"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:onClick="@{() -> viewModel.settings()}"
+            app:drawable_src="@drawable/ic_settings"
+            app:drawable_text="@string/more_settings"
+            app:drawable_theme="true"
+            app:layout_constraintEnd_toStartOf="@id/contact_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <dev.kxxcn.maru.view.custom.DrawableTextView
+            android:id="@+id/contact_icon"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:onClick="@{() -> viewModel.contact()}"
+            app:drawable_src="@drawable/ic_email"
+            app:drawable_text="@string/more_contact"
+            app:drawable_theme="true"
+            app:layout_constraintEnd_toStartOf="@id/notice_icon"
+            app:layout_constraintStart_toEndOf="@id/settings_icon"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <dev.kxxcn.maru.view.custom.DrawableTextView
+            android:id="@+id/notice_icon"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:onClick="@{() -> viewModel.notice()}"
+            app:drawable_src="@drawable/ic_notice"
+            app:drawable_text="@string/more_notice"
+            app:drawable_theme="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/contact_icon"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

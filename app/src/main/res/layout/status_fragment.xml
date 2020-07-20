@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="dev.kxxcn.maru.view.status.StatusViewModel" />
+
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.motion.widget.MotionLayout
+            android:id="@+id/status_motion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutDescription="@xml/scene_status"
+            tools:motionProgress="1.0">
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:id="@+id/status_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="@string/status_message"
+                android:textColor="?maruFontColor"
+                android:textSize="20sp" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/status_progress_lottie"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:lottie_autoPlay="true"
+                app:lottie_fileName="complete_animation.json"
+                app:lottie_loop="true"
+                tools:ignore="ContentDescription" />
+
+            <dev.kxxcn.maru.view.custom.ArcProgressView
+                android:id="@+id/status_progress"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:arcProgress="@{viewModel.tasksProgress}"
+                app:arc_finished_color="@color/statusProgressFinished"
+                app:arc_max="100"
+                app:arc_text_color="@color/statusProgressFinished"
+                app:arc_text_size="40sp"
+                app:arc_unfinished_color="@color/statusProgressUnfinished"
+                tools:arc_progress="25" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:id="@+id/status_total_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{Integer.toString(viewModel.totalTasksCount)}"
+                android:textColor="?maruFontColor"
+                android:textSize="25sp" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:id="@+id/task_total_desc_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/home_task_card_total_desc"
+                android:textColor="?maruFontColor"
+                android:textSize="12sp" />
+
+            <View
+                android:id="@+id/status_divider_1"
+                android:layout_width="0.3dp"
+                android:layout_height="30dp"
+                android:background="@color/taskCardDivider" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:id="@+id/status_progress_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{Integer.toString(viewModel.progressTasksCount)}"
+                android:textColor="?maruFontColor"
+                android:textSize="25sp" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:id="@+id/status_progress_desc_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/home_task_card_progress_desc"
+                android:textColor="?maruFontColor"
+                android:textSize="12sp" />
+
+            <View
+                android:id="@+id/status_divider_2"
+                android:layout_width="0.3dp"
+                android:layout_height="30dp"
+                android:background="@color/taskCardDivider" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:id="@+id/status_remain_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{Integer.toString(viewModel.completedTasksCount)}"
+                android:textColor="?maruFontColor"
+                android:textSize="25sp" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:id="@+id/status_remain_desc_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="@string/home_task_card_completed_desc"
+                android:textColor="?maruFontColor"
+                android:textSize="12sp" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:id="@+id/status_complete_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/status_complete_button"
+                android:gravity="center"
+                android:onClick="@{() -> viewModel.close()}"
+                android:padding="15dp"
+                android:text="@string/home_task_card_complete"
+                android:textSize="18sp" />
+
+        </androidx.constraintlayout.motion.widget.MotionLayout>
+
+    </ScrollView>
+
+</layout>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="?maruBackgroundColor"
+    app:cardCornerRadius="30dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/decision_icon"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginTop="20dp"
+            android:tint="@color/colorAccent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <dev.kxxcn.maru.view.custom.MaruTextView
+            android:id="@+id/decision_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:lineSpacingExtra="5dp"
+            android:padding="10dp"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/decision_icon"
+            app:textStyle="bold" />
+
+        <dev.kxxcn.maru.view.custom.MaruTextView
+            android:id="@+id/decision_no"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingVertical="20dp"
+            android:text="@string/no"
+            android:textColor="?maruFontColor"
+            app:layout_constraintEnd_toStartOf="@id/decision_yes"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/decision_text" />
+
+        <dev.kxxcn.maru.view.custom.MaruTextView
+            android:id="@+id/decision_yes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingVertical="20dp"
+            android:text="@string/yes"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/decision_no"
+            app:layout_constraintTop_toTopOf="@id/decision_no"
+            app:textStyle="bold" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

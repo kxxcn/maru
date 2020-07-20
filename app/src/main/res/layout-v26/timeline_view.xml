@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="item"
+            type="dev.kxxcn.maru.view.timeline.TimelineTask" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <dev.kxxcn.maru.view.custom.MaruTextView
+            android:id="@+id/timeline_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:paddingBottom="10dp"
+            android:text="@{context.getString(item.nameRes)}"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <dev.kxxcn.maru.view.custom.MaruTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:justificationMode="inter_word"
+            android:lineSpacingExtra="5dp"
+            android:text="@{context.getString(item.contentRes)}"
+            android:textColor="@color/timelineContentTint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/timeline_name"
+            app:layout_constraintTop_toBottomOf="@id/timeline_name" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

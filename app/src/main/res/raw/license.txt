@@ -1,0 +1,63 @@
+Retrofit2
+http://square.github.io/retrofit/
+Copyright 2013 Square, Inc.
+Apache License 2.0
+
+Glide
+https://github.com/bumptech/glide
+Copyright 2014 Google, Inc. All rights reserved.
+Copyright 2012 Jake Wharton
+Copyright 2011 The Android Open Source Project
+Copyright (c) 2013 Xcellent Creations, Inc.
+Copyright (c) 1994 Anthony Dekker
+Apache License 2.0
+MIT License
+
+dotsindicator
+https://github.com/tommybuonomo/dotsindicator
+Copyright 2016 Tommy Buonomo
+Apache License 2.0
+
+SmoothBottomBar
+https://github.com/ibrahimsn98/SmoothBottomBar
+Copyright (c) 2019 İbrahim Süren
+MIT License
+
+RoundCornerProgressBar
+https://github.com/akexorcist/RoundCornerProgressBar
+Copyright 2020 Akexorcist
+Apache License 2.0
+
+WaveView
+https://github.com/gelitenight/WaveView
+Apache License 2.0
+
+Circle-Progress-View
+https://github.com/jakob-grabner/Circle-Progress-View
+Copyright (c) 2015 jakob-grabner
+MIT License
+
+MPAndroidChart
+https://github.com/PhilJay/MPAndroidChart
+Copyright 2020 Philipp Jahoda
+Apache License 2.0
+
+logger
+https://github.com/orhanobut/logger
+Copyright 2018 Orhan Obut
+Apache License 2.0
+
+android-map-sdk
+https://github.com/navermaps/android-map-sdk
+Copyright (c) 2018-2020 NAVER Corp.
+Apache License 2.0
+
+lottie-android
+https://github.com/airbnb/lottie-android
+Copyright 2018 Airbnb, Inc.
+Apache License 2.0
+
+ToggleButton
+https://github.com/zcweng/ToggleButton
+Copyright (c) 2016 ToggleButton
+MIT License

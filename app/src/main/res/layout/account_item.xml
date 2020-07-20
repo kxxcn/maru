@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="content"
+            type="dev.kxxcn.maru.data.Summary" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?maruBackgroundColor"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="20dp"
+            app:cardBackgroundColor="?maruSecondaryBackgroundColor"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="5dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:src="@drawable/ic_budget"
+                    android:tint="?maruFontColor"
+                    app:layout_constraintEnd_toStartOf="@id/total_accounts_text"
+                    app:layout_constraintTop_toTopOf="@id/total_accounts_text"
+                    tools:ignore="ContentDescription" />
+
+                <dev.kxxcn.maru.view.custom.MaruTextView
+                    android:id="@+id/total_accounts_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="@{content.totalAccountsText}"
+                    android:textColor="?maruFontColor"
+                    android:textSize="30sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <dev.kxxcn.maru.view.custom.MaruTextView
+                    android:id="@+id/total_accounts_desc_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/home_account_card_total_accounts"
+                    android:textColor="?maruFontColor"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/total_accounts_text" />
+
+                <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
+                    android:id="@+id/corner_progress_bar"
+                    android:layout_width="0dp"
+                    android:layout_height="25dp"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/total_accounts_desc_text"
+                    app:progress="@{content.husbandProgress}"
+                    app:rcBackgroundColor="@color/progressBarBackground"
+                    app:rcBackgroundPadding="3dp"
+                    app:rcMax="1.0"
+                    app:rcProgressColor="@color/progressBarForeground"
+                    app:rcSecondaryProgressColor="@color/progressBarSecondaryForeground"
+                    app:secondaryProgress="@{content.wifeProgress}" />
+
+                <ImageView
+                    android:id="@+id/husband_accounts_rect"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_marginStart="20dp"
+                    android:background="@drawable/account_husband_rect"
+                    app:layout_constraintBottom_toBottomOf="@id/husband_accounts_desc_text"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/husband_accounts_desc_text"
+                    tools:ignore="ContentDescription" />
+
+                <dev.kxxcn.maru.view.custom.MaruTextView
+                    android:id="@+id/husband_accounts_desc_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:includeFontPadding="false"
+                    android:text="@string/home_account_card_accounts_husband"
+                    android:textColor="?maruFontColor"
+                    app:layout_constraintBottom_toBottomOf="@id/husband_accounts_text"
+                    app:layout_constraintStart_toEndOf="@id/husband_accounts_rect"
+                    app:layout_constraintTop_toTopOf="@id/husband_accounts_text" />
+
+                <ImageView
+                    android:id="@+id/wife_accounts_rect"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_marginStart="20dp"
+                    android:background="@drawable/account_wife_rect"
+                    app:layout_constraintBottom_toBottomOf="@id/wife_accounts_desc_text"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/wife_accounts_desc_text"
+                    tools:ignore="ContentDescription" />
+
+                <dev.kxxcn.maru.view.custom.MaruTextView
+                    android:id="@+id/wife_accounts_desc_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:includeFontPadding="false"
+                    android:text="@string/home_account_card_accounts_wife"
+                    android:textColor="?maruFontColor"
+                    app:layout_constraintBottom_toBottomOf="@id/wife_accounts_text"
+                    app:layout_constraintStart_toEndOf="@id/wife_accounts_rect"
+                    app:layout_constraintTop_toTopOf="@id/wife_accounts_text" />
+
+                <dev.kxxcn.maru.view.custom.MaruTextView
+                    android:id="@+id/husband_accounts_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:text="@{@string/home_account_card_percent(content.husbandProgress * 100)}"
+                    android:textColor="?maruFontColor"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/corner_progress_bar"
+                    app:textStyle="bold" />
+
+                <dev.kxxcn.maru.view.custom.MaruTextView
+                    android:id="@+id/wife_accounts_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:text="@{@string/home_account_card_percent(content.wifeProgress * 100)}"
+                    android:textColor="?maruFontColor"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/husband_accounts_text"
+                    app:textStyle="bold" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:translationY="-10dp"
+            tools:ignore="DisableBaselineAlignment">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/account_budget_rect"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="15dp">
+
+                <dev.kxxcn.maru.view.custom.MaruTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:textColor="@android:color/white"
+                    app:moneyText="@{content.user.budget}" />
+
+                <dev.kxxcn.maru.view.custom.MaruTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="@string/home_account_card_total_budget"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/account_remain_rect"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="15dp"
+                android:translationX="-10dp">
+
+                <dev.kxxcn.maru.view.custom.MaruTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:textColor="@android:color/white"
+                    app:moneyText="@{content.user.budget - content.totalAccounts}" />
+
+                <dev.kxxcn.maru.view.custom.MaruTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="@string/home_account_card_total_remain"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

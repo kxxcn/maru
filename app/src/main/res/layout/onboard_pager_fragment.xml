@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="androidx.core.content.ContextCompat" />
+
+        <variable
+            name="viewModel"
+            type="dev.kxxcn.maru.view.onboard.page.OnboardPagerViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/onboard_image"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="7"
+            app:lottie="@{viewModel.onboardFileName}"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            tools:ignore="ContentDescription" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:id="@+id/onboard_subject"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="15dp"
+                android:text="@{context.getString(viewModel.onboardSubject, viewModel.remaining)}"
+                android:textSize="30sp"
+                app:textStyle="bold" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:id="@+id/onboard_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:lineSpacingExtra="5dp"
+                android:text="@{viewModel.onboardContent}"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

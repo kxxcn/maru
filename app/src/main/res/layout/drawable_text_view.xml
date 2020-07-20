@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="icon"
+            type="android.graphics.drawable.Drawable" />
+
+        <variable
+            name="text"
+            type="String" />
+
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/drawable_icon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@{icon}"
+            tools:ignore="ContentDescription"
+            tools:src="@drawable/ic_settings" />
+
+        <dev.kxxcn.maru.view.custom.MaruTextView
+            android:id="@+id/drawable_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:lineSpacingExtra="2dp"
+            android:text="@{text}"
+            android:textColor="?maruFontColor"
+            android:textSize="12sp"
+            tools:text="설정" />
+
+    </LinearLayout>
+
+</layout>

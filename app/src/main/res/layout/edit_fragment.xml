@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="dev.kxxcn.maru.view.register.RegisterFilterType" />
+
+        <variable
+            name="viewModel"
+            type="dev.kxxcn.maru.view.edit.EditViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/back_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:onClick="@{() -> viewModel.close()}"
+            android:padding="10dp"
+            android:src="@drawable/ic_arrow_left"
+            android:tint="?maruFontColor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <dev.kxxcn.maru.view.custom.MaruTextView
+            android:id="@+id/edit_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="@string/setting_my_profile_edit"
+            android:textColor="?maruFontColor"
+            android:textSize="@dimen/title_text_size"
+            app:highlight="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/back_icon"
+            app:textStyle="bold" />
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_title">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{() -> viewModel.edit(RegisterFilterType.REGISTER_NAME)}">
+
+                    <dev.kxxcn.maru.view.custom.MaruTextView
+                        android:id="@+id/edit_name_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:text="@string/register_name"
+                        android:textColor="@color/noticeItemTint"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <dev.kxxcn.maru.view.custom.MaruTextView
+                        android:id="@+id/edit_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="10dp"
+                        android:text="@{viewModel.name}"
+                        android:textColor="?maruFontColor"
+                        android:textSize="20sp"
+                        app:layout_constraintStart_toStartOf="@id/edit_name_desc"
+                        app:layout_constraintTop_toBottomOf="@id/edit_name_desc" />
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginEnd="20dp"
+                        android:rotation="270"
+                        android:src="@drawable/ic_arrow_down"
+                        android:tint="?maruFontColor"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="ContentDescription" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0.3dp"
+                        android:layout_marginHorizontal="20dp"
+                        android:background="@color/noticeItemTint"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/edit_name" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:onClick="@{() -> viewModel.edit(RegisterFilterType.REGISTER_WEDDING)}"
+                    android:visibility="gone">
+
+                    <dev.kxxcn.maru.view.custom.MaruTextView
+                        android:id="@+id/edit_wedding_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:text="@string/register_wedding"
+                        android:textColor="@color/noticeItemTint"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <dev.kxxcn.maru.view.custom.MaruTextView
+                        android:id="@+id/edit_wedding"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="10dp"
+                        android:text="@{viewModel.wedding}"
+                        android:textColor="?maruFontColor"
+                        android:textSize="20sp"
+                        app:layout_constraintStart_toStartOf="@id/edit_wedding_desc"
+                        app:layout_constraintTop_toBottomOf="@id/edit_wedding_desc" />
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginEnd="20dp"
+                        android:rotation="270"
+                        android:src="@drawable/ic_arrow_down"
+                        android:tint="?maruFontColor"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="ContentDescription" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0.3dp"
+                        android:layout_marginHorizontal="20dp"
+                        android:background="@color/noticeItemTint"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/edit_wedding" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:onClick="@{() -> viewModel.edit(RegisterFilterType.REGISTER_BUDGET)}">
+
+                    <dev.kxxcn.maru.view.custom.MaruTextView
+                        android:id="@+id/edit_budget_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:text="@string/register_budget"
+                        android:textColor="@color/noticeItemTint"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <dev.kxxcn.maru.view.custom.MaruTextView
+                        android:id="@+id/edit_budget"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="10dp"
+                        android:text="@{viewModel.budget}"
+                        android:textColor="?maruFontColor"
+                        android:textSize="20sp"
+                        app:layout_constraintStart_toStartOf="@id/edit_budget_desc"
+                        app:layout_constraintTop_toBottomOf="@id/edit_budget_desc" />
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginEnd="20dp"
+                        android:rotation="270"
+                        android:src="@drawable/ic_arrow_down"
+                        android:tint="?maruFontColor"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="ContentDescription" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0.3dp"
+                        android:layout_marginHorizontal="20dp"
+                        android:background="@color/noticeItemTint"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/edit_budget" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

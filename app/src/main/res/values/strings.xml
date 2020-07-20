@@ -1,0 +1,353 @@
+<resources>
+    <string name="app_name">마루</string>
+    <string name="app_name_en">MARU</string>
+    <string name="app_ad_attribution">AD</string>
+
+    <string name="nav_label_splash">SplashFragment</string>
+    <string name="nav_label_intro">IntroFragment</string>
+    <string name="nav_label_register">RegisterFragment</string>
+    <string name="nav_label_home">HomeFragment</string>
+    <string name="nav_label_onboard">OnboardFragment</string>
+    <string name="nav_label_tasks">TasksFragment</string>
+    <string name="nav_label_more">MoreFragment</string>
+    <string name="nav_label_input">InputFragment</string>
+    <string name="nav_label_status">StatusFragment</string>
+    <string name="nav_label_sort">SortFragment</string>
+    <string name="nav_label_order">OrderFragment</string>
+    <string name="nav_label_purchase">PurchaseFragment</string>
+    <string name="nav_label_present">PresentFragment</string>
+    <string name="nav_label_timeline">TimelineFragment</string>
+    <string name="nav_label_landmark">LandmarkFragment</string>
+    <string name="nav_label_days">DaysFragment</string>
+    <string name="nav_label_days_add">DaysAddFragment</string>
+    <string name="nav_label_notice">NoticeFragment</string>
+    <string name="nav_label_setting">SettingFragment</string>
+    <string name="nav_label_notification">NotificationFragment</string>
+    <string name="nav_label_edit">EditFragment</string>
+    <string name="nav_label_edit_dialog">EditDialogFragment</string>
+    <string name="nav_label_terms">TermsFragment</string>
+
+    <string name="nav_key_task_id">KEY_TASK_ID</string>
+
+    <string name="play_store_app">market://details?id=%1$s</string>
+    <string name="play_store_web">https://play.google.com/store/apps/details?id=%1$s</string>
+
+    <string name="front_zero_format">%02d</string>
+
+    <string-array name="task_list">
+        <item name="task_item_greeting">상견례</item>
+        <item name="task_item_engagement">약혼식</item>
+        <item name="task_item_dress">드레스</item>
+        <item name="task_item_studio">스튜디오</item>
+        <item name="task_item_makeup">메이크업</item>
+        <item name="task_item_hall">웨딩홀</item>
+        <item name="task_item_snap">본식 스냅</item>
+        <item name="task_item_honeymoon">신혼여행</item>
+        <item name="task_item_shoes">웨딩슈즈</item>
+        <item name="task_item_gift">예단/예물</item>
+        <item name="task_item_contribution">폐백/이바지</item>
+        <item name="task_item_hanbok">한복</item>
+        <item name="task_item_parent_makeup">혼주 메이크업</item>
+        <item name="task_item_invitation">청첩장</item>
+        <item name="task_item_reward">사회/축가 사례비</item>
+        <item name="task_item_living_ware">혼수</item>
+        <item name="task_item_house">신혼집</item>
+        <item name="task_item_marriage_pledge">혼인신고</item>
+    </string-array>
+
+    <string-array name="task_icons">
+        <item name="task_icon_greeting">ic_greeting</item>
+        <item name="task_icon_engagement">ic_engagement</item>
+        <item name="task_icon_dress">ic_dress</item>
+        <item name="task_icon_studio">ic_studio</item>
+        <item name="task_icon_makeup">ic_makeup</item>
+        <item name="task_icon_hall">ic_hall</item>
+        <item name="task_icon_snap">ic_snap</item>
+        <item name="task_icon_honeymoon">ic_honeymoon</item>
+        <item name="task_icon_shoes">ic_shoes</item>
+        <item name="task_icon_gift">ic_gift</item>
+        <item name="task_icon_contribution">ic_contribution</item>
+        <item name="task_icon_hanbok">ic_hanbok</item>
+        <item name="task_icon_parent_makeup">ic_parent_makeup</item>
+        <item name="task_icon_invitation">ic_invitation</item>
+        <item name="task_icon_reward">ic_reward</item>
+        <item name="task_icon_living_ware">ic_living_ware</item>
+        <item name="task_icon_house">ic_house</item>
+        <item name="task_icon_marriage_pledge">ic_marriage_pledge</item>
+    </string-array>
+
+    <string name="ok">확인</string>
+    <string name="cancel">취소</string>
+    <string name="yes">예</string>
+    <string name="no">아니오</string>
+    <string name="date">날짜</string>
+    <string name="register">등록하기</string>
+    <string name="vibrate">진동</string>
+    <string name="sound">소리</string>
+    <string name="save">저장하기</string>
+
+    <string name="register_hello">안녕하세요.</string>
+    <string name="register_welcome">마루에 오신 것을\n환영합니다.</string>
+    <string name="register_start">시작하기</string>
+    <string name="register_name">이름</string>
+    <string name="register_name_hint">홍길동</string>
+    <string name="register_wedding">결혼 예정일</string>
+    <string name="register_wedding_hint">%1$s</string>
+    <string name="register_budget">예산</string>
+    <string name="register_budget_hint">100,000,000</string>
+    <string name="register_calculate_budget">0원</string>
+    <string name="register_next">다음</string>
+    <string name="register_complete">완료</string>
+
+    <string name="menu_dashboard">홈</string>
+    <string name="menu_tasks">체크리스트</string>
+    <string name="menu_more">더보기</string>
+    <string name="menu_edit">편집</string>
+
+    <string name="onboard_next">다음</string>
+    <string name="onboard_complete">완료</string>
+    <string name="onboard_tasks_subject">차근차근 하나씩.</string>
+    <string name="onboard_tasks_content">결혼 준비를 위한\n나만의 체크리스트를 기록하세요.</string>
+    <string name="onboard_account_subject">현명한 소비를 도와드려요.</string>
+    <string name="onboard_account_content">신랑 지출 금액, 신부 지출 금액을\n등록하고 서로 비교해보세요.</string>
+    <string name="onboard_welcome_subject">결혼식까지 D-%1$d.</string>
+    <string name="onboard_welcome_content">[마루]와 함께 행복한 결혼 생활을 준비하세요.</string>
+
+    <string name="home_welcome_card_name">%1$s님</string>
+    <string name="home_welcome_card_greeting">안녕하세요.</string>
+    <string name="home_welcome_card_remain">D-%1$d</string>
+    <string name="home_account_card_total_accounts">총 지출금액</string>
+    <string name="home_account_card_total_budget">전체금액</string>
+    <string name="home_account_card_total_remain">남은금액</string>
+    <string name="home_account_card_accounts_husband">신랑 지출</string>
+    <string name="home_account_card_accounts_wife">신부 지출</string>
+    <string name="home_account_card_percent">%1$.0f %%</string>
+    <string name="home_task_card_title">체크리스트</string>
+    <string name="home_task_card_total_desc">전체</string>
+    <string name="home_task_card_progress_desc">진행중</string>
+    <string name="home_task_card_completed_desc">완료됨</string>
+    <string name="home_task_card_transaction_title">이번 달</string>
+    <string name="home_task_card_activity_title">최근 활동</string>
+    <string name="home_task_card_activity_empty">최근 활동 내역이 없어요.</string>
+    <string name="home_task_card_next_task">일정</string>
+    <string name="home_task_card_complete">완료</string>
+    <string name="home_task_card_no_item">진행중인\n항목이\n없어요.</string>
+    <string name="home_day_card_title">디데이</string>
+    <string name="home_day_card_management_schedule">디데이를 등록하고 일정을 관리하세요~</string>
+
+    <string name="tasks_total_desc">전체</string>
+    <string name="tasks_progress_desc">진행중</string>
+    <string name="tasks_completed_desc">완료됨</string>
+
+    <string name="task_empty_progress">진행 중인 체크리스트가 없어요.</string>
+    <string name="task_empty_completed">완료 된 체크리스트가 없어요.</string>
+
+    <string name="input_remain_money">잔금</string>
+    <string name="input_unit_desc">단위 설정</string>
+    <string name="input_unit1">+1만</string>
+    <string name="input_unit2">+10만</string>
+    <string name="input_unit3">+100만</string>
+    <string name="input_unit4">+1000만</string>
+    <string name="input_complete">입력하기</string>
+
+    <string name="status_message">차근차근 하나씩 준비하세요!</string>
+    <string name="status_should_input_either">지출 금액을 입력하세요.</string>
+
+    <string name="sort_tasks_deletion_dialog_title">체크리스트 삭제</string>
+    <string name="sort_tasks_deletion_dialog_message">%1$d개의 항목을 삭제하시겠습니까?</string>
+    <string name="sort_tasks_delete">체크리스트 목록이 삭제되었습니다.</string>
+    <string name="sort_tasks_update">체크리스트 목록이 업데이트 되었습니다.</string>
+
+    <string name="more_settings">설정</string>
+    <string name="more_contact">문의하기</string>
+    <string name="more_notice">공지사항</string>
+
+    <string name="more_contents_ad">광고제거</string>
+    <string name="more_contents_backup">백업/복원</string>
+    <string name="more_contents_review">리뷰쓰기</string>
+    <string name="more_contents_event">디데이</string>
+    <string name="more_contents_order">결혼식 순서</string>
+    <string name="more_contents_timeline">타임라인</string>
+    <string name="more_contents_ring">반지</string>
+    <string name="more_contents_dress">드레스</string>
+    <string name="more_contents_hanbok">한복</string>
+    <string name="more_contents_tuxedo">턱시도</string>
+    <string name="more_contents_night">야간모드</string>
+    <string name="more_contents_landmark">셀프웨딩</string>
+
+    <string name="order_type_basic">일반 결혼식</string>
+    <string name="order_type_no_officiate">주례 없는 결혼식</string>
+    <string name="order_type_cathedral">성당 결혼식</string>
+    <string name="order_opening">개식 예고</string>
+    <string name="order_notice">개식사</string>
+    <string name="order_light">양가혼주 점촉식</string>
+    <string name="order_introduce">주례 소개</string>
+    <string name="order_husband">신랑 입장</string>
+    <string name="order_wife">신부 입장</string>
+    <string name="order_greeting">신랑, 신부 맞절</string>
+    <string name="order_vows">혼인서약</string>
+    <string name="order_declaration">성혼선언</string>
+    <string name="order_congratulatory">주례사</string>
+    <string name="order_blessing">덕담</string>
+    <string name="order_anthem">축가</string>
+    <string name="order_thanks">양가 부모님 및\n내빈 인사</string>
+    <string name="order_march">신랑, 신부 행진</string>
+    <string name="order_ending">폐식</string>
+    <string name="order_step">주례 등단</string>
+    <string name="order_entrance">신랑, 신부 입장</string>
+    <string name="order_prayer">기도와 축사</string>
+    <string name="order_witness">신랑, 신부 증인 등단</string>
+    <string name="order_pledge">서약사</string>
+    <string name="order_offering">예물 교환</string>
+    <string name="order_sacrament">혼인성사</string>
+    <string name="order_signature">결혼 증명서 서명</string>
+    <string name="order_believer">신자들 기도</string>
+    <string name="order_liturgy">성찬 전례</string>
+    <string name="order_bow">신랑, 신부 배례</string>
+
+    <string name="need_sign_in_process">인증이 필요한 서비스입니다.\n로그인 하시겠습니까?</string>
+    <string name="active_night_mode">야간모드로 전환하시겠습니까?</string>
+    <string name="inactive_night_mode">야간모드를 해제하시겠습니까?</string>
+    <string name="send_email">문의하시겠습니까?</string>
+
+    <string name="email_address">kxxcn.dev@gmail.com</string>
+    <string name="email_subject">[마루] 문의사항</string>
+    <string name="email_text">Device: %1$s\nOS: %2$d\nVersion: %3$s\n\n\n</string>
+
+    <string name="present_dress_a_title">A라인 드레스</string>
+    <string name="present_dress_a_content">A라인 드레스는 모든 체형에 어울리는 드레스 라인이에요. 체형/키와 관계 없이 누구에게나 어울리는 클래식 드레스에요. 특히 키가 작으신 분들이 입으시면 단점을 보완하여 키가 커보이는 효과가 있답니다. 또한 하체가 통통하신 분들도 허리 라인 밑으로 내려오는 스커트가 단점을 커버 해주지요. 대중성을 고려해 특이하고 튀는것을 싫어하시는 신부님들 또는 키가 작으신 신부님들께 권해드리고 싶은 드레스랍니다.</string>
+    <string name="present_dress_bell_title">벨라인 드레스</string>
+    <string name="present_dress_bell_content">벨라인 드레스는 모양이 마치 종과 같다고 하여 지어진 이름이에요. 영국의 빅토리아 여왕님이 입으신 후 인기가 하늘을 치솟았던 드레스죠! 벨라인 드레스는 힙이 크신 분 또는 몸매를 감추고 싶으신 분들에게 권해드리는 드레스에요. 벨라인 드레스를 입으시면 상대적으로 신랑의 키가 커보이는 효과도 있답니다. 그래서 신랑이 키가 작으신 분들에게도 추천드려요. 단, 키가 작으신 신부님들이 입으시면 더욱 키가 작아 보일 수 있으니 피하시는게 좋겠지요. :)</string>
+    <string name="present_dress_mermaid_title">머메이드라인 드레스</string>
+    <string name="present_dress_mermaid_content">머메이드라인 드레스는 몸매를 환하게 비춰주는 아찔하고 섹시한 드레스에요. 마치 인어 공주를 연상시키는 라인을 가지고 있어 한층 더 여성스럽고 고혹스러운 모습을 연출 시키지요. 전체적으로 마른 체형을 가지시면서 골반 라인이 크신 신부님들이 입으신다면 육감적인 라인을 더욱 강조시키는 멋진 선택이 되실 것 같아요~ 하지만 골반이 작으신 신부님들은 얼굴이 부각되니 피하시는 것이 좋겠지요. :)</string>
+    <string name="present_dress_empire_title">엠파이어라인 드레스</string>
+    <string name="present_dress_empire_content">여신 느낌이 물씬 풍기는, 범접할 수 없는 성스러운 이미지가 돋보이는 엠파이어 라인 드레스랍니다. 가슴 아래부터 허리 라인으로 절개된 하이 웨스트 실루엣이 돋보이는 라인을 가지고 있는데요. 하늘하늘한 실크 소재를 많이 사용하여 성스러운 느낌을 더욱 강조한답니다. 다리가 길어 보이는 효과와 함께 가슴을 부각시켜 작은 가슴으로 신경 쓰시던 신부님들께 큰 사랑을 받고 있어요. 그러나 허리가 굵은 원통형 몸매, 어깨가 좁은 신부들은 피해야 하는 라인이에요. :D</string>
+    <string name="present_dress_princess_title">프린세스라인 드레스</string>
+    <string name="present_dress_princess_content">프린세스 라인 드레스는 FIT한 상체와 풍성한 스커트가 인상적인 드레스인데요. A라인 드레스와 혼동될 수도 있지만 코르셋을 입은 듯한 허리 라인 덕분에 A라인 보다는 조금 더 귀족스럽고 고급스러운 느낌이 있답니다. 마치 영화 속 공주를 연상케 하는 프린세스 라인 드레스는 허리가 굵으신 신부님들 또는 상체가 크시거나 군살이 있으신 신부님들이 입으시면 더욱 라인 보정 효과를 볼 수 있어요.</string>
+
+    <string name="present_ring_short_thick_title">손가락이 짧고 통통하신 분</string>
+    <string name="present_ring_short_thick_content">밴드가 굵은 다이아 반지를 착용하시면 오히려 손가락의 길이가 짧아보일 수 있기 때문에 U라인 또는 V라인이 들어간 다이아 반지를 착용하시는 것이 손가락을 길어 보이게 할 수 있답니다.</string>
+    <string name="present_ring_short_thin_title">손가락이 짧고 가느신 분</string>
+    <string name="present_ring_short_thin_content">심플한 스타일을 착용하시면 손이 더욱 작게 보여서 \'어리다\'라는 느낌을 받으실 수 있기 때문에 여성스러움을 강조하기 위해선 약간 화려한 스타일의 다이아 반지를 착용하시는 것이 좋아요~ 또는, 투톤 스타일의 다이아 반지를 선택 하신다면 시선을 집중 시킴으로써 짧은 손가락의 단점을 커버하실 수 있지요. :)</string>
+    <string name="present_ring_long_thick_title">손가락이 길고 통통하신 분</string>
+    <string name="present_ring_long_thick_content">밴드가 얇은 다이아 반지를 착용하시면 오히려 손이 크고 손가락이 두껍게 보일 수 있어요. 두께감이 느껴지는 다이아 반지를 착용하여 손의 크기를 작게 연출해보세요~</string>
+    <string name="present_ring_long_thin_title">손가락이 길고 가느신 분</string>
+    <string name="present_ring_long_thin_content">손가락이 길고 가느신 분은 어떤 디자인이라도 잘 어울리실 거에요~ 다만, 너무 작고 심플한 스타일을 선택하시면 손이 말라 보이는 효과를 보실 수도 있어요. 심플한 다이아 반지를 선택 하신다면 말라 보이는 느낌을 피하기 위해 다이아 반지와 함께 착용할 수 있는 가드링을 구입하는 것도 좋은 방법이에요. :)</string>
+
+    <string name="present_tuxedo_short_thick_title">키가 작고 통통한 체형</string>
+    <string name="present_tuxedo_short_thick_content">둥근 느낌의 체형 때문에 턱시도 선택 시 어려움이 있지만, 유연한 곡선보다는 직선 처리된 디자인이나 검정/네이비 색상과 같은 어두운 계열의 턱시도로 체형을 커버하실 수 있어요. 굵은 체크 무늬나 스트라이프는 자칫 더 통통해 보일 수 있으니 피해야 한답니다. 더블 자켓은 볼륨감을 주기 때문에 싱글 자켓과 숄카라로 체형을 커버 하시는 것을 추천 드려요.</string>
+    <string name="present_tuxedo_short_thin_title">키가 작고 마른 체형</string>
+    <string name="present_tuxedo_short_thin_content">역시 턱시도를 고를 때 주의 깊게 선택 해야하는 체형으로 슈트와 바지 색상을 통일하되 길이가 허리까지 오는 자켓으로 다리가 길어 보이는 효과를 볼 수 있어요. 그리고 어깨 라인에 약간 여유를 주어 체격이 커보이게 하고 화려한 커버랜드, 보타이, 행거 치프로 포인트를 주어 시선을 위로 끌어주는 것이 좋답니다.</string>
+    <string name="present_tuxedo_long_thick_title">키가 크고 통통한 체형</string>
+    <string name="present_tuxedo_long_thick_content">가장 남성적인 이미지의 체형으로 몸집이 너무 커보이지 않도록 스타일에 중점을 둬야 한답니다. 밝은 색상은 몸집이 커보이는 효과가 있으니 피하시는게 좋아요. 어두운 색상으로 상하의 컬러를 통일하며 간격이 좁은 세로 스트라이프 패턴의 턱시도로 더욱 날씬 해보이는 효과를 볼 수 있어요. 보타이와 포켓칩으로 포인트를 주는 것도 좋겠지요. :)</string>
+    <string name="present_tuxedo_long_thin_title">키가 크고 마른 체형</string>
+    <string name="present_tuxedo_long_thin_content">키가 크신 분들은 키가 작으신 분들에 비해 상대적으로 더 말라 보이는 느낌이 있어요~ 그래서 체형을 보완하는데 중점을 둬야 한답니다. 사실 어떤 스타일을 입어도 무난하게 잘 어울리지만 상의는 밝은 색, 하의는 어두운 색으로 상하의 색상을 다르게 선택하시는 것이 좋아요. 싱글 자켓보다는 더블 버튼 자켓으로 체형을 보완 해주는 것이 좋으며, 만약 신부와 키 차이가 많이 난다면 더블 자켓이나 세퍼레이트 스타일을 선택하는 것도 좋겠지요. :)</string>
+
+    <string name="present_hanbok_short_thick_title">키가 작고 통통한 체형</string>
+    <string name="present_hanbok_short_thick_content">저고리와 치마 길이 간의 비율을 조정한다면 허리선의 위치까지도 조정할 수 있다는 사실! 짧은 저고리로 허리선을 높여 긴 다리를 연출하세요~ 어두운 색상은 연하고 밝은 색상과는 반대로 부피가 작아 보이는 효과가 있어요. 은은하고 어두운 색으로 단아하게 연출해보세요! 상체를 더욱 가냘프게 하려면 치마보다 저고리를 더 어둡게 스타일링 하시면 된답니다. 굵거나 짧은 목이 고민이신 분들은 저고리 깃을 길게 연출하여 목의 선을 드러내는 것이 좋답니다. 넓은 어깨가 고민이신 분들이라면 색동 저고리도 추천하고 싶은데요. 어깨와 소매의 색을 달리하여 구분을 주는 것이 어깨를 마냥 넓어 보이게 하지 않기 때문이랍니다.</string>
+    <string name="present_hanbok_short_thin_title">키가 작고 마른 체형</string>
+    <string name="present_hanbok_short_thin_content">저고리가 짧을수록 다리가 길어 보이는 것은 당연, 여기에 치마를 풍성하게 연출한다면 너무 말라보이지 않을 거예요. 연하고 밝은 색상은 시선을 집중시키고 부피를 커 보이게 하는 효과가 있어서 왜소한 체구를 보완해줄 수 있어요. 또한, 저고리와 치마의 색을 같은 계열로 입는다면 몸이 더 길어 보일 수 있답니다. 크고 화려한 무늬는 몸을 더 작아 보이게 할 수 있으니 작고 단순한 무늬를 추천해 드릴게요.</string>
+    <string name="present_hanbok_long_thick_title">키가 크고 통통한 체형</string>
+    <string name="present_hanbok_long_thick_content">큰 키가 신경 쓰이신다면 긴 저고리를 통해 키를 조금 작아 보이게 하는 효과를 줄 수 있습니다. 목선을 더욱 가늘고 길어 보이게 하고 싶으시다면, 저고리 깃을 길게 하는 것을 추천해 드릴게요. 진하고 어두운 색 계열은 날씬해 보이는 효과가 있어요. 상체를 더욱 날씬하게 하기 위해서는 저고리를 특히 더 어둡게 하면 도움이 된답니다! 또한, 상하를 다른 색 계열로 스타일링해야 체구를 작아 보이게 할 수 있어요. 전체적으로는 절제된 디자인에 화려한 장신구 하나는 시선을 사로잡는 좋은 포인트가 되어준답니다!</string>
+    <string name="present_hanbok_long_thin_title">키가 크고 마른 체형</string>
+    <string name="present_hanbok_long_thin_content">큰 키가 신경 쓰이신다면 긴 저고리와 앞코가 살짝 보일 정도의 짧은 치마를 통해 키를 조금 작아 보이게 할 수 있습니다. 또한, 풍성한 치마를 통해 볼륨감을 주는 것이 좋습니다. 키가 크고 마르신 분들에게는 밝고 따뜻한 색상이 더 잘 어울려요. 또한, 상하를 다른 계열의 색으로 연출한다면 상체와 하체의 구분이 또렷해져 큰 키를 보완할 수 있습니다. 우아해 보이는 긴 목이지만, 신경이 쓰이신다면 저고리 깃을 짧고 넓게 하는 것이 도움이 됩니다.</string>
+
+    <string name="timeline_item_greeting_name">상견례 하기</string>
+    <string name="timeline_item_greeting_content">상견례는 양가의 부모님들을 모시고 앞으로 한 식구가 될 사람을 소개하는 자리로 최소 2주 전에 시간과 장소를 확정해 양가에 통보하세요~</string>
+    <string name="timeline_item_hall_research_name">웨딩홀 알아보기</string>
+    <string name="timeline_item_hall_research_content">예식일이 결정되면 약 3~6개월 전에 예약하는 것이 좋으며, 웨딩홀 선택 시 양가 하객수와 교통편을 고려하여 예약하세요.</string>
+    <string name="timeline_item_marriage_budget_name">결혼 예산 세우기</string>
+    <string name="timeline_item_marriage_budget_content">저축 해놓은 자금과 은행 융자, 부모님의 지원금을 모두 합산하여 예산을 산출하세요. 혼수 품목은 신혼집의 크기와 형편에 맞게 작성해야 해요!</string>
+    <string name="timeline_item_marriage_house_name">신혼집 알아보기</string>
+    <string name="timeline_item_marriage_house_content">신혼집 마련하실 때는 예산, 여유 자금을 고려하고 위치와 교통 및 크기 등을 비교하여 결정하세요. 일반적으로 직장 위치와 적당한 거리에 있는 것이 좋겠지요. :)</string>
+    <string name="timeline_item_honeymoon_name">여행지 결정하기</string>
+    <string name="timeline_item_honeymoon_content">예식일 3개월 전에 여행지를 예약을 하셔야 원하는 지역의 허니문을 선택하실 수 있어요.</string>
+    <string name="timeline_item_dress_name">드레스 샵 결정하기</string>
+    <string name="timeline_item_dress_content">드레스 샵은 2개월 전 쯤 예약하고 웨딩 촬영일과 본식 일정에 맞춰 원하는 디자인을 고르시게 될거에요. :D</string>
+    <string name="timeline_item_studio_name">스튜디오 결정하기</string>
+    <string name="timeline_item_studio_content">개인의 취향과 컨셉에 맞춰 마음에 드는 스튜디오로 결정해주세요.</string>
+    <string name="timeline_item_makeup_name">메이크업 샵 결정하기</string>
+    <string name="timeline_item_makeup_content">메이크업은 신부의 이미지를 좌우하는 중요한 요소이기 때문에 스튜디오 촬영 및 본식 촬영 시 이용하실 메이크업 샵을 선정하실 때는 특별히 신경을 써야 해요!</string>
+    <string name="timeline_item_skin_care_name">피부 관리</string>
+    <string name="timeline_item_skin_care_content">가장 아름다운 그 날의 모습을 위해 미리미리 준비한다면 마지막에 활짝 웃는 신부가 될 수 있을 거에요. :)</string>
+    <string name="timeline_item_contract_house_name">신혼집 계약하기</string>
+    <string name="timeline_item_contract_house_content">신혼집 결정이 끝나셨다면 믿을 수 있는 부동산을 통해 계약 하세요!</string>
+    <string name="timeline_item_gift_name">예단 상의하기</string>
+    <string name="timeline_item_gift_content">예단은 보통 신랑의 직계 가족과 사촌의 범위까지 포함하며, 사전에 양가 부모님과 상의하셔서 예단 비용을 산출하세요.</string>
+    <string name="timeline_item_hanbok_name">한복</string>
+    <string name="timeline_item_hanbok_content">결혼식 날 폐백 때 입게 되는 한복은 부모님과 상의하신 후 디자인과 한복의 색감 등을 결정하세요.</string>
+    <string name="timeline_item_prepare_passport_name">여권, 비자 확인</string>
+    <string name="timeline_item_prepare_passport_content">신혼 여행에 앞서 사전에 여권과 비자 유무를 체크하세요. 여권 발급은 2~3주 정도의 시간이 소요되므로 여유있게 준비하세요!</string>
+    <string name="timeline_item_photo_name">웨딩 촬영</string>
+    <string name="timeline_item_photo_content">넉넉한 일정을 두고 촬영 하셔야 해요. 앨범이 나오기까지 대략 35일 내외의 시간이 소요되므로 여유있게 준비하세요!</string>
+    <string name="timeline_item_present_name">예물 구입</string>
+    <string name="timeline_item_present_content">평생 동안 간직해야 할 소중한 보석이므로 믿을 수 있는 샵에서 충분한 상담을 거친후 구입하세요.</string>
+    <string name="timeline_item_invitation_name">청첩장 주문</string>
+    <string name="timeline_item_invitation_content">결혼식에 참석할 사람들을 선정해 청첩장을 주문하세요. 완성된 청첩장은 약 보름 정도 전부터 하객분들에게 발송하시면 되요!</string>
+    <string name="timeline_item_furniture_name">가전/가구 구입</string>
+    <string name="timeline_item_furniture_content">작성해놓은 혼수 리스트를 보면서 구입하세요. 한 업체에서 한꺼번에 구입하시면 많은 사은품이나 할인율을 적용받을 수 있어요.</string>
+    <string name="timeline_item_helper_name">주례/사회자/도우미 섭외</string>
+    <string name="timeline_item_helper_content">결혼식의 주례자와 사회자, 분위기를 한껏 빛내 줄 축가단과 축주단, 웨딩카 운전자, 들러리 등 결혼식 전반에 걸쳐 도움을 주는 사람들을 선정하세요.</string>
+    <string name="timeline_item_delivery_name">함 받기</string>
+    <string name="timeline_item_delivery_content">원래 결혼식 전날 신랑이 신부에게 보내는 것이 원칙이지만 요즘에는 양가의 편의에 따라 결혼식 며칠 전에 날을 정해서 보내고 있어요.</string>
+    <string name="timeline_item_purchase_honeymoon_name">여행 용품 구입</string>
+    <string name="timeline_item_purchase_honeymoon_content">여행지의 계절과 환경에 맞는 옷을 준비 하되 옷가지는 간소하게 챙기는 것이 좋으며, 여행 기간에 맞도록 짐을 정리하세요.</string>
+    <string name="timeline_item_contribution_name">폐백/이바지 준비</string>
+    <string name="timeline_item_contribution_content">폐백 음식은 결혼 당일 폐백을 올리면서 시댁에 보내는 음식이고, 이바지 음식은 신혼 여행을 다녀온 후 시댁에 처음 인사를 가면서 챙겨가는 음식이에요.</string>
+    <string name="timeline_item_interior_name">신혼집 꾸미기</string>
+    <string name="timeline_item_interior_content">벽지나 바닥재 교체로 신혼집 분위기를 화사하게 바꿔 보세요. 구입한 혼수 가전과 가구 등을 들여놓고 적절한 자리에 배치하세요.</string>
+    <string name="timeline_item_repair_name">본식 드레스 가봉 및 부케 선정하기</string>
+    <string name="timeline_item_repair_content">최종적으로 드레스를 입어보고 색깔과 디자인에 맞는 부케를 주문해요.</string>
+    <string name="timeline_item_rehearsal_name">최종 확인</string>
+    <string name="timeline_item_rehearsal_content">웨딩홀, 드레스, 사진 촬영, 피로연, 메이크업, 부케, 허니문 여행사 등에 전화를 걸어 일정을 정확히 확인하고 미리 여권과 비자를 확실히 챙겨두세요!</string>
+    <string name="timeline_item_prepare_honeymoon_name">신혼여행 짐 꾸리기</string>
+    <string name="timeline_item_prepare_honeymoon_content">여권, 비자 및 준비한 여행 용품을 목록에 맞게 챙기고, 가급적 필요한 물품 이외의 생필품은 간소하게 정리하세요.</string>
+    <string name="timeline_item_day_name">결혼식 당일</string>
+    <string name="timeline_item_day_content">웨딩홀에 최소 1시간 전에 도착하여 대기실에서 하객분들과 인사를 나누세요.</string>
+
+    <string name="landmark_distance">%1$d km</string>
+    <string name="landmark_distance_desc">이동 거리</string>
+    <string name="landmark_time">%1$d min</string>
+    <string name="landmark_time_desc">이동 시간</string>
+    <string name="landmark_taxi_fare">택시 요금</string>
+    <string name="landmark_toll_fare">톨게이트 요금</string>
+    <string name="landmark_fuel_price">유류 비용</string>
+    <string name="landmark_fare_format">%1$s원</string>
+    <string name="landmark_fare_not_found">요금 정보를 찾지 못했습니다.</string>
+
+    <string name="days_deletion_message">[%1$s] 항목을 삭제하시겠습니까?</string>
+    <string name="days_deletion_succeeded">항목이 삭제되었습니다.</string>
+    <string name="days_deletion_failed">삭제를 실패했습니다.</string>
+
+    <string name="days_add_hint">디데이 내용을 입력하세요.</string>
+    <string name="days_add_count">날짜수</string>
+    <string name="days_add_desc_type_count">1일부터 시작해요.</string>
+    <string name="days_add_desc_type_remain">D-0, D+0 등으로 시작해요.</string>
+    <string name="days_add_calculate_count">%1$d일</string>
+    <string name="days_add_calculate_remain_minus">D%d</string>
+    <string name="days_add_calculate_remain_plus">D+%d</string>
+    <string name="days_add_calculate_remain_day">D-Day</string>
+
+    <string name="notice_empty_message">공지사항이 없어요~</string>
+
+    <string name="setting_category_my">내 정보</string>
+    <string name="setting_category_notification">알림 설정</string>
+    <string name="setting_category_terms">약관 및 정책</string>
+    <string name="setting_notification_notice">공지사항 알림</string>
+    <string name="setting_my_profile_edit">프로필 편집</string>
+    <string name="setting_my_tasks_edit">체크리스트 편집</string>
+    <string name="setting_terms_location_based_service">위치기반 서비스 이용약관</string>
+    <string name="setting_terms_license">오픈소스 라이선스</string>
+
+    <string name="notification_use">알림 사용</string>
+    <string name="notification_notice">공지사항</string>
+
+    <string name="close_app_press_back_button_more">뒤로가기 버튼을 한번 더 누르시면 앱이 종료됩니다.</string>
+
+    <string name="edit_dialog_title_name">이름 변경</string>
+    <string name="edit_dialog_title_name_hint">이름을 입력하세요.</string>
+    <string name="edit_dialog_title_wedding">결혼 예정일 변경</string>
+    <string name="edit_dialog_title_wedding_hint">결혼 예정일을 입력하세요.</string>
+    <string name="edit_dialog_title_budget">예산 변경</string>
+    <string name="edit_dialog_title_budget_hint">예산을 입력하세요.</string>
+</resources>

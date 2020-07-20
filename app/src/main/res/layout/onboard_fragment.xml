@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="androidx.core.content.ContextCompat" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="dev.kxxcn.maru.view.onboard.OnboardViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/onboardBackground">
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/onboard_pager"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/next_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:pagerPosition="@={viewModel.currentItem}" />
+
+        <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+            android:id="@+id/dots_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            app:dotsColor="@color/onboardIndicatorDots"
+            app:dotsCornerRadius="8dp"
+            app:dotsSize="10dp"
+            app:dotsSpacing="5dp"
+            app:dotsWidthFactor="5.0"
+            app:layout_constraintBottom_toBottomOf="@id/next_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/next_text"
+            app:progressMode="true"
+            app:selectedDotColor="@color/onboardIndicatorSelectedDots" />
+
+        <dev.kxxcn.maru.view.custom.MaruTextView
+            android:id="@+id/next_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@{viewModel.isLastPage ? ContextCompat.getDrawable(context, viewModel.completeDrawable) : ContextCompat.getDrawable(context, viewModel.nextDrawable)}"
+            android:gravity="center"
+            android:onClick="@{() -> viewModel.onNext()}"
+            android:paddingStart="50dp"
+            android:paddingTop="35dp"
+            android:paddingEnd="50dp"
+            android:paddingBottom="35dp"
+            android:text="@{viewModel.isLastPage ? context.getString(viewModel.completeLabel) : context.getString(viewModel.nextLabel)}"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:textStyle="bold" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="close"
+            type="kotlin.jvm.functions.Function0" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/back_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:onClick="@{() -> close.invoke()}"
+            android:padding="10dp"
+            android:src="@drawable/ic_arrow_left"
+            android:tint="?maruFontColor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <dev.kxxcn.maru.view.custom.MaruTextView
+            android:id="@+id/setting_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="@string/more_settings"
+            android:textColor="?maruFontColor"
+            android:textSize="@dimen/title_text_size"
+            app:highlight="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/back_icon"
+            app:textStyle="bold" />
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/setting_title">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <dev.kxxcn.maru.view.custom.MaruTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp"
+                    android:text="@string/setting_category_my"
+                    android:textColor="@color/noticeItemTint"
+                    android:textSize="12sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.3dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:background="@color/noticeItemTint" />
+
+                <LinearLayout
+                    android:id="@+id/setting_profile_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <dev.kxxcn.maru.view.custom.MaruTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="9"
+                        android:padding="20dp"
+                        android:text="@string/setting_my_profile_edit"
+                        android:textColor="?maruFontColor" />
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_weight="1"
+                        android:rotation="270"
+                        android:src="@drawable/ic_arrow_down"
+                        android:tint="?maruFontColor"
+                        tools:ignore="ContentDescription" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.3dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:background="@color/noticeItemTint" />
+
+                <LinearLayout
+                    android:id="@+id/setting_tasks_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <dev.kxxcn.maru.view.custom.MaruTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="9"
+                        android:padding="20dp"
+                        android:text="@string/setting_my_tasks_edit"
+                        android:textColor="?maruFontColor" />
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_weight="1"
+                        android:rotation="270"
+                        android:src="@drawable/ic_arrow_down"
+                        android:tint="?maruFontColor"
+                        tools:ignore="ContentDescription" />
+
+                </LinearLayout>
+
+                <dev.kxxcn.maru.view.custom.MaruTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp"
+                    android:text="@string/setting_category_notification"
+                    android:textColor="@color/noticeItemTint"
+                    android:textSize="12sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.3dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:background="@color/noticeItemTint" />
+
+                <LinearLayout
+                    android:id="@+id/setting_notification_notice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <dev.kxxcn.maru.view.custom.MaruTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="9"
+                        android:padding="20dp"
+                        android:text="@string/setting_notification_notice"
+                        android:textColor="?maruFontColor" />
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_weight="1"
+                        android:rotation="270"
+                        android:src="@drawable/ic_arrow_down"
+                        android:tint="?maruFontColor"
+                        tools:ignore="ContentDescription" />
+
+                </LinearLayout>
+
+                <dev.kxxcn.maru.view.custom.MaruTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp"
+                    android:text="@string/setting_category_terms"
+                    android:textColor="@color/noticeItemTint"
+                    android:textSize="12sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.3dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:background="@color/noticeItemTint" />
+
+                <LinearLayout
+                    android:id="@+id/setting_terms_location_based_service"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <dev.kxxcn.maru.view.custom.MaruTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="9"
+                        android:padding="20dp"
+                        android:text="@string/setting_terms_location_based_service"
+                        android:textColor="?maruFontColor" />
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_weight="1"
+                        android:rotation="270"
+                        android:src="@drawable/ic_arrow_down"
+                        android:tint="?maruFontColor"
+                        tools:ignore="ContentDescription" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.3dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:background="@color/noticeItemTint" />
+
+                <LinearLayout
+                    android:id="@+id/setting_terms_license"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <dev.kxxcn.maru.view.custom.MaruTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="9"
+                        android:padding="20dp"
+                        android:text="@string/setting_terms_license"
+                        android:textColor="?maruFontColor" />
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_weight="1"
+                        android:rotation="270"
+                        android:src="@drawable/ic_arrow_down"
+                        android:tint="?maruFontColor"
+                        tools:ignore="ContentDescription" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
