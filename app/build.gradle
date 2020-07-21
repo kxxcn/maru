@@ -15,11 +15,18 @@ android {
         versionName "1.1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
     }
 
     buildTypes {
         debug {
-            minifyEnabled true
+            minifyEnabled false
+            testCoverageEnabled true
             proguardFile getDefaultProguardFile('proguard-android-optimize.txt')
             proguardFile 'proguard-rules.pro'
             proguardFile 'proguard-firebase.pro'
@@ -57,6 +64,10 @@ android {
         tasks.withType(JavaCompile) {
             options.compilerArgs << "-Xmaxerrs" << "500"
         }
+    }
+
+    sourceSets {
+        androidTest.assets.srcDirs += files("$projectDir/schemas".toString())
     }
 }
 
@@ -126,6 +137,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation "androidx.room:room-testing:2.2.5"
 }
 
 apply plugin: 'com.google.gms.google-services'
