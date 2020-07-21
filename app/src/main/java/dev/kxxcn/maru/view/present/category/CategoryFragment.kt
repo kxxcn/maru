@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import dev.kxxcn.maru.EventObserver
+import dev.kxxcn.maru.GlideApp
 import dev.kxxcn.maru.databinding.CategoryFragmentBinding
 import dev.kxxcn.maru.util.LinearSpacingDecoration
 import dev.kxxcn.maru.util.extension.displayWidth
@@ -58,7 +59,11 @@ class CategoryFragment : Fragment() {
         val viewModel = binding.viewModel ?: return
         with(binding.categoryList) {
             addItemDecoration(LinearSpacingDecoration(), 0)
-            adapter = PresentAdapter(viewModel, displayWidth() / 2)
+            adapter = PresentAdapter(
+                viewModel,
+                displayWidth() / 2,
+                GlideApp.with(this@CategoryFragment)
+            )
         }
     }
 

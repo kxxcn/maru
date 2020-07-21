@@ -2,6 +2,7 @@ package dev.kxxcn.maru.view.present.category
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import dev.kxxcn.maru.GlideApp
 import dev.kxxcn.maru.data.Present
@@ -11,7 +12,8 @@ import dev.kxxcn.maru.view.present.PresentViewModel
 
 class CategoryViewHolder(
     private val binding: CategoryItemBinding,
-    private val size: Int
+    private val size: Int,
+    private val requestManager: RequestManager
 ) : LifecycleViewHolder(binding) {
 
     fun bind(viewModel: PresentViewModel, item: Present) {
@@ -30,17 +32,15 @@ class CategoryViewHolder(
     }
 
     fun clear() {
-        GlideApp
-            .with(itemView.context)
-            .clear(binding.categoryImage)
+        requestManager.clear(binding.categoryImage)
     }
 
     companion object {
 
-        fun from(parent: ViewGroup, size: Int): CategoryViewHolder {
+        fun from(parent: ViewGroup, size: Int, requestManager: RequestManager): CategoryViewHolder {
             val inflater = LayoutInflater.from(parent.context)
             val binding = CategoryItemBinding.inflate(inflater, parent, false)
-            return CategoryViewHolder(binding, size)
+            return CategoryViewHolder(binding, size, requestManager)
         }
     }
 }

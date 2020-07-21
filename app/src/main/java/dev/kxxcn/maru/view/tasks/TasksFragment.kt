@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import dagger.android.support.DaggerFragment
 import dev.kxxcn.maru.EventObserver
+import dev.kxxcn.maru.GlideApp
 import dev.kxxcn.maru.MaruActivity
 import dev.kxxcn.maru.databinding.TasksFragmentBinding
 import dev.kxxcn.maru.util.LinearSpacingDecoration
@@ -72,7 +73,7 @@ class TasksFragment : DaggerFragment() {
                 }
             })
             addItemDecoration(LinearSpacingDecoration(size = 20.px), 0)
-            adapter = TasksAdapter(viewModel)
+            adapter = TasksAdapter(viewModel, GlideApp.with(this@TasksFragment))
         }
     }
 

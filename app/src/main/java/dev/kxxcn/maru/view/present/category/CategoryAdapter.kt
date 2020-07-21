@@ -3,16 +3,18 @@ package dev.kxxcn.maru.view.present.category
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
+import com.bumptech.glide.RequestManager
 import dev.kxxcn.maru.data.Present
 import dev.kxxcn.maru.view.present.PresentViewModel
 
 class PresentAdapter(
     private val viewModel: PresentViewModel,
-    private val size: Int
+    private val size: Int,
+    private val requestManager: RequestManager
 ) : ListAdapter<Present, CategoryViewHolder>(PresentDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
-        return CategoryViewHolder.from(parent, size)
+        return CategoryViewHolder.from(parent, size, requestManager)
     }
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {

@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.RequestManager
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.VideoOptions
 import com.google.android.gms.ads.formats.NativeAdOptions
@@ -17,9 +18,11 @@ import com.google.android.gms.ads.formats.UnifiedNativeAd
 import com.google.android.gms.ads.formats.UnifiedNativeAdView
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.util.AdHelper
-import dev.kxxcn.maru.util.extension.loadCircleCrop
 
-class TasksNativeAdHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class TasksNativeAdHolder(
+    itemView: View,
+    private val requestManager: RequestManager
+) : RecyclerView.ViewHolder(itemView) {
 
     private var currentNativeAd: UnifiedNativeAd? = null
 
@@ -85,7 +88,7 @@ class TasksNativeAdHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             } else {
                 nativeAd.icon.drawable
             }.also {
-                (iconView as? ImageView)?.loadCircleCrop(it)
+                requestManager.load(it).circleCrop().into(iconView as ImageView)
             }
 
             setNativeAd(nativeAd)
@@ -99,10 +102,10 @@ class TasksNativeAdHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     companion object {
 
-        fun from(parent: ViewGroup): TasksNativeAdHolder {
+        fun from(parent: ViewGroup, requestManager: RequestManager): TasksNativeAdHolder {
             val inflater = LayoutInflater.from(parent.context)
             val view = inflater.inflate(R.layout.tasks_ad_item, parent, false)
-            return TasksNativeAdHolder(view)
+            return TasksNativeAdHolder(view, requestManager)
         }
     }
 }

@@ -4,6 +4,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.RequestManager
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.data.TaskDetail
 import dev.kxxcn.maru.util.AD_INTERVAL
@@ -11,7 +12,8 @@ import dev.kxxcn.maru.view.base.LifecycleViewHolder
 import dev.kxxcn.maru.view.tasks.holder.*
 
 class TasksAdapter(
-    private val viewModel: TasksViewModel
+    private val viewModel: TasksViewModel,
+    private val requestManager: RequestManager
 ) : ListAdapter<TasksAdapter.TasksItem, RecyclerView.ViewHolder>(TasksDiffCallback()) {
 
     private val releasable = mutableListOf<() -> Unit>()
@@ -21,7 +23,7 @@ class TasksAdapter(
             TYPE_PREPARE -> TasksPrepareHolder.from(parent)
             TYPE_COMPLETED -> TasksCompletedHolder.from(parent)
             TYPE_ACTIVE -> TasksActiveHolder.from(parent)
-            TYPE_AD -> TasksNativeAdHolder.from(parent)
+            TYPE_AD -> TasksNativeAdHolder.from(parent, requestManager)
             else -> TasksEmptyHolder.from(parent)
         }
     }

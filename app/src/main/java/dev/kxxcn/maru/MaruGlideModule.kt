@@ -9,6 +9,7 @@ import com.bumptech.glide.request.RequestOptions
 
 @GlideModule
 class MaruGlideModule : AppGlideModule() {
+
     override fun applyOptions(context: Context, builder: GlideBuilder) {
         builder.setDefaultRequestOptions(
             RequestOptions().format(DecodeFormat.PREFER_RGB_565)

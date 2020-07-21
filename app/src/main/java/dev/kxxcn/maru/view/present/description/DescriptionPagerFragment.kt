@@ -30,7 +30,7 @@ class DescriptionPagerFragment : Fragment() {
     }
 
     override fun onStop() {
-        context?.let { GlideApp.with(this).clear(desc_pager_image) }
+        GlideApp.with(this).clear(desc_pager_image)
         super.onStop()
     }
 
