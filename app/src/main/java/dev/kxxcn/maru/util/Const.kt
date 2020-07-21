@@ -1,6 +1,5 @@
 package dev.kxxcn.maru.util
 
-
 const val NAV_HOME = 0
 const val NAV_TASKS = 1
 const val NAV_SETTINGS = 2
@@ -53,3 +52,5 @@ const val AD_INTERVAL = 7
 const val ANIMATION_ONBOARD_TASKS = "animation_onboard_tasks.json"
 const val ANIMATION_ONBOARD_ACCOUNT = "animation_onboard_account.json"
 const val ANIMATION_ONBOARD_WELCOME = "animation_onboard_welcome.json"
+
+const val ROOM_VERSION = 1

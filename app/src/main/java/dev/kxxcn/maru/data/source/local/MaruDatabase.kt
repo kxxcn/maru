@@ -5,6 +5,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import dev.kxxcn.maru.data.*
 import dev.kxxcn.maru.data.source.local.dao.*
+import dev.kxxcn.maru.util.ROOM_VERSION
 import dev.kxxcn.maru.view.days.DaysTypeConverter
 
 @Database(
@@ -15,8 +16,7 @@ import dev.kxxcn.maru.view.days.DaysTypeConverter
         Direction::class,
         Day::class
     ],
-    version = 1,
-    exportSchema = false
+    version = ROOM_VERSION
 )
 @TypeConverters(DaysTypeConverter::class)
 abstract class MaruDatabase : RoomDatabase() {
