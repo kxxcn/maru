@@ -78,7 +78,7 @@ object ApplicationModule {
             application.applicationContext,
             MaruDatabase::class.java,
             "Maru.db"
-        ).build()
+        ).fallbackToDestructiveMigrationOnDowngrade().build()
     }
 
     @Singleton
