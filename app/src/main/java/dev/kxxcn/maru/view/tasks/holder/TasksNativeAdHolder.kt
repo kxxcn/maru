@@ -75,14 +75,19 @@ class TasksNativeAdHolder(
             callToActionView = findViewById(R.id.ad_call_to_action)
 
             mediaView.setImageScaleType(ImageView.ScaleType.CENTER_CROP)
-            advertiserView.isVisible = nativeAd.advertiser.isNotEmpty()
-            headlineView.isVisible = nativeAd.headline.isNotEmpty()
-            bodyView.isVisible = nativeAd.body.isNotEmpty()
-            callToActionView.isVisible = nativeAd.callToAction.isNotEmpty()
+            advertiserView.visibility = if (nativeAd.advertiser.isNullOrEmpty()) {
+                View.INVISIBLE
+            } else {
+                View.VISIBLE
+            }
+            headlineView.isVisible = !nativeAd.headline.isNullOrEmpty()
+            bodyView.isVisible = !nativeAd.body.isNullOrEmpty()
+            callToActionView.isVisible = !nativeAd.callToAction.isNullOrEmpty()
             (advertiserView as? TextView)?.text = nativeAd.advertiser
             (headlineView as? TextView)?.text = nativeAd.headline
             (bodyView as? TextView)?.text = nativeAd.body
-            (callToActionView as? TextView)?.text = nativeAd.callToAction
+            (callToActionView as? TextView)?.text =
+                nativeAd.callToAction ?: context.getString(R.string.menu_more)
             if (nativeAd.icon == null) {
                 ContextCompat.getDrawable(context, R.drawable.ic_contents_ad)
             } else {
