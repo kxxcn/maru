@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +17,8 @@ import com.google.android.gms.ads.formats.UnifiedNativeAd
 import com.google.android.gms.ads.formats.UnifiedNativeAdView
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.util.AdHelper
+import dev.kxxcn.maru.util.extension.asImageView
+import dev.kxxcn.maru.util.extension.asTextView
 
 class TasksNativeAdHolder(
     itemView: View,
@@ -75,26 +76,29 @@ class TasksNativeAdHolder(
             callToActionView = findViewById(R.id.ad_call_to_action)
 
             mediaView.setImageScaleType(ImageView.ScaleType.CENTER_CROP)
-            advertiserView.visibility = if (nativeAd.advertiser.isNullOrEmpty()) {
-                View.INVISIBLE
-            } else {
-                View.VISIBLE
-            }
-            headlineView.isVisible = !nativeAd.headline.isNullOrEmpty()
-            bodyView.isVisible = !nativeAd.body.isNullOrEmpty()
-            callToActionView.isVisible = !nativeAd.callToAction.isNullOrEmpty()
-            (advertiserView as? TextView)?.text = nativeAd.advertiser
-            (headlineView as? TextView)?.text = nativeAd.headline
-            (bodyView as? TextView)?.text = nativeAd.body
-            (callToActionView as? TextView)?.text =
+            advertiserView.visibility = nativeAd.advertiser
+                ?.let { advertiserView.asTextView().text = it }
+                ?.run { View.VISIBLE }
+                ?: View.INVISIBLE
+            headlineView.isVisible = nativeAd.headline
+                ?.let { headlineView.asTextView().text = it }
+                ?.run { true }
+                ?: false
+            bodyView.isVisible = nativeAd.body
+                ?.let { bodyView.asTextView().text = it }
+                ?.run { true }
+                ?: false
+
+            callToActionView.asTextView().text =
                 nativeAd.callToAction ?: context.getString(R.string.menu_more)
-            if (nativeAd.icon == null) {
-                ContextCompat.getDrawable(context, R.drawable.ic_contents_ad)
-            } else {
-                nativeAd.icon.drawable
-            }.also {
-                requestManager.load(it).circleCrop().into(iconView as ImageView)
-            }
+
+            val icon = nativeAd.icon
+                ?.drawable
+                ?: ContextCompat.getDrawable(context, R.drawable.ic_contents_ad)
+            requestManager
+                .load(icon)
+                .circleCrop()
+                .into(iconView.asImageView())
 
             setNativeAd(nativeAd)
         }

@@ -159,3 +159,7 @@ fun View.requestNewSize(width: Int? = null, height: Int? = null) {
     height?.let { layoutParams.height = it }
     layoutParams = layoutParams
 }
+
+fun View.asTextView() = this as TextView
+
+fun View.asImageView() = this as ImageView

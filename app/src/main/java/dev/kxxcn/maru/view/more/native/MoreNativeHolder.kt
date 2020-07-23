@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
-import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
@@ -16,6 +16,7 @@ import com.google.android.gms.ads.formats.UnifiedNativeAd
 import com.google.android.gms.ads.formats.UnifiedNativeAdView
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.util.AdHelper
+import dev.kxxcn.maru.util.extension.asTextView
 
 class MoreNativeHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -70,18 +71,13 @@ class MoreNativeHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             callToActionView = findViewById(R.id.ad_call_to_action)
 
             mediaView.setImageScaleType(ImageView.ScaleType.CENTER_CROP)
-            bodyView.visibility = if (nativeAd.body.isEmpty()) {
-                View.GONE
-            } else {
-                (bodyView as? TextView)?.text = nativeAd.body
-                View.VISIBLE
-            }
-            callToActionView.visibility = if (nativeAd.callToAction.isEmpty()) {
-                View.GONE
-            } else {
-                (callToActionView as? TextView)?.text = nativeAd.callToAction
-                View.VISIBLE
-            }
+
+            bodyView.isVisible = nativeAd.body
+                ?.let { bodyView.asTextView().text = it }
+                ?.run { true }
+                ?: false
+            callToActionView.asTextView().text =
+                nativeAd.callToAction ?: context.getString(R.string.menu_more)
 
             setNativeAd(nativeAd)
         }
