@@ -12,7 +12,7 @@ object Versions {
     const val fragmentVersion = "1.2.0-rc02"
     const val recyclerViewVersion = "1.1.0"
     const val glideVersion = "4.11.0"
-    const val daggerVersion = "2.28"
+    const val daggerVersion = "2.28.3"
     const val daggerAssistedVersion = "0.5.2"
     const val ankoVersion = "0.10.8"
     const val indicatorVersion = "4.1.2"
