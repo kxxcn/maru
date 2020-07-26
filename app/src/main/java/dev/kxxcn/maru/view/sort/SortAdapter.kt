@@ -4,12 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import dev.kxxcn.maru.data.Task
 import dev.kxxcn.maru.databinding.SortItemBinding
 import dev.kxxcn.maru.util.ItemTouchHelperCallback
 import dev.kxxcn.maru.util.OnStartDragListener
+import dev.kxxcn.maru.view.base.LifecycleAdapter
 import dev.kxxcn.maru.view.base.LifecycleViewHolder
 import org.jetbrains.anko.sdk27.coroutines.onLongClick
 import java.lang.ref.WeakReference
@@ -17,11 +17,9 @@ import java.util.*
 
 class SortAdapter(
     private val viewModel: SortViewModel
-) : ListAdapter<Task?, SortAdapter.SortViewHolder>(SortDiffCallback()),
+) : LifecycleAdapter<Task?, SortAdapter.SortViewHolder>(SortDiffCallback()),
     ItemTouchHelperCallback.ItemTouchHelperAdapter,
     OnStartDragListener {
-
-    private val releasable = mutableListOf<() -> Unit>()
 
     private lateinit var refRecyclerView: WeakReference<RecyclerView>
 
@@ -43,21 +41,6 @@ class SortAdapter(
     override fun onBindViewHolder(h: SortViewHolder, position: Int) {
         val item = getItem(position) ?: return
         releasable.add(h.bind(viewModel, item))
-    }
-
-    override fun onViewAttachedToWindow(holder: SortViewHolder) {
-        super.onViewAttachedToWindow(holder)
-        holder.onAttach()
-    }
-
-    override fun onViewDetachedFromWindow(holder: SortViewHolder) {
-        holder.onDetach()
-        super.onViewDetachedFromWindow(holder)
-    }
-
-    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
-        release()
-        super.onDetachedFromRecyclerView(recyclerView)
     }
 
     override fun onItemMove(fromPosition: Int, toPosition: Int) {
@@ -84,11 +67,6 @@ class SortAdapter(
 
     override fun onStartDrag(viewHolder: RecyclerView.ViewHolder) {
         touchHelper.startDrag(viewHolder)
-    }
-
-    private fun release() {
-        releasable.forEach { release -> release() }
-        releasable.clear()
     }
 
     class SortViewHolder(

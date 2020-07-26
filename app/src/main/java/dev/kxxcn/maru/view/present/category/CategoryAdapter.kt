@@ -2,16 +2,16 @@ package dev.kxxcn.maru.view.present.category
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import com.bumptech.glide.RequestManager
 import dev.kxxcn.maru.data.Present
+import dev.kxxcn.maru.view.base.LifecycleAdapter
 import dev.kxxcn.maru.view.present.PresentViewModel
 
 class PresentAdapter(
     private val viewModel: PresentViewModel,
     private val size: Int,
     private val requestManager: RequestManager
-) : ListAdapter<Present, CategoryViewHolder>(PresentDiffCallback()) {
+) : LifecycleAdapter<Present, CategoryViewHolder>(PresentDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
         return CategoryViewHolder.from(parent, size, requestManager)
@@ -24,16 +24,6 @@ class PresentAdapter(
     override fun onViewRecycled(holder: CategoryViewHolder) {
         super.onViewRecycled(holder)
         holder.clear()
-    }
-
-    override fun onViewAttachedToWindow(holder: CategoryViewHolder) {
-        super.onViewAttachedToWindow(holder)
-        holder.onAttach()
-    }
-
-    override fun onViewDetachedFromWindow(holder: CategoryViewHolder) {
-        holder.onDetach()
-        super.onViewDetachedFromWindow(holder)
     }
 }
 

@@ -2,21 +2,18 @@ package dev.kxxcn.maru.view.tasks
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.data.TaskDetail
 import dev.kxxcn.maru.util.AD_INTERVAL
-import dev.kxxcn.maru.view.base.LifecycleViewHolder
+import dev.kxxcn.maru.view.base.LifecycleAdapter
 import dev.kxxcn.maru.view.tasks.holder.*
 
 class TasksAdapter(
     private val viewModel: TasksViewModel,
     private val requestManager: RequestManager
-) : ListAdapter<TasksAdapter.TasksItem, RecyclerView.ViewHolder>(TasksDiffCallback()) {
-
-    private val releasable = mutableListOf<() -> Unit>()
+) : LifecycleAdapter<TasksAdapter.TasksItem, RecyclerView.ViewHolder>(TasksDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -63,26 +60,6 @@ class TasksAdapter(
 
     override fun getItemViewType(position: Int): Int {
         return getItem(position).viewType
-    }
-
-    override fun onViewAttachedToWindow(holder: RecyclerView.ViewHolder) {
-        super.onViewAttachedToWindow(holder)
-        (holder as? LifecycleViewHolder)?.onAttach()
-    }
-
-    override fun onViewDetachedFromWindow(holder: RecyclerView.ViewHolder) {
-        (holder as? LifecycleViewHolder)?.onDetach()
-        super.onViewDetachedFromWindow(holder)
-    }
-
-    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
-        release()
-        super.onDetachedFromRecyclerView(recyclerView)
-    }
-
-    private fun release() {
-        releasable.forEach { release -> release() }
-        releasable.clear()
     }
 
     companion object {
