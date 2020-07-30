@@ -97,7 +97,7 @@ class FirebaseDataSource(
     override suspend fun getNotices(): Result<QuerySnapshot?> = withContext(ioDispatcher) {
         return@withContext try {
             val data = firestore
-                .collection(COLLECTION_NOTICES)
+                .collection(COLLECTION_NOTICE)
                 .orderBy(FILED_CREATED_AT, DESCENDING)
                 .get()
                 .await()
@@ -127,9 +127,8 @@ class FirebaseDataSource(
                     FILED_SIGNATURE to purchase.signature,
                     FILED_SKU to purchase.sku
                 )
-
                 val data = firestore
-                    .collection(COLLECTION_PURCHASES)
+                    .collection(COLLECTION_PURCHASE)
                     .add(history)
                     .await()
                 Success(data)
@@ -142,7 +141,7 @@ class FirebaseDataSource(
         return@withContext try {
             if (email == null) throw NullPointerException("Invalid email address.")
             val data = firestore
-                .collection(COLLECTION_PURCHASES)
+                .collection(COLLECTION_PURCHASE)
                 .whereEqualTo(FILED_EMAIL, email)
                 .get()
                 .await()
@@ -159,13 +158,12 @@ class FirebaseDataSource(
                     FILED_DATA to encoded,
                     FILED_TIME to System.currentTimeMillis()
                 )
-
-                val data = firestore
+                firestore
                     .collection(COLLECTION_BACKUP)
                     .document(email)
                     .set(backup)
                     .await()
-                Success(data)
+                Success(Unit)
             } catch (e: Exception) {
                 Error(e)
             }
@@ -174,12 +172,12 @@ class FirebaseDataSource(
     override suspend fun findRestore(email: String): Result<Restore?> =
         withContext(ioDispatcher) {
             return@withContext try {
-                val snapshot = firestore
+                val data = firestore
                     .collection(COLLECTION_BACKUP)
                     .document(email)
                     .get()
                     .await()
-                val data = snapshot.toObject<Restore>()
+                    .run { toObject<Restore>() }
                 Success(data)
             } catch (e: Exception) {
                 Error(e)

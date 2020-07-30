@@ -18,4 +18,4 @@ sealed class Result<out R> {
 }
 
 val Result<*>.succeeded
-    get() = this is Success
+    get() = this is Success && this.data != null

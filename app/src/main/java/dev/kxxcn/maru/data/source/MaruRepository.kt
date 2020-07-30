@@ -77,7 +77,7 @@ class MaruRepository @Inject constructor(
             .takeIf { it.succeeded }
             ?: remoteDataSource.getDirection(start, goal, option)
                 .also {
-                    if (it is Success && it.data != null && it.data.code == 0) {
+                    if (it is Success && it.data?.code == 0) {
                         saveDirection(it.data, goal)
                     }
                 }

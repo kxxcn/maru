@@ -236,7 +236,7 @@ class LocalDataSource(
             taskDao.insertTaskAll(tasks)
             accountDao.insertAccountAll(accounts)
             dayDao.insertDayAll(days)
-            Success(null)
+            Success(Unit)
         } catch (e: Exception) {
             Error(e)
         }

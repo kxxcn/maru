@@ -45,8 +45,8 @@ const val PAGER_DESCRIPTION = 1
 const val REQUEST_CODE_PERMISSION = 1000
 const val REQUEST_CODE_NOTIFY = 1001
 
-const val COLLECTION_NOTICES = "notices"
-const val COLLECTION_PURCHASES = "purchases"
+const val COLLECTION_NOTICE = "notice"
+const val COLLECTION_PURCHASE = "purchase"
 const val COLLECTION_BACKUP = "backup"
 const val FILED_CREATED_AT = "createdAt"
 const val FILED_EMAIL = "email"
