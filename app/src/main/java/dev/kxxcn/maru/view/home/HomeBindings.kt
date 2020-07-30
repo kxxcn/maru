@@ -103,7 +103,7 @@ fun setDaysItem(view: LinearLayout, days: List<Day>?) {
                 gravity = Gravity.CENTER
             }.also { parent ->
                 parent.addView(LottieAnimationView(view.context).apply {
-                    setAnimation("empty_animation_2.json")
+                    setAnimation("animation_empty_2.json")
                     repeatCount = LottieDrawable.INFINITE
                     playAnimation()
                 })

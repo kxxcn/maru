@@ -23,7 +23,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:lottie_autoPlay="true"
-            app:lottie_fileName="empty_animation_1.json"
+            app:lottie_fileName="animation_empty_1.json"
             app:lottie_loop="true" />
 
         <dev.kxxcn.maru.view.custom.MaruTextView
