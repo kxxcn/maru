@@ -1,13 +1,12 @@
 package dev.kxxcn.maru
 
 import androidx.room.Room
-import androidx.room.migration.Migration
 import androidx.room.testing.MigrationTestHelper
-import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import dev.kxxcn.maru.data.source.local.MaruDatabase
+import dev.kxxcn.maru.di.ApplicationModule
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -34,24 +33,14 @@ class RoomMigrationTest {
             InstrumentationRegistry.getInstrumentation().targetContext,
             MaruDatabase::class.java,
             DATABASE_NAME
-        ).addMigrations(*ALL_MIGRATIONS)
-            .build()
-            .apply {
-                openHelper.writableDatabase
-                close()
-            }
+        ).addMigrations(*ApplicationModule.ALL_MIGRATIONS).build().apply {
+            openHelper.writableDatabase
+            close()
+        }
     }
 
     companion object {
 
         private const val DATABASE_NAME = "Maru"
-
-        private val ALL_MIGRATIONS = arrayOf(
-            object : Migration(1, 2) {
-                override fun migrate(database: SupportSQLiteDatabase) {
-                    database.execSQL("")
-                }
-            }
-        )
     }
 }
