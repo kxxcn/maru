@@ -118,7 +118,8 @@ class MaruActivity : AppCompatActivity() {
                 getString(R.string.nav_label_notification),
                 getString(R.string.nav_label_edit),
                 getString(R.string.nav_label_edit_dialog),
-                getString(R.string.nav_label_terms) -> false
+                getString(R.string.nav_label_terms),
+                getString(R.string.nav_label_backup) -> false
                 else -> true
             }.also {
                 navigator_layout.isVisible = it

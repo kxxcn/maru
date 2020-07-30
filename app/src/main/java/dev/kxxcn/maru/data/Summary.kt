@@ -118,10 +118,10 @@ class Summary {
 
     override fun equals(other: Any?): Boolean {
         if (other !is Summary) return false
-        return tasks == other.tasks
+        return tasks == other.tasks && days == other.days
     }
 
     override fun hashCode(): Int {
-        return tasks.hashCode()
+        return tasks.hashCode() + days.hashCode()
     }
 }

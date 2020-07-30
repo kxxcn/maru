@@ -1,6 +1,7 @@
 package dev.kxxcn.maru.data.source.local
 
 import androidx.lifecycle.LiveData
+import com.android.billingclient.api.Purchase
 import com.google.firebase.firestore.QuerySnapshot
 import dev.kxxcn.maru.data.*
 import dev.kxxcn.maru.data.Result.Error
@@ -14,7 +15,6 @@ import dev.kxxcn.maru.util.extension.coordinates
 import dev.kxxcn.maru.util.extension.fromJson
 import dev.kxxcn.maru.util.extension.toJson
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class LocalDataSource(
@@ -24,7 +24,7 @@ class LocalDataSource(
     private val mappingDao: MappingDao,
     private val directionDao: DirectionDao,
     private val dayDao: DayDao,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+    private val ioDispatcher: CoroutineDispatcher
 ) : DataSource {
 
     override suspend fun getUsers(): Result<List<User>> = withContext(ioDispatcher) {
@@ -92,6 +92,14 @@ class LocalDataSource(
             val isCompleted = if (account.remain == 0L) COMPLETED_TASK else UNCOMPLETED_TASK
             updateTask(account.taskId, isCompleted)
             Success(accountDao.insertAccount(account))
+        } catch (e: Exception) {
+            Error(e)
+        }
+    }
+
+    override suspend fun getSummary() = withContext(ioDispatcher) {
+        return@withContext try {
+            Success(mappingDao.getSummaries())
         } catch (e: Exception) {
             Error(e)
         }
@@ -183,6 +191,52 @@ class LocalDataSource(
                 .first()
                 .apply { this.budget = budget }
                 .run { Success(userDao.updateUser(this)) }
+        } catch (e: Exception) {
+            Error(e)
+        }
+    }
+
+    override suspend fun savePremium(email: String?, purchase: Purchase?): Result<Any?> =
+        withContext(ioDispatcher) {
+            return@withContext try {
+                userDao.getUsers()
+                    .first()
+                    .apply { this.premium = true }
+                    .run { Success(userDao.updateUser(this)) }
+            } catch (e: Exception) {
+                Error(e)
+            }
+        }
+
+    override suspend fun isPremium(email: String?): Result<Boolean> = withContext(ioDispatcher) {
+        return@withContext try {
+            Success(userDao.getUsers().first().premium)
+        } catch (e: Exception) {
+            Error(e)
+        }
+    }
+
+    override suspend fun backup(email: String, encoded: String): Result<Any?> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun findRestore(email: String): Result<Restore?> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun restore(summary: Summary): Result<Any?> = withContext(ioDispatcher) {
+        return@withContext try {
+            userDao.deleteUser(userDao.getUsers().first())
+            val user = summary.user ?: throw NullPointerException()
+            val tasks = summary.tasks.mapNotNull { it.task }
+            val accounts = summary.tasks.mapNotNull { it.account }
+            val days = summary.days
+
+            userDao.insertUser(user)
+            taskDao.insertTaskAll(tasks)
+            accountDao.insertAccountAll(accounts)
+            dayDao.insertDayAll(days)
+            Success(null)
         } catch (e: Exception) {
             Error(e)
         }

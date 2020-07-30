@@ -1,14 +1,17 @@
 package dev.kxxcn.maru.data.source.firebase
 
 import androidx.lifecycle.LiveData
+import com.android.billingclient.api.Purchase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query.Direction.DESCENDING
 import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.ktx.toObject
 import dev.kxxcn.maru.data.*
+import dev.kxxcn.maru.data.Result.Error
+import dev.kxxcn.maru.data.Result.Success
 import dev.kxxcn.maru.data.source.DataSource
 import dev.kxxcn.maru.data.source.api.dto.DirectionDto
-import dev.kxxcn.maru.util.COLLECTION_NOTICES
-import dev.kxxcn.maru.util.FILED_CREATED_AT
+import dev.kxxcn.maru.util.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
@@ -63,6 +66,10 @@ class FirebaseDataSource(
         TODO("Not yet implemented")
     }
 
+    override suspend fun getSummary(): Result<List<Summary>> {
+        TODO("Not yet implemented")
+    }
+
     override fun observeSummary(): LiveData<List<Summary>> {
         TODO("Not yet implemented")
     }
@@ -94,9 +101,9 @@ class FirebaseDataSource(
                 .orderBy(FILED_CREATED_AT, DESCENDING)
                 .get()
                 .await()
-            Result.Success(data)
+            Success(data)
         } catch (e: Exception) {
-            Result.Error(e)
+            Error(e)
         }
     }
 
@@ -105,6 +112,81 @@ class FirebaseDataSource(
     }
 
     override suspend fun editBudget(budget: Long): Result<Any?> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun savePremium(email: String?, purchase: Purchase?): Result<Any?> =
+        withContext(ioDispatcher) {
+            return@withContext try {
+                if (purchase == null) throw NullPointerException("Invalid input object.")
+                val history = hashMapOf(
+                    FILED_EMAIL to email,
+                    FILED_ORDER_ID to purchase.orderId,
+                    FILED_ORDER_TIME to purchase.purchaseTime,
+                    FILED_ORDER_TOKEN to purchase.purchaseToken,
+                    FILED_SIGNATURE to purchase.signature,
+                    FILED_SKU to purchase.sku
+                )
+
+                val data = firestore
+                    .collection(COLLECTION_PURCHASES)
+                    .add(history)
+                    .await()
+                Success(data)
+            } catch (e: Exception) {
+                Error(e)
+            }
+        }
+
+    override suspend fun isPremium(email: String?): Result<Boolean> = withContext(ioDispatcher) {
+        return@withContext try {
+            if (email == null) throw NullPointerException("Invalid email address.")
+            val data = firestore
+                .collection(COLLECTION_PURCHASES)
+                .whereEqualTo(FILED_EMAIL, email)
+                .get()
+                .await()
+            Success(!data.isEmpty)
+        } catch (e: Exception) {
+            Error(e)
+        }
+    }
+
+    override suspend fun backup(email: String, encoded: String): Result<Any?> =
+        withContext(ioDispatcher) {
+            return@withContext try {
+                val backup = hashMapOf(
+                    FILED_DATA to encoded,
+                    FILED_TIME to System.currentTimeMillis()
+                )
+
+                val data = firestore
+                    .collection(COLLECTION_BACKUP)
+                    .document(email)
+                    .set(backup)
+                    .await()
+                Success(data)
+            } catch (e: Exception) {
+                Error(e)
+            }
+        }
+
+    override suspend fun findRestore(email: String): Result<Restore?> =
+        withContext(ioDispatcher) {
+            return@withContext try {
+                val snapshot = firestore
+                    .collection(COLLECTION_BACKUP)
+                    .document(email)
+                    .get()
+                    .await()
+                val data = snapshot.toObject<Restore>()
+                Success(data)
+            } catch (e: Exception) {
+                Error(e)
+            }
+        }
+
+    override suspend fun restore(summary: Summary): Result<Any?> {
         TODO("Not yet implemented")
     }
 }

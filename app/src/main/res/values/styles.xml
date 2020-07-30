@@ -8,6 +8,7 @@
         <item name="maruBackgroundColor">@color/maruBackGround</item>
         <item name="maruSecondaryBackgroundColor">@color/maruBackGround</item>
         <item name="maruFontColor">@color/maruFontColor</item>
+        <item name="maruFontColorLight">@color/maruFontColorLight</item>
         <item name="maruSecondaryFontColor">@color/maruBackGround</item>
         <item name="statusBarColor">@color/colorPrimary</item>
         <item name="splashBackgroundDrawable">@drawable/splash_background_rect</item>
@@ -36,6 +37,7 @@
         <item name="maruBackgroundColor">@color/maruBackGroundNight</item>
         <item name="maruSecondaryBackgroundColor">@color/colorAccentNight</item>
         <item name="maruFontColor">@color/maruFontColorNight</item>
+        <item name="maruFontColorLight">@color/maruFontColorLightNight</item>
         <item name="maruSecondaryFontColor">@color/colorPrimaryDarkNight</item>
         <item name="statusBarColor">@color/colorPrimaryDarkNight</item>
         <item name="splashBackgroundDrawable">@drawable/splash_background_rect_night</item>

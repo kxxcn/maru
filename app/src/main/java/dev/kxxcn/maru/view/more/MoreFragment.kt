@@ -12,17 +12,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.orhanobut.logger.Logger
+import dagger.android.support.DaggerFragment
 import dev.kxxcn.maru.BuildConfig
 import dev.kxxcn.maru.EventObserver
 import dev.kxxcn.maru.MaruActivity
@@ -36,29 +36,28 @@ import dev.kxxcn.maru.util.extension.displayWidth
 import dev.kxxcn.maru.util.extension.openDialog
 import dev.kxxcn.maru.util.extension.setupSnackbar
 import dev.kxxcn.maru.util.preference.PreferenceUtils
+import dev.kxxcn.maru.view.more.contents.ContentsItem
 import org.jetbrains.anko.contentView
 import java.io.File
 import java.io.FileOutputStream
+import javax.inject.Inject
 
-class MoreFragment : Fragment() {
+class MoreFragment : DaggerFragment() {
 
-    private val viewModel by viewModels<MoreViewModel>()
+    @Inject
+    lateinit var auth: FirebaseAuth
 
-    private lateinit var auth: FirebaseAuth
+    @Inject
+    lateinit var client: GoogleSignInClient
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val viewModel by viewModels<MoreViewModel> { viewModelFactory }
 
     private lateinit var binding: MoreFragmentBinding
 
     private var alertDialog: AlertDialog? = null
-
-    private val client: GoogleSignInClient? by lazy {
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.maru_web_client_id))
-            .requestEmail()
-            .build()
-        context.takeIf { it != null }?.let {
-            GoogleSignIn.getClient(it, gso)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -78,7 +77,6 @@ class MoreFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupLifecycle()
-        setupArguments()
         setupListAdapter()
         setupSnackbar()
         setupListener()
@@ -133,10 +131,6 @@ class MoreFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
     }
 
-    private fun setupArguments() {
-        auth = FirebaseAuth.getInstance()
-    }
-
     private fun setupListAdapter() {
         val viewModel = binding.viewModel ?: return
         with(binding.moreList) {
@@ -174,14 +168,14 @@ class MoreFragment : Fragment() {
         })
         viewModel.adEvent.observe(viewLifecycleOwner, EventObserver {
             if (isSignedIn()) {
-                openPayment()
+                viewModel.isPremium(auth.currentUser?.email, ContentsItem.AD)
             } else {
                 signInDialog()
             }
         })
         viewModel.backupEvent.observe(viewLifecycleOwner, EventObserver {
             if (isSignedIn()) {
-                openPayment()
+                viewModel.isPremium(auth.currentUser?.email, ContentsItem.BACKUP)
             } else {
                 signInDialog()
             }
@@ -208,6 +202,12 @@ class MoreFragment : Fragment() {
             MoreFragmentDirections.actionMoreFragmentToLandmarkFragment().also {
                 findNavController().navigate(it)
             }
+        })
+        viewModel.purchaseEvent.observe(viewLifecycleOwner, EventObserver {
+            openPurchaseScreen()
+        })
+        viewModel.premiumEvent.observe(viewLifecycleOwner, EventObserver {
+            openBackupScreen()
         })
     }
 
@@ -241,8 +241,7 @@ class MoreFragment : Fragment() {
     }
 
     private fun signIn() {
-        val intent = client?.signInIntent ?: return
-        startActivityForResult(intent, RESULT_GOOGLE_SIGN_IN)
+        startActivityForResult(client.signInIntent, RESULT_GOOGLE_SIGN_IN)
     }
 
     private fun switch() {
@@ -331,11 +330,17 @@ class MoreFragment : Fragment() {
         switch()
     }
 
-    private fun openPayment() {
+    private fun openPurchaseScreen() {
         MoreFragmentDirections.actionMoreFragmentToPurchaseFragment().also {
             findNavController().navigate(it)
         }
     }
 
-    private fun isSignedIn() = FirebaseAuth.getInstance().currentUser != null
+    private fun openBackupScreen() {
+        MoreFragmentDirections.actionMoreFragmentToBackupFragment().also {
+            findNavController().navigate(it)
+        }
+    }
+
+    private fun isSignedIn() = auth.currentUser != null
 }

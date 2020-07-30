@@ -18,6 +18,8 @@
 
     <color name="maruFontColor">#000000</color>
     <color name="maruFontColorNight">#E5E1DD</color>
+    <color name="maruFontColorLight">#808080</color>
+    <color name="maruFontColorLightNight">#B5B1AE</color>
 
     <color name="registerNextButtonEnable">#CEDAF8</color>
     <color name="registerNextButtonDisable">#E6E6E6</color>
@@ -126,4 +128,7 @@
 
     <color name="editDisableTint">#C7C7C7</color>
     <color name="editEnableTint">#1DE9B6</color>
+
+    <color name="backupButtonTint">#1DE9B6</color>
+    <color name="restoreButtonTint">#BFC4F6</color>
 </resources>

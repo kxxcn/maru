@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.InterstitialAd
@@ -15,17 +14,22 @@ import dagger.android.support.DaggerFragment
 import dev.kxxcn.maru.EventObserver
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.databinding.InputFragmentBinding
+import dev.kxxcn.maru.di.MaruSavedStateViewModelFactory
 import dev.kxxcn.maru.util.AdHelper
-import dev.kxxcn.maru.util.KEY_TASK_ID
 import dev.kxxcn.maru.util.extension.setupSnackbar
 import javax.inject.Inject
 
 class InputFragment : DaggerFragment() {
 
     @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+    lateinit var viewModelFactory: MaruSavedStateViewModelFactory
 
-    private val viewModel by viewModels<InputViewModel> { viewModelFactory }
+    private val viewModel by viewModels<InputViewModel> {
+        viewModelFactory.create(
+            this,
+            arguments
+        )
+    }
 
     private lateinit var binding: InputFragmentBinding
 
@@ -53,7 +57,6 @@ class InputFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupLifecycle()
-        setupArguments()
         setupSnackbar()
         setupListener()
         setupInterstitial()
@@ -68,10 +71,6 @@ class InputFragment : DaggerFragment() {
         binding.lifecycleOwner = viewLifecycleOwner
     }
 
-    private fun setupArguments() {
-        viewModel.start(arguments?.getString(KEY_TASK_ID))
-    }
-
     private fun setupSnackbar() {
         view?.setupSnackbar(viewLifecycleOwner, viewModel.snackbarText, Snackbar.LENGTH_SHORT)
     }
@@ -80,7 +79,10 @@ class InputFragment : DaggerFragment() {
         viewModel.closeEvent.observe(viewLifecycleOwner, Observer {
             findNavController().popBackStack()
         })
-        viewModel.completeEvent.observe(viewLifecycleOwner, EventObserver {
+        viewModel.doneEvent.observe(viewLifecycleOwner, EventObserver {
+            openStatusFragment()
+        })
+        viewModel.adEvent.observe(viewLifecycleOwner, EventObserver {
             showAd()
         })
     }

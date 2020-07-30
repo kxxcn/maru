@@ -91,13 +91,13 @@ class HomeAdapter(
         private const val TYPE_BANNER_AD = 4
 
         fun makeItems(content: Summary): List<SummaryItem> {
-            return listOf(
-                SummaryItem(TYPE_WELCOME, content),
-                SummaryItem(TYPE_ACCOUNT, content),
-                SummaryItem(TYPE_TASK, content),
-                SummaryItem(TYPE_BANNER_AD, content),
-                SummaryItem(TYPE_DAYS, content)
-            )
+            return mutableListOf<SummaryItem>().apply {
+                add(SummaryItem(TYPE_WELCOME, content))
+                add(SummaryItem(TYPE_ACCOUNT, content))
+                add(SummaryItem(TYPE_TASK, content))
+                if (content.user?.premium == false) add(SummaryItem(TYPE_BANNER_AD, content))
+                add(SummaryItem(TYPE_DAYS, content))
+            }
         }
     }
 

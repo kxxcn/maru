@@ -12,6 +12,7 @@ import javax.inject.Singleton
         AndroidInjectionModule::class,
         AssistedInjectModule::class,
         ApplicationModule::class,
+        AuthenticationModule::class,
         HomeModule::class,
         PresentModule::class,
         SplashModule::class,
@@ -26,7 +27,10 @@ import javax.inject.Singleton
         DaysAddModule::class,
         NoticeModule::class,
         EditModule::class,
-        EditDialogModule::class
+        EditDialogModule::class,
+        MoreModule::class,
+        PurchaseModule::class,
+        BackupModule::class
     ]
 )
 interface ApplicationComponent : AndroidInjector<MaruApplication> {

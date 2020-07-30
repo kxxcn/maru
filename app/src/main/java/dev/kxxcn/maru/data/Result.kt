@@ -1,6 +1,6 @@
 package dev.kxxcn.maru.data
 
-import dev.kxxcn.maru.data.Result.*
+import dev.kxxcn.maru.data.Result.Success
 
 sealed class Result<out R> {
 
@@ -18,4 +18,4 @@ sealed class Result<out R> {
 }
 
 val Result<*>.succeeded
-    get() = this is Success && data != null
+    get() = this is Success

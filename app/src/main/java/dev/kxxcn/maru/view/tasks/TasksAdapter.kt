@@ -30,7 +30,7 @@ class TasksAdapter(
         when (item.viewType) {
             TYPE_PREPARE -> {
                 val h = holder as? TasksPrepareHolder ?: return
-                releasable.add(h.bind(viewModel, item.taskDetail))
+                releasable.add(h.bind(viewModel, item.taskDetail, item.isPremium))
             }
             TYPE_COMPLETED -> {
                 val h = holder as? TasksCompletedHolder ?: return
@@ -38,7 +38,7 @@ class TasksAdapter(
             }
             TYPE_ACTIVE -> {
                 val h = holder as? TasksActiveHolder ?: return
-                h.bind(viewModel, item.taskDetail)
+                h.bind(viewModel, item.taskDetail, item.isPremium)
             }
             TYPE_AD -> {
                 val h = holder as? TasksNativeAdHolder ?: return
@@ -74,7 +74,11 @@ class TasksAdapter(
 
         private const val TYPE_EMPTY = 4
 
-        fun makeItems(list: List<TaskDetail>, filterType: TasksFilterType?): List<TasksItem> {
+        fun makeItems(
+            list: List<TaskDetail>,
+            filterType: TasksFilterType?,
+            isPremium: Boolean = false
+        ): List<TasksItem> {
             val items = mutableListOf<TasksItem>()
             if (list.isEmpty()) {
                 when (filterType) {
@@ -90,30 +94,56 @@ class TasksAdapter(
                             return emptyList()
                         }
                         TasksFilterType.COMPLETED_TASKS -> {
-                            items.add(TasksItem(TYPE_COMPLETED, taskDetail))
-                            if (index % AD_INTERVAL == 0) items.add(
+                            items.add(
                                 TasksItem(
-                                    TYPE_AD,
-                                    TaskDetail()
+                                    TYPE_COMPLETED,
+                                    taskDetail
                                 )
                             )
+                            if (!isPremium && index % AD_INTERVAL == 0) {
+                                items.add(
+                                    TasksItem(
+                                        TYPE_AD,
+                                        TaskDetail()
+                                    )
+                                )
+                            }
                         }
                         else -> {
                             if (taskDetail.task?.isCompleted == true) {
-                                items.add(TasksItem(TYPE_COMPLETED, taskDetail))
+                                items.add(
+                                    TasksItem(
+                                        TYPE_COMPLETED,
+                                        taskDetail
+                                    )
+                                )
                             } else {
                                 if (taskDetail.account?.remain == null || taskDetail.account?.remain == 0L) {
-                                    items.add(TasksItem(TYPE_PREPARE, taskDetail))
+                                    items.add(
+                                        TasksItem(
+                                            TYPE_PREPARE,
+                                            taskDetail,
+                                            isPremium = isPremium
+                                        )
+                                    )
                                 } else {
-                                    items.add(TasksItem(TYPE_ACTIVE, taskDetail))
+                                    items.add(
+                                        TasksItem(
+                                            TYPE_ACTIVE,
+                                            taskDetail,
+                                            isPremium = isPremium
+                                        )
+                                    )
                                 }
                             }
-                            if (index % AD_INTERVAL == 0) items.add(
-                                TasksItem(
-                                    TYPE_AD,
-                                    TaskDetail()
+                            if (!isPremium && index % AD_INTERVAL == 0) {
+                                items.add(
+                                    TasksItem(
+                                        TYPE_AD,
+                                        TaskDetail()
+                                    )
                                 )
-                            )
+                            }
                         }
                     }
                 }
@@ -122,7 +152,12 @@ class TasksAdapter(
         }
     }
 
-    data class TasksItem(val viewType: Int, val taskDetail: TaskDetail?, val stringRes: Int? = null)
+    data class TasksItem(
+        val viewType: Int,
+        val taskDetail: TaskDetail?,
+        val stringRes: Int? = null,
+        val isPremium: Boolean = false
+    )
 }
 
 class TasksDiffCallback : DiffUtil.ItemCallback<TasksAdapter.TasksItem>() {

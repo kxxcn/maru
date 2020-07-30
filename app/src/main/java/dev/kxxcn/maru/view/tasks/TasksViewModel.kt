@@ -29,12 +29,26 @@ class TasksViewModel @Inject constructor(
 
     val tasks: LiveData<List<TasksAdapter.TasksItem>> =
         MediatorLiveData<List<TasksAdapter.TasksItem>>().apply {
-            addSource(items) { value = tasks(it.first().tasks, filterType.value) }
-            addSource(filterType) { value = tasks(items.value?.first()?.tasks, it) }
+            addSource(items) {
+                val summary = it.first()
+                value = tasks(
+                    summary.tasks,
+                    filterType.value,
+                    summary.user?.premium ?: false
+                )
+            }
+            addSource(filterType) {
+                val summary = items.value?.first()
+                value = tasks(
+                    summary?.tasks,
+                    it,
+                    summary?.user?.premium ?: false
+                )
+            }
         }
 
-    private val _taskSelectionEvent = MutableLiveData<Event<TaskDetail>>()
-    val taskSelectionEvent: LiveData<Event<TaskDetail>> = _taskSelectionEvent
+    private val _taskSelectionEvent = MutableLiveData<Event<Pair<TaskDetail, Boolean>>>()
+    val taskSelectionEvent: LiveData<Event<Pair<TaskDetail, Boolean>>> = _taskSelectionEvent
 
     private val _navigateEvent = MutableLiveData<Event<Unit>>()
     val navigateEvent: LiveData<Event<Unit>> = _navigateEvent
@@ -53,7 +67,8 @@ class TasksViewModel @Inject constructor(
 
     private fun tasks(
         list: List<TaskDetail>?,
-        filterType: TasksFilterType?
+        filterType: TasksFilterType?,
+        isPremium: Boolean = false
     ): List<TasksAdapter.TasksItem> {
         val filterItems = list
             ?.sortedBy { it.task?.priority }
@@ -66,7 +81,7 @@ class TasksViewModel @Inject constructor(
                 }
             } ?: emptyList()
 
-        return TasksAdapter.makeItems(filterItems, filterType)
+        return TasksAdapter.makeItems(filterItems, filterType, isPremium)
     }
 
     fun setFiltering(requestType: TasksFilterType) {
@@ -75,8 +90,8 @@ class TasksViewModel @Inject constructor(
         _filterType.value = requestType
     }
 
-    fun handleTargetSelection(taskDetail: TaskDetail) {
-        _taskSelectionEvent.value = Event(taskDetail)
+    fun handleTargetSelection(taskDetail: TaskDetail, isPremium: Boolean) {
+        _taskSelectionEvent.value = Event(taskDetail to isPremium)
     }
 
     fun showNavigator() {

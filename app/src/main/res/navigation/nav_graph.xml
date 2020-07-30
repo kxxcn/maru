@@ -98,6 +98,10 @@
                 app:argType="string"
                 app:nullable="true" />
 
+            <argument
+                android:name="is_premium"
+                app:argType="boolean" />
+
         </action>
 
         <action
@@ -173,6 +177,13 @@
         <action
             android:id="@+id/action_more_fragment_to_settingFragment"
             app:destination="@id/setting_fragment"
+            app:enterAnim="@anim/slide_in_right_to_left"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+
+        <action
+            android:id="@+id/action_more_fragment_to_backupFragment"
+            app:destination="@id/backup_fragment"
             app:enterAnim="@anim/slide_in_right_to_left"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/fade_out" />
@@ -316,5 +327,10 @@
         android:id="@+id/terms_fragment"
         android:name="dev.kxxcn.maru.view.terms.TermsFragment"
         android:label="@string/nav_label_terms" />
+
+    <fragment
+        android:id="@+id/backup_fragment"
+        android:name="dev.kxxcn.maru.view.backup.BackupFragment"
+        android:label="@string/nav_label_backup" />
 
 </navigation>

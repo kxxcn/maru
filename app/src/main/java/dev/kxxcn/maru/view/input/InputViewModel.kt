@@ -1,22 +1,30 @@
 package dev.kxxcn.maru.view.input
 
 import androidx.lifecycle.*
+import com.squareup.inject.assisted.Assisted
+import com.squareup.inject.assisted.AssistedInject
 import dev.kxxcn.maru.Event
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.data.Account
 import dev.kxxcn.maru.data.Result.Success
 import dev.kxxcn.maru.data.source.DataRepository
 import dev.kxxcn.maru.data.succeeded
+import dev.kxxcn.maru.di.AssistedSavedStateViewModelFactory
+import dev.kxxcn.maru.util.KEY_IS_PREMIUM
+import dev.kxxcn.maru.util.KEY_TASK_ID
 import dev.kxxcn.maru.util.extension.moneyToLong
 import dev.kxxcn.maru.util.preference.PreferenceUtils
 import kotlinx.coroutines.launch
 import java.text.NumberFormat
 import java.util.*
-import javax.inject.Inject
 
-class InputViewModel @Inject constructor(
-    private val repository: DataRepository
+class InputViewModel @AssistedInject constructor(
+    private val repository: DataRepository,
+    @Assisted private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
+
+    @AssistedInject.Factory
+    interface Factory : AssistedSavedStateViewModelFactory<InputViewModel>
 
     private var taskId: String? = null
 
@@ -28,8 +36,11 @@ class InputViewModel @Inject constructor(
     private val _closeEvent = MutableLiveData<Unit>()
     val closeEvent: LiveData<Unit> = _closeEvent
 
-    private val _completeEvent = MutableLiveData<Event<Unit>>()
-    val completeEvent: LiveData<Event<Unit>> = _completeEvent
+    private val _adEvent = MutableLiveData<Event<Unit>>()
+    val adEvent: LiveData<Event<Unit>> = _adEvent
+
+    private val _doneEvent = MutableLiveData<Event<Unit>>()
+    val doneEvent: LiveData<Event<Unit>> = _doneEvent
 
     private val _taskName = MutableLiveData<String>()
     val taskName: LiveData<String> = _taskName
@@ -77,9 +88,10 @@ class InputViewModel @Inject constructor(
         _selectDrawableRes.value = R.drawable.input_unit_select
         _deselectDrawableRes.value = R.drawable.input_unit_deselect
         _isLoading.value = false
+        start(savedStateHandle.get(KEY_TASK_ID))
     }
 
-    fun start(taskId: String?) {
+    private fun start(taskId: String?) {
         taskId ?: return
         viewModelScope.launch {
             val result = repository.getTaskDetail(taskId)
@@ -158,7 +170,13 @@ class InputViewModel @Inject constructor(
                     )
                 )
                 if (result.succeeded) {
-                    _completeEvent.value = Event(Unit)
+                    if (savedStateHandle.get<Boolean>(KEY_IS_PREMIUM) == true) {
+                        _doneEvent
+                    } else {
+                        _adEvent
+                    }.also {
+                        it.value = Event(Unit)
+                    }
                 }
             }
         }

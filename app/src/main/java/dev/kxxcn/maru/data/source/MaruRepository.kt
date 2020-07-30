@@ -1,6 +1,7 @@
 package dev.kxxcn.maru.data.source
 
 import androidx.lifecycle.LiveData
+import com.android.billingclient.api.Purchase
 import com.google.firebase.firestore.QuerySnapshot
 import dev.kxxcn.maru.data.*
 import dev.kxxcn.maru.data.Result.Success
@@ -49,6 +50,10 @@ class MaruRepository @Inject constructor(
 
     override suspend fun saveAccount(account: Account): Result<Any?> {
         return localDataSource.saveAccount(account)
+    }
+
+    override suspend fun getSummary(): Result<List<Summary>> {
+        return localDataSource.getSummary()
     }
 
     override fun observeSummary(): LiveData<List<Summary>> {
@@ -100,5 +105,35 @@ class MaruRepository @Inject constructor(
 
     override suspend fun editBudget(budget: Long): Result<Any?> {
         return localDataSource.editBudget(budget)
+    }
+
+    override suspend fun savePremium(email: String?, purchase: Purchase): Result<Any?> {
+        return localDataSource.savePremium(purchase = purchase).also {
+            if (it.succeeded) {
+                firebaseDataSource.savePremium(email, purchase)
+            }
+        }
+    }
+
+    override suspend fun isPremium(email: String?): Result<Boolean> {
+        return localDataSource.isPremium(email)
+            .takeIf { it is Success && it.data }
+            ?: firebaseDataSource.isPremium(email).also {
+                if (it is Success && it.data) {
+                    localDataSource.savePremium()
+                }
+            }
+    }
+
+    override suspend fun backup(email: String, encoded: String): Result<Any?> {
+        return firebaseDataSource.backup(email, encoded)
+    }
+
+    override suspend fun findRestore(email: String): Result<Restore?> {
+        return firebaseDataSource.findRestore(email)
+    }
+
+    override suspend fun restore(summary: Summary): Result<Any?> {
+        return localDataSource.restore(summary)
     }
 }

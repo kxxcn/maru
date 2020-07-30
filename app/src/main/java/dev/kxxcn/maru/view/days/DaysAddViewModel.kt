@@ -8,6 +8,7 @@ import dev.kxxcn.maru.data.source.DataRepository
 import dev.kxxcn.maru.data.succeeded
 import dev.kxxcn.maru.util.ColorUtils
 import dev.kxxcn.maru.util.ConvertUtils
+import dev.kxxcn.maru.util.DateUtils
 import dev.kxxcn.maru.util.extension.msToDate
 import dev.kxxcn.maru.util.preference.PreferenceUtils
 import dev.kxxcn.maru.view.days.DaysFilterType.COUNT
@@ -107,7 +108,7 @@ class DaysAddViewModel @Inject constructor(
             _snackbarText.value = Event(R.string.days_add_hint)
         } else {
             val timeText = timeText.value ?: return
-            val timeMs = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val timeMs = DateUtils.DATE_FORMAT_4
                 .parse(timeText)
                 ?.time
                 ?: return

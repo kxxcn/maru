@@ -17,5 +17,5 @@ abstract class InputModule {
     @Binds
     @IntoMap
     @ViewModelKey(InputViewModel::class)
-    abstract fun bindViewModel(viewModel: InputViewModel): ViewModel
+    abstract fun bindViewModel(factory: InputViewModel.Factory): AssistedSavedStateViewModelFactory<out ViewModel>
 }

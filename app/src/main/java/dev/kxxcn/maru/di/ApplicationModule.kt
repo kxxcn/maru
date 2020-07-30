@@ -1,12 +1,15 @@
 package dev.kxxcn.maru.di
 
 import androidx.room.Room
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dev.kxxcn.maru.MaruApplication
+import dev.kxxcn.maru.MaruCoroutineScope
 import dev.kxxcn.maru.data.source.DataRepository
 import dev.kxxcn.maru.data.source.DataSource
 import dev.kxxcn.maru.data.source.MaruRepository
@@ -15,6 +18,7 @@ import dev.kxxcn.maru.data.source.firebase.FirebaseDataSource
 import dev.kxxcn.maru.data.source.local.LocalDataSource
 import dev.kxxcn.maru.data.source.local.MaruDatabase
 import dev.kxxcn.maru.data.source.remote.RemoteDataSource
+import dev.kxxcn.maru.view.base.BaseCoroutineScope
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Qualifier
@@ -78,12 +82,23 @@ object ApplicationModule {
             application.applicationContext,
             MaruDatabase::class.java,
             "Maru.db"
-        ).fallbackToDestructiveMigrationOnDowngrade().build()
+        ).addMigrations(*ALL_MIGRATIONS).fallbackToDestructiveMigrationOnDowngrade().build()
     }
 
     @Singleton
     @Provides
-    fun provideIoDispatcher() = Dispatchers.IO
+    fun provideIoDispatcher(): CoroutineDispatcher = Dispatchers.IO
+
+    @Provides
+    fun provideCoroutineScope(): BaseCoroutineScope = MaruCoroutineScope()
+
+    val ALL_MIGRATIONS = arrayOf<Migration>(
+        object : Migration(1, 2) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE users ADD COLUMN premium INTEGER default 0 NOT NULL")
+            }
+        }
+    )
 }
 
 @Module

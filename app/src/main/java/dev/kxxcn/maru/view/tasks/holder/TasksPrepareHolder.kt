@@ -11,11 +11,12 @@ class TasksPrepareHolder(
     private val binding: TasksPrepareItemBinding
 ) : LifecycleViewHolder(binding) {
 
-    fun bind(viewModel: TasksViewModel, item: TaskDetail?): () -> Unit {
+    fun bind(viewModel: TasksViewModel, item: TaskDetail?, isPremium: Boolean): () -> Unit {
         with(binding) {
             this.lifecycleOwner = this@TasksPrepareHolder
             this.viewModel = viewModel
             this.item = item
+            this.isPremium = isPremium
             this.executePendingBindings()
         }
         return { release() }

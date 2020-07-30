@@ -1,7 +1,7 @@
 package dev.kxxcn.maru.data
 
 import androidx.room.*
-import java.text.SimpleDateFormat
+import dev.kxxcn.maru.util.DateUtils
 import java.util.*
 
 @Entity(
@@ -83,8 +83,7 @@ class TaskDetail {
 
     val accountDate: String
         get() {
-            val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault())
-            return dateFormat.format(account?.date)
+            return DateUtils.DATE_FORMAT_5.format(account?.date)
         }
 
     override fun equals(other: Any?): Boolean {

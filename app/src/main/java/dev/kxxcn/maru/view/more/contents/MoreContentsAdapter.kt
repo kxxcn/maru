@@ -58,8 +58,8 @@ class MoreContentsAdapter(
     companion object {
 
         fun makeItems() = listOf(
-            // AD,
-            // BACKUP,
+            AD,
+            BACKUP,
             NIGHT,
             REVIEW,
             DAYS,

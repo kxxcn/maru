@@ -2,6 +2,7 @@ package dev.kxxcn.maru.data.source.local.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
+import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import dev.kxxcn.maru.data.Summary
@@ -13,6 +14,10 @@ interface MappingDao {
     @Transaction
     @Query("SELECT * FROM Users")
     fun observeSummaries(): LiveData<List<Summary>>
+
+    @Transaction
+    @Query("SELECT * FROM Users")
+    fun getSummaries(): List<Summary>
 
     @Transaction
     @Query("SELECT * FROM Tasks WHERE id = :taskId")

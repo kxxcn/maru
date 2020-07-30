@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="dev.kxxcn.maru.view.purchase.PurchaseViewModel" />
+
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/back_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:onClick="@{() -> viewModel.close()}"
+                android:padding="10dp"
+                android:src="@drawable/ic_arrow_left"
+                android:tint="?maruFontColor"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:id="@+id/purchase_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:text="@string/purchase_title"
+                android:textColor="?maruFontColor"
+                android:textSize="@dimen/title_text_size"
+                app:highlight="true"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/back_icon"
+                app:textStyle="bold" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/purchase_image"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="3:2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/purchase_title"
+                app:lottie_autoPlay="true"
+                app:lottie_fileName="animation_purchase.json" />
+
+            <ImageView
+                android:id="@+id/purchase_icon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_budget"
+                android:tint="?maruFontColor"
+                app:layout_constraintBottom_toBottomOf="@id/purchase_money"
+                app:layout_constraintEnd_toStartOf="@id/purchase_money"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/purchase_money"
+                tools:ignore="ContentDescription" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:id="@+id/purchase_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="@string/purchase_money"
+                android:textColor="?maruFontColor"
+                android:textSize="40sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/purchase_icon"
+                app:layout_constraintTop_toBottomOf="@id/purchase_image"
+                app:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/purchase_check_icon_1"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="20dp"
+                android:src="@drawable/ic_check"
+                app:layout_constraintBottom_toBottomOf="@id/purchase_desc_1"
+                app:layout_constraintEnd_toStartOf="@id/purchase_icon"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/purchase_desc_1"
+                tools:ignore="ContentDescription" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:id="@+id/purchase_desc_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="40dp"
+                android:includeFontPadding="false"
+                android:text="@string/purchase_desc_1"
+                android:textColor="?maruFontColor"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@id/purchase_check_icon_1"
+                app:layout_constraintTop_toBottomOf="@id/purchase_money" />
+
+            <ImageView
+                android:id="@+id/purchase_check_icon_2"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_check"
+                app:layout_constraintBottom_toBottomOf="@id/purchase_desc_2"
+                app:layout_constraintEnd_toEndOf="@id/purchase_check_icon_1"
+                app:layout_constraintStart_toStartOf="@id/purchase_check_icon_1"
+                app:layout_constraintTop_toTopOf="@id/purchase_desc_2"
+                tools:ignore="ContentDescription" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:id="@+id/purchase_desc_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:includeFontPadding="false"
+                android:text="@string/purchase_desc_2"
+                android:textColor="?maruFontColor"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@id/purchase_check_icon_2"
+                app:layout_constraintTop_toBottomOf="@id/purchase_desc_1" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="20dp"
+                android:background="?attr/inputButtonBackgroundDrawable"
+                android:gravity="center"
+                android:onClick="@{() -> viewModel.purchase()}"
+                android:padding="15dp"
+                android:text="@string/purchase"
+                android:textColor="?maruSecondaryFontColor"
+                android:textSize="17sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/purchase_desc_2"
+                app:layout_constraintVertical_bias="1.0" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</layout>

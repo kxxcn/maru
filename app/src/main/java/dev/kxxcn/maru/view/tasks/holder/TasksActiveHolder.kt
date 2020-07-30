@@ -11,11 +11,12 @@ class TasksActiveHolder(
     private val binding: TasksActiveItemBinding
 ) : LifecycleViewHolder(binding) {
 
-    fun bind(viewModel: TasksViewModel, item: TaskDetail?) {
+    fun bind(viewModel: TasksViewModel, item: TaskDetail?, isPremium: Boolean) {
         with(binding) {
             this.lifecycleOwner = this@TasksActiveHolder
             this.viewModel = viewModel
             this.item = item
+            this.isPremium = isPremium
             this.executePendingBindings()
         }
     }

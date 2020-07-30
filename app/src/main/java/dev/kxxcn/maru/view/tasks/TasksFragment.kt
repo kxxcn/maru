@@ -78,11 +78,16 @@ class TasksFragment : DaggerFragment() {
     }
 
     private fun setupListener() {
-        viewModel.taskSelectionEvent.observe(viewLifecycleOwner, EventObserver { taskDetail ->
-            TasksFragmentDirections.actionTasksFragmentToInputFragment(taskDetail.task?.id).also {
-                findNavController().navigate(it)
-            }
-        })
+        viewModel.taskSelectionEvent.observe(
+            viewLifecycleOwner,
+            EventObserver { (taskDetail, isPremium) ->
+                TasksFragmentDirections.actionTasksFragmentToInputFragment(
+                    taskDetail.task?.id,
+                    isPremium
+                ).also {
+                    findNavController().navigate(it)
+                }
+            })
         viewModel.navigateEvent.observe(viewLifecycleOwner, EventObserver {
             showNavigator()
         })

@@ -1,6 +1,7 @@
 package dev.kxxcn.maru.data.source
 
 import androidx.lifecycle.LiveData
+import com.android.billingclient.api.Purchase
 import com.google.firebase.firestore.QuerySnapshot
 import dev.kxxcn.maru.data.*
 import dev.kxxcn.maru.data.source.api.dto.DirectionDto
@@ -29,6 +30,8 @@ interface DataSource {
 
     suspend fun replaceTasks(items: List<Task>)
 
+    suspend fun getSummary(): Result<List<Summary>>
+
     fun observeSummary(): LiveData<List<Summary>>
 
     suspend fun getDirection(
@@ -48,4 +51,14 @@ interface DataSource {
     suspend fun editName(name: String): Result<Any?>
 
     suspend fun editBudget(budget: Long): Result<Any?>
+
+    suspend fun savePremium(email: String? = null, purchase: Purchase? = null): Result<Any?>
+
+    suspend fun isPremium(email: String?): Result<Boolean>
+
+    suspend fun backup(email: String, encoded: String): Result<Any?>
+
+    suspend fun findRestore(email: String): Result<Restore?>
+
+    suspend fun restore(summary: Summary): Result<Any?>
 }

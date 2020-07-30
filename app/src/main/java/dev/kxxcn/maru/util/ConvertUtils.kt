@@ -3,7 +3,6 @@ package dev.kxxcn.maru.util
 import androidx.databinding.InverseMethod
 import dev.kxxcn.maru.R
 import java.text.NumberFormat
-import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -78,13 +77,11 @@ object ConvertUtils {
 
     @InverseMethod("inverseDateFormat")
     fun dateFormat(time: Long?): String? {
-        val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault())
-        return dateFormat.format(time)
+        return DateUtils.DATE_FORMAT_5.format(time)
     }
 
     fun inverseDateFormat(time: String): Long? {
-        val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault())
-        return dateFormat.parse(time)?.time
+        return DateUtils.DATE_FORMAT_5.parse(time)?.time
     }
 
     fun getRemain(selection: Long): Pair<Int, Int> {

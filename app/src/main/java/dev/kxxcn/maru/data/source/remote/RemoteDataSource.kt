@@ -1,6 +1,7 @@
 package dev.kxxcn.maru.data.source.remote
 
 import androidx.lifecycle.LiveData
+import com.android.billingclient.api.Purchase
 import com.google.firebase.firestore.QuerySnapshot
 import dev.kxxcn.maru.data.*
 import dev.kxxcn.maru.data.Result.Error
@@ -9,12 +10,11 @@ import dev.kxxcn.maru.data.source.DataSource
 import dev.kxxcn.maru.data.source.api.NaverService
 import dev.kxxcn.maru.data.source.api.dto.DirectionDto
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class RemoteDataSource(
     private val naverService: NaverService,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+    private val ioDispatcher: CoroutineDispatcher
 ) : DataSource {
 
     override suspend fun getUsers(): Result<List<User>> {
@@ -61,6 +61,10 @@ class RemoteDataSource(
         TODO("Not yet implemented")
     }
 
+    override suspend fun getSummary(): Result<List<Summary>> {
+        TODO("Not yet implemented")
+    }
+
     override fun observeSummary(): LiveData<List<Summary>> {
         TODO("Not yet implemented")
     }
@@ -98,6 +102,26 @@ class RemoteDataSource(
     }
 
     override suspend fun editBudget(budget: Long): Result<Any?> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun savePremium(email: String?, purchase: Purchase?): Result<Any?> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun isPremium(email: String?): Result<Boolean> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun backup(email: String, encoded: String): Result<Any?> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun findRestore(email: String): Result<Restore?> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun restore(summary: Summary): Result<Any?> {
         TODO("Not yet implemented")
     }
 }

@@ -3,14 +3,21 @@ package dev.kxxcn.maru.view.more
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.orhanobut.logger.Logger
+import androidx.lifecycle.viewModelScope
 import dev.kxxcn.maru.Event
+import dev.kxxcn.maru.R
+import dev.kxxcn.maru.data.Result.Success
+import dev.kxxcn.maru.data.source.DataRepository
 import dev.kxxcn.maru.view.more.contents.ContentsItem
 import dev.kxxcn.maru.view.more.contents.ContentsItem.*
 import dev.kxxcn.maru.view.more.contents.MoreContentsAdapter
 import dev.kxxcn.maru.view.present.PresentFilterType
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MoreViewModel : ViewModel() {
+class MoreViewModel @Inject constructor(
+    private val repository: DataRepository
+) : ViewModel() {
 
     private val _settingEvent = MutableLiveData<Event<Unit>>()
     val settingEvent: LiveData<Event<Unit>> = _settingEvent
@@ -50,6 +57,12 @@ class MoreViewModel : ViewModel() {
 
     private val _snackbarText = MutableLiveData<Event<Int>>()
     val snackbarText: LiveData<Event<Int>> = _snackbarText
+
+    private val _purchaseEvent = MutableLiveData<Event<Unit>>()
+    val purchaseEvent: LiveData<Event<Unit>> = _purchaseEvent
+
+    private val _premiumEvent = MutableLiveData<Event<Unit>>()
+    val premiumEvent: LiveData<Event<Unit>> = _premiumEvent
 
     val moreItems: List<MoreAdapter.MoreItem> = MoreAdapter.makeItems()
 
@@ -121,10 +134,24 @@ class MoreViewModel : ViewModel() {
     }
 
     fun handleSignInSuccess() {
-        Logger.d("handleSignInSuccess")
+        _snackbarText.value = Event(R.string.success_sign_in)
     }
 
     fun handleSignInFailure() {
-        Logger.d("handleSignInFailure")
+        _snackbarText.value = Event(R.string.failure_sign_in)
+    }
+
+    fun isPremium(email: String?, filterType: ContentsItem) {
+        viewModelScope.launch {
+            val result = repository.isPremium(email)
+            if (result is Success && result.data) {
+                when (filterType) {
+                    AD -> _snackbarText.value = Event(R.string.apply_ad_removal_function)
+                    BACKUP -> _premiumEvent.value = Event(Unit)
+                }
+            } else {
+                _purchaseEvent.value = Event(Unit)
+            }
+        }
     }
 }

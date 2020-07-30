@@ -18,6 +18,7 @@ const val ONE_HUNDREDS_MILLION = 100000000L
 const val TEN_THOUSAND = 10000L
 
 const val KEY_TASK_ID = "task_id"
+const val KEY_IS_PREMIUM = "is_premium"
 const val KEY_ONBOARD_TYPE = "onboard_type"
 const val KEY_PRESENT_TYPE = "present_type"
 const val KEY_REGISTER_TYPE = "register_type"
@@ -45,7 +46,17 @@ const val REQUEST_CODE_PERMISSION = 1000
 const val REQUEST_CODE_NOTIFY = 1001
 
 const val COLLECTION_NOTICES = "notices"
+const val COLLECTION_PURCHASES = "purchases"
+const val COLLECTION_BACKUP = "backup"
 const val FILED_CREATED_AT = "createdAt"
+const val FILED_EMAIL = "email"
+const val FILED_ORDER_ID = "orderId"
+const val FILED_ORDER_TIME = "orderTime"
+const val FILED_ORDER_TOKEN = "orderToken"
+const val FILED_SIGNATURE = "signature"
+const val FILED_SKU = "sku"
+const val FILED_DATA = "data"
+const val FILED_TIME = "time"
 
 const val AD_INTERVAL = 7
 
@@ -53,4 +64,4 @@ const val ANIMATION_ONBOARD_TASKS = "animation_onboard_tasks.json"
 const val ANIMATION_ONBOARD_ACCOUNT = "animation_onboard_account.json"
 const val ANIMATION_ONBOARD_WELCOME = "animation_onboard_welcome.json"
 
-const val ROOM_VERSION = 1
+const val ROOM_VERSION = 2

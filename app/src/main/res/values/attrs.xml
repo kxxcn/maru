@@ -46,6 +46,7 @@
         <attr name="maruBackgroundColor" format="reference" />
         <attr name="maruSecondaryBackgroundColor" format="reference" />
         <attr name="maruFontColor" format="reference" />
+        <attr name="maruFontColorLight" format="reference" />
         <attr name="maruSecondaryFontColor" format="reference" />
         <attr name="statusBarColor" format="reference" />
         <attr name="splashBackgroundDrawable" format="reference" />

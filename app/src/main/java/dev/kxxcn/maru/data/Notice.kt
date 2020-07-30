@@ -1,8 +1,7 @@
 package dev.kxxcn.maru.data
 
 import com.google.firebase.Timestamp
-import java.text.SimpleDateFormat
-import java.util.*
+import dev.kxxcn.maru.util.DateUtils
 
 data class Notice(
     val subject: String = "",
@@ -16,7 +15,7 @@ data class Notice(
             return if (date == null) {
                 "시간 정보가 없습니다."
             } else {
-                SimpleDateFormat("yyyy년 MM월 dd일 HH:MM:ss", Locale.getDefault()).format(date)
+                DateUtils.DATE_FORMAT_2.format(date)
             }
         }
 }
