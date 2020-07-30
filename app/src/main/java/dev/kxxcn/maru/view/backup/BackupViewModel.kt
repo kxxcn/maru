@@ -41,6 +41,8 @@ class BackupViewModel @Inject constructor(
 
     val noData = restoreData.map { it == null }
 
+    val email = MutableLiveData<String?>().apply { value = auth.currentUser?.email }
+
     init {
         findRestore()
     }
@@ -67,12 +69,12 @@ class BackupViewModel @Inject constructor(
                         .takeIf { it.succeeded }
                         ?.let { R.string.success_backup }
                         ?: R.string.failure_backup
-
                     _snackbarText.value = Event(messageRes)
-                    _progress.value = false
-
                     findRestore()
+                } else {
+                    _snackbarText.value = Event(R.string.try_again_later)
                 }
+                _progress.value = false
             }
         }
     }
@@ -104,11 +106,13 @@ class BackupViewModel @Inject constructor(
                 _progress.value = true
                 val result = repository.findRestore(email)
                 if (result is Success) {
-                    val restore = result.data
-                    restoreData.value = restore
-                    _updatedTime.value = DateUtils.DATE_FORMAT_1.format(restore?.time)
-                    _progress.value = false
+                    result.data
+                        .also { restoreData.value = it }
+                        ?.let { _updatedTime.value = DateUtils.DATE_FORMAT_1.format(it.time) }
+                } else {
+                    _snackbarText.value = Event(R.string.try_again_later)
                 }
+                _progress.value = false
             }
         }
     }
