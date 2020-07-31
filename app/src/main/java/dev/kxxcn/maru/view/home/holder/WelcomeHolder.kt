@@ -10,6 +10,7 @@ import dev.kxxcn.maru.util.ConvertUtils
 import dev.kxxcn.maru.util.WaveHelper
 import dev.kxxcn.maru.view.base.LifecycleViewHolder
 import dev.kxxcn.maru.view.home.HomeAdapter
+import dev.kxxcn.maru.view.home.HomeViewModel
 
 class WelcomeHolder(
     private val binding: WelcomeItemBinding
@@ -17,7 +18,7 @@ class WelcomeHolder(
 
     private var waveHelper: WaveHelper? = null
 
-    fun bind(item: HomeAdapter.SummaryItem): () -> Unit {
+    fun bind(item: HomeAdapter.SummaryItem, viewModel: HomeViewModel): () -> Unit {
         with(binding) {
             with(welcomeWave) {
                 setWaveColor(
@@ -29,6 +30,7 @@ class WelcomeHolder(
                 waveHelper = WaveHelper(this, percentage).also { it.start() }
             }
             this.lifecycleOwner = this@WelcomeHolder
+            this.viewModel = viewModel
             this.content = item.content
             this.executePendingBindings()
         }

@@ -10,10 +10,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
 import dev.kxxcn.maru.MaruActivity
 import dev.kxxcn.maru.databinding.HomeFragmentBinding
 import dev.kxxcn.maru.util.LinearSpacingDecoration
+import dev.kxxcn.maru.util.extension.setupSnackbar
 import dev.kxxcn.maru.util.preference.PreferenceUtils
 import javax.inject.Inject
 
@@ -44,6 +46,7 @@ class HomeFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupLifecycle()
+        setupSnackbar()
         setupOnboard()
         setupListAdapter()
         setupOnBackPressed()
@@ -61,6 +64,10 @@ class HomeFragment : DaggerFragment() {
 
     private fun setupLifecycle() {
         binding.lifecycleOwner = viewLifecycleOwner
+    }
+
+    private fun setupSnackbar() {
+        view?.setupSnackbar(viewLifecycleOwner, viewModel.snackbarText, Snackbar.LENGTH_SHORT)
     }
 
     private fun setupOnboard() {
@@ -87,7 +94,7 @@ class HomeFragment : DaggerFragment() {
                 })
                 addItemDecoration(LinearSpacingDecoration(), 0)
                 val activity = activity ?: return
-                adapter = HomeAdapter(activity)
+                adapter = HomeAdapter(activity, viewModel)
             }
         }
     }

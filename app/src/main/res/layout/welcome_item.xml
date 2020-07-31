@@ -5,7 +5,13 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <import type="dev.kxxcn.maru.util.ConvertUtils" />
+
+        <variable
+            name="viewModel"
+            type="dev.kxxcn.maru.view.home.HomeViewModel" />
 
         <variable
             name="content"
@@ -18,17 +24,34 @@
         android:layout_height="wrap_content"
         android:background="?attr/maruBackgroundColor">
 
+        <ImageView
+            android:id="@+id/welcome_verified"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:onClick="@{() -> viewModel.description()}"
+            android:padding="10dp"
+            android:src="@drawable/ic_verified"
+            android:visibility="@{viewModel.verified ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@id/welcome_name_text"
+            app:layout_constraintEnd_toStartOf="@id/welcome_wave_view"
+            app:layout_constraintStart_toEndOf="@id/welcome_name_text"
+            app:layout_constraintTop_toTopOf="@id/welcome_name_text"
+            tools:ignore="ContentDescription" />
+
         <dev.kxxcn.maru.view.custom.MaruTextView
             android:id="@+id/welcome_name_text"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:text="@{@string/home_welcome_card_name(content.user.name)}"
             android:textColor="?maruFontColor"
             android:textSize="25sp"
             app:highlight="true"
+            app:layout_constrainedWidth="true"
             app:layout_constraintBottom_toTopOf="@id/welcome_greeting_text"
-            app:layout_constraintEnd_toStartOf="@id/welcome_wave_view"
+            app:layout_constraintEnd_toStartOf="@id/welcome_verified"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/welcome_wave_view"
             app:layout_constraintVertical_chainStyle="packed"

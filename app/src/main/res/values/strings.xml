@@ -124,6 +124,7 @@
     <string name="home_welcome_card_name">%1$s님</string>
     <string name="home_welcome_card_greeting">안녕하세요.</string>
     <string name="home_welcome_card_remain">D-%1$d</string>
+    <string name="home_welcome_card_verified">이메일 인증이 완료된 계정입니다.</string>
     <string name="home_account_card_total_accounts">총 지출금액</string>
     <string name="home_account_card_total_budget">전체금액</string>
     <string name="home_account_card_total_remain">남은금액</string>

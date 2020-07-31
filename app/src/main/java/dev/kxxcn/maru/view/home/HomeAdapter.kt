@@ -8,7 +8,8 @@ import dev.kxxcn.maru.view.base.LifecycleViewHolder
 import dev.kxxcn.maru.view.home.holder.*
 
 class HomeAdapter(
-    private val activity: Activity
+    private val activity: Activity,
+    private val viewModel: HomeViewModel
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var items: List<SummaryItem>? = null
@@ -32,7 +33,7 @@ class HomeAdapter(
         when (item.type) {
             TYPE_WELCOME -> {
                 val h = holder as? WelcomeHolder ?: return
-                releasable.add(h.bind(item))
+                releasable.add(h.bind(item, viewModel))
             }
             TYPE_ACCOUNT -> {
                 val h = holder as? AccountHolder ?: return
