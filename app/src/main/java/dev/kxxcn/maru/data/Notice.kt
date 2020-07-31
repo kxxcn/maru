@@ -1,8 +1,10 @@
 package dev.kxxcn.maru.data
 
+import androidx.annotation.Keep
 import com.google.firebase.Timestamp
 import dev.kxxcn.maru.util.DateUtils
 
+@Keep
 data class Notice(
     val subject: String = "",
     val content: String = "",
