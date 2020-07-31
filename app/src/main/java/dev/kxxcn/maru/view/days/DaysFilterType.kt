@@ -1,7 +1,9 @@
 package dev.kxxcn.maru.view.days
 
+import androidx.annotation.Keep
 import androidx.room.TypeConverter
 
+@Keep
 enum class DaysFilterType {
 
     /**
