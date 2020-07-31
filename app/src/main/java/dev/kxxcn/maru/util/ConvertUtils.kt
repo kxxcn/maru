@@ -91,7 +91,7 @@ object ConvertUtils {
         }
         val longDecimalDay = decimalDay.timeInMillis / (24 * 60 * 60 * 1000)
         val longToday = today.timeInMillis / (24 * 60 * 60 * 1000)
-        val count = (longToday - longDecimalDay).toInt()
+        val count = (longToday - 1 - longDecimalDay).toInt()
         return when {
             count > 0 -> R.string.days_add_calculate_remain_plus to count
             count == 0 -> R.string.days_add_calculate_remain_day to count
@@ -106,7 +106,7 @@ object ConvertUtils {
         }
         val longDecimalDay = decimalDay.timeInMillis / (24 * 60 * 60 * 1000)
         val longToday = today.timeInMillis / (24 * 60 * 60 * 1000)
-        val count = (longToday - longDecimalDay).toInt() + 1
+        val count = (longToday - longDecimalDay).toInt()
         return R.string.days_add_calculate_count to count
     }
 }
