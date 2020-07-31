@@ -226,6 +226,7 @@
     <string name="failure_backup">백업을 실패했습니다.</string>
     <string name="success_restore">복원 되었습니다.</string>
     <string name="failure_restore">복원을 실패했습니다.</string>
+    <string name="write_review">리뷰를 작성하시겠습니까?</string>
 
     <string name="email_address">kxxcn.dev@gmail.com</string>
     <string name="email_subject">[마루] 문의사항</string>

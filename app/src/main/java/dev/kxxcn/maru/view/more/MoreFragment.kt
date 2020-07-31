@@ -159,7 +159,7 @@ class MoreFragment : DaggerFragment() {
             }
         })
         viewModel.storeEvent.observe(viewLifecycleOwner, EventObserver {
-            openStore()
+            storeDialog()
         })
         viewModel.orderEvent.observe(viewLifecycleOwner, EventObserver {
             MoreFragmentDirections.actionMoreFragmentToOrderFragment().also {
@@ -212,6 +212,7 @@ class MoreFragment : DaggerFragment() {
     }
 
     private fun openStore() {
+        alertDialog?.dismiss()
         val packageName = context?.packageName
         try {
             val uri = getString(R.string.play_store_app, packageName)
@@ -283,6 +284,16 @@ class MoreFragment : DaggerFragment() {
             getString(R.string.send_email),
             negative = { handleNegativeSelection() },
             positive = { handleContactSelection() }
+        )
+    }
+
+    private fun storeDialog() {
+        alertDialog?.dismiss()
+        alertDialog = openDialog(
+            R.drawable.ic_review,
+            getString(R.string.write_review),
+            negative = { handleNegativeSelection() },
+            positive = { openStore() }
         )
     }
 
