@@ -19,8 +19,8 @@ import java.text.NumberFormat
 import java.util.*
 
 class InputViewModel @AssistedInject constructor(
-    private val repository: DataRepository,
-    @Assisted private val savedStateHandle: SavedStateHandle
+        private val repository: DataRepository,
+        @Assisted private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     @AssistedInject.Factory
@@ -76,18 +76,17 @@ class InputViewModel @AssistedInject constructor(
     private val _deselectDrawableRes = MutableLiveData<Int>()
     val deselectDrawableRes: LiveData<Int> = _deselectDrawableRes
 
-    private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean> = _isLoading
+    private val _progress = MutableLiveData<Boolean>()
+    val progress: LiveData<Boolean> = _progress
 
     val selectedFontColorRes = android.R.color.black
-    val deselectedFontColorRes =
-        if (PreferenceUtils.useDarkMode) R.color.maruFontColorNight else android.R.color.black
+    val deselectedFontColorRes = if (PreferenceUtils.useDarkMode) R.color.maruFontColorNight else android.R.color.black
 
     init {
         _unitType.value = PreferenceUtils.unitType
         _selectDrawableRes.value = R.drawable.input_unit_select
         _deselectDrawableRes.value = R.drawable.input_unit_deselect
-        _isLoading.value = false
+        _progress.value = false
         start(savedStateHandle.get(KEY_TASK_ID))
     }
 
@@ -152,22 +151,23 @@ class InputViewModel @AssistedInject constructor(
 
     fun complete() {
         val id = taskId ?: return
-        _isLoading.value = true
+        _progress.value = true
         viewModelScope.launch {
             val husband = taskHusband.value.moneyToLong().takeIf { it > 0 }
             val wife = taskWife.value.moneyToLong().takeIf { it > 0 }
             val remain = taskRemain.value.moneyToLong()
             if (husband == null && wife == null) {
                 _snackbarText.value = Event(R.string.status_should_input_either)
+                _progress.value = false
             } else {
                 val result = repository.saveAccount(
-                    Account(
-                        taskId = id,
-                        husband = husband ?: 0,
-                        wife = wife ?: 0,
-                        remain = remain,
-                        date = Calendar.getInstance().timeInMillis
-                    )
+                        Account(
+                                taskId = id,
+                                husband = husband ?: 0,
+                                wife = wife ?: 0,
+                                remain = remain,
+                                date = Calendar.getInstance().timeInMillis
+                        )
                 )
                 if (result.succeeded) {
                     if (savedStateHandle.get<Boolean>(KEY_IS_PREMIUM) == true) {
