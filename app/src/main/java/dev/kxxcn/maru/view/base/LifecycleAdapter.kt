@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
 abstract class LifecycleAdapter<T, VH : RecyclerView.ViewHolder>(
-    callback: DiffUtil.ItemCallback<T>
+        callback: DiffUtil.ItemCallback<T>
 ) : ListAdapter<T, VH>(callback) {
 
     val releasable = mutableListOf<() -> Unit>()
@@ -23,9 +23,18 @@ abstract class LifecycleAdapter<T, VH : RecyclerView.ViewHolder>(
         super.onViewDetachedFromWindow(holder)
     }
 
-    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+    override fun onDetachedFromRecyclerView(view: RecyclerView) {
         release()
-        super.onDetachedFromRecyclerView(recyclerView)
+        view.adapter?.let { adapter ->
+            (0 until adapter.itemCount).forEach {
+                val holder = view
+                        .findViewHolderForAdapterPosition(it)
+                        as? LifecycleViewHolder
+                holder?.onDestroy()
+            }
+        }
+
+        super.onDetachedFromRecyclerView(view)
     }
 
     private fun release() {

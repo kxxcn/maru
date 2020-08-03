@@ -7,7 +7,7 @@ import androidx.lifecycle.LifecycleRegistry
 import androidx.recyclerview.widget.RecyclerView
 
 abstract class LifecycleViewHolder(
-    binding: ViewDataBinding
+        binding: ViewDataBinding
 ) : RecyclerView.ViewHolder(binding.root), LifecycleOwner {
 
     private val lifecycleRegistry by lazy { LifecycleRegistry(this) }
@@ -21,13 +21,14 @@ abstract class LifecycleViewHolder(
     }
 
     fun onAttach() {
-        with(lifecycleRegistry) {
-            currentState = Lifecycle.State.CREATED
-            currentState = Lifecycle.State.STARTED
-        }
+        lifecycleRegistry.currentState = Lifecycle.State.STARTED
     }
 
     fun onDetach() {
+        lifecycleRegistry.currentState = Lifecycle.State.CREATED
+    }
+
+    fun onDestroy() {
         lifecycleRegistry.currentState = Lifecycle.State.DESTROYED
     }
 }

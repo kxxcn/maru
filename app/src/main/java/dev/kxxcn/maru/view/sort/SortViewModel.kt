@@ -17,8 +17,8 @@ import dev.kxxcn.maru.util.preference.PreferenceUtils
 import kotlinx.coroutines.launch
 
 class SortViewModel @AssistedInject constructor(
-    private val repository: DataRepository,
-    @Assisted private val savedStateHandle: SavedStateHandle
+        private val repository: DataRepository,
+        @Assisted private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     @AssistedInject.Factory
@@ -28,9 +28,6 @@ class SortViewModel @AssistedInject constructor(
 
     private val _closeEvent = MutableLiveData<Event<Unit>>()
     val closeEvent: LiveData<Event<Unit>> = _closeEvent
-
-    private val _updateEvent = MutableLiveData<Event<Unit>>()
-    val updateEvent: LiveData<Event<Unit>> = _updateEvent
 
     private val _deleteEvent = MutableLiveData<Event<Int>>()
     val deleteEvent: LiveData<Event<Int>> = _deleteEvent
@@ -42,66 +39,59 @@ class SortViewModel @AssistedInject constructor(
     val toastText: LiveData<Event<Int>> = _toastText
 
     val items: LiveData<List<Summary>> =
-        _forceUpdate.switchMap {
-            repository.observeSummary().switchMap {
-                MutableLiveData<List<Summary>>().apply {
-                    value = it
+            _forceUpdate.switchMap {
+                repository.observeSummary().switchMap {
+                    MutableLiveData<List<Summary>>().apply {
+                        value = it
+                    }
                 }
             }
-        }
 
     val tasks: LiveData<List<Task?>> = items.map {
         it.flatMap { summary -> summary.tasks }
-            .map { detail -> detail.task }
-            .sortedBy { task -> task?.priority }
+                .map { detail -> detail.task }
+                .sortedBy { task -> task?.priority }
     }
 
-    private val _basicColorRes = MutableLiveData<Int>()
+    private val _basicColorRes = MutableLiveData<Int>().apply {
+        value = if (PreferenceUtils.useDarkMode) R.color.colorPrimaryDarkNight else R.color.editBasicBackground
+    }
     val basicColorRes: LiveData<Int> = _basicColorRes
 
-    private val _deletableColorRes = MutableLiveData<Int>()
+    private val _deletableColorRes = MutableLiveData<Int>().apply {
+        value = if (PreferenceUtils.useDarkMode) R.color.editDeletableBackgroundNight else R.color.editDeletableBackground
+    }
     val deletableColorRes: LiveData<Int> = _deletableColorRes
 
-    private val _deleteIconActiveColorRes = MutableLiveData<Int>()
+    private val _deleteIconActiveColorRes = MutableLiveData<Int>().apply { value = R.color.editDeleteIconActiveTint }
     val deleteIconActiveColorRes: LiveData<Int> = _deleteIconActiveColorRes
 
-    private val _deleteIconInactiveColorRes = MutableLiveData<Int>()
+    private val _deleteIconInactiveColorRes = MutableLiveData<Int>().apply { value = R.color.editDeleteIconInActiveTint }
     val deleteIconInactiveColorRes: LiveData<Int> = _deleteIconInactiveColorRes
 
-    val tasksJson: LiveData<String> = getSavedDeletableSetLiveData()
+    private val deletableSource: LiveData<String> = savedStateHandle.getLiveData<String>(EDIT_DELETABLE_SET_SAVED_STATE_KEY)
 
-    val isEmpty: LiveData<Boolean> = getSavedDeletableSetLiveData().map {
-        Gson().fromJson(it, Array<Task>::class.java).toList().isEmpty()
+    val deletableSet: LiveData<Set<Task>> = deletableSource.map {
+        Gson().fromJson(it, Array<Task>::class.java).toSet()
+    }
+
+    val isEmpty: LiveData<Boolean> = deletableSource.map {
+        Gson().fromJson(it, Array<Task>::class.java).isEmpty()
     }
 
     init {
-        _basicColorRes.value =
-            if (PreferenceUtils.useDarkMode) R.color.colorPrimaryDarkNight else R.color.editBasicBackground
-        _deletableColorRes.value =
-            if (PreferenceUtils.useDarkMode) R.color.editDeletableBackgroundNight else R.color.editDeletableBackground
-        _deleteIconActiveColorRes.value = R.color.editDeleteIconActiveTint
-        _deleteIconInactiveColorRes.value = R.color.editDeleteIconInActiveTint
         start()
     }
 
     private fun start() {
         _forceUpdate.value = Unit
-        val set = convertSavedDeletableSet()
-        savedStateHandle.set(EDIT_DELETABLE_SET_SAVED_STATE_KEY, Gson().toJson(set))
-    }
-
-    private fun getSavedDeletableSet(): String? {
-        return savedStateHandle.get(EDIT_DELETABLE_SET_SAVED_STATE_KEY)
-    }
-
-    private fun getSavedDeletableSetLiveData(): LiveData<String> {
-        return savedStateHandle.getLiveData(EDIT_DELETABLE_SET_SAVED_STATE_KEY)
+        savedStateHandle.set(EDIT_DELETABLE_SET_SAVED_STATE_KEY, Gson().toJson(convertJsonToSet()))
     }
 
     private fun clearSet() {
         savedStateHandle.set(
-            EDIT_DELETABLE_SET_SAVED_STATE_KEY,
-            Gson().toJson(emptySet<Task>())
+                EDIT_DELETABLE_SET_SAVED_STATE_KEY,
+                Gson().toJson(emptySet<Task>())
         )
     }
 
@@ -112,21 +102,23 @@ class SortViewModel @AssistedInject constructor(
     /**
      * "SavedState"의 Json 문자열을 "Set"으로 변환
      */
-    fun convertSavedDeletableSet(): MutableSet<Task> {
-        return getSavedDeletableSet()
-            ?.let { Gson().fromJson(it, Array<Task>::class.java).toMutableSet() }
-            ?: mutableSetOf()
+    private fun convertJsonToSet(): MutableSet<Task> {
+        return deletableSource.value
+                ?.let { Gson().fromJson(it, Array<Task>::class.java).toMutableSet() }
+                ?: mutableSetOf()
     }
 
-    fun onClickTask(task: Task) {
-        convertSavedDeletableSet().apply {
+    fun taskSelectionToDelete(task: Task) {
+        with(convertJsonToSet()) {
             if (contains(task)) {
                 remove(task)
             } else {
                 add(task)
             }
-        }.also { set ->
-            savedStateHandle.set(EDIT_DELETABLE_SET_SAVED_STATE_KEY, Gson().toJson(set))
+            savedStateHandle.set(
+                    EDIT_DELETABLE_SET_SAVED_STATE_KEY,
+                    Gson().toJson(this)
+            )
         }
     }
 
@@ -144,8 +136,8 @@ class SortViewModel @AssistedInject constructor(
             if (fetchResult is Success) {
                 // DB 업데이트 전 체크리스트 목록
                 val origin = fetchResult.data
-                    .sortedBy { it.priority }
-                    .map { it.name }
+                        .sortedBy { it.priority }
+                        .map { it.name }
 
                 val updateResult = repository.updateTasks(target)
                 if (updateResult.succeeded) {
@@ -159,15 +151,19 @@ class SortViewModel @AssistedInject constructor(
         }
     }
 
-    fun handleDeletionClick() {
-        val tasksSet = convertSavedDeletableSet()
-        if (tasksSet.isEmpty()) return
-        _deleteEvent.value = Event(tasksSet.size)
+    fun handleTasksDeletion() {
+        deletableSet.value
+                ?.takeUnless { it.isEmpty() }
+                ?.let { _deleteEvent.value = Event(it.size) }
     }
 
     fun deleteTasks() {
         viewModelScope.launch {
-            val result = repository.deleteTasks(convertSavedDeletableSet().toList())
+            val tasks = deletableSet.value
+                    ?.toList()
+                    ?.takeIf { it.isNotEmpty() }
+                    ?: return@launch
+            val result = repository.deleteTasks(tasks)
             if (result.succeeded) {
                 clearSet()
                 _snackbarText.value = Event(R.string.sort_tasks_delete)

@@ -1,25 +1,21 @@
 package dev.kxxcn.maru.view.sort
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import dev.kxxcn.maru.data.Task
-import dev.kxxcn.maru.databinding.SortItemBinding
 import dev.kxxcn.maru.util.ItemTouchHelperCallback
 import dev.kxxcn.maru.util.OnStartDragListener
 import dev.kxxcn.maru.view.base.LifecycleAdapter
-import dev.kxxcn.maru.view.base.LifecycleViewHolder
-import org.jetbrains.anko.sdk27.coroutines.onLongClick
 import java.lang.ref.WeakReference
 import java.util.*
 
 class SortAdapter(
-    private val viewModel: SortViewModel
-) : LifecycleAdapter<Task?, SortAdapter.SortViewHolder>(SortDiffCallback()),
-    ItemTouchHelperCallback.ItemTouchHelperAdapter,
-    OnStartDragListener {
+        private val viewModel: SortViewModel
+) : LifecycleAdapter<Task?, SortViewHolder>(SortDiffCallback()),
+        ItemTouchHelperCallback.ItemTouchHelperAdapter,
+        OnStartDragListener {
 
     private lateinit var refRecyclerView: WeakReference<RecyclerView>
 
@@ -29,9 +25,7 @@ class SortAdapter(
         super.onAttachedToRecyclerView(recyclerView)
         refRecyclerView = WeakReference(recyclerView)
         val callback = ItemTouchHelperCallback(this)
-        touchHelper = ItemTouchHelper(callback).apply {
-            attachToRecyclerView(recyclerView)
-        }
+        touchHelper = ItemTouchHelper(callback).apply { attachToRecyclerView(recyclerView) }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SortViewHolder {
@@ -67,41 +61,6 @@ class SortAdapter(
 
     override fun onStartDrag(viewHolder: RecyclerView.ViewHolder) {
         touchHelper.startDrag(viewHolder)
-    }
-
-    class SortViewHolder(
-        private val binding: SortItemBinding,
-        private val dragListener: OnStartDragListener
-    ) : LifecycleViewHolder(binding) {
-
-        init {
-            binding.sortIcon.onLongClick {
-                dragListener.onStartDrag(this@SortViewHolder)
-            }
-        }
-
-        fun bind(viewModel: SortViewModel, task: Task): () -> Unit {
-            with(binding) {
-                this.lifecycleOwner = this@SortViewHolder
-                this.viewModel = viewModel
-                this.task = task
-                this.executePendingBindings()
-            }
-            return { release() }
-        }
-
-        private fun release() {
-            binding.sortParent.setOnClickListener(null)
-        }
-
-        companion object {
-
-            fun from(parent: ViewGroup, dragListener: OnStartDragListener): SortViewHolder {
-                val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = SortItemBinding.inflate(layoutInflater, parent, false)
-                return SortViewHolder(binding, dragListener)
-            }
-        }
     }
 }
 

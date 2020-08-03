@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
@@ -27,8 +26,8 @@ class SortFragment : DaggerFragment() {
 
     private val viewModel by viewModels<SortViewModel> {
         viewModelFactory.create(
-            this,
-            arguments
+                this,
+                arguments
         )
     }
 
@@ -37,14 +36,14 @@ class SortFragment : DaggerFragment() {
     private var alertDialog: AlertDialog? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         binding = SortFragmentBinding.inflate(
-            inflater,
-            container,
-            false
+                inflater,
+                container,
+                false
         ).apply {
             viewModel = this@SortFragment.viewModel
         }
@@ -80,9 +79,6 @@ class SortFragment : DaggerFragment() {
     }
 
     private fun setupListener() {
-        viewModel.updateEvent.observe(viewLifecycleOwner, EventObserver {
-            binding.tasksList.adapter?.notifyDataSetChanged()
-        })
         viewModel.closeEvent.observe(viewLifecycleOwner, EventObserver {
             findNavController().popBackStack()
         })
@@ -91,9 +87,6 @@ class SortFragment : DaggerFragment() {
         })
         viewModel.toastText.observe(viewLifecycleOwner, EventObserver {
             Toast.makeText(context, it, Toast.LENGTH_LONG).show()
-        })
-        viewModel.tasksJson.observe(viewLifecycleOwner, Observer {
-            binding.tasksList.adapter?.notifyDataSetChanged()
         })
     }
 
@@ -106,10 +99,10 @@ class SortFragment : DaggerFragment() {
     private fun showDialog(count: Int) {
         alertDialog?.dismiss()
         alertDialog = openDialog(
-            R.drawable.ic_delete,
-            getString(R.string.sort_tasks_deletion_dialog_message, count),
-            negative = { handleNegativeClick() },
-            positive = { handlePositiveClick() }
+                R.drawable.ic_delete,
+                getString(R.string.sort_tasks_deletion_dialog_message, count),
+                negative = { handleNegativeClick() },
+                positive = { handlePositiveClick() }
         )
     }
 
