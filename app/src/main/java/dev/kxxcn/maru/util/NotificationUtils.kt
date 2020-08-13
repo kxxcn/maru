@@ -20,7 +20,7 @@ object NotificationUtils {
     private fun defaultBeep() =
         "android.resource://${BuildConfig.APPLICATION_ID}/${R.raw.beep_default}"
 
-    fun init(context: Context) {
+    fun makeChannels(context: Context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val manager = context.notificationManager
             listOf(CHANNEL_NOTICE).also { ids ->

@@ -1,35 +1,35 @@
 package dev.kxxcn.maru.util.extension
 
-import dev.kxxcn.maru.util.preference.PreferenceManager
+import dev.kxxcn.maru.util.preference.PreferenceProvider
 
 fun String.putString(value: String?) {
-    PreferenceManager.putString(this, value)
+    PreferenceProvider.instance.edit().putString(this, value).apply()
 }
 
 fun String.putInt(value: Int) {
-    PreferenceManager.putInt(this, value)
+    PreferenceProvider.instance.edit().putInt(this, value).apply()
 }
 
 fun String.putLong(value: Long) {
-    PreferenceManager.putLong(this, value)
+    PreferenceProvider.instance.edit().putLong(this, value).apply()
 }
 
 fun String.putBoolean(value: Boolean) {
-    PreferenceManager.putBoolean(this, value)
+    PreferenceProvider.instance.edit().putBoolean(this, value).apply()
 }
 
 fun String.getString(defValue: String?): String? {
-    return PreferenceManager.getString(this, defValue)
+    return PreferenceProvider.instance.getString(this, defValue)
 }
 
 fun String.getInt(defValue: Int): Int {
-    return PreferenceManager.getInt(this, defValue)
+    return PreferenceProvider.instance.getInt(this, defValue)
 }
 
 fun String.getLong(defValue: Long): Long {
-    return PreferenceManager.getLong(this, defValue)
+    return PreferenceProvider.instance.getLong(this, defValue)
 }
 
 fun String.getBoolean(defValue: Boolean): Boolean {
-    return PreferenceManager.getBoolean(this, defValue)
+    return PreferenceProvider.instance.getBoolean(this, defValue)
 }

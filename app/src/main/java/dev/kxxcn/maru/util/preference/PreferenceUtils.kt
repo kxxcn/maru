@@ -5,6 +5,7 @@ import dev.kxxcn.maru.util.extension.getInt
 import dev.kxxcn.maru.util.extension.putBoolean
 import dev.kxxcn.maru.util.extension.putInt
 
+
 object PreferenceUtils {
 
     /**
