@@ -11,14 +11,14 @@ import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import dev.kxxcn.maru.di.DaggerApplicationComponent
 import dev.kxxcn.maru.util.NotificationUtils
-import dev.kxxcn.maru.util.preference.PreferenceProvider
+import dev.kxxcn.maru.util.preference.PreferenceManager
 
 class MaruApplication : DaggerApplication() {
 
     override fun onCreate() {
         super.onCreate()
-        PreferenceProvider.createInstance(this)
-        NotificationUtils.makeChannels(this)
+        PreferenceManager.init(this)
+        NotificationUtils.init(this)
         FirebaseApp.initializeApp(this)
         FirebaseMessaging.getInstance().subscribeToTopic(getString(R.string.topic_notice))
         MobileAds.initialize(this)

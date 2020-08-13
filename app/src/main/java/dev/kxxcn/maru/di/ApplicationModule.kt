@@ -13,7 +13,7 @@ import dev.kxxcn.maru.MaruCoroutineScope
 import dev.kxxcn.maru.data.source.DataRepository
 import dev.kxxcn.maru.data.source.DataSource
 import dev.kxxcn.maru.data.source.MaruRepository
-import dev.kxxcn.maru.data.source.api.RetrofitBuilder
+import dev.kxxcn.maru.data.source.api.RetrofitFactory
 import dev.kxxcn.maru.data.source.firebase.FirebaseDataSource
 import dev.kxxcn.maru.data.source.local.LocalDataSource
 import dev.kxxcn.maru.data.source.local.MaruDatabase
@@ -45,7 +45,7 @@ object ApplicationModule {
     @Provides
     fun provideRemoteDataSource(ioDispatcher: CoroutineDispatcher): DataSource {
         return RemoteDataSource(
-            RetrofitBuilder.createNaverService(),
+            RetrofitFactory.create(),
             ioDispatcher
         )
     }
