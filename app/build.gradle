@@ -11,8 +11,8 @@ android {
         applicationId "dev.kxxcn.maru"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 6
-        versionName "1.2.2"
+        versionCode 7
+        versionName "1.2.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -83,6 +83,8 @@ dependencies {
     implementation Dependencies.recyclerView
     implementation Dependencies.anko
 
+    implementation Dependencies.googlePlay
+    implementation Dependencies.googlePlayKtx
     implementation Dependencies.playServicesAd
     implementation Dependencies.playServicesAuth
     implementation Dependencies.firebaseAuth
