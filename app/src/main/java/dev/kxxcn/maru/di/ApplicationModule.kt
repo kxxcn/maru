@@ -3,6 +3,7 @@ package dev.kxxcn.maru.di
 import androidx.room.Room
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import dagger.Binds
@@ -83,6 +84,12 @@ object ApplicationModule {
             MaruDatabase::class.java,
             "Maru.db"
         ).addMigrations(*ALL_MIGRATIONS).fallbackToDestructiveMigrationOnDowngrade().build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideAnalytics(application: MaruApplication): FirebaseAnalytics {
+        return FirebaseAnalytics.getInstance(application.applicationContext)
     }
 
     @Singleton

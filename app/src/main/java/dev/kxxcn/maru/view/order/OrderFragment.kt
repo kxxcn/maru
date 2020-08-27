@@ -4,18 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import dev.kxxcn.maru.EventObserver
-import dev.kxxcn.maru.R
 import dev.kxxcn.maru.databinding.OrderFragmentBinding
 import dev.kxxcn.maru.util.LinearSpacingDecoration
 import dev.kxxcn.maru.util.extension.px
-import javax.inject.Inject
+import dev.kxxcn.maru.view.base.BaseFragment
 
-class OrderFragment : Fragment(R.layout.order_fragment) {
+class OrderFragment : BaseFragment() {
+
+    override val clazz: Class<*>
+        get() = this::class.java
 
     private val viewModel by viewModels<OrderViewModel>()
 

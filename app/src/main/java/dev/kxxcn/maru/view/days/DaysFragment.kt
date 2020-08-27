@@ -10,8 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
-import dagger.android.support.DaggerFragment
 import dev.kxxcn.maru.EventObserver
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.data.Day
@@ -19,9 +17,13 @@ import dev.kxxcn.maru.databinding.DaysFragmentBinding
 import dev.kxxcn.maru.util.DayGridSpacingDecoration
 import dev.kxxcn.maru.util.extension.openDialog
 import dev.kxxcn.maru.util.extension.setupSnackbar
+import dev.kxxcn.maru.view.base.BaseDaggerFragment
 import javax.inject.Inject
 
-class DaysFragment : DaggerFragment() {
+class DaysFragment : BaseDaggerFragment() {
+
+    override val clazz: Class<*>
+        get() = this::class.java
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -66,7 +68,7 @@ class DaysFragment : DaggerFragment() {
     }
 
     private fun setupSnackbar() {
-        view?.setupSnackbar(viewLifecycleOwner, viewModel.snackbarText, Snackbar.LENGTH_SHORT)
+        view?.setupSnackbar(viewLifecycleOwner, viewModel.snackbarText)
     }
 
     private fun setupListener() {

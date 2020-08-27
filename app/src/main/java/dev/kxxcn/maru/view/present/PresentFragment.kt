@@ -7,13 +7,16 @@ import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import dagger.android.support.DaggerFragment
 import dev.kxxcn.maru.databinding.PresentFragmentBinding
 import dev.kxxcn.maru.di.MaruSavedStateViewModelFactory
 import dev.kxxcn.maru.util.PAGER_CATEGORY
+import dev.kxxcn.maru.view.base.BaseDaggerFragment
 import javax.inject.Inject
 
-class PresentFragment : DaggerFragment() {
+class PresentFragment : BaseDaggerFragment() {
+
+    override val clazz: Class<*>
+        get() = this::class.java
 
     @Inject
     lateinit var viewModelFactory: MaruSavedStateViewModelFactory

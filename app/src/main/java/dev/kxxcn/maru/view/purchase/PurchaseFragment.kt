@@ -8,16 +8,17 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.FirebaseAuth
-import dagger.android.support.DaggerFragment
 import dev.kxxcn.maru.EventObserver
 import dev.kxxcn.maru.databinding.PurchaseFragmentBinding
 import dev.kxxcn.maru.util.BillingManager
 import dev.kxxcn.maru.util.extension.setupSnackbar
+import dev.kxxcn.maru.view.base.BaseDaggerFragment
 import javax.inject.Inject
 
-class PurchaseFragment : DaggerFragment() {
+class PurchaseFragment : BaseDaggerFragment() {
+
+    override val clazz: Class<*>
+        get() = this::class.java
 
     @Inject
     lateinit var billingManager: BillingManager
@@ -61,7 +62,7 @@ class PurchaseFragment : DaggerFragment() {
     }
 
     private fun setupSnackbar() {
-        view?.setupSnackbar(viewLifecycleOwner, viewModel.snackbarText, Snackbar.LENGTH_SHORT)
+        view?.setupSnackbar(viewLifecycleOwner, viewModel.snackbarText)
     }
 
     private fun setupListener() {

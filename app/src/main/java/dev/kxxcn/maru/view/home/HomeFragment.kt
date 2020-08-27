@@ -10,16 +10,18 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
-import dagger.android.support.DaggerFragment
 import dev.kxxcn.maru.MaruActivity
 import dev.kxxcn.maru.databinding.HomeFragmentBinding
 import dev.kxxcn.maru.util.LinearSpacingDecoration
 import dev.kxxcn.maru.util.extension.setupSnackbar
 import dev.kxxcn.maru.util.preference.PreferenceUtils
+import dev.kxxcn.maru.view.base.BaseDaggerFragment
 import javax.inject.Inject
 
-class HomeFragment : DaggerFragment() {
+class HomeFragment : BaseDaggerFragment() {
+
+    override val clazz: Class<*>
+        get() = this::class.java
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -67,7 +69,7 @@ class HomeFragment : DaggerFragment() {
     }
 
     private fun setupSnackbar() {
-        view?.setupSnackbar(viewLifecycleOwner, viewModel.snackbarText, Snackbar.LENGTH_SHORT)
+        view?.setupSnackbar(viewLifecycleOwner, viewModel.snackbarText)
     }
 
     private fun setupOnboard() {

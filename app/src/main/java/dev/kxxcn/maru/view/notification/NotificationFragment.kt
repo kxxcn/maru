@@ -4,15 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import dev.kxxcn.maru.EventObserver
 import dev.kxxcn.maru.databinding.NotificationFragmentBinding
 import dev.kxxcn.maru.util.preference.PreferenceUtils
+import dev.kxxcn.maru.view.base.BaseFragment
 
-class NotificationFragment : Fragment() {
+class NotificationFragment : BaseFragment() {
+
+    override val clazz: Class<*>
+        get() = this::class.java
 
     private val viewModel by viewModels<NotificationViewModel>()
 

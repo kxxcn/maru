@@ -17,13 +17,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.snackbar.Snackbar
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.geometry.LatLngBounds
 import com.naver.maps.map.*
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.PathOverlay
-import dagger.android.support.DaggerFragment
 import dev.kxxcn.maru.EventObserver
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.databinding.LandmarkFragmentBinding
@@ -33,9 +31,13 @@ import dev.kxxcn.maru.util.extension.displayHeight
 import dev.kxxcn.maru.util.extension.px
 import dev.kxxcn.maru.util.extension.setupSnackbar
 import dev.kxxcn.maru.util.preference.PreferenceUtils
+import dev.kxxcn.maru.view.base.BaseDaggerFragment
 import javax.inject.Inject
 
-class LandmarkFragment : DaggerFragment(), OnMapReadyCallback {
+class LandmarkFragment : BaseDaggerFragment(), OnMapReadyCallback, LocationListener {
+
+    override val clazz: Class<*>
+        get() = this::class.java
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -94,7 +96,8 @@ class LandmarkFragment : DaggerFragment(), OnMapReadyCallback {
     }
 
     private fun setupSnackbar() {
-        view?.setupSnackbar(viewLifecycleOwner, viewModel.snackbarText, Snackbar.LENGTH_SHORT)
+        view?.setupSnackbar(viewLifecycleOwner, viewModel.snackbarText)
+        view?.setupSnackbar(viewLifecycleOwner, viewModel.snackbarRes)
     }
 
     private fun setupListener() {

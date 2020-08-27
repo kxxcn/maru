@@ -9,6 +9,10 @@
             name="close"
             type="kotlin.jvm.functions.Function0" />
 
+        <variable
+            name="viewModel"
+            type="dev.kxxcn.maru.view.setting.SettingViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -74,6 +78,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:onClick="@{() -> viewModel.editProfile()}"
                     android:orientation="horizontal">
 
                     <dev.kxxcn.maru.view.custom.MaruTextView
@@ -106,6 +111,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:onClick="@{() -> viewModel.editTasks()}"
                     android:orientation="horizontal">
 
                     <dev.kxxcn.maru.view.custom.MaruTextView
@@ -146,6 +152,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:onClick="@{() -> viewModel.noticeNotification()}"
                     android:orientation="horizontal">
 
                     <dev.kxxcn.maru.view.custom.MaruTextView
@@ -186,6 +193,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:onClick="@{() -> viewModel.termsLocationBasedService()}"
                     android:orientation="horizontal">
 
                     <dev.kxxcn.maru.view.custom.MaruTextView
@@ -218,6 +226,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:onClick="@{() -> viewModel.termsLicense()}"
                     android:orientation="horizontal">
 
                     <dev.kxxcn.maru.view.custom.MaruTextView

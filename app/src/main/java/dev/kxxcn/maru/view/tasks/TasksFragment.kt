@@ -8,16 +8,19 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import dagger.android.support.DaggerFragment
 import dev.kxxcn.maru.EventObserver
 import dev.kxxcn.maru.GlideApp
 import dev.kxxcn.maru.MaruActivity
 import dev.kxxcn.maru.databinding.TasksFragmentBinding
 import dev.kxxcn.maru.util.LinearSpacingDecoration
 import dev.kxxcn.maru.util.extension.px
+import dev.kxxcn.maru.view.base.BaseDaggerFragment
 import javax.inject.Inject
 
-class TasksFragment : DaggerFragment() {
+class TasksFragment : BaseDaggerFragment() {
+
+    override val clazz: Class<*>
+        get() = this::class.java
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory

@@ -8,15 +8,18 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import dagger.android.support.DaggerFragment
 import dev.kxxcn.maru.EventObserver
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.databinding.EditFragmentBinding
 import dev.kxxcn.maru.util.KEY_REGISTER_TYPE
+import dev.kxxcn.maru.view.base.BaseDaggerFragment
 import dev.kxxcn.maru.view.register.RegisterFilterType
 import javax.inject.Inject
 
-class EditFragment : DaggerFragment() {
+class EditFragment : BaseDaggerFragment() {
+
+    override val clazz: Class<*>
+        get() = this::class.java
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory

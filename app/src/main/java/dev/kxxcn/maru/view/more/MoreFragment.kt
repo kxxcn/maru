@@ -22,7 +22,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.orhanobut.logger.Logger
-import dagger.android.support.DaggerFragment
 import dev.kxxcn.maru.BuildConfig
 import dev.kxxcn.maru.EventObserver
 import dev.kxxcn.maru.MaruActivity
@@ -36,13 +35,17 @@ import dev.kxxcn.maru.util.extension.displayWidth
 import dev.kxxcn.maru.util.extension.openDialog
 import dev.kxxcn.maru.util.extension.setupSnackbar
 import dev.kxxcn.maru.util.preference.PreferenceUtils
+import dev.kxxcn.maru.view.base.BaseDaggerFragment
 import dev.kxxcn.maru.view.more.contents.ContentsItem
 import org.jetbrains.anko.contentView
 import java.io.File
 import java.io.FileOutputStream
 import javax.inject.Inject
 
-class MoreFragment : DaggerFragment() {
+class MoreFragment : BaseDaggerFragment() {
+
+    override val clazz: Class<*>
+        get() = this::class.java
 
     @Inject
     lateinit var auth: FirebaseAuth

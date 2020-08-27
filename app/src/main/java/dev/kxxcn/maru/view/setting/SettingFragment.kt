@@ -7,15 +7,20 @@ import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import dev.kxxcn.maru.EventObserver
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.databinding.SettingFragmentBinding
 import dev.kxxcn.maru.util.NotificationUtils
-import kotlinx.android.synthetic.main.setting_fragment.*
-import org.jetbrains.anko.sdk27.coroutines.onClick
+import dev.kxxcn.maru.view.base.BaseFragment
 
-class SettingFragment : Fragment() {
+class SettingFragment : BaseFragment() {
+
+    override val clazz: Class<*>
+        get() = this::class.java
+
+    private val viewModel by viewModels<SettingViewModel>()
 
     private lateinit var binding: SettingFragmentBinding
 
@@ -30,6 +35,7 @@ class SettingFragment : Fragment() {
             false
         ).apply {
             close = { findNavController().popBackStack() }
+            viewModel = this@SettingFragment.viewModel
         }
         return binding.root
     }
@@ -40,22 +46,21 @@ class SettingFragment : Fragment() {
     }
 
     private fun setupListener() {
-        setting_profile_edit.onClick { clickItem(it) }
-        setting_tasks_edit.onClick { clickItem(it) }
-        setting_notification_notice.onClick { clickItem(it) }
-        setting_terms_location_based_service.onClick { clickItem(it) }
-        setting_terms_license.onClick { clickItem(it) }
-    }
-
-    private fun clickItem(v: View?) {
-        v ?: return
-        when (v.id) {
-            R.id.setting_profile_edit -> profile()
-            R.id.setting_tasks_edit -> tasks()
-            R.id.setting_notification_notice -> notification()
-            R.id.setting_terms_location_based_service -> locationBasedService()
-            R.id.setting_terms_license -> license()
-        }
+        viewModel.profile.observe(viewLifecycleOwner, EventObserver {
+            profile()
+        })
+        viewModel.tasks.observe(viewLifecycleOwner, EventObserver {
+            tasks()
+        })
+        viewModel.notice.observe(viewLifecycleOwner, EventObserver {
+            notification()
+        })
+        viewModel.location.observe(viewLifecycleOwner, EventObserver {
+            locationBasedService()
+        })
+        viewModel.license.observe(viewLifecycleOwner, EventObserver {
+            license()
+        })
     }
 
     private fun profile() {

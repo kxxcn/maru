@@ -141,7 +141,7 @@ fun View.showSnackbar(text: String, timeLength: Int) {
 fun <T> View.setupSnackbar(
     lifecycleOwner: LifecycleOwner,
     snackbarEvent: LiveData<Event<T>>,
-    timeLength: Int
+    timeLength: Int = Snackbar.LENGTH_SHORT
 ) {
     snackbarEvent.observe(lifecycleOwner, Observer { event ->
         event.getContentIfNotHandled()?.let {
