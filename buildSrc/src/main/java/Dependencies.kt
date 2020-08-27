@@ -33,6 +33,8 @@ object Versions {
     const val playServicesAuthVersion = "17.0.0"
     const val playServicesAdsVersion = "19.1.0"
     const val googleServicesVersion = "4.3.3"
+    const val googlePlayVersion = "1.8.0"
+    const val googlePlayKtxVersion = "1.8.1"
     const val crashlyticsGradleVersion = "2.2.0"
     const val billingVersion = "2.1.0"
     const val naverMapVersion = "3.8.0"
@@ -69,6 +71,8 @@ object Dependencies {
     /**
      * Google
      */
+    const val googlePlay = "com.google.android.play:core:${Versions.googlePlayVersion}"
+    const val googlePlayKtx = "com.google.android.play:core-ktx:${Versions.googlePlayKtxVersion}"
     const val playServicesAd =
         "com.google.android.gms:play-services-ads:${Versions.playServicesAdsVersion}"
     const val playServicesAuth =

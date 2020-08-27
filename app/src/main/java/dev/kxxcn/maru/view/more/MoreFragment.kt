@@ -18,7 +18,8 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.common.api.ApiException
-import com.google.android.material.snackbar.Snackbar
+import com.google.android.play.core.review.ReviewInfo
+import com.google.android.play.core.review.ReviewManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.orhanobut.logger.Logger
@@ -54,11 +55,16 @@ class MoreFragment : BaseDaggerFragment() {
     lateinit var client: GoogleSignInClient
 
     @Inject
+    lateinit var manager: ReviewManager
+
+    @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val viewModel by viewModels<MoreViewModel> { viewModelFactory }
 
     private lateinit var binding: MoreFragmentBinding
+
+    private var reviewInfo: ReviewInfo? = null
 
     private var alertDialog: AlertDialog? = null
 
@@ -144,10 +150,17 @@ class MoreFragment : BaseDaggerFragment() {
     }
 
     private fun setupSnackbar() {
-        view?.setupSnackbar(viewLifecycleOwner, viewModel.snackbarText, Snackbar.LENGTH_SHORT)
+        view?.setupSnackbar(viewLifecycleOwner, viewModel.snackbarText)
     }
 
     private fun setupListener() {
+        manager.requestReviewFlow().apply {
+            addOnCompleteListener { request ->
+                if (request.isSuccessful) {
+                    reviewInfo = request.result
+                }
+            }
+        }
         viewModel.settingEvent.observe(viewLifecycleOwner, EventObserver {
             MoreFragmentDirections.actionMoreFragmentToSettingFragment().also {
                 findNavController().navigate(it)
@@ -216,13 +229,21 @@ class MoreFragment : BaseDaggerFragment() {
 
     private fun openStore() {
         alertDialog?.dismiss()
-        val packageName = context?.packageName
-        try {
-            val uri = getString(R.string.play_store_app, packageName)
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(uri)))
-        } catch (e: ActivityNotFoundException) {
-            val uri = getString(R.string.play_store_web, packageName)
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(uri)))
+        val activity = activity
+        val info = reviewInfo
+        if (activity == null || info == null) {
+            val packageName = context?.packageName
+            try {
+                val uri = getString(R.string.play_store_app, packageName)
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(uri)))
+            } catch (e: ActivityNotFoundException) {
+                val uri = getString(R.string.play_store_web, packageName)
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(uri)))
+            }
+        } else {
+            manager
+                .launchReviewFlow(activity, info)
+                .addOnCompleteListener { viewModel.handleReviewSuccess() }
         }
     }
 

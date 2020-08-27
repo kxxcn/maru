@@ -94,6 +94,21 @@
     <string name="backup">백업하기</string>
     <string name="restore">복원하기</string>
 
+    <string name="need_sign_in_process">인증이 필요한 서비스입니다.\n로그인 하시겠습니까?</string>
+    <string name="active_night_mode">야간모드로 전환하시겠습니까?</string>
+    <string name="inactive_night_mode">야간모드를 해제하시겠습니까?</string>
+    <string name="send_email">문의하시겠습니까?</string>
+    <string name="try_again_later">잠시 후 다시 시도해주세요.</string>
+    <string name="success_sign_in">로그인 되었습니다.</string>
+    <string name="failure_sign_in">로그인을 실패했습니다.</string>
+    <string name="apply_ad_removal_function">광고 제거 기능이 적용되어 있습니다.</string>
+    <string name="success_backup">백업 되었습니다.</string>5
+    <string name="failure_backup">백업을 실패했습니다.</string>
+    <string name="success_restore">복원 되었습니다.</string>
+    <string name="failure_restore">복원을 실패했습니다.</string>
+    <string name="write_review">리뷰를 작성하시겠습니까?</string>
+    <string name="thank_you_for_feedback">소중한 의견 감사합니다! (۶•౪•)۶</string>
+
     <string name="register_hello">안녕하세요.</string>
     <string name="register_welcome">마루에 오신 것을\n환영합니다.</string>
     <string name="register_start">시작하기</string>
@@ -213,20 +228,6 @@
     <string name="order_believer">신자들 기도</string>
     <string name="order_liturgy">성찬 전례</string>
     <string name="order_bow">신랑, 신부 배례</string>
-
-    <string name="need_sign_in_process">인증이 필요한 서비스입니다.\n로그인 하시겠습니까?</string>
-    <string name="active_night_mode">야간모드로 전환하시겠습니까?</string>
-    <string name="inactive_night_mode">야간모드를 해제하시겠습니까?</string>
-    <string name="send_email">문의하시겠습니까?</string>
-    <string name="try_again_later">잠시 후 다시 시도해주세요.</string>
-    <string name="success_sign_in">로그인 되었습니다.</string>
-    <string name="failure_sign_in">로그인을 실패했습니다.</string>
-    <string name="apply_ad_removal_function">광고 제거 기능이 적용되어 있습니다.</string>
-    <string name="success_backup">백업 되었습니다.</string>
-    <string name="failure_backup">백업을 실패했습니다.</string>
-    <string name="success_restore">복원 되었습니다.</string>
-    <string name="failure_restore">복원을 실패했습니다.</string>
-    <string name="write_review">리뷰를 작성하시겠습니까?</string>
 
     <string name="email_address">kxxcn.dev@gmail.com</string>
     <string name="email_subject">[마루] 문의사항</string>

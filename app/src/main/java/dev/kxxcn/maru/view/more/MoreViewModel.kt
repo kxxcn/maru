@@ -154,4 +154,8 @@ class MoreViewModel @Inject constructor(
             }
         }
     }
+
+    fun handleReviewSuccess() {
+        _snackbarText.value = Event(R.string.thank_you_for_feedback)
+    }
 }

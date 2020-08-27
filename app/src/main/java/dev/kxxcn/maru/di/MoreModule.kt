@@ -14,7 +14,8 @@ abstract class MoreModule {
     @ContributesAndroidInjector(
         modules = [
             ViewModelBuilder::class,
-            AuthenticationModule::class
+            AuthenticationModule::class,
+            ReviewManagerModule::class
         ]
     )
     internal abstract fun moreFragment(): MoreFragment
