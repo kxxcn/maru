@@ -332,6 +332,7 @@
     <string name="landmark_fuel_price">유류 비용</string>
     <string name="landmark_fare_format">%1$s원</string>
     <string name="landmark_fare_not_found">요금 정보를 찾지 못했습니다.</string>
+    <string name="landmark_invalid_location">위치 정보 확인을 실패했습니다.</string>
 
     <string name="days_deletion_message">[%1$s] 항목을 삭제하시겠습니까?</string>
     <string name="days_deletion_succeeded">항목이 삭제되었습니다.</string>

@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
+import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
@@ -48,6 +49,8 @@ class LandmarkFragment : BaseDaggerFragment(), OnMapReadyCallback, LocationListe
 
     private lateinit var map: NaverMap
 
+    private var locationManager: LocationManager? = null
+
     private val pathSet = mutableSetOf<PathOverlay>()
     private val markerSet = mutableSetOf<Marker>()
 
@@ -72,6 +75,7 @@ class LandmarkFragment : BaseDaggerFragment(), OnMapReadyCallback, LocationListe
         setupSnackbar()
         setupListener()
         setupOnBackPressed()
+        setupLocationManager()
         setupMap()
     }
 
@@ -86,9 +90,26 @@ class LandmarkFragment : BaseDaggerFragment(), OnMapReadyCallback, LocationListe
         }
     }
 
+    override fun onDestroyView() {
+        locationManager?.removeUpdates(this)
+        super.onDestroyView()
+    }
+
     override fun onMapReady(map: NaverMap) {
         this.map = map
         setupLocation()
+    }
+
+    override fun onLocationChanged(location: Location?) {
+    }
+
+    override fun onStatusChanged(p0: String?, p1: Int, p2: Bundle?) {
+    }
+
+    override fun onProviderEnabled(p0: String?) {
+    }
+
+    override fun onProviderDisabled(p0: String?) {
     }
 
     private fun setupLifecycle() {
@@ -125,6 +146,10 @@ class LandmarkFragment : BaseDaggerFragment(), OnMapReadyCallback, LocationListe
         }
     }
 
+    private fun setupLocationManager() {
+        locationManager = activity?.getSystemService(Context.LOCATION_SERVICE) as? LocationManager
+    }
+
     private fun setupMap() {
         with(childFragmentManager) {
             val northWest = LatLng(31.43, 122.37)
@@ -147,7 +172,7 @@ class LandmarkFragment : BaseDaggerFragment(), OnMapReadyCallback, LocationListe
 
     private fun setupLocation() {
         if (checkPermission()) {
-            getLocation()
+            syncLocation()
         }
     }
 
@@ -175,9 +200,17 @@ class LandmarkFragment : BaseDaggerFragment(), OnMapReadyCallback, LocationListe
         }
     }
 
-    private fun getLocation() {
+    private fun syncLocation() {
         try {
-            (activity?.getSystemService(Context.LOCATION_SERVICE) as? LocationManager)
+            locationManager
+                ?.also {
+                    it.requestLocationUpdates(
+                        LocationManager.NETWORK_PROVIDER,
+                        0L,
+                        0f,
+                        this
+                    )
+                }
                 ?.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
                 ?.let {
                     setupPagerAdapter(it)
@@ -187,8 +220,11 @@ class LandmarkFragment : BaseDaggerFragment(), OnMapReadyCallback, LocationListe
                             .also { update -> map.moveCamera(update) }
                     }
                 }
+                ?: throw RuntimeException()
         } catch (e: SecurityException) {
-
+            viewModel.handleSyncFailure()
+        } catch (e: RuntimeException) {
+            viewModel.invalidLocation()
         }
     }
 

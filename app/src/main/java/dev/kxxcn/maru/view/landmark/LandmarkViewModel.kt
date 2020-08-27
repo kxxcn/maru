@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.kxxcn.maru.Event
+import dev.kxxcn.maru.R
 import dev.kxxcn.maru.data.Result.Success
 import dev.kxxcn.maru.data.source.DataRepository
 import dev.kxxcn.maru.data.source.api.dto.DirectionDto
@@ -22,6 +23,9 @@ class LandmarkViewModel @Inject constructor(
 
     private val _snackbarText = MutableLiveData<Event<String?>>()
     val snackbarText: LiveData<Event<String?>> = _snackbarText
+
+    private val _snackbarRes = MutableLiveData<Event<Int>>()
+    val snackbarRes: LiveData<Event<Int>> = _snackbarRes
 
     private val _directionEvent = MutableLiveData<Event<DirectionDto?>>()
     val directionEvent: LiveData<Event<DirectionDto?>> = _directionEvent
@@ -79,5 +83,13 @@ class LandmarkViewModel @Inject constructor(
             }
             _isLoading.value = false
         }
+    }
+
+    fun handleSyncFailure() {
+        _snackbarRes.value = Event(R.string.try_again_later)
+    }
+
+    fun invalidLocation() {
+        _snackbarRes.value = Event(R.string.landmark_invalid_location)
     }
 }
