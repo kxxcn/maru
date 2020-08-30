@@ -86,14 +86,14 @@ class RegisterFragment : DaggerFragment() {
         val ctx = context ?: return
         datePicker = DatePickerDialog(
             ctx,
-            DatePickerDialog.OnDateSetListener { _, y, m, d ->
+            { _, y, m, d ->
                 Calendar.getInstance().run {
                     set(y, m, d, 0, 0, 0)
                     set(Calendar.MILLISECOND, 0)
                     timeInMillis.also { wedding = it }
                 }.also { viewModel.setInputText(it.msToDate()) }
             }, today.year(), today.month(), today.day()
-        )
+        ).also { it.datePicker.minDate = today.timeInMillis }
     }
 
     private fun setupFilterType() {
