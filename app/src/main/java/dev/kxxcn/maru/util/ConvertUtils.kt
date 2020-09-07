@@ -2,6 +2,9 @@ package dev.kxxcn.maru.util
 
 import androidx.databinding.InverseMethod
 import dev.kxxcn.maru.R
+import dev.kxxcn.maru.util.extension.day
+import dev.kxxcn.maru.util.extension.month
+import dev.kxxcn.maru.util.extension.year
 import java.text.NumberFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -52,8 +55,14 @@ object ConvertUtils {
 
     @InverseMethod("inverseRemain")
     fun computeRemain(time: Long?): Long? {
-        val remain = time?.minus(System.currentTimeMillis())
-        return TimeUnit.MILLISECONDS.toDays(remain ?: 0L) + 1
+        val current = Calendar.getInstance().run {
+            timeInMillis = System.currentTimeMillis()
+            set(year(), month(), day(), 0, 0, 0)
+            set(Calendar.MILLISECOND, 0)
+            timeInMillis
+        }
+        val remain = time?.minus(current)
+        return TimeUnit.MILLISECONDS.toDays(remain ?: 0L)
     }
 
     fun inverseRemain(remain: Long?): Long? = 0L

@@ -87,7 +87,7 @@ class DaysAddFragment : BaseFragment() {
         val ctx = context ?: return
         datePicker = DatePickerDialog(
             ctx,
-            DatePickerDialog.OnDateSetListener { _, y, m, d ->
+            { _, y, m, d ->
                 Calendar.getInstance().apply {
                     set(y, m, d, 0, 0, 0)
                     set(Calendar.MILLISECOND, 0)

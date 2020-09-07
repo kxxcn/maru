@@ -1,19 +1,16 @@
 package dev.kxxcn.maru.view.onboard.page
 
 import androidx.annotation.StringRes
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.data.Result.Success
 import dev.kxxcn.maru.data.source.DataRepository
 import dev.kxxcn.maru.util.ANIMATION_ONBOARD_ACCOUNT
 import dev.kxxcn.maru.util.ANIMATION_ONBOARD_TASKS
 import dev.kxxcn.maru.util.ANIMATION_ONBOARD_WELCOME
+import dev.kxxcn.maru.util.ConvertUtils
 import dev.kxxcn.maru.view.onboard.page.OnboardPagerFilterType.*
 import kotlinx.coroutines.launch
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class OnboardPagerViewModel @Inject constructor(
@@ -32,11 +29,19 @@ class OnboardPagerViewModel @Inject constructor(
     private val _remaining = MutableLiveData<Long>()
     val remaining: LiveData<Long> = _remaining
 
+    private val _requestType = MutableLiveData<OnboardPagerFilterType>()
+
+    val weddingAlreadyPassed = MediatorLiveData<Boolean>().apply {
+        addSource(_requestType) { value = it == ONBOARD_WELCOME && (_remaining.value ?: 0) <= 0L }
+        addSource(_remaining) { value = _requestType.value == ONBOARD_WELCOME && it <= 0L }
+    }
+
     init {
         computeRemaining()
     }
 
     fun setFiltering(requestType: OnboardPagerFilterType) {
+        _requestType.value = requestType
         when (requestType) {
             ONBOARD_TASKS -> setFilter(
                 ANIMATION_ONBOARD_TASKS,
@@ -70,8 +75,7 @@ class OnboardPagerViewModel @Inject constructor(
         viewModelScope.launch {
             repository.getUsers().let { result ->
                 if (result is Success) {
-                    val remain = result.data[0].wedding - System.currentTimeMillis()
-                    _remaining.value = TimeUnit.MILLISECONDS.toDays(remain) + 1
+                    _remaining.value = ConvertUtils.computeRemain(result.data[0].wedding)
                 }
             }
         }

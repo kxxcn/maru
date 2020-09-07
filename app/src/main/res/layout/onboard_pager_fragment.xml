@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="15dp"
-                android:text="@{context.getString(viewModel.onboardSubject, viewModel.remaining)}"
+                android:text="@{viewModel.weddingAlreadyPassed ? @string/congratulations_on_your_wedding : context.getString(viewModel.onboardSubject, viewModel.remaining)}"
                 android:textSize="30sp"
                 app:textStyle="bold" />
 
