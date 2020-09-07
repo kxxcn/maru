@@ -11,18 +11,16 @@ import dev.kxxcn.maru.util.KEY_PRESENT_TYPE
 import dev.kxxcn.maru.util.PAGER_CATEGORY
 import dev.kxxcn.maru.util.PAGER_DESCRIPTION
 import dev.kxxcn.maru.util.SCROLL_TO_TOP_DELAY
+import dev.kxxcn.maru.view.base.BaseViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class PresentViewModel @AssistedInject constructor(
     @Assisted private val savedStateHandle: SavedStateHandle
-) : ViewModel() {
+) : BaseViewModel() {
 
     @AssistedInject.Factory
     interface Factory : AssistedSavedStateViewModelFactory<PresentViewModel>
-
-    private val _closeEvent = MutableLiveData<Event<Unit>>()
-    val closeEvent: LiveData<Event<Unit>> = _closeEvent
 
     private val _scrollEvent = MutableLiveData<Event<Unit>>()
     val scrollEvent: LiveData<Event<Unit>> = _scrollEvent
@@ -57,10 +55,6 @@ class PresentViewModel @AssistedInject constructor(
 
     init {
         currentItem.value = PAGER_CATEGORY
-    }
-
-    fun close() {
-        _closeEvent.value = Event(Unit)
     }
 
     fun selection(present: Present) {

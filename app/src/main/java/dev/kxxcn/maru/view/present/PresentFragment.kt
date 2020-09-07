@@ -10,25 +10,25 @@ import androidx.navigation.fragment.findNavController
 import dev.kxxcn.maru.databinding.PresentFragmentBinding
 import dev.kxxcn.maru.di.MaruSavedStateViewModelFactory
 import dev.kxxcn.maru.util.PAGER_CATEGORY
-import dev.kxxcn.maru.view.base.BaseDaggerFragment
+import dev.kxxcn.maru.view.base.BaseFragment
 import javax.inject.Inject
 
-class PresentFragment : BaseDaggerFragment() {
-
-    override val clazz: Class<*>
-        get() = this::class.java
+class PresentFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: MaruSavedStateViewModelFactory
 
-    private val viewModel by viewModels<PresentViewModel> {
+    private lateinit var binding: PresentFragmentBinding
+
+    override val clazz: Class<*>
+        get() = this::class.java
+
+    override val viewModel by viewModels<PresentViewModel> {
         viewModelFactory.create(
             this,
             arguments
         )
     }
-
-    private lateinit var binding: PresentFragmentBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,

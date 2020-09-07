@@ -5,8 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
-import dev.kxxcn.maru.EventObserver
 import dev.kxxcn.maru.databinding.TimelineFragmentBinding
 import dev.kxxcn.maru.util.LinearSpacingDecoration
 import dev.kxxcn.maru.util.extension.px
@@ -14,12 +12,12 @@ import dev.kxxcn.maru.view.base.BaseFragment
 
 class TimelineFragment : BaseFragment() {
 
+    private lateinit var binding: TimelineFragmentBinding
+
     override val clazz: Class<*>
         get() = this::class.java
 
-    private val viewModel by viewModels<TimelineViewModel>()
-
-    private lateinit var binding: TimelineFragmentBinding
+    override val viewModel by viewModels<TimelineViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,7 +38,6 @@ class TimelineFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         setupLifecycle()
         setupListAdapter()
-        setupListener()
     }
 
     override fun onDestroyView() {
@@ -58,11 +55,5 @@ class TimelineFragment : BaseFragment() {
             addItemDecoration(LinearSpacingDecoration(20.px), 0)
             adapter = TimelineAdapter(viewModel)
         }
-    }
-
-    private fun setupListener() {
-        viewModel.closeEvent.observe(viewLifecycleOwner, EventObserver {
-            findNavController().popBackStack()
-        })
     }
 }

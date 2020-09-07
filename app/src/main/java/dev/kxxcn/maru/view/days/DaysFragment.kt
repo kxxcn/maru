@@ -16,11 +16,10 @@ import dev.kxxcn.maru.data.Day
 import dev.kxxcn.maru.databinding.DaysFragmentBinding
 import dev.kxxcn.maru.util.DayGridSpacingDecoration
 import dev.kxxcn.maru.util.extension.openDialog
-import dev.kxxcn.maru.util.extension.setupSnackbar
-import dev.kxxcn.maru.view.base.BaseDaggerFragment
+import dev.kxxcn.maru.view.base.BaseFragment
 import javax.inject.Inject
 
-class DaysFragment : BaseDaggerFragment() {
+class DaysFragment : BaseFragment() {
 
     override val clazz: Class<*>
         get() = this::class.java
@@ -28,11 +27,11 @@ class DaysFragment : BaseDaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private val viewModel by viewModels<DaysViewModel> { viewModelFactory }
-
     private lateinit var binding: DaysFragmentBinding
 
     private var alertDialog: AlertDialog? = null
+
+    override val viewModel by viewModels<DaysViewModel> { viewModelFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,7 +51,6 @@ class DaysFragment : BaseDaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupLifecycle()
-        setupSnackbar()
         setupListener()
         setupListAdapter()
     }
@@ -67,14 +65,7 @@ class DaysFragment : BaseDaggerFragment() {
         binding.lifecycleOwner = viewLifecycleOwner
     }
 
-    private fun setupSnackbar() {
-        view?.setupSnackbar(viewLifecycleOwner, viewModel.snackbarText)
-    }
-
     private fun setupListener() {
-        viewModel.closeEvent.observe(viewLifecycleOwner, EventObserver {
-            findNavController().popBackStack()
-        })
         viewModel.addEvent.observe(viewLifecycleOwner, EventObserver {
             DaysFragmentDirections.actionDaysFragmentToDaysAddFragment().also {
                 findNavController().navigate(it)

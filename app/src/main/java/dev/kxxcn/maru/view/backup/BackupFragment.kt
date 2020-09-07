@@ -7,27 +7,26 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.FirebaseAuth
-import dagger.android.support.DaggerFragment
 import dev.kxxcn.maru.EventObserver
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.databinding.BackupFragmentBinding
 import dev.kxxcn.maru.util.extension.openDialog
-import dev.kxxcn.maru.util.extension.setupSnackbar
+import dev.kxxcn.maru.view.base.BaseFragment
 import javax.inject.Inject
 
-class BackupFragment : DaggerFragment() {
+class BackupFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private val viewModel by viewModels<BackupViewModel> { viewModelFactory }
-
     private lateinit var binding: BackupFragmentBinding
 
     private var alertDialog: AlertDialog? = null
+
+    override val clazz: Class<*>
+        get() = this::class.java
+
+    override val viewModel by viewModels<BackupViewModel> { viewModelFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,7 +46,6 @@ class BackupFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupLifecycle()
-        setupSnackbar()
         setupListener()
     }
 
@@ -55,14 +53,7 @@ class BackupFragment : DaggerFragment() {
         binding.lifecycleOwner = viewLifecycleOwner
     }
 
-    private fun setupSnackbar() {
-        view?.setupSnackbar(viewLifecycleOwner, viewModel.snackbarText, Snackbar.LENGTH_SHORT)
-    }
-
     private fun setupListener() {
-        viewModel.closeEvent.observe(viewLifecycleOwner, EventObserver {
-            findNavController().popBackStack()
-        })
         viewModel.askEvent.observe(viewLifecycleOwner, EventObserver {
             showDialog(it)
         })

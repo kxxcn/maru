@@ -2,7 +2,6 @@ package dev.kxxcn.maru.view.purchase
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.billingclient.api.Purchase
 import com.google.firebase.auth.FirebaseAuth
@@ -10,16 +9,14 @@ import dev.kxxcn.maru.Event
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.data.source.DataRepository
 import dev.kxxcn.maru.data.succeeded
+import dev.kxxcn.maru.view.base.BaseViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class PurchaseViewModel @Inject constructor(
     private val repository: DataRepository,
     private val auth: FirebaseAuth
-) : ViewModel() {
-
-    private val _closeEvent = MutableLiveData<Event<Unit>>()
-    val closeEvent: LiveData<Event<Unit>> = _closeEvent
+) : BaseViewModel() {
 
     private val _purchaseEvent = MutableLiveData<Event<Unit>>()
     val purchaseEvent: LiveData<Event<Unit>> = _purchaseEvent
@@ -29,13 +26,6 @@ class PurchaseViewModel @Inject constructor(
 
     private val _failureEvent = MutableLiveData<Event<Int>>()
     val failureEvent: LiveData<Event<Int>> = _failureEvent
-
-    private val _snackbarText = MutableLiveData<Event<Int>>()
-    val snackbarText: LiveData<Event<Int>> = _snackbarText
-
-    fun close() {
-        _closeEvent.value = Event(Unit)
-    }
 
     fun purchase() {
         _purchaseEvent.value = Event(Unit)
@@ -54,6 +44,6 @@ class PurchaseViewModel @Inject constructor(
     }
 
     fun handlePurchaseFailure() {
-        _snackbarText.value = Event(R.string.try_again_later)
+        message(R.string.try_again_later)
     }
 }

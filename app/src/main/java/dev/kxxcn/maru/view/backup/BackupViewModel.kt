@@ -1,6 +1,9 @@
 package dev.kxxcn.maru.view.backup
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.map
+import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
 import dev.kxxcn.maru.Event
 import dev.kxxcn.maru.R
@@ -14,19 +17,14 @@ import dev.kxxcn.maru.util.extension.decode
 import dev.kxxcn.maru.util.extension.encode
 import dev.kxxcn.maru.util.extension.fromJson
 import dev.kxxcn.maru.util.extension.toJson
+import dev.kxxcn.maru.view.base.BaseViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class BackupViewModel @Inject constructor(
     private val repository: DataRepository,
     private val auth: FirebaseAuth
-) : ViewModel() {
-
-    private val _snackbarText = MutableLiveData<Event<Int>>()
-    val snackbarText: LiveData<Event<Int>> = _snackbarText
-
-    private val _closeEvent = MutableLiveData<Event<Unit>>()
-    val closeEvent: LiveData<Event<Unit>> = _closeEvent
+) : BaseViewModel() {
 
     private val _askEvent = MutableLiveData<Event<BackupFilterType>>()
     val askEvent: LiveData<Event<BackupFilterType>> = _askEvent
@@ -47,10 +45,6 @@ class BackupViewModel @Inject constructor(
         findRestore()
     }
 
-    fun close() {
-        _closeEvent.value = Event(Unit)
-    }
-
     fun ask(filterType: BackupFilterType) {
         _askEvent.value = Event(filterType)
     }
@@ -58,7 +52,7 @@ class BackupViewModel @Inject constructor(
     fun backup() {
         val email = auth.currentUser?.email
         if (email == null) {
-            _snackbarText.value = Event(R.string.try_again_later)
+            message(R.string.try_again_later)
         } else {
             viewModelScope.launch {
                 _progress.value = true
@@ -69,10 +63,12 @@ class BackupViewModel @Inject constructor(
                         .takeIf { it.succeeded }
                         ?.let { R.string.success_backup }
                         ?: R.string.failure_backup
-                    _snackbarText.value = Event(messageRes)
                     findRestore()
+                    messageRes
                 } else {
-                    _snackbarText.value = Event(R.string.try_again_later)
+                    R.string.try_again_later
+                }.also {
+                    message(it)
                 }
                 _progress.value = false
             }
@@ -82,7 +78,7 @@ class BackupViewModel @Inject constructor(
     fun restore() {
         val restore = restoreData.value
         if (restore == null) {
-            _snackbarText.value = Event(R.string.backup_restore_no_data)
+            message(R.string.backup_restore_no_data)
         } else {
             val decodedString = restore.data.decode()
             val summary = decodedString.fromJson<Summary>()
@@ -92,7 +88,7 @@ class BackupViewModel @Inject constructor(
                     ?.let { R.string.success_restore }
                     ?: R.string.failure_restore
 
-                _snackbarText.value = Event(messageRes)
+                message(messageRes)
             }
         }
     }
@@ -100,7 +96,7 @@ class BackupViewModel @Inject constructor(
     private fun findRestore() {
         val email = auth.currentUser?.email
         if (email == null) {
-            _snackbarText.value = Event(R.string.try_again_later)
+            message(R.string.try_again_later)
         } else {
             viewModelScope.launch {
                 _progress.value = true
@@ -110,7 +106,7 @@ class BackupViewModel @Inject constructor(
                         .also { restoreData.value = it }
                         ?.let { _updatedTime.value = DateUtils.DATE_FORMAT_1.format(it.time) }
                 } else {
-                    _snackbarText.value = Event(R.string.try_again_later)
+                    message(R.string.try_again_later)
                 }
                 _progress.value = false
             }

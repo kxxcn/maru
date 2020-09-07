@@ -140,7 +140,7 @@ class MaruActivity : AppCompatActivity() {
     }
 
     private fun setupSnackbar() {
-        contentView?.setupSnackbar(this, viewModel.snackbarText, Snackbar.LENGTH_SHORT)
+        contentView?.setupSnackbar(this, viewModel.snackbarRes, Snackbar.LENGTH_SHORT)
     }
 
     private fun setupListener() {

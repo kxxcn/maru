@@ -1,6 +1,9 @@
 package dev.kxxcn.maru.view.days
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import dev.kxxcn.maru.Event
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.data.Day
@@ -11,6 +14,7 @@ import dev.kxxcn.maru.util.ConvertUtils
 import dev.kxxcn.maru.util.DateUtils
 import dev.kxxcn.maru.util.extension.msToDate
 import dev.kxxcn.maru.util.preference.PreferenceUtils
+import dev.kxxcn.maru.view.base.BaseViewModel
 import dev.kxxcn.maru.view.days.DaysFilterType.COUNT
 import dev.kxxcn.maru.view.days.DaysFilterType.REMAIN
 import kotlinx.coroutines.launch
@@ -20,13 +24,10 @@ import javax.inject.Inject
 
 class DaysAddViewModel @Inject constructor(
     private val repository: DataRepository
-) : ViewModel() {
+) : BaseViewModel() {
 
-    private val _closeEvent = MutableLiveData<Event<Unit>>()
-    val closeEvent: LiveData<Event<Unit>> = _closeEvent
-
-    private val _snackbarText = MutableLiveData<Event<Int>>()
-    val snackbarText: LiveData<Event<Int>> = _snackbarText
+    private val _hideKeyboardEvent = MutableLiveData<Event<Unit>>()
+    val hideKeyboardEvent: LiveData<Event<Unit>> = _hideKeyboardEvent
 
     private val _datePickerEvent = MutableLiveData<Event<Unit>>()
     val datePickerEvent: LiveData<Event<Unit>> = _datePickerEvent
@@ -77,6 +78,10 @@ class DaysAddViewModel @Inject constructor(
         setTime(timeMs, true)
     }
 
+    private fun hideKeyboard() {
+        _hideKeyboardEvent.value = Event(Unit)
+    }
+
     fun setTime(timeMs: Long, forceCount: Boolean = false) {
         _timeText.value = timeMs.msToDate(
             SimpleDateFormat(
@@ -98,14 +103,10 @@ class DaysAddViewModel @Inject constructor(
         }
     }
 
-    fun close() {
-        _closeEvent.value = Event(Unit)
-    }
-
     fun register() {
         val content = content.value
         if (content.isNullOrEmpty()) {
-            _snackbarText.value = Event(R.string.days_add_hint)
+            message(R.string.days_add_hint)
         } else {
             val timeText = timeText.value ?: return
             val timeMs = DateUtils.DATE_FORMAT_4
@@ -123,6 +124,7 @@ class DaysAddViewModel @Inject constructor(
                     )
                 )
                 if (result.succeeded) {
+                    hideKeyboard()
                     close()
                 }
             }

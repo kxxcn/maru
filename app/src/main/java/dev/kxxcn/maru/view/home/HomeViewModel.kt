@@ -8,12 +8,13 @@ import com.google.firebase.auth.FirebaseAuth
 import dev.kxxcn.maru.Event
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.data.source.DataRepository
+import dev.kxxcn.maru.view.base.BaseViewModel
 import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(
     private val repository: DataRepository,
     private val auth: FirebaseAuth
-) : ViewModel() {
+) : BaseViewModel() {
 
     private val _forceUpdate = MutableLiveData<Unit>()
 
@@ -40,6 +41,8 @@ class HomeViewModel @Inject constructor(
     }
 
     fun description() {
-        _snackbarText.value = Event(R.string.home_welcome_card_verified)
+        message(R.string.home_welcome_card_verified)
+    }
+
     }
 }

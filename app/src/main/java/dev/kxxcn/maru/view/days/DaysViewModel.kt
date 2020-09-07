@@ -6,27 +6,22 @@ import dev.kxxcn.maru.R
 import dev.kxxcn.maru.data.Day
 import dev.kxxcn.maru.data.source.DataRepository
 import dev.kxxcn.maru.data.succeeded
+import dev.kxxcn.maru.view.base.BaseViewModel
 import dev.kxxcn.maru.view.home.HomeAdapter
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class DaysViewModel @Inject constructor(
     private val repository: DataRepository
-) : ViewModel() {
+) : BaseViewModel() {
 
     private val _forceUpdate = MutableLiveData<Unit>()
-
-    private val _closeEvent = MutableLiveData<Event<Unit>>()
-    val closeEvent: LiveData<Event<Unit>> = _closeEvent
 
     private val _addEvent = MutableLiveData<Event<Unit>>()
     val addEvent: LiveData<Event<Unit>> = _addEvent
 
     private val _deleteEvent = MutableLiveData<Event<Day>>()
     val deleteEvent: LiveData<Event<Day>> = _deleteEvent
-
-    private val _snackbarText = MutableLiveData<Event<Int>>()
-    val snackbarText: LiveData<Event<Int>> = _snackbarText
 
     private val items: LiveData<List<HomeAdapter.SummaryItem>> =
         _forceUpdate.switchMap { _ ->
@@ -53,10 +48,6 @@ class DaysViewModel @Inject constructor(
         _forceUpdate.value = Unit
     }
 
-    fun close() {
-        _closeEvent.value = Event(Unit)
-    }
-
     fun add() {
         _addEvent.value = Event(Unit)
     }
@@ -74,7 +65,7 @@ class DaysViewModel @Inject constructor(
             } else {
                 R.string.days_deletion_failed
             }
-            _snackbarText.value = Event(messageRes)
+            message(messageRes)
         }
     }
 }

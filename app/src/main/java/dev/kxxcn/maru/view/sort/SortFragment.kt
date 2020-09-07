@@ -8,34 +8,32 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import dev.kxxcn.maru.EventObserver
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.databinding.SortFragmentBinding
 import dev.kxxcn.maru.di.MaruSavedStateViewModelFactory
 import dev.kxxcn.maru.util.extension.openDialog
-import dev.kxxcn.maru.util.extension.setupSnackbar
-import dev.kxxcn.maru.view.base.BaseDaggerFragment
+import dev.kxxcn.maru.view.base.BaseFragment
 import javax.inject.Inject
 
-class SortFragment : BaseDaggerFragment() {
-
-    override val clazz: Class<*>
-        get() = this::class.java
+class SortFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: MaruSavedStateViewModelFactory
 
-    private val viewModel by viewModels<SortViewModel> {
+    private lateinit var binding: SortFragmentBinding
+
+    private var alertDialog: AlertDialog? = null
+
+    override val clazz: Class<*>
+        get() = this::class.java
+
+    override val viewModel by viewModels<SortViewModel> {
         viewModelFactory.create(
             this,
             arguments
         )
     }
-
-    private lateinit var binding: SortFragmentBinding
-
-    private var alertDialog: AlertDialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,7 +54,6 @@ class SortFragment : BaseDaggerFragment() {
         super.onViewCreated(view, savedInstanceState)
         setupLifecycle()
         setupListAdapter()
-        setupSnackbar()
         setupListener()
         setupOnBackPressed()
     }
@@ -76,14 +73,7 @@ class SortFragment : BaseDaggerFragment() {
         binding.tasksList.adapter = SortAdapter(viewModel)
     }
 
-    private fun setupSnackbar() {
-        view?.setupSnackbar(viewLifecycleOwner, viewModel.snackbarText)
-    }
-
     private fun setupListener() {
-        viewModel.closeEvent.observe(viewLifecycleOwner, EventObserver {
-            findNavController().popBackStack()
-        })
         viewModel.deleteEvent.observe(viewLifecycleOwner, EventObserver {
             showDialog(it)
         })

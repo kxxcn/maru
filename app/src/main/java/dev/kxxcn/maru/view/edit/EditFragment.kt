@@ -12,21 +12,21 @@ import dev.kxxcn.maru.EventObserver
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.databinding.EditFragmentBinding
 import dev.kxxcn.maru.util.KEY_REGISTER_TYPE
-import dev.kxxcn.maru.view.base.BaseDaggerFragment
+import dev.kxxcn.maru.view.base.BaseFragment
 import dev.kxxcn.maru.view.register.RegisterFilterType
 import javax.inject.Inject
 
-class EditFragment : BaseDaggerFragment() {
-
-    override val clazz: Class<*>
-        get() = this::class.java
+class EditFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private val viewModel by viewModels<EditViewModel> { viewModelFactory }
-
     private lateinit var binding: EditFragmentBinding
+
+    override val clazz: Class<*>
+        get() = this::class.java
+
+    override val viewModel by viewModels<EditViewModel> { viewModelFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,9 +54,6 @@ class EditFragment : BaseDaggerFragment() {
     }
 
     private fun setupListener() {
-        viewModel.closeEvent.observe(viewLifecycleOwner, EventObserver {
-            findNavController().popBackStack()
-        })
         viewModel.editEvent.observe(viewLifecycleOwner, EventObserver {
             openEditDialog(it)
         })

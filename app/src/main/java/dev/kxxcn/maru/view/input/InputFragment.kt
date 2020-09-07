@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.InterstitialAd
@@ -14,24 +13,13 @@ import dev.kxxcn.maru.R
 import dev.kxxcn.maru.databinding.InputFragmentBinding
 import dev.kxxcn.maru.di.MaruSavedStateViewModelFactory
 import dev.kxxcn.maru.util.AdHelper
-import dev.kxxcn.maru.util.extension.setupSnackbar
-import dev.kxxcn.maru.view.base.BaseDaggerFragment
+import dev.kxxcn.maru.view.base.BaseFragment
 import javax.inject.Inject
 
-class InputFragment : BaseDaggerFragment() {
-
-    override val clazz: Class<*>
-        get() = this::class.java
+class InputFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: MaruSavedStateViewModelFactory
-
-    private val viewModel by viewModels<InputViewModel> {
-        viewModelFactory.create(
-            this,
-            arguments
-        )
-    }
 
     private lateinit var binding: InputFragmentBinding
 
@@ -40,6 +28,16 @@ class InputFragment : BaseDaggerFragment() {
     private var adRequestCount = 0
 
     private var adHelper = AdHelper()
+
+    override val clazz: Class<*>
+        get() = this::class.java
+
+    override val viewModel by viewModels<InputViewModel> {
+        viewModelFactory.create(
+            this,
+            arguments
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,7 +57,6 @@ class InputFragment : BaseDaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupLifecycle()
-        setupSnackbar()
         setupListener()
         setupInterstitial()
     }
@@ -73,14 +70,7 @@ class InputFragment : BaseDaggerFragment() {
         binding.lifecycleOwner = viewLifecycleOwner
     }
 
-    private fun setupSnackbar() {
-        view?.setupSnackbar(viewLifecycleOwner, viewModel.snackbarText)
-    }
-
     private fun setupListener() {
-        viewModel.closeEvent.observe(viewLifecycleOwner, Observer {
-            findNavController().popBackStack()
-        })
         viewModel.doneEvent.observe(viewLifecycleOwner, EventObserver {
             openStatusFragment()
         })

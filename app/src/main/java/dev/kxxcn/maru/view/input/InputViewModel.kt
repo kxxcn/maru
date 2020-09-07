@@ -14,14 +14,15 @@ import dev.kxxcn.maru.util.KEY_IS_PREMIUM
 import dev.kxxcn.maru.util.KEY_TASK_ID
 import dev.kxxcn.maru.util.extension.moneyToLong
 import dev.kxxcn.maru.util.preference.PreferenceUtils
+import dev.kxxcn.maru.view.base.BaseViewModel
 import kotlinx.coroutines.launch
 import java.text.NumberFormat
 import java.util.*
 
 class InputViewModel @AssistedInject constructor(
-        private val repository: DataRepository,
-        @Assisted private val savedStateHandle: SavedStateHandle
-) : ViewModel() {
+    private val repository: DataRepository,
+    @Assisted private val savedStateHandle: SavedStateHandle
+) : BaseViewModel() {
 
     @AssistedInject.Factory
     interface Factory : AssistedSavedStateViewModelFactory<InputViewModel>
@@ -29,12 +30,6 @@ class InputViewModel @AssistedInject constructor(
     private var taskId: String? = null
 
     private val decimalFormat = NumberFormat.getInstance(Locale.KOREA)
-
-    private val _snackbarText = MutableLiveData<Event<Int>>()
-    val snackbarText: LiveData<Event<Int>> = _snackbarText
-
-    private val _closeEvent = MutableLiveData<Unit>()
-    val closeEvent: LiveData<Unit> = _closeEvent
 
     private val _adEvent = MutableLiveData<Event<Unit>>()
     val adEvent: LiveData<Event<Unit>> = _adEvent
@@ -80,7 +75,8 @@ class InputViewModel @AssistedInject constructor(
     val progress: LiveData<Boolean> = _progress
 
     val selectedFontColorRes = android.R.color.black
-    val deselectedFontColorRes = if (PreferenceUtils.useDarkMode) R.color.maruFontColorNight else android.R.color.black
+    val deselectedFontColorRes =
+        if (PreferenceUtils.useDarkMode) R.color.maruFontColorNight else android.R.color.black
 
     init {
         _unitType.value = PreferenceUtils.unitType
@@ -145,10 +141,6 @@ class InputViewModel @AssistedInject constructor(
         _unitType.value = type.id
     }
 
-    fun close() {
-        _closeEvent.value = Unit
-    }
-
     fun complete() {
         val id = taskId ?: return
         _progress.value = true
@@ -157,17 +149,17 @@ class InputViewModel @AssistedInject constructor(
             val wife = taskWife.value.moneyToLong().takeIf { it > 0 }
             val remain = taskRemain.value.moneyToLong()
             if (husband == null && wife == null) {
-                _snackbarText.value = Event(R.string.status_should_input_either)
+                message(R.string.status_should_input_either)
                 _progress.value = false
             } else {
                 val result = repository.saveAccount(
-                        Account(
-                                taskId = id,
-                                husband = husband ?: 0,
-                                wife = wife ?: 0,
-                                remain = remain,
-                                date = Calendar.getInstance().timeInMillis
-                        )
+                    Account(
+                        taskId = id,
+                        husband = husband ?: 0,
+                        wife = wife ?: 0,
+                        remain = remain,
+                        date = Calendar.getInstance().timeInMillis
+                    )
                 )
                 if (result.succeeded) {
                     if (savedStateHandle.get<Boolean>(KEY_IS_PREMIUM) == true) {

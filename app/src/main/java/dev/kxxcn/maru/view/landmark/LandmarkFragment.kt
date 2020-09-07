@@ -30,20 +30,14 @@ import dev.kxxcn.maru.util.CAMERA_MOVE_ANIMATION_DURATION
 import dev.kxxcn.maru.util.REQUEST_CODE_PERMISSION
 import dev.kxxcn.maru.util.extension.displayHeight
 import dev.kxxcn.maru.util.extension.px
-import dev.kxxcn.maru.util.extension.setupSnackbar
 import dev.kxxcn.maru.util.preference.PreferenceUtils
-import dev.kxxcn.maru.view.base.BaseDaggerFragment
+import dev.kxxcn.maru.view.base.BaseFragment
 import javax.inject.Inject
 
-class LandmarkFragment : BaseDaggerFragment(), OnMapReadyCallback, LocationListener {
-
-    override val clazz: Class<*>
-        get() = this::class.java
+class LandmarkFragment : BaseFragment(), OnMapReadyCallback, LocationListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    private val viewModel by viewModels<LandmarkViewModel> { viewModelFactory }
 
     private lateinit var binding: LandmarkFragmentBinding
 
@@ -53,6 +47,11 @@ class LandmarkFragment : BaseDaggerFragment(), OnMapReadyCallback, LocationListe
 
     private val pathSet = mutableSetOf<PathOverlay>()
     private val markerSet = mutableSetOf<Marker>()
+
+    override val clazz: Class<*>
+        get() = this::class.java
+
+    override val viewModel by viewModels<LandmarkViewModel> { viewModelFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -72,7 +71,6 @@ class LandmarkFragment : BaseDaggerFragment(), OnMapReadyCallback, LocationListe
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupLifecycle()
-        setupSnackbar()
         setupListener()
         setupOnBackPressed()
         setupLocationManager()
@@ -114,11 +112,6 @@ class LandmarkFragment : BaseDaggerFragment(), OnMapReadyCallback, LocationListe
 
     private fun setupLifecycle() {
         binding.lifecycleOwner = viewLifecycleOwner
-    }
-
-    private fun setupSnackbar() {
-        view?.setupSnackbar(viewLifecycleOwner, viewModel.snackbarText)
-        view?.setupSnackbar(viewLifecycleOwner, viewModel.snackbarRes)
     }
 
     private fun setupListener() {

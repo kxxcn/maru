@@ -2,9 +2,9 @@ package dev.kxxcn.maru
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.kxxcn.maru.util.BACK_BUTTON_DELAY
+import dev.kxxcn.maru.view.base.BaseViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.BroadcastChannel
@@ -14,13 +14,10 @@ import kotlinx.coroutines.launch
 
 @FlowPreview
 @ExperimentalCoroutinesApi
-class MaruViewModel : ViewModel() {
+class MaruViewModel : BaseViewModel() {
 
     private val _finishEvent = MutableLiveData<Event<Unit>>()
     val finishEvent: LiveData<Event<Unit>> = _finishEvent
-
-    private val _snackbarText = MutableLiveData<Event<Int>>()
-    val snackbarText: LiveData<Event<Int>> = _snackbarText
 
     private val channel = BroadcastChannel<Long>(1)
 
@@ -41,7 +38,7 @@ class MaruViewModel : ViewModel() {
                 .collect {
                     if (backPressedTimeMs == 0L) {
                         backPressedTimeMs = it
-                        _snackbarText.value = Event(R.string.close_app_press_back_button_more)
+                        message(R.string.close_app_press_back_button_more)
                         return@collect
                     } else {
                         if (it - backPressedTimeMs < BACK_BUTTON_DELAY) {

@@ -26,7 +26,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:gravity="center"
-            android:text="@{context.getString(viewModel.remainRes, item.days)}"
+            android:text="@{@string/home_welcome_card_remain(item.days)}"
             android:textColor="?maruFontColor"
             app:layout_constraintEnd_toStartOf="@id/timeline_task_parent"
             app:layout_constraintStart_toStartOf="parent"

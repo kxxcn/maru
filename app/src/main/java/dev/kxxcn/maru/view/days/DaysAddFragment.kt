@@ -8,27 +8,29 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import dev.kxxcn.maru.EventObserver
 import dev.kxxcn.maru.databinding.DaysAddFragmentBinding
-import dev.kxxcn.maru.util.extension.*
-import dev.kxxcn.maru.view.base.BaseDaggerFragment
+import dev.kxxcn.maru.util.extension.day
+import dev.kxxcn.maru.util.extension.hideKeyboard
+import dev.kxxcn.maru.util.extension.month
+import dev.kxxcn.maru.util.extension.year
+import dev.kxxcn.maru.view.base.BaseFragment
 import java.util.*
 import javax.inject.Inject
 
-class DaysAddFragment : BaseDaggerFragment() {
-
-    override val clazz: Class<*>
-        get() = this::class.java
+class DaysAddFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private val viewModel by viewModels<DaysAddViewModel> { viewModelFactory }
-
     private lateinit var binding: DaysAddFragmentBinding
 
     private var datePicker: DatePickerDialog? = null
+
+    override val clazz: Class<*>
+        get() = this::class.java
+
+    override val viewModel by viewModels<DaysAddViewModel> { viewModelFactory }
 
     private var time = Calendar.getInstance().apply {
         set(Calendar.HOUR_OF_DAY, 0)
@@ -55,7 +57,6 @@ class DaysAddFragment : BaseDaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupLifecycle()
-        setupSnackbar()
         setupListener()
         setupDatePicker()
     }
@@ -70,14 +71,9 @@ class DaysAddFragment : BaseDaggerFragment() {
         binding.lifecycleOwner = viewLifecycleOwner
     }
 
-    private fun setupSnackbar() {
-        view?.setupSnackbar(viewLifecycleOwner, viewModel.snackbarText)
-    }
-
     private fun setupListener() {
-        viewModel.closeEvent.observe(viewLifecycleOwner, EventObserver {
+        viewModel.hideKeyboardEvent.observe(viewLifecycleOwner, EventObserver {
             hideKeyboard()
-            findNavController().popBackStack()
         })
         viewModel.datePickerEvent.observe(viewLifecycleOwner, EventObserver {
             showDatePicker()

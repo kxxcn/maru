@@ -15,10 +15,10 @@ import dev.kxxcn.maru.databinding.HomeFragmentBinding
 import dev.kxxcn.maru.util.LinearSpacingDecoration
 import dev.kxxcn.maru.util.extension.setupSnackbar
 import dev.kxxcn.maru.util.preference.PreferenceUtils
-import dev.kxxcn.maru.view.base.BaseDaggerFragment
+import dev.kxxcn.maru.view.base.BaseFragment
 import javax.inject.Inject
 
-class HomeFragment : BaseDaggerFragment() {
+class HomeFragment : BaseFragment() {
 
     override val clazz: Class<*>
         get() = this::class.java
@@ -29,6 +29,11 @@ class HomeFragment : BaseDaggerFragment() {
     private val viewModel by viewModels<HomeViewModel> { viewModelFactory }
 
     private lateinit var binding: HomeFragmentBinding
+
+    override val clazz: Class<*>
+        get() = this::class.java
+
+    override val viewModel by viewModels<HomeViewModel> { viewModelFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater,

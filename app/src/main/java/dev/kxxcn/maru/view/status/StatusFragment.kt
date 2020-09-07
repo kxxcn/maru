@@ -6,23 +6,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import dev.kxxcn.maru.EventObserver
 import dev.kxxcn.maru.databinding.StatusFragmentBinding
-import dev.kxxcn.maru.view.base.BaseDaggerFragment
+import dev.kxxcn.maru.view.base.BaseFragment
 import javax.inject.Inject
 
-class StatusFragment : BaseDaggerFragment() {
-
-    override val clazz: Class<*>
-        get() = this::class.java
+class StatusFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private val viewModel by viewModels<StatusViewModel> { viewModelFactory }
-
     private lateinit var binding: StatusFragmentBinding
+
+    override val clazz: Class<*>
+        get() = this::class.java
+
+    override val viewModel by viewModels<StatusViewModel> { viewModelFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,9 +51,6 @@ class StatusFragment : BaseDaggerFragment() {
     private fun setupListener() {
         viewModel.motionEvent.observe(viewLifecycleOwner, EventObserver {
             binding.statusMotion.transitionToEnd()
-        })
-        viewModel.closeEvent.observe(viewLifecycleOwner, EventObserver {
-            findNavController().popBackStack()
         })
     }
 }

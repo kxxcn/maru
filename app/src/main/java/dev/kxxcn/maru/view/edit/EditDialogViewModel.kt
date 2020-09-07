@@ -3,7 +3,6 @@ package dev.kxxcn.maru.view.edit
 import androidx.lifecycle.*
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
-import dev.kxxcn.maru.Event
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.data.source.DataRepository
 import dev.kxxcn.maru.data.succeeded
@@ -11,6 +10,7 @@ import dev.kxxcn.maru.di.AssistedSavedStateViewModelFactory
 import dev.kxxcn.maru.util.ConvertUtils
 import dev.kxxcn.maru.util.KEY_REGISTER_TYPE
 import dev.kxxcn.maru.util.ONE_THOUSAND_MILLION
+import dev.kxxcn.maru.view.base.BaseViewModel
 import dev.kxxcn.maru.view.register.RegisterFilterType
 import dev.kxxcn.maru.view.register.RegisterFilterType.*
 import kotlinx.coroutines.launch
@@ -20,24 +20,18 @@ import java.util.*
 class EditDialogViewModel @AssistedInject constructor(
     private val repository: DataRepository,
     @Assisted private val savedStateHandle: SavedStateHandle
-) : ViewModel() {
+) : BaseViewModel() {
 
     @AssistedInject.Factory
     interface Factory : AssistedSavedStateViewModelFactory<EditDialogViewModel>
 
     private val numberFormat = NumberFormat.getInstance(Locale.KOREA)
 
-    private val _closeEvent = MutableLiveData<Event<Unit>>()
-    val closeEvent: LiveData<Event<Unit>> = _closeEvent
-
     private val _titleRes = MutableLiveData<Int>()
     val titleRes: LiveData<Int> = _titleRes
 
     private val _hintRes = MutableLiveData<Int>()
     val hintRes: LiveData<Int> = _hintRes
-
-    private val _snackbarText = MutableLiveData<Event<Int>>()
-    val snackbarText: LiveData<Event<Int>> = _snackbarText
 
     val content = MutableLiveData<String?>()
 
@@ -86,20 +80,12 @@ class EditDialogViewModel @AssistedInject constructor(
         content.value = null
     }
 
-    fun close() {
-        _closeEvent.value = Event(Unit)
-    }
-
     fun save() {
         val content = content.value ?: return
         viewModelScope.launch {
             val result = when (savedStateHandle.get<RegisterFilterType>(KEY_REGISTER_TYPE)) {
-                REGISTER_NAME -> {
-                    repository.editName(content)
-                }
-                REGISTER_BUDGET -> {
-                    repository.editBudget(content.replace(",", "").toLong())
-                }
+                REGISTER_NAME -> repository.editName(content)
+                REGISTER_BUDGET -> repository.editBudget(content.replace(",", "").toLong())
                 REGISTER_WEDDING,
                 REGISTER_COMPLETE,
                 null -> throw RuntimeException("Invalid Filter Type.")

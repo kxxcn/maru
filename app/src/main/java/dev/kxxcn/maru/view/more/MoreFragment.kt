@@ -33,19 +33,15 @@ import dev.kxxcn.maru.util.RESULT_GOOGLE_SIGN_IN
 import dev.kxxcn.maru.util.extension.displayHeight
 import dev.kxxcn.maru.util.extension.displayWidth
 import dev.kxxcn.maru.util.extension.openDialog
-import dev.kxxcn.maru.util.extension.setupSnackbar
 import dev.kxxcn.maru.util.preference.PreferenceUtils
-import dev.kxxcn.maru.view.base.BaseDaggerFragment
+import dev.kxxcn.maru.view.base.BaseFragment
 import dev.kxxcn.maru.view.more.contents.ContentsItem
 import org.jetbrains.anko.contentView
 import java.io.File
 import java.io.FileOutputStream
 import javax.inject.Inject
 
-class MoreFragment : BaseDaggerFragment() {
-
-    override val clazz: Class<*>
-        get() = this::class.java
+class MoreFragment : BaseFragment() {
 
     @Inject
     lateinit var auth: FirebaseAuth
@@ -59,11 +55,14 @@ class MoreFragment : BaseDaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private val viewModel by viewModels<MoreViewModel> { viewModelFactory }
-
     private lateinit var binding: MoreFragmentBinding
 
     private var alertDialog: AlertDialog? = null
+
+    override val clazz: Class<*>
+        get() = this::class.java
+
+    override val viewModel by viewModels<MoreViewModel> { viewModelFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -84,7 +83,6 @@ class MoreFragment : BaseDaggerFragment() {
         super.onViewCreated(view, savedInstanceState)
         setupLifecycle()
         setupListAdapter()
-        setupSnackbar()
         setupListener()
     }
 
@@ -144,10 +142,6 @@ class MoreFragment : BaseDaggerFragment() {
             val activity = requireActivity() as MaruActivity
             adapter = MoreAdapter(viewModel, activity)
         }
-    }
-
-    private fun setupSnackbar() {
-        view?.setupSnackbar(viewLifecycleOwner, viewModel.snackbarText)
     }
 
     private fun setupListener() {

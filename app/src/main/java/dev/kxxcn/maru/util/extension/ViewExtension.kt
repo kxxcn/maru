@@ -50,13 +50,15 @@ fun Fragment.openDialog(
         .create()
         .apply {
             show()
-            window?.setBackgroundDrawable(
-                ContextCompat.getDrawable(
-                    context,
-                    android.R.color.transparent
+            window?.let {
+                it.setBackgroundDrawable(
+                    ContextCompat.getDrawable(
+                        context,
+                        android.R.color.transparent
+                    )
                 )
-            )
-            window?.setLayout((displayWidth() * 0.6).toInt(), wrapContent)
+                it.setLayout((displayWidth() * 0.6).toInt(), wrapContent)
+            }
         }
 }
 

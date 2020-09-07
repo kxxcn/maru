@@ -8,7 +8,6 @@ import android.view.animation.DecelerateInterpolator
 import android.view.animation.LinearInterpolator
 import com.gelitenight.waveview.library.WaveView
 
-
 class WaveHelper(
     private val view: WaveView,
     private val percentage: Float

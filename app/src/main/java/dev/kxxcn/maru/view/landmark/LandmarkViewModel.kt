@@ -2,7 +2,6 @@ package dev.kxxcn.maru.view.landmark
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.kxxcn.maru.Event
 import dev.kxxcn.maru.R
@@ -10,22 +9,14 @@ import dev.kxxcn.maru.data.Result.Success
 import dev.kxxcn.maru.data.source.DataRepository
 import dev.kxxcn.maru.data.source.api.dto.DirectionDto
 import dev.kxxcn.maru.util.extension.km
+import dev.kxxcn.maru.view.base.BaseViewModel
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class LandmarkViewModel @Inject constructor(
     private val repository: DataRepository
-) : ViewModel() {
-
-    private val _closeEvent = MutableLiveData<Event<Unit>>()
-    val closeEvent: LiveData<Event<Unit>> = _closeEvent
-
-    private val _snackbarText = MutableLiveData<Event<String?>>()
-    val snackbarText: LiveData<Event<String?>> = _snackbarText
-
-    private val _snackbarRes = MutableLiveData<Event<Int>>()
-    val snackbarRes: LiveData<Event<Int>> = _snackbarRes
+) : BaseViewModel() {
 
     private val _directionEvent = MutableLiveData<Event<DirectionDto?>>()
     val directionEvent: LiveData<Event<DirectionDto?>> = _directionEvent
@@ -51,10 +42,6 @@ class LandmarkViewModel @Inject constructor(
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    fun close() {
-        _closeEvent.value = Event(Unit)
-    }
-
     fun direction(
         longitude: Double,
         latitude: Double,
@@ -78,7 +65,7 @@ class LandmarkViewModel @Inject constructor(
                     _bottomFuelPrice.value = summary.fuelPrice
                     _directionEvent.value = Event(result.data)
                 } else {
-                    _snackbarText.value = Event(result.data?.message)
+                    message(messageText = result.data?.message)
                 }
             }
             _isLoading.value = false
@@ -86,10 +73,10 @@ class LandmarkViewModel @Inject constructor(
     }
 
     fun handleSyncFailure() {
-        _snackbarRes.value = Event(R.string.try_again_later)
+        message(R.string.try_again_later)
     }
 
     fun invalidLocation() {
-        _snackbarRes.value = Event(R.string.landmark_invalid_location)
+        message(R.string.landmark_invalid_location)
     }
 }

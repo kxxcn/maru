@@ -2,15 +2,11 @@ package dev.kxxcn.maru.view.order
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
-import dev.kxxcn.maru.Event
+import dev.kxxcn.maru.view.base.BaseViewModel
 import dev.kxxcn.maru.view.order.OrderFilterType.*
 
-class OrderViewModel : ViewModel() {
-
-    private val _closeEvent = MutableLiveData<Event<Unit>>()
-    val closeEvent: LiveData<Event<Unit>> = _closeEvent
+class OrderViewModel : BaseViewModel() {
 
     private val _filterType = MutableLiveData<OrderFilterType>()
     val filterType: LiveData<OrderFilterType> = _filterType
@@ -30,9 +26,5 @@ class OrderViewModel : ViewModel() {
     fun setFiltering(requestType: OrderFilterType) {
         if (filterType.value == requestType) return
         _filterType.value = requestType
-    }
-
-    fun close() {
-        _closeEvent.value = Event(Unit)
     }
 }

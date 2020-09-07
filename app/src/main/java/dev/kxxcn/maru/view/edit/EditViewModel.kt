@@ -1,19 +1,20 @@
 package dev.kxxcn.maru.view.edit
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.map
+import androidx.lifecycle.switchMap
 import dev.kxxcn.maru.Event
 import dev.kxxcn.maru.data.source.DataRepository
 import dev.kxxcn.maru.util.ConvertUtils
+import dev.kxxcn.maru.view.base.BaseViewModel
 import dev.kxxcn.maru.view.home.HomeAdapter
 import dev.kxxcn.maru.view.register.RegisterFilterType
 import javax.inject.Inject
 
 class EditViewModel @Inject constructor(
     private val repository: DataRepository
-) : ViewModel() {
-
-    private val _closeEvent = MutableLiveData<Event<Unit>>()
-    val closeEvent: LiveData<Event<Unit>> = _closeEvent
+) : BaseViewModel() {
 
     private val _editEvent = MutableLiveData<Event<RegisterFilterType>>()
     val editEvent: LiveData<Event<RegisterFilterType>> = _editEvent
@@ -49,10 +50,6 @@ class EditViewModel @Inject constructor(
 
     private fun start() {
         _forceUpdate.value = Unit
-    }
-
-    fun close() {
-        _closeEvent.value = Event(Unit)
     }
 
     fun edit(filterType: RegisterFilterType) {

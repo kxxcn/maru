@@ -12,13 +12,10 @@ import dev.kxxcn.maru.EventObserver
 import dev.kxxcn.maru.databinding.PurchaseFragmentBinding
 import dev.kxxcn.maru.util.BillingManager
 import dev.kxxcn.maru.util.extension.setupSnackbar
-import dev.kxxcn.maru.view.base.BaseDaggerFragment
+import dev.kxxcn.maru.view.base.BaseFragment
 import javax.inject.Inject
 
-class PurchaseFragment : BaseDaggerFragment() {
-
-    override val clazz: Class<*>
-        get() = this::class.java
+class PurchaseFragment : BaseFragment() {
 
     @Inject
     lateinit var billingManager: BillingManager
@@ -26,9 +23,12 @@ class PurchaseFragment : BaseDaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private val viewModel by viewModels<PurchaseViewModel> { viewModelFactory }
-
     private lateinit var binding: PurchaseFragmentBinding
+
+    override val clazz: Class<*>
+        get() = this::class.java
+
+    override val viewModel by viewModels<PurchaseViewModel> { viewModelFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,7 +62,7 @@ class PurchaseFragment : BaseDaggerFragment() {
     }
 
     private fun setupSnackbar() {
-        view?.setupSnackbar(viewLifecycleOwner, viewModel.snackbarText)
+        view?.setupSnackbar(viewLifecycleOwner, viewModel.snackbarRes)
     }
 
     private fun setupListener() {

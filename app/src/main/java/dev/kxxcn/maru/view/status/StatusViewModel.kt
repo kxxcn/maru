@@ -2,23 +2,20 @@ package dev.kxxcn.maru.view.status
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.kxxcn.maru.Event
 import dev.kxxcn.maru.data.Result.Success
 import dev.kxxcn.maru.data.source.DataRepository
+import dev.kxxcn.maru.view.base.BaseViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class StatusViewModel @Inject constructor(
     private val repository: DataRepository
-) : ViewModel() {
+) : BaseViewModel() {
 
     private val _motionEvent = MutableLiveData<Event<Unit>>()
     val motionEvent: LiveData<Event<Unit>> = _motionEvent
-
-    private val _closeEvent = MutableLiveData<Event<Unit>>()
-    val closeEvent: LiveData<Event<Unit>> = _closeEvent
 
     private val _totalTasksCount = MutableLiveData<Int>()
     val totalTasksCount: LiveData<Int> = _totalTasksCount
@@ -50,9 +47,5 @@ class StatusViewModel @Inject constructor(
                 _motionEvent.value = Event(Unit)
             }
         }
-    }
-
-    fun close() {
-        _closeEvent.value = Event(Unit)
     }
 }

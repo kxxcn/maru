@@ -6,23 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
-import dev.kxxcn.maru.EventObserver
 import dev.kxxcn.maru.databinding.NoticeFragmentBinding
-import dev.kxxcn.maru.view.base.BaseDaggerFragment
+import dev.kxxcn.maru.view.base.BaseFragment
 import javax.inject.Inject
 
-class NoticeFragment : BaseDaggerFragment() {
-
-    override val clazz: Class<*>
-        get() = this::class.java
+class NoticeFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private val viewModel by viewModels<NoticeViewModel> { viewModelFactory }
-
     private lateinit var binding: NoticeFragmentBinding
+
+    override val clazz: Class<*>
+        get() = this::class.java
+
+    override val viewModel by viewModels<NoticeViewModel> { viewModelFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,7 +41,6 @@ class NoticeFragment : BaseDaggerFragment() {
         super.onViewCreated(view, savedInstanceState)
         setupLifecycle()
         setupListAdapter()
-        setupListener()
     }
 
     override fun onDestroyView() {
@@ -57,11 +54,5 @@ class NoticeFragment : BaseDaggerFragment() {
 
     private fun setupListAdapter() {
         binding.noticeList.adapter = NoticeAdapter()
-    }
-
-    private fun setupListener() {
-        viewModel.closeEvent.observe(viewLifecycleOwner, EventObserver {
-            findNavController().popBackStack()
-        })
     }
 }

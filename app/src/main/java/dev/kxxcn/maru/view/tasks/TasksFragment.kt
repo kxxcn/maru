@@ -14,20 +14,20 @@ import dev.kxxcn.maru.MaruActivity
 import dev.kxxcn.maru.databinding.TasksFragmentBinding
 import dev.kxxcn.maru.util.LinearSpacingDecoration
 import dev.kxxcn.maru.util.extension.px
-import dev.kxxcn.maru.view.base.BaseDaggerFragment
+import dev.kxxcn.maru.view.base.BaseFragment
 import javax.inject.Inject
 
-class TasksFragment : BaseDaggerFragment() {
-
-    override val clazz: Class<*>
-        get() = this::class.java
+class TasksFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private val viewModel by viewModels<TasksViewModel> { viewModelFactory }
-
     private lateinit var binding: TasksFragmentBinding
+
+    override val clazz: Class<*>
+        get() = this::class.java
+
+    override val viewModel by viewModels<TasksViewModel> { viewModelFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater,

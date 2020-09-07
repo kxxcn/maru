@@ -6,20 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
-import dev.kxxcn.maru.EventObserver
 import dev.kxxcn.maru.databinding.NotificationFragmentBinding
 import dev.kxxcn.maru.util.preference.PreferenceUtils
 import dev.kxxcn.maru.view.base.BaseFragment
 
 class NotificationFragment : BaseFragment() {
 
+    private lateinit var binding: NotificationFragmentBinding
+
     override val clazz: Class<*>
         get() = this::class.java
 
-    private val viewModel by viewModels<NotificationViewModel>()
-
-    private lateinit var binding: NotificationFragmentBinding
+    override val viewModel by viewModels<NotificationViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,9 +45,6 @@ class NotificationFragment : BaseFragment() {
     }
 
     private fun setupListener() {
-        viewModel.closeEvent.observe(viewLifecycleOwner, EventObserver {
-            findNavController().popBackStack()
-        })
         viewModel.noticeUse.observe(viewLifecycleOwner, Observer {
             PreferenceUtils.notifyNotice = it
         })

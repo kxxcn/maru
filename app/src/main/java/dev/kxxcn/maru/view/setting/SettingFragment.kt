@@ -17,12 +17,12 @@ import dev.kxxcn.maru.view.base.BaseFragment
 
 class SettingFragment : BaseFragment() {
 
+    private lateinit var binding: SettingFragmentBinding
+
     override val clazz: Class<*>
         get() = this::class.java
 
-    private val viewModel by viewModels<SettingViewModel>()
-
-    private lateinit var binding: SettingFragmentBinding
+    override val viewModel by viewModels<SettingViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,

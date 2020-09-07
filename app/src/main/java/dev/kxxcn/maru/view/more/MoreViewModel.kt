@@ -2,12 +2,12 @@ package dev.kxxcn.maru.view.more
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.kxxcn.maru.Event
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.data.Result.Success
 import dev.kxxcn.maru.data.source.DataRepository
+import dev.kxxcn.maru.view.base.BaseViewModel
 import dev.kxxcn.maru.view.more.contents.ContentsItem
 import dev.kxxcn.maru.view.more.contents.ContentsItem.*
 import dev.kxxcn.maru.view.more.contents.MoreContentsAdapter
@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 class MoreViewModel @Inject constructor(
     private val repository: DataRepository
-) : ViewModel() {
+) : BaseViewModel() {
 
     private val _settingEvent = MutableLiveData<Event<Unit>>()
     val settingEvent: LiveData<Event<Unit>> = _settingEvent
@@ -54,9 +54,6 @@ class MoreViewModel @Inject constructor(
 
     private val _landmarkEvent = MutableLiveData<Event<Unit>>()
     val landmarkEvent: LiveData<Event<Unit>> = _landmarkEvent
-
-    private val _snackbarText = MutableLiveData<Event<Int>>()
-    val snackbarText: LiveData<Event<Int>> = _snackbarText
 
     private val _purchaseEvent = MutableLiveData<Event<Unit>>()
     val purchaseEvent: LiveData<Event<Unit>> = _purchaseEvent
@@ -134,11 +131,11 @@ class MoreViewModel @Inject constructor(
     }
 
     fun handleSignInSuccess() {
-        _snackbarText.value = Event(R.string.success_sign_in)
+        message(R.string.success_sign_in)
     }
 
     fun handleSignInFailure() {
-        _snackbarText.value = Event(R.string.failure_sign_in)
+        message(R.string.failure_sign_in)
     }
 
     fun isPremium(email: String?, filterType: ContentsItem) {
@@ -146,7 +143,7 @@ class MoreViewModel @Inject constructor(
             val result = repository.isPremium(email)
             if (result is Success && result.data) {
                 when (filterType) {
-                    AD -> _snackbarText.value = Event(R.string.apply_ad_removal_function)
+                    AD -> message(R.string.apply_ad_removal_function)
                     BACKUP -> _premiumEvent.value = Event(Unit)
                 }
             } else {
@@ -156,6 +153,6 @@ class MoreViewModel @Inject constructor(
     }
 
     fun handleReviewSuccess() {
-        _snackbarText.value = Event(R.string.thank_you_for_feedback)
+        message(R.string.thank_you_for_feedback)
     }
 }
