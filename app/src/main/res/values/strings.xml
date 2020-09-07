@@ -93,6 +93,8 @@
     <string name="purchase">구매하기</string>
     <string name="backup">백업하기</string>
     <string name="restore">복원하기</string>
+    <string name="wedding">결혼식</string>
+    <string name="expenses">지출</string>
 
     <string name="need_sign_in_process">인증이 필요한 서비스입니다.\n로그인 하시겠습니까?</string>
     <string name="active_night_mode">야간모드로 전환하시겠습니까?</string>
@@ -134,15 +136,17 @@
     <string name="onboard_account_subject">현명한 소비를 도와드려요.</string>
     <string name="onboard_account_content">신랑 지출 금액, 신부 지출 금액을\n등록하고 서로 비교해보세요.</string>
     <string name="onboard_welcome_subject">결혼식까지 D-%1$d.</string>
-    <string name="onboard_welcome_content">[마루]와 함께 행복한 결혼 생활을 준비하세요.</string>
+    <string name="onboard_welcome_content">[마루]와 함께 행복한 결혼 생활을 준비하세요. :)</string>
 
     <string name="home_welcome_card_name">%1$s님</string>
     <string name="home_welcome_card_greeting">안녕하세요.</string>
     <string name="home_welcome_card_remain">D-%1$d</string>
-    <string name="home_welcome_card_verified">이메일 인증이 완료된 계정입니다.</string>
-    <string name="home_account_card_total_accounts">총 지출금액</string>
-    <string name="home_account_card_total_budget">전체금액</string>
-    <string name="home_account_card_total_remain">남은금액</string>
+    <string name="home_welcome_card_verified">인증이 완료된 계정입니다.</string>
+    <string name="home_welcome_card_remain2">%1$d일 전</string>
+    <string name="home_account_card_title">지출 내역</string>
+    <string name="home_account_card_total_accounts">총 지출 금액</string>
+    <string name="home_account_card_total_budget">전체 예산</string>
+    <string name="home_account_card_total_remain">남은 예산</string>
     <string name="home_account_card_accounts_husband">신랑 지출</string>
     <string name="home_account_card_accounts_wife">신부 지출</string>
     <string name="home_account_card_percent">%1$.0f %%</string>
@@ -157,7 +161,7 @@
     <string name="home_task_card_complete">완료</string>
     <string name="home_task_card_no_item">진행중인\n항목이\n없어요.</string>
     <string name="home_day_card_title">디데이</string>
-    <string name="home_day_card_management_schedule">디데이를 등록하고 일정을 관리하세요~</string>
+    <string name="home_day_card_management_schedule">디데이를 등록하고 일정을 관리하세요. （・◇・）/~~~</string>
 
     <string name="tasks_total_desc">전체</string>
     <string name="tasks_progress_desc">진행중</string>

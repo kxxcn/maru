@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="dev.kxxcn.maru.util.ConvertUtils" />
+
+        <variable
+            name="item"
+            type="dev.kxxcn.maru.data.TaskDetail" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        tools:background="@drawable/task_remain_gradient">
+
+        <dev.kxxcn.maru.view.custom.MaruTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"
+            android:text="@{item.task.name}"
+            android:textColor="@android:color/white" />
+
+        <dev.kxxcn.maru.view.custom.MaruTextView
+            android:id="@+id/task_card_remain_desc_expenses"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="@{ConvertUtils.INSTANCE.moneyText(item.totalAccounts)}"
+            android:textColor="@color/taskCardRemainTint" />
+
+        <dev.kxxcn.maru.view.custom.MaruTextView
+            android:id="@+id/task_card_remain_desc_remain"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="@{ConvertUtils.INSTANCE.moneyText(item.account.remain)}"
+            android:textColor="@android:color/white" />
+
+    </LinearLayout>
+
+</layout>

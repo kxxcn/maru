@@ -7,15 +7,17 @@ import dev.kxxcn.maru.databinding.DaysItemBinding
 import dev.kxxcn.maru.view.base.LifecycleViewHolder
 import dev.kxxcn.maru.view.custom.DayView
 import dev.kxxcn.maru.view.home.HomeAdapter
+import dev.kxxcn.maru.view.home.HomeViewModel
 
 class DaysHolder(
     private val binding: DaysItemBinding
 ) : LifecycleViewHolder(binding) {
 
-    fun bind(item: HomeAdapter.SummaryItem): () -> Unit {
+    fun bind(item: HomeAdapter.SummaryItem, viewModel: HomeViewModel): () -> Unit {
         with(binding) {
             this.lifecycleOwner = this@DaysHolder
             this.content = item.content
+            this.viewModel = viewModel
             this.executePendingBindings()
         }
         return { release() }

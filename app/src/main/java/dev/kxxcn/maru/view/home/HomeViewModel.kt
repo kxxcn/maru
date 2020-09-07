@@ -2,7 +2,6 @@ package dev.kxxcn.maru.view.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
 import com.google.firebase.auth.FirebaseAuth
 import dev.kxxcn.maru.Event
@@ -18,8 +17,8 @@ class HomeViewModel @Inject constructor(
 
     private val _forceUpdate = MutableLiveData<Unit>()
 
-    private val _snackbarText = MutableLiveData<Event<Int>>()
-    val snackbarText: LiveData<Event<Int>> = _snackbarText
+    private val _daysEvent = MutableLiveData<Event<Unit>>()
+    val daysEvent: LiveData<Event<Unit>> = _daysEvent
 
     val items: LiveData<List<HomeAdapter.SummaryItem>> =
         _forceUpdate.switchMap { _ ->
@@ -44,5 +43,7 @@ class HomeViewModel @Inject constructor(
         message(R.string.home_welcome_card_verified)
     }
 
+    fun days() {
+        _daysEvent.value = Event(Unit)
     }
 }

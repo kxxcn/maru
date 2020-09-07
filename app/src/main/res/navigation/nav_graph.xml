@@ -74,6 +74,13 @@
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/fade_out" />
 
+        <action
+            android:id="@+id/action_home_fragment_to_days_fragment"
+            app:destination="@id/days_fragment"
+            app:enterAnim="@anim/slide_in_right_to_left"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+
     </fragment>
 
     <fragment

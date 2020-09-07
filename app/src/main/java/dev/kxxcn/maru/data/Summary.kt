@@ -45,10 +45,10 @@ class Summary {
             return numberFormat.format(totalAccounts)
         }
 
-    private val husbandAccounts: Long
+    val husbandAccounts: Long
         get() = accounts.sumBy { it?.husband?.toInt() ?: 0 }.toLong()
 
-    private val wifeAccounts: Long
+    val wifeAccounts: Long
         get() = accounts.sumBy { it?.wife?.toInt() ?: 0 }.toLong()
 
     val husbandProgress: Float
@@ -114,6 +114,11 @@ class Summary {
             } else {
                 accounts.sumBy { it?.remain?.toInt() ?: 0 }.toLong()
             }
+        }
+
+    val existRemain: Boolean
+        get() {
+            return accounts.isNotEmpty() && accounts.sumBy { it?.remain?.toInt() ?: 0 } != 0
         }
 
     override fun equals(other: Any?): Boolean {

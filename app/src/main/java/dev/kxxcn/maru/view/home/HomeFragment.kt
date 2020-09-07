@@ -4,29 +4,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.addCallback
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import dev.kxxcn.maru.EventObserver
 import dev.kxxcn.maru.MaruActivity
 import dev.kxxcn.maru.databinding.HomeFragmentBinding
 import dev.kxxcn.maru.util.LinearSpacingDecoration
-import dev.kxxcn.maru.util.extension.setupSnackbar
+import dev.kxxcn.maru.util.extension.px
 import dev.kxxcn.maru.util.preference.PreferenceUtils
 import dev.kxxcn.maru.view.base.BaseFragment
 import javax.inject.Inject
 
 class HomeFragment : BaseFragment() {
 
-    override val clazz: Class<*>
-        get() = this::class.java
-
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    private val viewModel by viewModels<HomeViewModel> { viewModelFactory }
 
     private lateinit var binding: HomeFragmentBinding
 
@@ -53,10 +48,9 @@ class HomeFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupLifecycle()
-        setupSnackbar()
         setupOnboard()
         setupListAdapter()
-        setupOnBackPressed()
+        setupListener()
     }
 
     override fun onDestroyView() {
@@ -71,10 +65,6 @@ class HomeFragment : BaseFragment() {
 
     private fun setupLifecycle() {
         binding.lifecycleOwner = viewLifecycleOwner
-    }
-
-    private fun setupSnackbar() {
-        view?.setupSnackbar(viewLifecycleOwner, viewModel.snackbarText)
     }
 
     private fun setupOnboard() {
@@ -99,20 +89,18 @@ class HomeFragment : BaseFragment() {
                         activity.openNavigator(dy < 0)
                     }
                 })
-                addItemDecoration(LinearSpacingDecoration(), 0)
+                addItemDecoration(LinearSpacingDecoration(50.px), 0)
                 val activity = activity ?: return
                 adapter = HomeAdapter(activity, viewModel)
             }
         }
     }
 
-    private fun setupOnBackPressed() {
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-
-        }
-    }
-
-    fun navigate(pos: Int) {
-
+    private fun setupListener() {
+        viewModel.daysEvent.observe(viewLifecycleOwner, EventObserver {
+            HomeFragmentDirections.actionHomeFragmentToDaysFragment().also {
+                findNavController().navigate(it)
+            }
+        })
     }
 }

@@ -38,6 +38,10 @@
     <color name="progressBarForeground">#AAD4EC</color>
     <color name="progressBarSecondaryForeground">#F5C9CA</color>
 
+    <color name="welcomeDayBackground">#F0E4D4</color>
+    <color name="welcomeDayWedding">#424242</color>
+    <color name="welcomeDayRemain">#D18063</color>
+
     <color name="accountCardBudgetBackground">#ADBED2</color>
     <color name="accountCardRemainBackground">#12406A</color>
 
@@ -46,9 +50,13 @@
     <color name="taskCardDivider">#B5B5B5</color>
     <color name="taskCardAchievementRate">#FFFFFF</color>
     <color name="taskCardProgressBar">#84A5F9</color>
-
+    <color name="taskCardRimColor">#C3D2FA</color>
     <color name="taskCardBaseOval">#40CEDAF8</color>
     <color name="taskCardRateOval">#40FFFFFF</color>
+    <color name="taskCardTotalCircle">#38BCFF</color>
+    <color name="taskCardTotalProgress">#40ECDC</color>
+    <color name="taskCardTotalRemain">#FFFF13</color>
+    <color name="taskCardRemainTint">#AEBDC2</color>
 
     <color name="waveStroke">#FFEDF1</color>
     <color name="waveBehind">#99FFD9E2</color>

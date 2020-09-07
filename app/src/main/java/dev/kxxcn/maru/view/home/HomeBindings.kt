@@ -19,10 +19,7 @@ import dev.kxxcn.maru.util.AttrsUtils
 import dev.kxxcn.maru.util.ConvertUtils
 import dev.kxxcn.maru.util.extension.getDisplayWidth
 import dev.kxxcn.maru.util.extension.px
-import dev.kxxcn.maru.view.custom.DayView
-import dev.kxxcn.maru.view.custom.EmptyTransactionView
-import dev.kxxcn.maru.view.custom.MaruTextView
-import dev.kxxcn.maru.view.custom.TransactionView
+import dev.kxxcn.maru.view.custom.*
 import org.jetbrains.anko.matchParent
 import org.jetbrains.anko.textColor
 import org.jetbrains.anko.wrapContent
@@ -63,7 +60,7 @@ fun setCircleProgress(view: CircleProgressView, progress: Float) {
 fun setTransaction(view: LinearLayout, tasks: List<TaskDetail>) {
     view.removeAllViews()
     val items = tasks
-        .filter { it.account != null }
+        .filter { it.account != null && it.account?.remain == 0L }
         .sortedByDescending { it.account?.date }
     if (items.isEmpty()) {
         view.addView(EmptyTransactionView(view.context))
@@ -121,17 +118,27 @@ fun setDaysItem(view: LinearLayout, days: List<Day>?) {
         days.reversed().mapIndexed { index, day ->
             DayView(view.context).apply {
                 val margin = 10.px
-                val params = LinearLayout.LayoutParams(wrapContent, wrapContent)
-                if (index == days.size - 1) {
-                    params.setMargins(margin, margin, margin, margin)
-                } else {
-                    params.setMargins(margin, margin, 0, margin)
+                val right = if (index == days.size - 1) margin else 0
+                layoutParams = LinearLayout.LayoutParams(wrapContent, wrapContent).apply {
+                    setMargins(margin, margin, right, margin)
                 }
-                layoutParams = params
                 bind(day)
             }
         }.forEach {
             view.addView(it)
         }
     }
+}
+
+@BindingAdapter("app:remainTransaction")
+fun setRemainTransaction(view: LinearLayout, tasks: List<TaskDetail>) {
+    view.removeAllViews()
+    tasks
+        .filter { it.account != null && it.account?.remain != 0L }
+        .sortedByDescending { it.account?.date }
+        .forEach {
+            RemainTransactionView(view.context)
+                .apply { bind(it) }
+                .also { view.addView(it) }
+        }
 }

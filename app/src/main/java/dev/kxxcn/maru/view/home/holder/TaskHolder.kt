@@ -2,29 +2,19 @@ package dev.kxxcn.maru.view.home.holder
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.view.children
 import dev.kxxcn.maru.databinding.TaskItemBinding
 import dev.kxxcn.maru.view.base.LifecycleViewHolder
-import dev.kxxcn.maru.view.custom.TransactionView
 import dev.kxxcn.maru.view.home.HomeAdapter
 
 class TaskHolder(
     private val binding: TaskItemBinding
 ) : LifecycleViewHolder(binding) {
 
-    fun bind(item: HomeAdapter.SummaryItem): () -> Unit {
+    fun bind(item: HomeAdapter.SummaryItem) {
         with(binding) {
             this.lifecycleOwner = this@TaskHolder
             this.content = item.content
             this.executePendingBindings()
-        }
-        return { release() }
-    }
-
-    fun release() {
-        with(binding.taskActivityList) {
-            for (child in children) (child as? TransactionView)?.release()
-            removeAllViews()
         }
     }
 

@@ -33,7 +33,7 @@ class HomeAdapter(
         when (item.type) {
             TYPE_WELCOME -> {
                 val h = holder as? WelcomeHolder ?: return
-                releasable.add(h.bind(item, viewModel))
+                h.bind(item, viewModel)
             }
             TYPE_ACCOUNT -> {
                 val h = holder as? AccountHolder ?: return
@@ -41,11 +41,11 @@ class HomeAdapter(
             }
             TYPE_TASK -> {
                 val h = holder as? TaskHolder ?: return
-                releasable.add(h.bind(item))
+                h.bind(item)
             }
             TYPE_DAYS -> {
                 val h = holder as? DaysHolder ?: return
-                releasable.add(h.bind(item))
+                releasable.add(h.bind(item, viewModel))
             }
             TYPE_BANNER_AD -> {
                 val h = holder as? BannerAdHolder ?: return
