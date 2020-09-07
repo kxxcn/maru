@@ -93,11 +93,8 @@ class DaysAddViewModel @Inject constructor(
     }
 
     fun setDay(timeMs: Long, forceCount: Boolean = false) {
-        if (forceCount || selectCount.value == true) {
-            ConvertUtils.getCount(timeMs)
-        } else {
-            ConvertUtils.getRemain(timeMs)
-        }.also { (stringRes, count) ->
+        val filterType = if (forceCount || selectCount.value == true) COUNT else REMAIN
+        ConvertUtils.getDaysCount(timeMs, filterType).also { (stringRes, count) ->
             _dayStringRes.value = stringRes
             _dayCount.value = count
         }

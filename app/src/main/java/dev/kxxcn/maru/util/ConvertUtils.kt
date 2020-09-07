@@ -5,6 +5,9 @@ import dev.kxxcn.maru.R
 import dev.kxxcn.maru.util.extension.day
 import dev.kxxcn.maru.util.extension.month
 import dev.kxxcn.maru.util.extension.year
+import dev.kxxcn.maru.view.days.DaysFilterType
+import dev.kxxcn.maru.view.days.DaysFilterType.COUNT
+import dev.kxxcn.maru.view.days.DaysFilterType.REMAIN
 import java.text.NumberFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -93,29 +96,29 @@ object ConvertUtils {
         return DateUtils.DATE_FORMAT_5.parse(time)?.time
     }
 
-    fun getRemain(selection: Long): Pair<Int, Int> {
-        val today = Calendar.getInstance()
+    fun getDaysCount(selection: Long, filterType: DaysFilterType): Pair<Int, Int> {
+        val today = Calendar.getInstance().apply {
+            set(year(), month(), day(), 0, 0, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
         val decimalDay = Calendar.getInstance().apply {
             timeInMillis = selection
         }
         val longDecimalDay = decimalDay.timeInMillis / (24 * 60 * 60 * 1000)
         val longToday = today.timeInMillis / (24 * 60 * 60 * 1000)
-        val count = (longToday - 1 - longDecimalDay).toInt()
-        return when {
-            count > 0 -> R.string.days_add_calculate_remain_plus to count
-            count == 0 -> R.string.days_add_calculate_remain_day to count
-            else -> R.string.days_add_calculate_remain_minus to count
+        return when (filterType) {
+            COUNT -> {
+                val count = (longToday - longDecimalDay).toInt()
+                R.string.days_add_calculate_count to count + 1
+            }
+            REMAIN -> {
+                val count = (longToday - longDecimalDay).toInt()
+                when {
+                    count > 0 -> R.string.days_add_calculate_remain_plus to count
+                    count == 0 -> R.string.days_add_calculate_remain_day to count
+                    else -> R.string.days_add_calculate_remain_minus to count
+                }
+            }
         }
-    }
-
-    fun getCount(selection: Long): Pair<Int, Int> {
-        val today = Calendar.getInstance()
-        val decimalDay = Calendar.getInstance().apply {
-            timeInMillis = selection
-        }
-        val longDecimalDay = decimalDay.timeInMillis / (24 * 60 * 60 * 1000)
-        val longToday = today.timeInMillis / (24 * 60 * 60 * 1000)
-        val count = (longToday - longDecimalDay).toInt()
-        return R.string.days_add_calculate_count to count
     }
 }
