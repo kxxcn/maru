@@ -5,13 +5,14 @@ import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
 import java.text.NumberFormat
 import java.util.*
+import kotlin.math.roundToInt
 
 class PieChartFormatter(private val pieChart: PieChart) : ValueFormatter() {
 
     private val numberFormat = NumberFormat.getInstance(Locale.KOREA)
 
     override fun getFormattedValue(value: Float): String {
-        return "${numberFormat.format(value)}%"
+        return "${value.roundToInt()}%"
     }
 
     override fun getPieLabel(value: Float, pieEntry: PieEntry?): String {

@@ -3,7 +3,9 @@ package dev.kxxcn.maru.view.base
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dev.kxxcn.maru.Event
+import kotlinx.coroutines.launch
 
 abstract class BaseViewModel : ViewModel() {
 
@@ -21,7 +23,9 @@ abstract class BaseViewModel : ViewModel() {
     }
 
     fun message(messageRes: Int? = null, messageText: String? = null) {
-        messageRes?.let { _snackbarRes.value = Event(it) }
-        messageText?.let { _snackbarText.value = Event(it) }
+        viewModelScope.launch {
+            messageRes?.let { _snackbarRes.value = Event(it) }
+            messageText?.let { _snackbarText.value = Event(it) }
+        }
     }
 }

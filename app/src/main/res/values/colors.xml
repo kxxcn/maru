@@ -139,4 +139,6 @@
 
     <color name="backupButtonTint">#1DE9B6</color>
     <color name="restoreButtonTint">#BFC4F6</color>
+
+    <color name="dialogBackground">#99000000</color>
 </resources>

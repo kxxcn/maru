@@ -2,6 +2,9 @@ package dev.kxxcn.maru.view.tasks.holder
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import com.github.mikephil.charting.animation.Easing
+import dev.kxxcn.maru.R
 import dev.kxxcn.maru.data.TaskDetail
 import dev.kxxcn.maru.databinding.TasksCompletedItemBinding
 import dev.kxxcn.maru.view.base.LifecycleViewHolder
@@ -16,6 +19,13 @@ class TasksCompletedHolder(
             this.lifecycleOwner = this@TasksCompletedHolder
             this.viewModel = viewModel
             this.item = item
+            this.tasksChart.setHoleColor(
+                ContextCompat.getColor(
+                    binding.root.context,
+                    R.color.tasksCompletedCardBackground
+                )
+            )
+            this.tasksChart.animateY(1400, Easing.EaseInOutQuad)
             this.executePendingBindings()
         }
     }

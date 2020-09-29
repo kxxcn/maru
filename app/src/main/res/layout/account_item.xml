@@ -78,21 +78,17 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/total_accounts_text" />
 
-                <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
-                    android:id="@+id/corner_progress_bar"
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/total_accounts_chart"
                     android:layout_width="0dp"
-                    android:layout_height="25dp"
+                    android:layout_height="0dp"
                     android:layout_marginTop="20dp"
+                    app:chart="@{content.totalTasks}"
+                    app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/total_accounts_desc_text"
-                    app:progress="@{content.husbandProgress}"
-                    app:rcBackgroundColor="@color/progressBarBackground"
-                    app:rcBackgroundPadding="3dp"
-                    app:rcMax="1.0"
-                    app:rcProgressColor="@color/progressBarForeground"
-                    app:rcSecondaryProgressColor="@color/progressBarSecondaryForeground"
-                    app:secondaryProgress="@{content.wifeProgress}" />
+                    app:layout_constraintWidth_percent="0.7" />
 
                 <ImageView
                     android:id="@+id/husband_accounts_rect"
@@ -149,7 +145,7 @@
                     android:textColor="?maruFontColor"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/corner_progress_bar"
+                    app:layout_constraintTop_toBottomOf="@id/total_accounts_chart"
                     app:moneyText="@{content.husbandAccounts}"
                     app:textStyle="bold" />
 

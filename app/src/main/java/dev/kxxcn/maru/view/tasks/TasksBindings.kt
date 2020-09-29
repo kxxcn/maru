@@ -4,7 +4,6 @@ import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
@@ -44,7 +43,7 @@ fun setResourceId(view: ImageView, resourceId: String?) {
     view.setImageResource(drawable)
 }
 
-@BindingAdapter("app:initialize")
+@BindingAdapter("app:chart")
 fun setPieChart(view: PieChart, taskDetail: TaskDetail) {
     with(view) {
         setUsePercentValues(true)
@@ -54,7 +53,6 @@ fun setPieChart(view: PieChart, taskDetail: TaskDetail) {
         setDrawCenterText(false)
         isHighlightPerTapEnabled = false
         isRotationEnabled = false
-        animateY(1400, Easing.EaseInOutQuad)
 
         with(legend) {
             isEnabled = false

@@ -66,12 +66,12 @@ class Summary {
     val progressTaskName: String?
         get() = tasks
             .filter { it.task?.isCompleted == false && it.account != null }
-            .minBy { it.task?.priority ?: Long.MAX_VALUE }?.task?.name
+            .minByOrNull { it.task?.priority ?: Long.MAX_VALUE }?.task?.name
 
     val progressTaskIcon: String?
         get() = tasks
             .filter { it.task?.isCompleted == false && it.account != null }
-            .minBy { it.task?.priority ?: Long.MAX_VALUE }?.task?.iconId
+            .minByOrNull { it.task?.priority ?: Long.MAX_VALUE }?.task?.iconId
 
     val monthAccounts: Long
         get() {
@@ -116,9 +116,29 @@ class Summary {
             }
         }
 
-    val existRemain: Boolean
+    val hasRemain: Boolean
         get() {
             return accounts.isNotEmpty() && accounts.sumBy { it?.remain?.toInt() ?: 0 } != 0
+        }
+
+    val hasDays: Boolean
+        get() {
+            return days.isNotEmpty()
+        }
+
+    val hasRecentlyTasks: Boolean
+        get() {
+            return tasks.any { it.account != null && it.account?.remain == 0L }
+        }
+
+    val totalTasks: TaskDetail
+        get() {
+            return TaskDetail().apply {
+                account = Account(
+                    husband = husbandAccounts,
+                    wife = wifeAccounts
+                )
+            }
         }
 
     override fun equals(other: Any?): Boolean {

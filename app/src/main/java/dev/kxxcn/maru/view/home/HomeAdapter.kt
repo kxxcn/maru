@@ -12,9 +12,9 @@ class HomeAdapter(
     private val viewModel: HomeViewModel
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var items: List<SummaryItem>? = null
-
     private val releasable = mutableListOf<() -> Unit>()
+
+    var items: List<SummaryItem>? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -43,13 +43,13 @@ class HomeAdapter(
                 val h = holder as? TaskHolder ?: return
                 h.bind(item)
             }
-            TYPE_DAYS -> {
-                val h = holder as? DaysHolder ?: return
-                releasable.add(h.bind(item, viewModel))
-            }
             TYPE_BANNER_AD -> {
                 val h = holder as? BannerAdHolder ?: return
                 releasable.add(h.loadAd())
+            }
+            TYPE_DAYS -> {
+                val h = holder as? DaysHolder ?: return
+                releasable.add(h.bind(item, viewModel))
             }
         }
     }
@@ -85,11 +85,11 @@ class HomeAdapter(
 
     companion object {
 
-        private const val TYPE_WELCOME = 0
-        private const val TYPE_ACCOUNT = 1
-        private const val TYPE_TASK = 2
-        private const val TYPE_DAYS = 3
-        private const val TYPE_BANNER_AD = 4
+        const val TYPE_WELCOME = 0
+        const val TYPE_ACCOUNT = 1
+        const val TYPE_TASK = 2
+        const val TYPE_BANNER_AD = 3
+        const val TYPE_DAYS = 4
 
         fun makeItems(content: Summary): List<SummaryItem> {
             return mutableListOf<SummaryItem>().apply {

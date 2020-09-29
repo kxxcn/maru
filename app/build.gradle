@@ -74,7 +74,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation Dependencies.kotlin
-    implementation Dependencies.coroutinesPlayServices
+    implementation Dependencies.coroutines
     implementation Dependencies.appCompat
     implementation Dependencies.coreKtx
     implementation Dependencies.cardView
@@ -82,7 +82,6 @@ dependencies {
     implementation Dependencies.fragment
     implementation Dependencies.recyclerView
     implementation Dependencies.anko
-
     implementation Dependencies.googlePlay
     implementation Dependencies.googlePlayKtx
     implementation Dependencies.playServicesAd
@@ -109,6 +108,7 @@ dependencies {
     implementation Dependencies.lifecycleExtensions
     implementation Dependencies.lifecycleViewModelKtx
     implementation Dependencies.lifecycleLiveDataKtx
+    implementation Dependencies.lifecycleRuntimeKtx
 
     implementation Dependencies.navigationFragmentKtx
     implementation Dependencies.navigationUiKtx

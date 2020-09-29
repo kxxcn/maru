@@ -33,11 +33,15 @@ fun setSummaries(view: RecyclerView, items: List<HomeAdapter.SummaryItem>?) {
     }
 }
 
-@BindingAdapter("app:progress", "app:secondaryProgress")
-fun setRoundProgress(view: RoundCornerProgressBar, progress: Float, secondaryProgress: Float) {
+@BindingAdapter("app:primaryProgress", "app:secondaryProgress")
+fun setRoundCornerProgress(
+    view: RoundCornerProgressBar,
+    primaryProgress: Float,
+    secondaryProgress: Float
+) {
     with(view) {
-        this.progress = progress
-        this.secondaryProgress = progress + secondaryProgress
+        this.progress = primaryProgress
+        this.secondaryProgress = primaryProgress + secondaryProgress
     }
 }
 

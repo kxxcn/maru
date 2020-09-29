@@ -40,4 +40,8 @@ class RotateSelectionView @JvmOverloads constructor(
             rotate_selection_content.textColor = it
         }
     }
+
+    fun getSelectionContent(): String {
+        return rotate_selection_content.text.toString()
+    }
 }

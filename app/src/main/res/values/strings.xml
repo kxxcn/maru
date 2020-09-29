@@ -97,6 +97,7 @@
     <string name="marriage">결혼을</string>
     <string name="expenses">지출</string>
     <string name="congratulations">축하합니다! :)</string>
+    <string name="share">공유하기</string>
 
     <string name="need_sign_in_process">인증이 필요한 서비스입니다.\n로그인 하시겠습니까?</string>
     <string name="active_night_mode">야간모드로 전환하시겠습니까?</string>
@@ -113,6 +114,8 @@
     <string name="write_review">리뷰를 작성하시겠습니까?</string>
     <string name="thank_you_for_feedback">소중한 의견 감사합니다! (۶•౪•)۶</string>
     <string name="congratulations_on_your_wedding">결혼을 축하합니다! :)</string>
+    <string name="save_to_gallery">사진첩에 저장되었습니다.</string>
+    <string name="requires_permission">"해당 기능은 권한이 필요합니다."</string>
 
     <string name="register_hello">안녕하세요.</string>
     <string name="register_welcome">마루에 오신 것을\n환영합니다.</string>

@@ -41,6 +41,7 @@ class RemainTransactionView @JvmOverloads constructor(
     fun bind(taskDetail: TaskDetail) {
         binding.lifecycleOwner = this
         binding.item = taskDetail
+        binding.executePendingBindings()
     }
 
     override fun onAttachedToWindow() {

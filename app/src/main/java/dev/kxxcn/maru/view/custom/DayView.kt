@@ -29,6 +29,7 @@ class DayView @JvmOverloads constructor(
 
     fun bind(day: Day) {
         binding?.day = day
+        binding?.executePendingBindings()
     }
 
     fun release() {

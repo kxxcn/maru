@@ -102,7 +102,6 @@ class TasksFragment : BaseFragment() {
     }
 
     private fun showNavigator(isShowing: Boolean = true) {
-        val activity = requireActivity() as MaruActivity
-        activity.openNavigator(isShowing)
+        (requireActivity() as? MaruActivity)?.openNavigator(isShowing)
     }
 }

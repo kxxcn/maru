@@ -170,7 +170,7 @@
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="40dp"
             android:layout_marginBottom="5dp"
-            android:visibility="@{content.existRemain ? View.VISIBLE : View.GONE}"
+            android:visibility="@{content.hasRemain ? View.VISIBLE : View.GONE}"
             app:cardCornerRadius="10dp"
             app:cardElevation="3dp"
             app:layout_constraintEnd_toEndOf="parent"

@@ -2,8 +2,8 @@ object Versions {
 
     const val compatVersion = "1.1.0"
     const val coreVersion = "1.3.0"
-    const val kotlinVersion = "1.3.72"
-    const val coroutinesPlayServicesVersion = "1.3.7"
+    const val kotlinVersion = "1.4.10"
+    const val coroutinesVersion = "1.3.7"
     const val constraintVersion = "2.0.0-beta3"
     const val cardVersion = "1.0.0"
     const val roomVersion = "2.2.4"
@@ -62,8 +62,8 @@ object Dependencies {
      * Kotlin
      */
     const val kotlin = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlinVersion}"
-    const val coroutinesPlayServices =
-        "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:${Versions.coroutinesPlayServicesVersion}"
+    const val coroutines =
+        "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:${Versions.coroutinesVersion}"
 
     /**
      * Layout
@@ -129,6 +129,8 @@ object Dependencies {
         "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.archLifecycleVersion}"
     const val lifecycleLiveDataKtx =
         "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.archLifecycleVersion}"
+    const val lifecycleRuntimeKtx =
+        "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.archLifecycleVersion}"
 
     /**
      * Navigation

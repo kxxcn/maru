@@ -2,13 +2,22 @@ package dev.kxxcn.maru.view.home.holder
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import dev.kxxcn.maru.databinding.TaskItemBinding
+import dev.kxxcn.maru.view.base.Capturable
 import dev.kxxcn.maru.view.base.LifecycleViewHolder
 import dev.kxxcn.maru.view.home.HomeAdapter
 
 class TaskHolder(
     private val binding: TaskItemBinding
-) : LifecycleViewHolder(binding) {
+) : LifecycleViewHolder(binding), Capturable {
+
+    override fun capture() {
+        with(binding) {
+            taskActivityParent.isVisible = content?.hasRecentlyTasks ?: true
+            executePendingBindings()
+        }
+    }
 
     fun bind(item: HomeAdapter.SummaryItem) {
         with(binding) {

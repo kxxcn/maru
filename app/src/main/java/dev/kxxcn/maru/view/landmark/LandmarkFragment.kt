@@ -12,7 +12,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -27,7 +26,8 @@ import dev.kxxcn.maru.EventObserver
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.databinding.LandmarkFragmentBinding
 import dev.kxxcn.maru.util.CAMERA_MOVE_ANIMATION_DURATION
-import dev.kxxcn.maru.util.REQUEST_CODE_PERMISSION
+import dev.kxxcn.maru.util.FileUtils
+import dev.kxxcn.maru.util.REQUEST_CODE_PERMISSION_LOCATION
 import dev.kxxcn.maru.util.extension.displayHeight
 import dev.kxxcn.maru.util.extension.px
 import dev.kxxcn.maru.util.preference.PreferenceUtils
@@ -83,8 +83,12 @@ class LandmarkFragment : BaseFragment(), OnMapReadyCallback, LocationListener {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when (requestCode) {
-            REQUEST_CODE_PERMISSION -> setupLocation()
+        if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            when (requestCode) {
+                REQUEST_CODE_PERMISSION_LOCATION -> setupLocation()
+            }
+        } else {
+            viewModel.message(R.string.requires_permission)
         }
     }
 
@@ -170,27 +174,12 @@ class LandmarkFragment : BaseFragment(), OnMapReadyCallback, LocationListener {
     }
 
     private fun checkPermission(): Boolean {
-        val activity = activity ?: return false
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
-            ContextCompat.checkSelfPermission(
-                activity,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED &&
-            ContextCompat.checkSelfPermission(
-                activity,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                activity, arrayOf(
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ), REQUEST_CODE_PERMISSION
-            )
-            false
-        } else {
-            true
-        }
+        return FileUtils.checkPermission(
+            activity,
+            REQUEST_CODE_PERMISSION_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ) { Build.VERSION.SDK_INT >= Build.VERSION_CODES.M }
     }
 
     private fun syncLocation() {
