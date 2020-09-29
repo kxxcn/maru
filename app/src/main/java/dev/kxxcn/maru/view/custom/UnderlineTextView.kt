@@ -1,15 +1,12 @@
 package dev.kxxcn.maru.view.custom
 
 import android.content.Context
-import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.util.AttrsUtils
 import kotlinx.android.synthetic.main.underline_view.view.*
-import org.jetbrains.anko.sdk27.coroutines.onClick
 import org.jetbrains.anko.textColor
 
 class UnderlineTextView @JvmOverloads constructor(

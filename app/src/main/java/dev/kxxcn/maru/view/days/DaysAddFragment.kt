@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import dev.kxxcn.maru.EventObserver
 import dev.kxxcn.maru.databinding.DaysAddFragmentBinding
@@ -78,9 +77,7 @@ class DaysAddFragment : BaseFragment() {
         viewModel.datePickerEvent.observe(viewLifecycleOwner, EventObserver {
             showDatePicker()
         })
-        viewModel.selectCount.observe(viewLifecycleOwner, Observer {
-            viewModel.setDay(time.timeInMillis)
-        })
+        viewModel.selectCount.observe(viewLifecycleOwner, { viewModel.setDay(time.timeInMillis) })
     }
 
     private fun setupDatePicker() {

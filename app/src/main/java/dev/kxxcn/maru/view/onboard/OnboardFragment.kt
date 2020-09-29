@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.databinding.OnboardFragmentBinding
@@ -57,8 +56,6 @@ class OnboardFragment : Fragment(R.layout.onboard_fragment) {
             }
         }
 
-        viewModel.popBackStack.observe(viewLifecycleOwner, Observer {
-            findNavController().popBackStack()
-        })
+        viewModel.popBackStack.observe(viewLifecycleOwner, { findNavController().popBackStack() })
     }
 }

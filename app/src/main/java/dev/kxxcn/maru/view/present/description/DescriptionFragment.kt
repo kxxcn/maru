@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ScrollView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import dev.kxxcn.maru.EventObserver
 import dev.kxxcn.maru.databinding.DescriptionFragmentBinding
@@ -57,7 +56,7 @@ class DescriptionFragment : Fragment() {
     }
 
     private fun setupListener() {
-        viewModel.present.observe(viewLifecycleOwner, Observer { present ->
+        viewModel.present.observe(viewLifecycleOwner, { present ->
             binding.descPager.currentItem = 0
             present?.let { adapter.notify(it) }
         })

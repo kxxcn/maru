@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import dev.kxxcn.maru.databinding.NotificationFragmentBinding
 import dev.kxxcn.maru.util.preference.PreferenceUtils
 import dev.kxxcn.maru.view.base.BaseFragment
@@ -45,13 +44,13 @@ class NotificationFragment : BaseFragment() {
     }
 
     private fun setupListener() {
-        viewModel.noticeUse.observe(viewLifecycleOwner, Observer {
+        viewModel.noticeUse.observe(viewLifecycleOwner, {
             PreferenceUtils.notifyNotice = it
         })
-        viewModel.noticeVibrate.observe(viewLifecycleOwner, Observer {
+        viewModel.noticeVibrate.observe(viewLifecycleOwner, {
             PreferenceUtils.notifyNoticeVibrate = it
         })
-        viewModel.noticeSound.observe(viewLifecycleOwner, Observer {
+        viewModel.noticeSound.observe(viewLifecycleOwner, {
             PreferenceUtils.notifyNoticeSound = it
         })
     }

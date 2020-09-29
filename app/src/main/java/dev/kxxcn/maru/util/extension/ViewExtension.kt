@@ -13,7 +13,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import dev.kxxcn.maru.Event
 import dev.kxxcn.maru.R
@@ -145,7 +144,7 @@ fun <T> View.setupSnackbar(
     snackbarEvent: LiveData<Event<T>>,
     timeLength: Int = Snackbar.LENGTH_SHORT
 ) {
-    snackbarEvent.observe(lifecycleOwner, Observer { event ->
+    snackbarEvent.observe(lifecycleOwner, { event ->
         event.getContentIfNotHandled()?.let {
             if (it is Int) {
                 showSnackbar(context.getString(it), timeLength)

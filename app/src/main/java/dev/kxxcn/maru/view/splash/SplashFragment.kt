@@ -3,7 +3,6 @@ package dev.kxxcn.maru.view.splash
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import dagger.android.support.DaggerFragment
@@ -23,9 +22,7 @@ class SplashFragment : DaggerFragment(R.layout.splash_fragment) {
     }
 
     private fun setupNavigation() {
-        viewModel.register.observe(viewLifecycleOwner, Observer {
-            navigate(it)
-        })
+        viewModel.register.observe(viewLifecycleOwner, { navigate(it) })
     }
 
     private fun navigate(loggedIn: Boolean) {

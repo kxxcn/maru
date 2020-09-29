@@ -2,7 +2,6 @@ package dev.kxxcn.maru.data.source.local.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
-import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import dev.kxxcn.maru.data.Summary

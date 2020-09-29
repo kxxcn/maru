@@ -69,7 +69,7 @@ class SortViewModel @AssistedInject constructor(
     val deleteIconInactiveColorRes: LiveData<Int> = _deleteIconInactiveColorRes
 
     private val deletableSource: LiveData<String> =
-        savedStateHandle.getLiveData<String>(EDIT_DELETABLE_SET_SAVED_STATE_KEY)
+        savedStateHandle.getLiveData(EDIT_DELETABLE_SET_SAVED_STATE_KEY)
 
     val deletableSet: LiveData<Set<Task>> = deletableSource.map {
         Gson().fromJson(it, Array<Task>::class.java).toSet()

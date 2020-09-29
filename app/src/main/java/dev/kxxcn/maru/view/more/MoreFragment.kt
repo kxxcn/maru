@@ -4,8 +4,6 @@ import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.Canvas
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -21,24 +19,18 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.play.core.review.ReviewManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import com.orhanobut.logger.Logger
 import dev.kxxcn.maru.BuildConfig
 import dev.kxxcn.maru.EventObserver
 import dev.kxxcn.maru.MaruActivity
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.databinding.MoreFragmentBinding
 import dev.kxxcn.maru.util.LinearSpacingDecoration
-import dev.kxxcn.maru.util.REQUEST_CODE_PERMISSION
+import dev.kxxcn.maru.util.REQUEST_CODE_PERMISSION_LOCATION
 import dev.kxxcn.maru.util.RESULT_GOOGLE_SIGN_IN
-import dev.kxxcn.maru.util.extension.displayHeight
-import dev.kxxcn.maru.util.extension.displayWidth
 import dev.kxxcn.maru.util.extension.openDialog
 import dev.kxxcn.maru.util.preference.PreferenceUtils
 import dev.kxxcn.maru.view.base.BaseFragment
 import dev.kxxcn.maru.view.more.contents.ContentsItem
-import org.jetbrains.anko.contentView
-import java.io.File
-import java.io.FileOutputStream
 import javax.inject.Inject
 
 class MoreFragment : BaseFragment() {
@@ -119,7 +111,7 @@ class MoreFragment : BaseFragment() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
-            REQUEST_CODE_PERMISSION -> nightDialog()
+            REQUEST_CODE_PERMISSION_LOCATION -> nightDialog()
         }
     }
 
@@ -246,35 +238,8 @@ class MoreFragment : BaseFragment() {
     }
 
     private fun switch() {
-        val activity = activity as? MaruActivity ?: return
-        val container = activity.contentView
-
-        val cache = context?.cacheDir
-        if (cache == null || container == null) {
-            activity.recreate()
-        } else {
-            Bitmap.createBitmap(
-                displayWidth(),
-                displayHeight(),
-                Bitmap.Config.ARGB_8888
-            ).also {
-                container.draw(Canvas(it))
-                val file = File(cache, "capture.png")
-                var output: FileOutputStream? = null
-                try {
-                    file.createNewFile()
-                    output = FileOutputStream(file)
-                    it.compress(Bitmap.CompressFormat.PNG, 100, output)
-                } catch (e: Exception) {
-                    Logger.d(e.message)
-                } finally {
-                    output?.flush()
-                    output?.close()
-                    PreferenceUtils.useDarkMode = !PreferenceUtils.useDarkMode
-                    activity.recreate()
-                }
-            }
-        }
+        PreferenceUtils.useDarkMode = !PreferenceUtils.useDarkMode
+        activity?.recreate()
     }
 
     private fun contactDialog() {

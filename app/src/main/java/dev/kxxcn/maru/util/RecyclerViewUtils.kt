@@ -4,9 +4,7 @@ import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.orhanobut.logger.Logger
 import dev.kxxcn.maru.util.extension.px
-import dev.kxxcn.maru.view.days.DaysViewHolder
 
 class LinearSpacingDecoration(
     private val size: Int = 30.px

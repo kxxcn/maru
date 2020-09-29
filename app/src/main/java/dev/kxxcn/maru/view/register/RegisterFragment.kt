@@ -169,7 +169,7 @@ class RegisterFragment : DaggerFragment() {
     }
 
     private fun setupBackPressed() {
-        viewModel.backPressedEvent.observe(viewLifecycleOwner, Observer {
+        viewModel.backPressedEvent.observe(viewLifecycleOwner, {
             findNavController().popBackStack()
         })
     }

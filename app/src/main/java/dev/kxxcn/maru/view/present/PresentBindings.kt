@@ -7,12 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import dev.kxxcn.maru.GlideApp
-import dev.kxxcn.maru.R
 import dev.kxxcn.maru.data.Present
-import dev.kxxcn.maru.util.AttrsUtils
 import dev.kxxcn.maru.util.extension.px
 import dev.kxxcn.maru.view.present.category.PresentAdapter
-import org.jetbrains.anko.textColor
 
 @BindingAdapter("app:presentItems")
 fun setPresentItems(view: RecyclerView, items: List<Present>?) {

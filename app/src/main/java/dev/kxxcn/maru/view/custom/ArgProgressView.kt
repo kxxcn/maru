@@ -119,7 +119,7 @@ class ArcProgressView @JvmOverloads constructor(
         super.invalidate()
     }
 
-    fun getStrokeWidth(): Float {
+    private fun getStrokeWidth(): Float {
         return strokeWidth
     }
 
@@ -158,7 +158,7 @@ class ArcProgressView @JvmOverloads constructor(
         invalidate()
     }
 
-    fun getBottomTextSize(): Float {
+    private fun getBottomTextSize(): Float {
         return bottomTextSize
     }
 
@@ -336,21 +336,22 @@ class ArcProgressView @JvmOverloads constructor(
 
     override fun onRestoreInstanceState(state: Parcelable) {
         if (state is Bundle) {
-            val bundle = state
-            strokeWidth = bundle.getFloat(INSTANCE_STROKE_WIDTH)
-            suffixTextSize = bundle.getFloat(INSTANCE_SUFFIX_TEXT_SIZE)
-            suffixTextPadding = bundle.getFloat(INSTANCE_SUFFIX_TEXT_PADDING)
-            bottomTextSize = bundle.getFloat(INSTANCE_BOTTOM_TEXT_SIZE)
-            bottomText = bundle.getString(INSTANCE_BOTTOM_TEXT)
-            textSize = bundle.getFloat(INSTANCE_TEXT_SIZE)
-            textColor = bundle.getInt(INSTANCE_TEXT_COLOR)
-            max = bundle.getInt(INSTANCE_MAX)
-            setProgress(bundle.getFloat(INSTANCE_PROGRESS))
-            finishedStrokeColor = bundle.getInt(INSTANCE_FINISHED_STROKE_COLOR)
-            unfinishedStrokeColor = bundle.getInt(INSTANCE_UNFINISHED_STROKE_COLOR)
-            suffixText = bundle.getString(INSTANCE_SUFFIX)
-            initPainters()
-            super.onRestoreInstanceState(bundle.getParcelable(INSTANCE_STATE))
+            with(state) {
+                strokeWidth = getFloat(INSTANCE_STROKE_WIDTH)
+                suffixTextSize = getFloat(INSTANCE_SUFFIX_TEXT_SIZE)
+                suffixTextPadding = getFloat(INSTANCE_SUFFIX_TEXT_PADDING)
+                bottomTextSize = getFloat(INSTANCE_BOTTOM_TEXT_SIZE)
+                bottomText = getString(INSTANCE_BOTTOM_TEXT)
+                textSize = getFloat(INSTANCE_TEXT_SIZE)
+                textColor = getInt(INSTANCE_TEXT_COLOR)
+                max = getInt(INSTANCE_MAX)
+                setProgress(getFloat(INSTANCE_PROGRESS))
+                finishedStrokeColor = getInt(INSTANCE_FINISHED_STROKE_COLOR)
+                unfinishedStrokeColor = getInt(INSTANCE_UNFINISHED_STROKE_COLOR)
+                suffixText = getString(INSTANCE_SUFFIX)
+                initPainters()
+                super.onRestoreInstanceState(getParcelable(INSTANCE_STATE))
+            }
             return
         }
         super.onRestoreInstanceState(state)

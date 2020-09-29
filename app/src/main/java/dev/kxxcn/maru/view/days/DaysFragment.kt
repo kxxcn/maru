@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import dev.kxxcn.maru.EventObserver
@@ -80,9 +79,7 @@ class DaysFragment : BaseFragment() {
                 positive = { handlePositiveClick(it) }
             )
         })
-        viewModel.isEmpty.observe(viewLifecycleOwner, Observer {
-            binding.daysEmpty.isVisible = it
-        })
+        viewModel.isEmpty.observe(viewLifecycleOwner, { binding.daysEmpty.isVisible = it })
     }
 
     private fun setupListAdapter() {
