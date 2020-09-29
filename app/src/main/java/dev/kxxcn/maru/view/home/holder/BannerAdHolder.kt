@@ -44,6 +44,7 @@ class BannerAdHolder(
             id,
             adSize
         ).also {
+            it.parent?.let { parent -> (parent as? ViewGroup)?.removeView(it) }
             adView = it
             container.addView(it)
         }.run {
