@@ -13,7 +13,7 @@ import dev.kxxcn.maru.di.DaggerApplicationComponent
 import dev.kxxcn.maru.util.NotificationUtils
 import dev.kxxcn.maru.util.preference.PreferenceManager
 
-class MaruApplication : DaggerApplication() {
+open class MaruApplication : DaggerApplication() {
 
     override fun onCreate() {
         super.onCreate()

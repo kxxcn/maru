@@ -1,4 +1,4 @@
-package dev.kxxcn.maru
+package dev.kxxcn.maru.room
 
 import android.content.Context
 import androidx.room.Room
@@ -43,9 +43,7 @@ class RoomEntityReadWriteTest {
     @Test
     @Throws(Exception::class)
     fun writeUserAndReadInList() {
-        val user: User = User().apply {
-            name = "kxxcn"
-        }
+        val user: User = User().apply { name = "kxxcn" }
         runBlocking {
             userDao.insertUser(user)
             val users = userDao.getUsers()

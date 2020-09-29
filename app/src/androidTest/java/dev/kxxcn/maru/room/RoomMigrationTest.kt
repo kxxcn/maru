@@ -1,4 +1,4 @@
-package dev.kxxcn.maru
+package dev.kxxcn.maru.room
 
 import androidx.room.Room
 import androidx.room.testing.MigrationTestHelper
@@ -25,22 +25,15 @@ class RoomMigrationTest {
     @Test
     @Throws(IOException::class)
     fun migrateAll() {
-        helper.createDatabase(DATABASE_NAME, 1).apply {
-            close()
-        }
-
+        val name = "Maru"
+        helper.createDatabase(name, 1).apply { close() }
         Room.databaseBuilder(
             InstrumentationRegistry.getInstrumentation().targetContext,
             MaruDatabase::class.java,
-            DATABASE_NAME
+            name
         ).addMigrations(*ApplicationModule.ALL_MIGRATIONS).build().apply {
             openHelper.writableDatabase
             close()
         }
-    }
-
-    companion object {
-
-        private const val DATABASE_NAME = "Maru"
     }
 }

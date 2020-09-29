@@ -123,6 +123,7 @@
                                 tools:ignore="ContentDescription" />
 
                             <dev.kxxcn.maru.view.custom.MaruTextView
+                                android:id="@+id/input_husband_money"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="5dp"
@@ -136,6 +137,7 @@
                     </LinearLayout>
 
                     <ImageView
+                        android:id="@+id/input_husband_decrement"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:onClick="@{()->viewModel.decrement(InputMoneyType.HUSBAND)}"
@@ -145,6 +147,7 @@
                         tools:ignore="ContentDescription" />
 
                     <ImageView
+                        android:id="@+id/input_husband_increment"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:onClick="@{()->viewModel.increment(InputMoneyType.HUSBAND)}"
@@ -205,6 +208,7 @@
                                 tools:ignore="ContentDescription" />
 
                             <dev.kxxcn.maru.view.custom.MaruTextView
+                                android:id="@+id/input_wife_money"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="5dp"
@@ -218,6 +222,7 @@
                     </LinearLayout>
 
                     <ImageView
+                        android:id="@+id/input_wife_decrement"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:onClick="@{()->viewModel.decrement(InputMoneyType.WIFE)}"
@@ -227,6 +232,7 @@
                         tools:ignore="ContentDescription" />
 
                     <ImageView
+                        android:id="@+id/input_wife_increment"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:onClick="@{()->viewModel.increment(InputMoneyType.WIFE)}"
@@ -287,6 +293,7 @@
                                 tools:ignore="ContentDescription" />
 
                             <dev.kxxcn.maru.view.custom.MaruTextView
+                                android:id="@+id/input_remain_money"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="5dp"
@@ -300,6 +307,7 @@
                     </LinearLayout>
 
                     <ImageView
+                        android:id="@+id/input_remain_decrement"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:onClick="@{()->viewModel.decrement(InputMoneyType.REMAIN)}"
@@ -309,6 +317,7 @@
                         tools:ignore="ContentDescription" />
 
                     <ImageView
+                        android:id="@+id/input_remain_increment"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:onClick="@{()->viewModel.increment(InputMoneyType.REMAIN)}"
@@ -430,6 +439,7 @@
                     app:layout_constraintTop_toBottomOf="@id/input_unit_parent" />
 
                 <ProgressBar
+                    android:id="@+id/input_progress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:visibility="@{viewModel.progress ? View.VISIBLE : View.GONE}"

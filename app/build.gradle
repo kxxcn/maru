@@ -14,7 +14,7 @@ android {
         versionCode 9
         versionName "1.2.7"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner 'dev.kxxcn.maru.CustomTestRunner'
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -118,6 +118,8 @@ dependencies {
 
     implementation Dependencies.dagger
     kapt Dependencies.daggerCompiler
+    kaptAndroidTest Dependencies.daggerCompiler
+    kaptTest Dependencies.daggerCompiler
     implementation Dependencies.daggerAndroidSupport
     kapt Dependencies.daggerAndroidProcessor
     implementation Dependencies.daggerAssistedAnnotations
@@ -136,10 +138,16 @@ dependencies {
 
     implementation project(':nativetemplates')
 
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    androidTestImplementation "androidx.room:room-testing:2.2.5"
+    implementation Dependencies.fragmentTesting
+    implementation Dependencies.androidXTestCore
+
+    testImplementation Dependencies.junit
+    testImplementation Dependencies.mockitoInline
+    androidTestImplementation Dependencies.junitExt
+    androidTestImplementation Dependencies.espressoCore
+    androidTestImplementation Dependencies.espressoContrib
+    androidTestImplementation Dependencies.roomTesting
+    androidTestImplementation(Dependencies.mockitoAndroid)
 }
 
 apply plugin: 'com.google.gms.google-services'

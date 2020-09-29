@@ -10,6 +10,7 @@ object Versions {
     const val archLifecycleVersion = "2.2.0"
     const val navigationVersion = "2.2.1"
     const val fragmentVersion = "1.2.0-rc02"
+    const val androidXTestCoreVersion = "1.3.0"
     const val recyclerViewVersion = "1.1.0"
     const val glideVersion = "4.11.0"
     const val daggerVersion = "2.28.3"
@@ -41,6 +42,12 @@ object Versions {
     const val interceptorVersion = "3.11.0"
     const val lottieVersion = "3.4.1"
     const val toggleVersion = "1.0.0"
+    const val junitVersion = "4.12"
+    const val junitExtVersion = "1.1.2"
+    const val mockitoInlineVersion = "2.13.0"
+    const val mockitoAndroidVersion = "2.24.5"
+    const val espressoVersion = "3.3.0"
+    const val roomTestingVersion = "2.2.5"
 }
 
 object Dependencies {
@@ -168,4 +175,18 @@ object Dependencies {
     const val naverMap = "com.naver.maps:map-sdk:${Versions.naverMapVersion}"
     const val lottie = "com.airbnb.android:lottie:${Versions.lottieVersion}"
     const val toggle = "com.zcw:togglebutton-library:${Versions.toggleVersion}"
+
+    /**
+     * Testing
+     */
+    const val fragmentTesting = "androidx.fragment:fragment-testing:${Versions.fragmentVersion}"
+    const val androidXTestCore = "androidx.test:core:${Versions.androidXTestCoreVersion}"
+    const val roomTesting = "androidx.room:room-testing:${Versions.roomTestingVersion}"
+    const val junit = "junit:junit:${Versions.junitVersion}"
+    const val junitExt = "androidx.test.ext:junit:${Versions.junitExtVersion}"
+    const val mockitoInline = "org.mockito:mockito-inline:${Versions.mockitoInlineVersion}"
+    const val mockitoAndroid = "org.mockito:mockito-android:${Versions.mockitoAndroidVersion}"
+    const val espressoCore = "androidx.test.espresso:espresso-core:${Versions.espressoVersion}"
+    const val espressoContrib =
+        "androidx.test.espresso:espresso-contrib:${Versions.espressoVersion}"
 }
