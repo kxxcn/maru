@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="content"
             type="dev.kxxcn.maru.data.Summary" />
@@ -83,6 +85,7 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_marginTop="20dp"
+                    android:visibility="@{content.hasTransaction ? View.VISIBLE : View.GONE}"
                     app:chart="@{content.totalTasks}"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintEnd_toEndOf="parent"

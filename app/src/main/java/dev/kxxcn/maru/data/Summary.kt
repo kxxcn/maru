@@ -141,6 +141,11 @@ class Summary {
             }
         }
 
+    val hasTransaction: Boolean
+        get() {
+            return totalTasks.account?.husband != 0L || totalTasks.account?.wife != 0L
+        }
+
     override fun equals(other: Any?): Boolean {
         if (other !is Summary) return false
         return tasks == other.tasks && days == other.days

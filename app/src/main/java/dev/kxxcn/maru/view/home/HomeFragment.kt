@@ -173,7 +173,7 @@ class HomeFragment : BaseFragment() {
         val context = context ?: return
         showNavigator(false)
         val parent = binding.contentsList
-        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Default) {
+        lifecycleScope.launch(Dispatchers.Default) {
             (parent.adapter as? HomeAdapter)?.let { adapter ->
                 parent.suppressLayout(true)
 

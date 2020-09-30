@@ -12,7 +12,7 @@ class PieChartFormatter(private val pieChart: PieChart) : ValueFormatter() {
     private val numberFormat = NumberFormat.getInstance(Locale.KOREA)
 
     override fun getFormattedValue(value: Float): String {
-        return "${value.roundToInt()}%"
+        return if (value.isNaN()) "0%" else "${value.roundToInt()}%"
     }
 
     override fun getPieLabel(value: Float, pieEntry: PieEntry?): String {
