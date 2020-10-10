@@ -14,11 +14,12 @@ class TasksCompletedHolder(
     private val binding: TasksCompletedItemBinding
 ) : LifecycleViewHolder(binding) {
 
-    fun bind(viewModel: TasksViewModel, item: TaskDetail?) {
+    fun bind(viewModel: TasksViewModel, item: TaskDetail?, isPremium: Boolean) {
         with(binding) {
             this.lifecycleOwner = this@TasksCompletedHolder
             this.viewModel = viewModel
             this.item = item
+            this.isPremium = isPremium
             this.tasksChart.setHoleColor(
                 ContextCompat.getColor(
                     binding.root.context,

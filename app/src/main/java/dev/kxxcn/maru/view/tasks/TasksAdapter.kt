@@ -34,7 +34,7 @@ class TasksAdapter(
             }
             TYPE_COMPLETED -> {
                 val h = holder as? TasksCompletedHolder ?: return
-                h.bind(viewModel, item.taskDetail)
+                h.bind(viewModel, item.taskDetail, item.isPremium)
             }
             TYPE_ACTIVE -> {
                 val h = holder as? TasksActiveHolder ?: return
