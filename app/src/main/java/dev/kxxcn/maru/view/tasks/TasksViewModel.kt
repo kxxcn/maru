@@ -15,14 +15,9 @@ class TasksViewModel @Inject constructor(
 
     private val _forceUpdate = MutableLiveData<Unit>()
 
-    val items: LiveData<List<Summary>> =
-        _forceUpdate.switchMap {
-            repository.observeSummary().switchMap {
-                MutableLiveData<List<Summary>>().apply {
-                    value = it
-                }
-            }
-        }
+    val items: LiveData<List<Summary>> = _forceUpdate.switchMap {
+        repository.observeSummary().switchMap { liveData { emit(it) } }
+    }
 
     private val _filterType = MutableLiveData<TasksFilterType>()
     val filterType: LiveData<TasksFilterType> = _filterType

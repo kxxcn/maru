@@ -8,27 +8,17 @@ import androidx.activity.addCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dev.kxxcn.maru.databinding.PresentFragmentBinding
-import dev.kxxcn.maru.di.MaruSavedStateViewModelFactory
 import dev.kxxcn.maru.util.PAGER_CATEGORY
 import dev.kxxcn.maru.view.base.BaseFragment
-import javax.inject.Inject
 
 class PresentFragment : BaseFragment() {
-
-    @Inject
-    lateinit var viewModelFactory: MaruSavedStateViewModelFactory
 
     private lateinit var binding: PresentFragmentBinding
 
     override val clazz: Class<*>
         get() = this::class.java
 
-    override val viewModel by viewModels<PresentViewModel> {
-        viewModelFactory.create(
-            this,
-            arguments
-        )
-    }
+    override val viewModel by viewModels<PresentViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,

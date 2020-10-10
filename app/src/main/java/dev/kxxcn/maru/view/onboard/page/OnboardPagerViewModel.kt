@@ -10,7 +10,6 @@ import dev.kxxcn.maru.util.ANIMATION_ONBOARD_TASKS
 import dev.kxxcn.maru.util.ANIMATION_ONBOARD_WELCOME
 import dev.kxxcn.maru.util.ConvertUtils
 import dev.kxxcn.maru.view.onboard.page.OnboardPagerFilterType.*
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class OnboardPagerViewModel @Inject constructor(
@@ -26,18 +25,19 @@ class OnboardPagerViewModel @Inject constructor(
     private val _onboardContent = MutableLiveData<Int>()
     val onboardContent: LiveData<Int> = _onboardContent
 
-    private val _remaining = MutableLiveData<Long>()
-    val remaining: LiveData<Long> = _remaining
+    val remaining = liveData {
+        repository.getUsers().let { result ->
+            if (result is Success) {
+                emit(ConvertUtils.computeRemain(result.data[0].wedding))
+            }
+        }
+    }
 
     private val _requestType = MutableLiveData<OnboardPagerFilterType>()
 
     val weddingAlreadyPassed = MediatorLiveData<Boolean>().apply {
-        addSource(_requestType) { value = it == ONBOARD_WELCOME && (_remaining.value ?: 0) <= 0L }
-        addSource(_remaining) { value = _requestType.value == ONBOARD_WELCOME && it <= 0L }
-    }
-
-    init {
-        computeRemaining()
+        addSource(_requestType) { value = it == ONBOARD_WELCOME && (remaining.value ?: 0) <= 0L }
+        addSource(remaining) { value = _requestType.value == ONBOARD_WELCOME && it ?: 0 <= 0L }
     }
 
     fun setFiltering(requestType: OnboardPagerFilterType) {
@@ -69,15 +69,5 @@ class OnboardPagerViewModel @Inject constructor(
         _onboardFileName.value = onboardFilename
         _onboardSubject.value = onboardSubjectStringRes
         _onboardContent.value = onboardContentStringRes
-    }
-
-    private fun computeRemaining() {
-        viewModelScope.launch {
-            repository.getUsers().let { result ->
-                if (result is Success) {
-                    _remaining.value = ConvertUtils.computeRemain(result.data[0].wedding)
-                }
-            }
-        }
     }
 }

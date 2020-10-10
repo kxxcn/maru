@@ -33,14 +33,9 @@ class SortViewModel @AssistedInject constructor(
     private val _toastText = MutableLiveData<Event<Int>>()
     val toastText: LiveData<Event<Int>> = _toastText
 
-    val items: LiveData<List<Summary>> =
-        _forceUpdate.switchMap {
-            repository.observeSummary().switchMap {
-                MutableLiveData<List<Summary>>().apply {
-                    value = it
-                }
-            }
-        }
+    val items: LiveData<List<Summary>> = _forceUpdate.switchMap {
+        repository.observeSummary().switchMap { liveData { emit(value = it) } }
+    }
 
     val tasks: LiveData<List<Task?>> = items.map {
         it.flatMap { summary -> summary.tasks }

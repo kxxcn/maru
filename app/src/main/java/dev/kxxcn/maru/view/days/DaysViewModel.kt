@@ -23,14 +23,9 @@ class DaysViewModel @Inject constructor(
     private val _deleteEvent = MutableLiveData<Event<Day>>()
     val deleteEvent: LiveData<Event<Day>> = _deleteEvent
 
-    private val items: LiveData<List<HomeAdapter.SummaryItem>> =
-        _forceUpdate.switchMap { _ ->
-            repository.observeSummary().switchMap {
-                MutableLiveData<List<HomeAdapter.SummaryItem>>().apply {
-                    value = HomeAdapter.makeItems(it[0])
-                }
-            }
-        }
+    private val items: LiveData<List<HomeAdapter.SummaryItem>> = _forceUpdate.switchMap { _ ->
+        repository.observeSummary().switchMap { liveData { emit(HomeAdapter.makeItems(it[0])) } }
+    }
 
     val days = items.map {
         it.firstOrNull()?.content?.days?.reversed()

@@ -1,12 +1,9 @@
 package dev.kxxcn.maru.view.present
 
 import androidx.lifecycle.*
-import com.squareup.inject.assisted.Assisted
-import com.squareup.inject.assisted.AssistedInject
 import dev.kxxcn.maru.Event
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.data.Present
-import dev.kxxcn.maru.di.AssistedSavedStateViewModelFactory
 import dev.kxxcn.maru.util.KEY_PRESENT_TYPE
 import dev.kxxcn.maru.util.PAGER_CATEGORY
 import dev.kxxcn.maru.util.PAGER_DESCRIPTION
@@ -15,12 +12,9 @@ import dev.kxxcn.maru.view.base.BaseViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class PresentViewModel @AssistedInject constructor(
-    @Assisted private val savedStateHandle: SavedStateHandle
+class PresentViewModel(
+    private val savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
-
-    @AssistedInject.Factory
-    interface Factory : AssistedSavedStateViewModelFactory<PresentViewModel>
 
     private val _scrollEvent = MutableLiveData<Event<Unit>>()
     val scrollEvent: LiveData<Event<Unit>> = _scrollEvent

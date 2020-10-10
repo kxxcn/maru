@@ -114,7 +114,7 @@ object FileUtils {
         }
     }
 
-    fun checkPermission(
+    inline fun checkPermission(
         activity: Activity?,
         requestCode: Int,
         vararg permissions: String,

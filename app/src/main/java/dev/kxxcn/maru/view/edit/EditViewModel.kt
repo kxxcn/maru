@@ -1,9 +1,6 @@
 package dev.kxxcn.maru.view.edit
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.map
-import androidx.lifecycle.switchMap
+import androidx.lifecycle.*
 import dev.kxxcn.maru.Event
 import dev.kxxcn.maru.data.source.DataRepository
 import dev.kxxcn.maru.util.ConvertUtils
@@ -21,14 +18,9 @@ class EditViewModel @Inject constructor(
 
     private val _forceUpdate = MutableLiveData<Unit>()
 
-    private val items: LiveData<List<HomeAdapter.SummaryItem>> =
-        _forceUpdate.switchMap { _ ->
-            repository.observeSummary().switchMap {
-                MutableLiveData<List<HomeAdapter.SummaryItem>>().apply {
-                    value = HomeAdapter.makeItems(it[0])
-                }
-            }
-        }
+    private val items: LiveData<List<HomeAdapter.SummaryItem>> = _forceUpdate.switchMap { _ ->
+        repository.observeSummary().switchMap { liveData { emit(HomeAdapter.makeItems(it[0])) } }
+    }
 
     val name = items.map {
         it.firstOrNull()?.content?.user?.name
