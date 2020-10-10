@@ -20,6 +20,7 @@ import dev.kxxcn.maru.view.more.MoreFragment
 import dev.kxxcn.maru.view.tasks.TasksFragment
 import kotlinx.android.synthetic.main.maru_activity.*
 import kotlinx.coroutines.*
+import me.ibrahimsn.lib.OnItemReselectedListener
 import me.ibrahimsn.lib.OnItemSelectedListener
 import org.jetbrains.anko.contentView
 
@@ -133,6 +134,13 @@ class MaruActivity : AppCompatActivity() {
             setOnItemSelectedListener(object : OnItemSelectedListener {
                 override fun onItemSelect(pos: Int) {
                     navigate(pos)
+                }
+            })
+            setOnItemReselectedListener(object : OnItemReselectedListener {
+                override fun onItemReselect(pos: Int) {
+                    if (pos == NAV_HOME) {
+                        (current() as? HomeFragment)?.scrollToTop()
+                    }
                 }
             })
             setActiveItem(savedInstanceState?.getInt(BOTTOM_NAVIGATOR_SAVED_STATE_KEY) ?: 0)

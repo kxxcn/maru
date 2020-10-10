@@ -266,4 +266,8 @@ class HomeFragment : BaseFragment() {
     private fun showNavigator(isShowing: Boolean = true) {
         (requireActivity() as? MaruActivity)?.openNavigator(isShowing)
     }
+
+    fun scrollToTop() {
+        binding.contentsList.smoothScrollToPosition(0)
+    }
 }
