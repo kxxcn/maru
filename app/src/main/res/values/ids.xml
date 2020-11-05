@@ -11,6 +11,7 @@
     <string name="admob_native_more_id">ca-app-pub-1655234429103343/5481646646</string>
     <string name="admob_interstitial_test_id">ca-app-pub-3940256099942544/1033173712</string>
     <string name="admob_interstitial_task_id">ca-app-pub-1655234429103343/3613390571</string>
+    <string name="admob_interstitial_edit_id">ca-app-pub-1655234429103343/8967200081</string>
 
     <string name="naver_client_id">9ef6ji95qg</string>
     <string name="naver_client_secret">p2VaXQD0yE37vA0lLt8rgz3MoGlR3wtTYPnVGKCa</string>

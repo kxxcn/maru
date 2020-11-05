@@ -1,9 +1,12 @@
 package dev.kxxcn.maru.view.edit
 
 import androidx.lifecycle.*
+import com.google.firebase.auth.FirebaseAuth
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
+import dev.kxxcn.maru.Event
 import dev.kxxcn.maru.R
+import dev.kxxcn.maru.data.Result.Success
 import dev.kxxcn.maru.data.source.DataRepository
 import dev.kxxcn.maru.data.succeeded
 import dev.kxxcn.maru.di.AssistedSavedStateViewModelFactory
@@ -19,6 +22,7 @@ import java.util.*
 
 class EditDialogViewModel @AssistedInject constructor(
     private val repository: DataRepository,
+    private val auth: FirebaseAuth,
     @Assisted private val savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
 
@@ -34,6 +38,9 @@ class EditDialogViewModel @AssistedInject constructor(
     val hintRes: LiveData<Int> = _hintRes
 
     val content = MutableLiveData<String?>()
+
+    private val _adEvent = MutableLiveData<Event<Unit>>()
+    val adEvent: LiveData<Event<Unit>> = _adEvent
 
     val moneyText = content.map {
         val money = try {
@@ -60,10 +67,8 @@ class EditDialogViewModel @AssistedInject constructor(
     val enableButtonRes = R.drawable.edit_dialog_enable_button
     val disableButtonRes = R.drawable.edit_dialog_disable_button
 
-    val isBudget = MutableLiveData<Boolean>().apply {
-        value =
-            savedStateHandle.get<RegisterFilterType>(KEY_REGISTER_TYPE) == REGISTER_BUDGET
-    }
+    val isBudget =
+        liveData { emit(savedStateHandle.get<RegisterFilterType>(KEY_REGISTER_TYPE) == REGISTER_BUDGET) }
 
     init {
         when (savedStateHandle.get<RegisterFilterType>(KEY_REGISTER_TYPE)) {
@@ -91,8 +96,22 @@ class EditDialogViewModel @AssistedInject constructor(
                 null -> throw RuntimeException("Invalid Filter Type.")
             }
             if (result.succeeded) {
-                close()
+                auth.currentUser?.email
+                    ?.let { email ->
+                        val premiumResult = repository.isPremium(email)
+                        premiumResult
+                            .takeIf { it is Success }
+                            ?.let { (it as Success).data }
+                            ?: false
+                    }
+                    .takeIf { it == true }
+                    ?.let { close() }
+                    ?: ad()
             }
         }
+    }
+
+    private fun ad() {
+        _adEvent.value = Event(Unit)
     }
 }

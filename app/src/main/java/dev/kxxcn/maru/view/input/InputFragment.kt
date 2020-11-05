@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.ads.AdListener
-import com.google.android.gms.ads.InterstitialAd
 import dev.kxxcn.maru.EventObserver
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.databinding.InputFragmentBinding
@@ -19,15 +18,12 @@ import javax.inject.Inject
 class InputFragment : BaseFragment() {
 
     @Inject
+    lateinit var adHelper: AdHelper
+
+    @Inject
     lateinit var viewModelFactory: MaruSavedStateViewModelFactory
 
     private lateinit var binding: InputFragmentBinding
-
-    private lateinit var interstitialAd: InterstitialAd
-
-    private var adRequestCount = 0
-
-    private var adHelper = AdHelper()
 
     override val clazz: Class<*>
         get() = this::class.java
@@ -61,11 +57,6 @@ class InputFragment : BaseFragment() {
         setupInterstitial()
     }
 
-    override fun onDestroyView() {
-        adHelper.release()
-        super.onDestroyView()
-    }
-
     private fun setupLifecycle() {
         binding.lifecycleOwner = viewLifecycleOwner
     }
@@ -80,13 +71,13 @@ class InputFragment : BaseFragment() {
     }
 
     private fun setupInterstitial() {
-        val context = context ?: return
         val id = getString(R.string.admob_interstitial_task_id)
-        interstitialAd = adHelper.loadInterstitialAd(context, id, object : AdListener() {
+        adHelper.loadInterstitialAd(id, object : AdListener() {
             override fun onAdLoaded() {
                 super.onAdLoaded()
-                if (adRequestCount == 0) return
-                interstitialAd.show()
+                if (adHelper.isRequested) {
+                    adHelper.show()
+                }
             }
 
             override fun onAdOpened() {
@@ -98,9 +89,14 @@ class InputFragment : BaseFragment() {
 
     private fun showAd() {
         try {
-            adRequestCount++
-            if (interstitialAd.isLoading) return
-            interstitialAd.show()
+            with(adHelper) {
+                request()
+                if (isLoaded) {
+                    show()
+                } else {
+                    openStatusFragment()
+                }
+            }
         } catch (e: Exception) {
             openStatusFragment()
         }

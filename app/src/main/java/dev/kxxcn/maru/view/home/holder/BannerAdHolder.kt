@@ -36,11 +36,10 @@ class BannerAdHolder(
 
     private var adView: AdView? = null
 
-    private val adHelper = AdHelper()
+    private val adHelper = AdHelper(itemView.context)
 
     fun loadAd(): () -> Unit {
         return adHelper.createBannerAd(
-            activity,
             id,
             adSize
         ).also {

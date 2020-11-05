@@ -29,7 +29,7 @@ class TasksNativeAdHolder(
 
     private val container: FrameLayout = itemView.findViewById(R.id.native_ad_container)
 
-    private val adHelper = AdHelper()
+    private val adHelper = AdHelper(itemView.context)
 
     @SuppressLint("InflateParams")
     fun loadAd(): () -> Unit {
@@ -44,7 +44,6 @@ class TasksNativeAdHolder(
         val context = itemView.context
 
         adHelper.createNativeAd(
-            context,
             context.getString(R.string.admob_native_task_id)
         ).forUnifiedNativeAd { unifiedNativeAd ->
             val inflater = LayoutInflater.from(context)

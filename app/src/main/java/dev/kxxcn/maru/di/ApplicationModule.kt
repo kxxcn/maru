@@ -19,6 +19,7 @@ import dev.kxxcn.maru.data.source.firebase.FirebaseDataSource
 import dev.kxxcn.maru.data.source.local.LocalDataSource
 import dev.kxxcn.maru.data.source.local.MaruDatabase
 import dev.kxxcn.maru.data.source.remote.RemoteDataSource
+import dev.kxxcn.maru.util.AdHelper
 import dev.kxxcn.maru.view.base.BaseCoroutineScope
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -88,9 +89,8 @@ object ApplicationModule {
 
     @Singleton
     @Provides
-    fun provideAnalytics(application: MaruApplication): FirebaseAnalytics {
-        return FirebaseAnalytics.getInstance(application.applicationContext)
-    }
+    fun provideAnalytics(application: MaruApplication): FirebaseAnalytics =
+        FirebaseAnalytics.getInstance(application.applicationContext)
 
     @Singleton
     @Provides
@@ -98,6 +98,10 @@ object ApplicationModule {
 
     @Provides
     fun provideCoroutineScope(): BaseCoroutineScope = MaruCoroutineScope()
+
+    @Provides
+    fun provideAdHelper(application: MaruApplication): AdHelper =
+        AdHelper(application.applicationContext)
 
     val ALL_MIGRATIONS = arrayOf<Migration>(
         object : Migration(1, 2) {
