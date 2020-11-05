@@ -4,8 +4,10 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
+import dev.kxxcn.maru.MaruApplication
 import dev.kxxcn.maru.data.source.DataRepository
 import dev.kxxcn.maru.data.source.FakeRepository
+import dev.kxxcn.maru.util.AdHelper
 import javax.inject.Singleton
 
 @Module
@@ -13,7 +15,9 @@ class TestApplicationModule {
 
     @Singleton
     @Provides
-    fun provideRepository(): DataRepository = FakeRepository()
+    fun provideRepository(): DataRepository {
+        return FakeRepository()
+    }
 
     @Singleton
     @Provides
@@ -25,5 +29,10 @@ class TestApplicationModule {
     @Provides
     fun provideFirebaseAuth(): FirebaseAuth {
         return FirebaseAuth.getInstance()
+    }
+
+    @Provides
+    fun provideAdHelper(application: TestMaruApplication): AdHelper {
+        return AdHelper(application.applicationContext)
     }
 }
