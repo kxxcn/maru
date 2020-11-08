@@ -15,7 +15,8 @@ import javax.inject.Singleton
         TestApplicationModule::class,
         TasksModule::class,
         InputModule::class,
-        HomeModule::class
+        HomeModule::class,
+        EditModule::class
     ]
 )
 interface TestApplicationComponent : AndroidInjector<TestMaruApplication> {

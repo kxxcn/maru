@@ -1,7 +1,6 @@
 package dev.kxxcn.maru.view.tasks
 
 import android.content.Context
-import android.os.Bundle
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -34,8 +33,7 @@ class TasksFragmentTest : BaseFragmentTest() {
     @Test
     fun tasksFragmentScreenDisplayedInUI() {
         launchFragmentInContainer<TasksFragment>(
-            Bundle(),
-            R.style.AppTheme
+            themeResId = R.style.AppTheme
         ).also { dataBindingIdlingResource.monitorFragment(it) }
 
         val expectedTasksFragmentTitleText = ApplicationProvider
@@ -71,8 +69,7 @@ class TasksFragmentTest : BaseFragmentTest() {
     @Test
     fun showEmptyTasks() {
         launchFragmentInContainer<TasksFragment>(
-            Bundle(),
-            R.style.AppTheme
+            themeResId = R.style.AppTheme
         ).also { dataBindingIdlingResource.monitorFragment(it) }
 
         onView(withId(R.id.tasks_completed_desc)).perform(click())
@@ -103,8 +100,7 @@ class TasksFragmentTest : BaseFragmentTest() {
         }
 
         launchFragmentInContainer<TasksFragment>(
-            Bundle(),
-            R.style.AppTheme
+            themeResId = R.style.AppTheme
         ).also { dataBindingIdlingResource.monitorFragment(it) }
 
         onView(withId(R.id.tasks_total_desc)).perform(click())
@@ -139,8 +135,7 @@ class TasksFragmentTest : BaseFragmentTest() {
         }
 
         launchFragmentInContainer<TasksFragment>(
-            Bundle(),
-            R.style.AppTheme
+            themeResId = R.style.AppTheme
         ).also { dataBindingIdlingResource.monitorFragment(it) }
 
         onView(withId(R.id.tasks_progress_desc)).perform(click())
@@ -175,8 +170,7 @@ class TasksFragmentTest : BaseFragmentTest() {
         }
 
         launchFragmentInContainer<TasksFragment>(
-            Bundle(),
-            R.style.AppTheme
+            themeResId = R.style.AppTheme
         ).also { dataBindingIdlingResource.monitorFragment(it) }
 
         onView(withId(R.id.tasks_completed_desc)).perform(click())
@@ -194,8 +188,7 @@ class TasksFragmentTest : BaseFragmentTest() {
     @Test
     fun showNativeAdvertisement() {
         launchFragmentInContainer<TasksFragment>(
-            Bundle(),
-            R.style.AppTheme
+            themeResId = R.style.AppTheme
         ).also { dataBindingIdlingResource.monitorFragment(it) }
 
         onView(withId(R.id.tasks_total_desc)).perform(click())
@@ -218,8 +211,7 @@ class TasksFragmentTest : BaseFragmentTest() {
         val navController = mock(NavController::class.java)
 
         launchFragmentInContainer<TasksFragment>(
-            Bundle(),
-            R.style.AppTheme
+            themeResId = R.style.AppTheme
         ).apply {
             onFragment {
                 it.view?.let { view ->
@@ -253,8 +245,7 @@ class TasksFragmentTest : BaseFragmentTest() {
         val navController = mock(NavController::class.java)
 
         launchFragmentInContainer<TasksFragment>(
-            Bundle(),
-            R.style.AppTheme
+            themeResId = R.style.AppTheme
         ).apply {
             onFragment {
                 it.view?.let { view ->

@@ -323,7 +323,19 @@
     <fragment
         android:id="@+id/edit_fragment"
         android:name="dev.kxxcn.maru.view.edit.EditFragment"
-        android:label="@string/nav_label_edit" />
+        android:label="@string/nav_label_edit">
+
+        <action
+            android:id="@+id/action_edit_fragment_to_edit_dialog_fragment"
+            app:destination="@id/edit_dialog_fragment">
+
+            <argument
+                android:name="register_type"
+                app:argType=".view.register.RegisterFilterType" />
+
+        </action>
+
+    </fragment>
 
     <dialog
         android:id="@+id/edit_dialog_fragment"

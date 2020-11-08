@@ -22,3 +22,4 @@
 
 -keep class * extends androidx.fragment.app.Fragment{}
 -keep class dev.kxxcn.maru.view.present.PresentFilterType
+-keep class dev.kxxcn.maru.view.register.RegisterFilterType

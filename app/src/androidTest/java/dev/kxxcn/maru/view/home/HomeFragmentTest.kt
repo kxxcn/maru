@@ -1,7 +1,6 @@
 package dev.kxxcn.maru.view.home
 
 import android.content.Context
-import android.os.Bundle
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
@@ -45,8 +44,7 @@ class HomeFragmentTest : BaseFragmentTest() {
             .getString(R.string.home_welcome_card_name, name)
 
         launchFragmentInContainer<HomeFragment>(
-            Bundle(),
-            R.style.AppTheme
+            themeResId = R.style.AppTheme
         ).also { dataBindingIdlingResource.monitorFragment(it) }
 
         onView(
@@ -61,8 +59,7 @@ class HomeFragmentTest : BaseFragmentTest() {
     @Test
     fun showVerifiedBadge() {
         launchFragmentInContainer<HomeFragment>(
-            Bundle(),
-            R.style.AppTheme
+            themeResId = R.style.AppTheme
         ).also { dataBindingIdlingResource.monitorFragment(it) }
 
         onView(
@@ -90,8 +87,7 @@ class HomeFragmentTest : BaseFragmentTest() {
             .getString(R.string.home_welcome_card_remain2, date)
 
         launchFragmentInContainer<HomeFragment>(
-            Bundle(),
-            R.style.AppTheme
+            themeResId = R.style.AppTheme
         ).also { dataBindingIdlingResource.monitorFragment(it) }
 
         onView(
@@ -116,8 +112,7 @@ class HomeFragmentTest : BaseFragmentTest() {
             .getString(R.string.congratulations)
 
         launchFragmentInContainer<HomeFragment>(
-            Bundle(),
-            R.style.AppTheme
+            themeResId = R.style.AppTheme
         ).also { dataBindingIdlingResource.monitorFragment(it) }
 
         onView(
@@ -140,8 +135,7 @@ class HomeFragmentTest : BaseFragmentTest() {
             }
         }
         launchFragmentInContainer<HomeFragment>(
-            Bundle(),
-            R.style.AppTheme
+            themeResId = R.style.AppTheme
         ).also { dataBindingIdlingResource.monitorFragment(it) }
 
         val budget = summary.user?.budget ?: 0L
@@ -196,8 +190,7 @@ class HomeFragmentTest : BaseFragmentTest() {
     @Test
     fun showAdvertisement() {
         launchFragmentInContainer<HomeFragment>(
-            Bundle(),
-            R.style.AppTheme
+            themeResId = R.style.AppTheme
         ).also { dataBindingIdlingResource.monitorFragment(it) }
 
         onView(withId(parentId)).perform(scrollToBottom())
@@ -216,8 +209,7 @@ class HomeFragmentTest : BaseFragmentTest() {
             (repository as? FakeRepository)?.replaceUser(User(premium = true))
         }
         launchFragmentInContainer<HomeFragment>(
-            Bundle(),
-            R.style.AppTheme
+            themeResId = R.style.AppTheme
         ).also { dataBindingIdlingResource.monitorFragment(it) }
 
         onView(withId(parentId)).perform(scrollToBottom())
