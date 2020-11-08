@@ -15,9 +15,10 @@ import dev.kxxcn.maru.databinding.TasksFragmentBinding
 import dev.kxxcn.maru.util.LinearSpacingDecoration
 import dev.kxxcn.maru.util.extension.px
 import dev.kxxcn.maru.view.base.BaseFragment
+import dev.kxxcn.maru.view.base.Scrollable
 import javax.inject.Inject
 
-class TasksFragment : BaseFragment() {
+class TasksFragment : BaseFragment(), Scrollable {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -59,6 +60,10 @@ class TasksFragment : BaseFragment() {
             }
         }
         super.onDestroyView()
+    }
+
+    override fun scrollToTop() {
+        binding.tasksList.smoothScrollToPosition(0)
     }
 
     private fun setupLifecycle() {

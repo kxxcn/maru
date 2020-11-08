@@ -15,6 +15,7 @@ import com.google.android.material.snackbar.Snackbar
 import dev.kxxcn.maru.util.*
 import dev.kxxcn.maru.util.extension.setupSnackbar
 import dev.kxxcn.maru.util.preference.PreferenceUtils
+import dev.kxxcn.maru.view.base.Scrollable
 import dev.kxxcn.maru.view.home.HomeFragment
 import dev.kxxcn.maru.view.more.MoreFragment
 import dev.kxxcn.maru.view.tasks.TasksFragment
@@ -138,9 +139,7 @@ class MaruActivity : AppCompatActivity() {
             })
             setOnItemReselectedListener(object : OnItemReselectedListener {
                 override fun onItemReselect(pos: Int) {
-                    if (pos == NAV_HOME) {
-                        (current() as? HomeFragment)?.scrollToTop()
-                    }
+                    (current() as? Scrollable)?.scrollToTop()
                 }
             })
             setActiveItem(savedInstanceState?.getInt(BOTTOM_NAVIGATOR_SAVED_STATE_KEY) ?: 0)

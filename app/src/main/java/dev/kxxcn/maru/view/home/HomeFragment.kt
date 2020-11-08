@@ -37,7 +37,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class HomeFragment : BaseFragment() {
+class HomeFragment : BaseFragment(), Scrollable {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -97,6 +97,10 @@ class HomeFragment : BaseFragment() {
             }
         }
         super.onDestroyView()
+    }
+
+    override fun scrollToTop() {
+        binding.contentsList.smoothScrollToPosition(0)
     }
 
     private fun setupLifecycle() {
@@ -265,9 +269,5 @@ class HomeFragment : BaseFragment() {
 
     private fun showNavigator(isShowing: Boolean = true) {
         (requireActivity() as? MaruActivity)?.openNavigator(isShowing)
-    }
-
-    fun scrollToTop() {
-        binding.contentsList.smoothScrollToPosition(0)
     }
 }
