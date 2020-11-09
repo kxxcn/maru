@@ -55,4 +55,11 @@ object PreferenceUtils {
     var notifyNoticeSound: Boolean
         get() = "notifyNoticeSound".getBoolean(true)
         set(value) = "notifyNoticeSound".putBoolean(value)
+
+    /**
+     * 스크롤 강제 여부
+     */
+    var forceScroll: Boolean
+        get() = "forceScroll".getBoolean(true)
+        set(value) = "forceScroll".putBoolean(value)
 }

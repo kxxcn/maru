@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/tasks_items_card_margin_start"
         android:layout_marginEnd="@dimen/tasks_items_card_margin_end"
-        android:onClick="@{() -> viewModel.handleTargetSelection(item, isPremium)}"
+        android:onClick="@{() -> viewModel.select(item, isPremium)}"
         app:cardBackgroundColor="?maruSecondaryBackgroundColor"
         app:cardCornerRadius="30dp"
         app:cardElevation="5dp">

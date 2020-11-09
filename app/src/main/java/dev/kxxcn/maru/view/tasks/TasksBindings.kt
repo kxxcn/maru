@@ -13,6 +13,7 @@ import dev.kxxcn.maru.R
 import dev.kxxcn.maru.data.TaskDetail
 import dev.kxxcn.maru.util.PieChartFormatter
 import dev.kxxcn.maru.util.extension.px
+import dev.kxxcn.maru.util.preference.PreferenceUtils
 import dev.kxxcn.maru.view.custom.RotateSelectionView
 
 @BindingAdapter("app:selection")
@@ -25,7 +26,9 @@ fun setTasks(view: RecyclerView, items: List<TasksAdapter.TasksItem>?) {
     items?.let {
         with(view) {
             (adapter as? TasksAdapter)?.submitList(it)
-            postDelayed({ view.smoothScrollToPosition(0) }, 200)
+            if (PreferenceUtils.forceScroll) {
+                postDelayed({ smoothScrollToPosition(0) }, 200)
+            }
         }
     }
 }

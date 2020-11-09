@@ -38,7 +38,7 @@
             android:layout_height="40dp"
             android:layout_marginEnd="20dp"
             android:background="@drawable/task_base_oval"
-            android:onClick="@{() -> viewModel.editList()}"
+            android:onClick="@{() -> viewModel.edit()}"
             android:padding="10dp"
             android:src="@drawable/ic_edit"
             android:tint="@color/colorSecondary"

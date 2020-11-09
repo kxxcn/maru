@@ -81,19 +81,22 @@ class TasksViewModel @Inject constructor(
 
     fun setFiltering(requestType: TasksFilterType) {
         showNavigator()
+        PreferenceUtils.forceScroll = true
         PreferenceUtils.taskFilterType = requestType.ordinal
         _filterType.value = requestType
     }
 
-    fun handleTargetSelection(taskDetail: TaskDetail, isPremium: Boolean) {
+    fun select(taskDetail: TaskDetail, isPremium: Boolean) {
+        PreferenceUtils.forceScroll = false
         _taskSelectionEvent.value = Event(taskDetail to isPremium)
+    }
+
+    fun edit() {
+        PreferenceUtils.forceScroll = false
+        _editEvent.value = Event(Unit)
     }
 
     fun showNavigator() {
         _navigateEvent.value = Event(Unit)
-    }
-
-    fun editList() {
-        _editEvent.value = Event(Unit)
     }
 }
