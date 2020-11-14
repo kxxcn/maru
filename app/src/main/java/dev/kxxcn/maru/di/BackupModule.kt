@@ -17,5 +17,5 @@ abstract class BackupModule {
     @Binds
     @IntoMap
     @ViewModelKey(BackupViewModel::class)
-    abstract fun bindViewModel(viewModel: BackupViewModel): ViewModel
+    abstract fun bindViewModel(factory: BackupViewModel.Factory): AssistedSavedStateViewModelFactory<out ViewModel>
 }

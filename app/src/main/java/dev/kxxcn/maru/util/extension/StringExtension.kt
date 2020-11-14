@@ -1,5 +1,9 @@
 package dev.kxxcn.maru.util.extension
 
+import android.graphics.Typeface
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.StyleSpan
 import android.util.Base64
 import dev.kxxcn.maru.BuildConfig
 
@@ -17,3 +21,18 @@ fun String.coordinates(): Pair<Double, Double> {
 fun String.encode(): String = Base64.encodeToString(this.toByteArray(), Base64.NO_WRAP)
 
 fun String.decode(): String = String(Base64.decode(this, Base64.NO_WRAP))
+
+fun SpannableStringBuilder.bold(
+    start: Int,
+    end: Int,
+    builderAction: SpannableStringBuilder.() -> Unit
+): SpannableStringBuilder {
+    builderAction()
+    setSpan(
+        StyleSpan(Typeface.BOLD),
+        start,
+        end,
+        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+    )
+    return this
+}

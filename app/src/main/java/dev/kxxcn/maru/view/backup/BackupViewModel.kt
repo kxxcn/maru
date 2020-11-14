@@ -1,10 +1,9 @@
 package dev.kxxcn.maru.view.backup
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.map
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.google.firebase.auth.FirebaseAuth
+import com.squareup.inject.assisted.Assisted
+import com.squareup.inject.assisted.AssistedInject
 import dev.kxxcn.maru.Event
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.data.Restore
@@ -12,19 +11,29 @@ import dev.kxxcn.maru.data.Result.Success
 import dev.kxxcn.maru.data.Summary
 import dev.kxxcn.maru.data.source.DataRepository
 import dev.kxxcn.maru.data.succeeded
+import dev.kxxcn.maru.di.AssistedSavedStateViewModelFactory
 import dev.kxxcn.maru.util.DateUtils
+import dev.kxxcn.maru.util.KEY_BACKUP_TYPE
 import dev.kxxcn.maru.util.extension.decode
 import dev.kxxcn.maru.util.extension.encode
 import dev.kxxcn.maru.util.extension.fromJson
 import dev.kxxcn.maru.util.extension.toJson
+import dev.kxxcn.maru.view.backup.BackupFilterType.BACKUP
 import dev.kxxcn.maru.view.base.BaseViewModel
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class BackupViewModel @Inject constructor(
+class BackupViewModel @AssistedInject constructor(
     private val repository: DataRepository,
-    private val auth: FirebaseAuth
+    private val auth: FirebaseAuth,
+    @Assisted private val savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
+
+    @AssistedInject.Factory
+    interface Factory : AssistedSavedStateViewModelFactory<BackupViewModel>
+
+    val filterType = savedStateHandle
+        .get<BackupFilterType>(KEY_BACKUP_TYPE)
+        ?: BACKUP
 
     private val _askEvent = MutableLiveData<Event<BackupFilterType>>()
     val askEvent: LiveData<Event<BackupFilterType>> = _askEvent

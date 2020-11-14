@@ -1,7 +1,5 @@
 package dev.kxxcn.maru.view.more
 
-import android.app.Activity.RESULT_OK
-import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
@@ -13,12 +11,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.common.api.ApiException
 import com.google.android.play.core.review.ReviewManager
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
 import dev.kxxcn.maru.BuildConfig
 import dev.kxxcn.maru.EventObserver
 import dev.kxxcn.maru.MaruActivity
@@ -26,20 +19,13 @@ import dev.kxxcn.maru.R
 import dev.kxxcn.maru.databinding.MoreFragmentBinding
 import dev.kxxcn.maru.util.LinearSpacingDecoration
 import dev.kxxcn.maru.util.REQUEST_CODE_PERMISSION_LOCATION
-import dev.kxxcn.maru.util.RESULT_GOOGLE_SIGN_IN
 import dev.kxxcn.maru.util.extension.openDialog
 import dev.kxxcn.maru.util.preference.PreferenceUtils
-import dev.kxxcn.maru.view.base.BaseFragment
 import dev.kxxcn.maru.view.more.contents.ContentsItem
+import dev.kxxcn.maru.view.signin.SignInFragment
 import javax.inject.Inject
 
-class MoreFragment : BaseFragment() {
-
-    @Inject
-    lateinit var auth: FirebaseAuth
-
-    @Inject
-    lateinit var client: GoogleSignInClient
+class MoreFragment : SignInFragment() {
 
     @Inject
     lateinit var manager: ReviewManager
@@ -48,8 +34,6 @@ class MoreFragment : BaseFragment() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private lateinit var binding: MoreFragmentBinding
-
-    private var alertDialog: AlertDialog? = null
 
     override val clazz: Class<*>
         get() = this::class.java
@@ -78,32 +62,6 @@ class MoreFragment : BaseFragment() {
         setupListener()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode) {
-            RESULT_GOOGLE_SIGN_IN -> {
-                if (resultCode == RESULT_OK) {
-                    try {
-                        val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-                        val account = task.getResult(ApiException::class.java)
-                        val credential = GoogleAuthProvider.getCredential(account?.idToken, null)
-                        auth.signInWithCredential(credential).addOnCompleteListener {
-                            if (it.isSuccessful) {
-                                viewModel.handleSignInSuccess()
-                            } else {
-                                viewModel.handleSignInFailure()
-                            }
-                        }
-                    } catch (e: Exception) {
-                        viewModel.handleSignInFailure()
-                    }
-                } else {
-                    viewModel.handleSignInFailure()
-                }
-            }
-        }
-    }
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -119,8 +77,15 @@ class MoreFragment : BaseFragment() {
         if (::binding.isInitialized) {
             binding.moreList.adapter = null
         }
-        alertDialog = null
         super.onDestroyView()
+    }
+
+    override fun handleSignInSuccess() {
+        viewModel.handleSignInSuccess()
+    }
+
+    override fun handleSignInFailure() {
+        viewModel.handleSignInFailure()
     }
 
     private fun setupLifecycle() {
@@ -231,10 +196,6 @@ class MoreFragment : BaseFragment() {
             )
             type = "message/rfc822"
         })
-    }
-
-    private fun signIn() {
-        startActivityForResult(client.signInIntent, RESULT_GOOGLE_SIGN_IN)
     }
 
     private fun switch() {

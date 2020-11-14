@@ -1,6 +1,5 @@
 package dev.kxxcn.maru.view.days
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -28,8 +27,6 @@ class DaysFragment : BaseFragment() {
 
     private lateinit var binding: DaysFragmentBinding
 
-    private var alertDialog: AlertDialog? = null
-
     override val viewModel by viewModels<DaysViewModel> { viewModelFactory }
 
     override fun onCreateView(
@@ -55,7 +52,6 @@ class DaysFragment : BaseFragment() {
     }
 
     override fun onDestroyView() {
-        alertDialog = null
         binding.daysList.adapter = null
         super.onDestroyView()
     }

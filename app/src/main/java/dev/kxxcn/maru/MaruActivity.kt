@@ -1,6 +1,7 @@
 package dev.kxxcn.maru
 
 import android.animation.ObjectAnimator
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.WindowManager
@@ -16,6 +17,7 @@ import dev.kxxcn.maru.util.*
 import dev.kxxcn.maru.util.extension.setupSnackbar
 import dev.kxxcn.maru.util.preference.PreferenceUtils
 import dev.kxxcn.maru.view.base.Scrollable
+import dev.kxxcn.maru.view.base.Signinable
 import dev.kxxcn.maru.view.home.HomeFragment
 import dev.kxxcn.maru.view.more.MoreFragment
 import dev.kxxcn.maru.view.tasks.TasksFragment
@@ -60,7 +62,17 @@ class MaruActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
-            RESULT_GOOGLE_SIGN_IN -> current()?.onActivityResult(requestCode, resultCode, data)
+            RESULT_GOOGLE_SIGN_IN -> {
+                try {
+                    if (resultCode == Activity.RESULT_OK) {
+                        (current() as? Signinable)?.onSuccess(data)
+                    } else {
+                        throw RuntimeException("Invalid Account.")
+                    }
+                } catch (e: Exception) {
+                    (current() as? Signinable)?.onFailure()
+                }
+            }
         }
     }
 

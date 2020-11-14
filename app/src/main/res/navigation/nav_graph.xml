@@ -60,6 +60,17 @@
             android:id="@+id/action_introFragment_to_registerFragment"
             app:destination="@id/register_fragment" />
 
+        <action
+            android:id="@+id/action_intro_fragment_to_backup_fragment"
+            app:destination="@id/backup_fragment">
+
+            <argument
+                android:name="backup_type"
+                android:defaultValue="RESTORE"
+                app:argType=".view.backup.BackupFilterType" />
+
+        </action>
+
     </fragment>
 
     <fragment
@@ -337,11 +348,6 @@
 
     </fragment>
 
-    <dialog
-        android:id="@+id/edit_dialog_fragment"
-        android:name="dev.kxxcn.maru.view.edit.EditDialogFragment"
-        android:label="@string/nav_label_edit_dialog" />
-
     <fragment
         android:id="@+id/terms_fragment"
         android:name="dev.kxxcn.maru.view.terms.TermsFragment"
@@ -351,5 +357,10 @@
         android:id="@+id/backup_fragment"
         android:name="dev.kxxcn.maru.view.backup.BackupFragment"
         android:label="@string/nav_label_backup" />
+
+    <dialog
+        android:id="@+id/edit_dialog_fragment"
+        android:name="dev.kxxcn.maru.view.edit.EditDialogFragment"
+        android:label="@string/nav_label_edit_dialog" />
 
 </navigation>

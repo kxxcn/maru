@@ -34,7 +34,8 @@ import javax.inject.Singleton
         TimelineModule::class,
         NotificationModule::class,
         OrderModule::class,
-        SettingModule::class
+        SettingModule::class,
+        IntroModule::class
     ]
 )
 interface ApplicationComponent : AndroidInjector<MaruApplication> {

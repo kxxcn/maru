@@ -1,6 +1,5 @@
 package dev.kxxcn.maru.view.sort
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -22,8 +21,6 @@ class SortFragment : BaseFragment() {
     lateinit var viewModelFactory: MaruSavedStateViewModelFactory
 
     private lateinit var binding: SortFragmentBinding
-
-    private var alertDialog: AlertDialog? = null
 
     override val clazz: Class<*>
         get() = this::class.java
@@ -59,7 +56,6 @@ class SortFragment : BaseFragment() {
     }
 
     override fun onDestroyView() {
-        alertDialog = null
         binding.tasksList.adapter = null
         super.onDestroyView()
     }

@@ -1,52 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/intro_motion"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/white"
-    app:layoutDescription="@xml/scene_intro">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <dev.kxxcn.maru.view.custom.MaruTextView
-        android:id="@+id/top_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name_en"
-        android:textSize="16sp" />
+    <data>
 
-    <View
-        android:id="@+id/line_view"
-        android:layout_width="70dp"
-        android:layout_height="1dp"
-        android:background="@color/colorSecondary" />
+        <variable
+            name="viewModel"
+            type="dev.kxxcn.maru.view.intro.IntroViewModel" />
 
-    <dev.kxxcn.maru.view.custom.MaruTextView
-        android:id="@+id/hello_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/register_hello"
-        android:textSize="40sp" />
+    </data>
 
-    <dev.kxxcn.maru.view.custom.MaruTextView
-        android:id="@+id/welcome_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/register_welcome"
-        android:textSize="40sp" />
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/intro_motion"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        app:layoutDescription="@xml/scene_intro">
 
-    <dev.kxxcn.maru.view.custom.MaruTextView
-        android:id="@+id/start_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/intro_start_button"
-        android:gravity="center"
-        android:paddingStart="50dp"
-        android:paddingTop="35dp"
-        android:paddingEnd="50dp"
-        android:paddingBottom="35dp"
-        android:text="@string/register_start"
-        android:textColor="@android:color/white"
-        android:textSize="18sp"
-        app:textStyle="bold" />
+        <dev.kxxcn.maru.view.custom.MaruTextView
+            android:id="@+id/top_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name_en"
+            android:textSize="16sp" />
 
-</androidx.constraintlayout.motion.widget.MotionLayout>
+        <dev.kxxcn.maru.view.custom.MaruTextView
+            android:id="@+id/restore_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> viewModel.restore()}"
+            android:padding="20dp"
+            android:textColor="?maruFontColor"
+            app:underline="@{@string/restore}" />
+
+        <View
+            android:id="@+id/line_view"
+            android:layout_width="70dp"
+            android:layout_height="1dp"
+            android:background="@color/colorSecondary" />
+
+        <dev.kxxcn.maru.view.custom.MaruTextView
+            android:id="@+id/hello_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/register_hello"
+            android:textSize="40sp" />
+
+        <dev.kxxcn.maru.view.custom.MaruTextView
+            android:id="@+id/welcome_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="40sp"
+            app:bold="@{@string/register_welcome}" />
+
+        <dev.kxxcn.maru.view.custom.MaruTextView
+            android:id="@+id/start_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/intro_start_button"
+            android:gravity="center"
+            android:onClick="@{() -> viewModel.start()}"
+            android:paddingStart="50dp"
+            android:paddingTop="35dp"
+            android:paddingEnd="50dp"
+            android:paddingBottom="35dp"
+            android:text="@string/register_start"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            app:textStyle="bold" />
+
+    </androidx.constraintlayout.motion.widget.MotionLayout>
+
+</layout>

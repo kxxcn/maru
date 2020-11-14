@@ -85,7 +85,7 @@ class TasksAdapter(
                     TasksFilterType.ACTIVE_TASKS -> R.string.task_empty_progress
                     else -> R.string.task_empty_completed
                 }.let {
-                    items.add(TasksItem(TYPE_EMPTY, null, it))
+                    items.add(TasksItem(TYPE_EMPTY, null, isPremium, it))
                 }
             } else {
                 for ((index, taskDetail) in list.withIndex()) {
@@ -97,14 +97,16 @@ class TasksAdapter(
                             items.add(
                                 TasksItem(
                                     TYPE_COMPLETED,
-                                    taskDetail
+                                    taskDetail,
+                                    isPremium
                                 )
                             )
                             if (!isPremium && index % AD_INTERVAL == 0) {
                                 items.add(
                                     TasksItem(
                                         TYPE_AD,
-                                        TaskDetail()
+                                        TaskDetail(),
+                                        isPremium
                                     )
                                 )
                             }
@@ -114,7 +116,8 @@ class TasksAdapter(
                                 items.add(
                                     TasksItem(
                                         TYPE_COMPLETED,
-                                        taskDetail
+                                        taskDetail,
+                                        isPremium = isPremium
                                     )
                                 )
                             } else {
@@ -123,7 +126,7 @@ class TasksAdapter(
                                         TasksItem(
                                             TYPE_PREPARE,
                                             taskDetail,
-                                            isPremium = isPremium
+                                            isPremium
                                         )
                                     )
                                 } else {
@@ -131,7 +134,7 @@ class TasksAdapter(
                                         TasksItem(
                                             TYPE_ACTIVE,
                                             taskDetail,
-                                            isPremium = isPremium
+                                            isPremium
                                         )
                                     )
                                 }
@@ -140,7 +143,8 @@ class TasksAdapter(
                                 items.add(
                                     TasksItem(
                                         TYPE_AD,
-                                        TaskDetail()
+                                        TaskDetail(),
+                                        isPremium
                                     )
                                 )
                             }
@@ -155,8 +159,8 @@ class TasksAdapter(
     data class TasksItem(
         val viewType: Int,
         val taskDetail: TaskDetail?,
-        val stringRes: Int? = null,
-        val isPremium: Boolean = false
+        val isPremium: Boolean,
+        val stringRes: Int? = null
     )
 }
 

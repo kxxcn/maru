@@ -28,6 +28,7 @@ const val KEY_PRESENT_IMAGE_RES = "present_image_res"
 const val KEY_LANDMARK_FILTER_TYPE = "landmark_filter_type"
 const val KEY_LANDMARK_LONGITUDE = "landmark_longitude"
 const val KEY_LANDMARK_LATITUDE = "landmark_latitude"
+const val KEY_BACKUP_TYPE = "backup_type"
 
 const val UNCOMPLETED_TASK = 0
 const val COMPLETED_TASK = 1

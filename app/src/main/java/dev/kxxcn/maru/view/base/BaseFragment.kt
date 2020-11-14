@@ -1,5 +1,6 @@
 package dev.kxxcn.maru.view.base
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModel
@@ -20,11 +21,19 @@ abstract class BaseFragment : DaggerFragment() {
 
     abstract val viewModel: ViewModel
 
+    protected var alertDialog: AlertDialog? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupListener()
         setupSnackbar()
         setupAnalytics()
+    }
+
+    override fun onDestroyView() {
+        alertDialog?.dismiss()
+        alertDialog = null
+        super.onDestroyView()
     }
 
     private fun setupListener() {

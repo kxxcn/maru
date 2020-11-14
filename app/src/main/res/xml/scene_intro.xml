@@ -20,6 +20,14 @@
             motion:layout_constraintTop_toTopOf="parent" />
 
         <Constraint
+            android:id="@+id/restore_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toBottomOf="@id/top_text"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintTop_toTopOf="@id/top_text" />
+
+        <Constraint
             android:id="@+id/line_view"
             android:layout_width="70dp"
             android:layout_height="1dp"
@@ -63,6 +71,15 @@
             android:alpha="0.0"
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintTop_toTopOf="parent" />
+
+        <Constraint
+            android:id="@+id/restore_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0.0"
+            motion:layout_constraintBottom_toBottomOf="@id/top_text"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintTop_toTopOf="@id/top_text" />
 
         <Constraint
             android:id="@+id/line_view"

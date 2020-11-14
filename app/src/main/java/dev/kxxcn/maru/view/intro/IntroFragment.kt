@@ -1,29 +1,76 @@
 package dev.kxxcn.maru.view.intro
 
-import android.graphics.Typeface
 import android.os.Bundle
-import android.text.SpannableStringBuilder
-import android.text.Spanned
-import android.text.style.StyleSpan
+import android.view.LayoutInflater
 import android.view.View
-import androidx.fragment.app.Fragment
+import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import dev.kxxcn.maru.EventObserver
+import dev.kxxcn.maru.MaruActivity
 import dev.kxxcn.maru.R
+import dev.kxxcn.maru.databinding.IntroFragmentBinding
+import dev.kxxcn.maru.util.NAV_HOME
+import dev.kxxcn.maru.util.extension.openDialog
 import dev.kxxcn.maru.util.extension.setTransitionCompleteListener
-import kotlinx.android.synthetic.main.intro_fragment.*
-import org.jetbrains.anko.sdk27.coroutines.onClick
+import dev.kxxcn.maru.view.signin.SignInFragment
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import javax.inject.Inject
 
-class IntroFragment : Fragment(R.layout.intro_fragment) {
+@ExperimentalCoroutinesApi
+@FlowPreview
+class IntroFragment : SignInFragment() {
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    override val clazz: Class<*>
+        get() = this::class.java
+
+    override val viewModel by viewModels<IntroViewModel> { viewModelFactory }
+
+    private lateinit var binding: IntroFragmentBinding
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = IntroFragmentBinding.inflate(
+            inflater,
+            container,
+            false
+        ).apply {
+            viewModel = this@IntroFragment.viewModel
+        }
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupLifecycle()
         setupMotionLayout()
-        setupTextView()
-        setupButtonListener()
+        setupListener()
+    }
+
+    override fun handleSignInSuccess() {
+        IntroFragmentDirections.actionIntroFragmentToBackupFragment().also {
+            findNavController().navigate(it)
+        }
+    }
+
+    override fun handleSignInFailure() {
+        viewModel.handleSignInFailure()
+    }
+
+    private fun setupLifecycle() {
+        binding.lifecycleOwner = viewLifecycleOwner
     }
 
     private fun setupMotionLayout() {
-        intro_motion.apply {
+        binding.introMotion.apply {
             setTransitionCompleteListener { _, _ ->
                 IntroFragmentDirections.actionIntroFragmentToRegisterFragment().also {
                     findNavController().navigate(it)
@@ -32,17 +79,38 @@ class IntroFragment : Fragment(R.layout.intro_fragment) {
         }
     }
 
-    private fun setupTextView() {
-        welcome_text.text = SpannableStringBuilder(welcome_text.text).apply {
-            setSpan(StyleSpan(Typeface.BOLD), 0, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        }
+    private fun setupListener() {
+        viewModel.hasProfile.observe(viewLifecycleOwner, {
+            if (it) (activity as? MaruActivity)?.navigate(NAV_HOME)
+        })
+        viewModel.startEvent.observe(viewLifecycleOwner, EventObserver {
+            start()
+        })
+        viewModel.signInEvent.observe(viewLifecycleOwner, EventObserver {
+            signInDialog()
+        })
     }
 
-    private fun setupButtonListener() {
-        start_text.onClick { showRegisterScreen() }
+    private fun start() {
+        binding.introMotion.transitionToEnd()
     }
 
-    private fun showRegisterScreen() {
-        intro_motion.transitionToEnd()
+    private fun signInDialog() {
+        alertDialog?.dismiss()
+        alertDialog = openDialog(
+            R.drawable.ic_sign_in,
+            getString(R.string.need_sign_in_process),
+            negative = { handleNegativeSelection() },
+            positive = { handleSignInSelection() }
+        )
+    }
+
+    private fun handleNegativeSelection() {
+        alertDialog?.dismiss()
+    }
+
+    private fun handleSignInSelection() {
+        alertDialog?.dismiss()
+        signIn()
     }
 }

@@ -226,7 +226,7 @@ class LocalDataSource(
 
     override suspend fun restore(summary: Summary): Result<Any?> = withContext(ioDispatcher) {
         return@withContext try {
-            userDao.deleteUser(userDao.getUsers().first())
+            userDao.getUsers().firstOrNull()?.let { userDao.deleteUser(it) }
             val user = summary.user ?: throw NullPointerException()
             val tasks = summary.tasks.mapNotNull { it.task }
             val accounts = summary.tasks.mapNotNull { it.account }

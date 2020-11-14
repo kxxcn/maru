@@ -45,9 +45,10 @@ object Versions {
     const val junitVersion = "4.12"
     const val junitExtVersion = "1.1.2"
     const val mockitoInlineVersion = "2.13.0"
-    const val mockitoAndroidVersion = "2.24.5"
+    const val mockitoAndroidVersion = "3.6.0"
     const val espressoVersion = "3.3.0"
     const val roomTestingVersion = "2.2.5"
+    const val mockkVersion = "1.10.2"
 }
 
 object Dependencies {
@@ -188,6 +189,7 @@ object Dependencies {
     const val junitExt = "androidx.test.ext:junit:${Versions.junitExtVersion}"
     const val mockitoInline = "org.mockito:mockito-inline:${Versions.mockitoInlineVersion}"
     const val mockitoAndroid = "org.mockito:mockito-android:${Versions.mockitoAndroidVersion}"
+    const val mockkAndroid = "io.mockk:mockk-android:${Versions.mockkVersion}"
     const val espressoCore = "androidx.test.espresso:espresso-core:${Versions.espressoVersion}"
     const val espressoContrib =
         "androidx.test.espresso:espresso-contrib:${Versions.espressoVersion}"
