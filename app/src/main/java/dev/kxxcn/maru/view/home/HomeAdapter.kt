@@ -4,13 +4,14 @@ import android.app.Activity
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import dev.kxxcn.maru.data.Summary
+import dev.kxxcn.maru.view.base.CapturableAdapter
 import dev.kxxcn.maru.view.base.LifecycleViewHolder
 import dev.kxxcn.maru.view.home.holder.*
 
 class HomeAdapter(
     private val activity: Activity,
     private val viewModel: HomeViewModel
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+) : CapturableAdapter<RecyclerView.ViewHolder>() {
 
     private val releasable = mutableListOf<() -> Unit>()
 
@@ -71,6 +72,18 @@ class HomeAdapter(
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
         release()
         super.onDetachedFromRecyclerView(recyclerView)
+    }
+
+    override fun isSkip(viewType: Int): Boolean {
+        return when (viewType) {
+            TYPE_WELCOME,
+            TYPE_BANNER_AD -> true
+            TYPE_DAYS -> items
+                ?.firstOrNull()
+                ?.content
+                ?.hasDays == false
+            else -> false
+        }
     }
 
     fun updateItems(items: List<SummaryItem>) {

@@ -26,7 +26,7 @@ import dev.kxxcn.maru.Event
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.util.preference.PreferenceUtils
 import dev.kxxcn.maru.view.base.Capturable
-import dev.kxxcn.maru.view.home.HomeAdapter
+import dev.kxxcn.maru.view.base.CapturableAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.jetbrains.anko.imageResource
@@ -180,7 +180,7 @@ fun View.asImageView() = this as ImageView
 
 suspend fun RecyclerView.capture(): Bitmap? {
     var bitmap: Bitmap? = null
-    (adapter as? HomeAdapter)?.let { adapter ->
+    (adapter as? CapturableAdapter)?.let { adapter ->
         suppressLayout(true)
 
         var height = 0
@@ -190,18 +190,6 @@ suspend fun RecyclerView.capture(): Bitmap? {
         val cacheSize = maxMemory / 8
         val cache = LruCache<String, Bitmap>(cacheSize)
 
-        fun isPassedHolder(viewType: Int): Boolean {
-            return when (viewType) {
-                HomeAdapter.TYPE_WELCOME,
-                HomeAdapter.TYPE_BANNER_AD -> true
-                HomeAdapter.TYPE_DAYS -> adapter.items
-                    ?.firstOrNull()
-                    ?.content
-                    ?.hasDays == false
-                else -> false
-            }
-        }
-
         val widthMeasureSpec =
             View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY)
         val heightMeasureSpec =
@@ -210,7 +198,7 @@ suspend fun RecyclerView.capture(): Bitmap? {
         val size = adapter.itemCount
         for (position in 0 until size) {
             val viewType = adapter.getItemViewType(position)
-            if (isPassedHolder(viewType)) continue
+            if (adapter.isSkip(viewType)) continue
             val holder = withContext(Dispatchers.Main) {
                 with(adapter) {
                     createViewHolder(
