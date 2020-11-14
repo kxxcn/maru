@@ -147,7 +147,8 @@ dependencies {
     androidTestImplementation Dependencies.espressoCore
     androidTestImplementation Dependencies.espressoContrib
     androidTestImplementation Dependencies.roomTesting
-    androidTestImplementation(Dependencies.mockitoAndroid)
+    androidTestImplementation Dependencies.mockitoAndroid
+    androidTestImplementation Dependencies.mockkAndroid
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -7,6 +7,7 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.google.firebase.auth.FirebaseAuth
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.data.Result.Success
 import dev.kxxcn.maru.data.User
@@ -17,6 +18,9 @@ import dev.kxxcn.maru.util.monitorFragment
 import dev.kxxcn.maru.util.scrollToBottom
 import dev.kxxcn.maru.view.base.BaseFragmentTest
 import dev.kxxcn.maru.view.home.holder.BannerAdHolder
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.mockkStatic
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.Matchers.not
 import org.junit.Test
@@ -58,6 +62,27 @@ class HomeFragmentTest : BaseFragmentTest() {
 
     @Test
     fun showVerifiedBadge() {
+        mockkStatic(FirebaseAuth::class)
+        every { FirebaseAuth.getInstance().currentUser } returns mockk(relaxed = true)
+
+        launchFragmentInContainer<HomeFragment>(
+            themeResId = R.style.AppTheme
+        ).also { dataBindingIdlingResource.monitorFragment(it) }
+
+        onView(
+            RecyclerViewMatcher.atPositionOnView(
+                HomeAdapter.TYPE_WELCOME,
+                parentId,
+                R.id.welcome_verified
+            )
+        ).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+    }
+
+    @Test
+    fun showUnverifiedBadge() {
+        mockkStatic(FirebaseAuth::class)
+        every { FirebaseAuth.getInstance().currentUser } returns null
+
         launchFragmentInContainer<HomeFragment>(
             themeResId = R.style.AppTheme
         ).also { dataBindingIdlingResource.monitorFragment(it) }

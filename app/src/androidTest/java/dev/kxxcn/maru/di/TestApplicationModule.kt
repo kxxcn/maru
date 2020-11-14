@@ -4,7 +4,6 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
-import dev.kxxcn.maru.MaruApplication
 import dev.kxxcn.maru.data.source.DataRepository
 import dev.kxxcn.maru.data.source.FakeRepository
 import dev.kxxcn.maru.util.AdHelper

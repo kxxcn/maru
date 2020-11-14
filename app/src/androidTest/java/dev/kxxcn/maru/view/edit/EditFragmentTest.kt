@@ -20,7 +20,7 @@ import dev.kxxcn.maru.view.register.RegisterFilterType.REGISTER_NAME
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito
+import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
 import java.util.concurrent.TimeUnit
 
@@ -49,7 +49,7 @@ class EditFragmentTest : BaseFragmentTest() {
 
     @Test
     fun clickUserNameNavigateToEditDialogFragment() {
-        val navController = Mockito.mock(NavController::class.java)
+        val navController = mock(NavController::class.java)
 
         runBlocking {
             val wedding = System.currentTimeMillis() - TimeUnit.DAYS.toMillis(5)
@@ -80,7 +80,7 @@ class EditFragmentTest : BaseFragmentTest() {
 
     @Test
     fun clickUserBudgetNavigateToEditDialogFragment() {
-        val navController = Mockito.mock(NavController::class.java)
+        val navController = mock(NavController::class.java)
 
         runBlocking {
             val wedding = System.currentTimeMillis() - TimeUnit.DAYS.toMillis(5)
