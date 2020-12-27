@@ -87,7 +87,11 @@ class IntroFragment : SignInFragment() {
             start()
         })
         viewModel.signInEvent.observe(viewLifecycleOwner, EventObserver {
-            signInDialog()
+            if (isSignedIn()) {
+                handleSignInSelection()
+            } else {
+                signInDialog()
+            }
         })
     }
 

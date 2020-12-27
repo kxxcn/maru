@@ -43,4 +43,6 @@ abstract class SignInFragment : BaseFragment(), Signinable {
     protected fun signIn() {
         activity?.startActivityForResult(client.signInIntent, RESULT_GOOGLE_SIGN_IN)
     }
+
+    protected fun isSignedIn() = auth.currentUser != null
 }

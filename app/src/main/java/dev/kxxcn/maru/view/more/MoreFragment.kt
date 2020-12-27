@@ -278,6 +278,4 @@ class MoreFragment : SignInFragment() {
             findNavController().navigate(it)
         }
     }
-
-    private fun isSignedIn() = auth.currentUser != null
 }
