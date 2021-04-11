@@ -1,8 +1,6 @@
 package dev.kxxcn.maru.view.more
 
-import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -170,14 +168,7 @@ class MoreFragment : SignInFragment() {
 
     private fun openStore() {
         alertDialog?.dismiss()
-        val packageName = context?.packageName
-        try {
-            val uri = getString(R.string.play_store_app, packageName)
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(uri)))
-        } catch (e: ActivityNotFoundException) {
-            val uri = getString(R.string.play_store_web, packageName)
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(uri)))
-        }
+        openStore(context?.packageName)
     }
 
     private fun sendEmail() {

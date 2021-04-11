@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import dev.kxxcn.maru.view.base.LifecycleViewHolder
 import dev.kxxcn.maru.view.home.holder.BannerAdHolder
+import dev.kxxcn.maru.view.home.holder.WoozooraHolder
 import dev.kxxcn.maru.view.more.contents.MoreContentsHolder
 import dev.kxxcn.maru.view.more.native.MoreNativeHolder
 import dev.kxxcn.maru.view.more.setting.MoreSettingHolder
@@ -23,6 +24,7 @@ class MoreAdapter(
             TYPE_SETTINGS -> MoreSettingHolder.from(parent)
             TYPE_BANNER_AD -> BannerAdHolder.from(parent, activity)
             TYPE_CONTENTS -> MoreContentsHolder.from(parent)
+            TYPE_WOOZOORA -> WoozooraHolder.from(parent)
             TYPE_NATIVE_AD -> MoreNativeHolder.from(parent)
             else -> MoreSettingHolder.from(parent)
         }
@@ -50,6 +52,10 @@ class MoreAdapter(
             TYPE_NATIVE_AD -> {
                 val h = holder as? MoreNativeHolder ?: return
                 releasable.add(h.loadAd())
+            }
+            TYPE_WOOZOORA -> {
+                val h = holder as? WoozooraHolder ?: return
+                h.bind(viewModel)
             }
             TYPE_BANNER_AD -> {
                 val h = holder as? BannerAdHolder ?: return
@@ -89,12 +95,14 @@ class MoreAdapter(
         private const val TYPE_BANNER_AD = 1
         private const val TYPE_CONTENTS = 2
         private const val TYPE_NATIVE_AD = 3
+        private const val TYPE_WOOZOORA = 4
 
         fun makeItems(): List<MoreItem> {
             return listOf(
                 MoreItem(TYPE_SETTINGS),
                 MoreItem(TYPE_BANNER_AD),
                 MoreItem(TYPE_CONTENTS),
+                MoreItem(TYPE_WOOZOORA),
                 MoreItem(TYPE_NATIVE_AD)
             )
         }

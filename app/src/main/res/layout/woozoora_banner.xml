@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="dev.kxxcn.maru.view.base.BaseViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> viewModel.woozoora()}">
+
+        <View
+            android:id="@+id/woozoora_background"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="30dp"
+            android:background="@color/colorWoozoora"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/woozoora_1_image"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@drawable/img_woozoora_1"
+            android:translationX="1dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:2"
+            app:layout_constraintEnd_toStartOf="@id/woozoora_2_image"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/woozoora_2_image"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@drawable/img_woozoora_2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <dev.kxxcn.maru.view.custom.MaruTextView
+            android:id="@+id/desc_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:lineSpacingExtra="5dp"
+            android:text="@string/launched_application_to_be_used_together"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@id/woozoora_text"
+            app:layout_constraintEnd_toStartOf="@id/woozoora_1_image"
+            app:layout_constraintStart_toStartOf="@id/woozoora_text"
+            app:layout_constraintTop_toTopOf="@id/woozoora_background"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/woozoora_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/font_recipe"
+            android:text="@string/woozoora"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@id/more_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/desc_text" />
+
+        <TextView
+            android:id="@+id/more_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/woozoora_round_background"
+            android:paddingHorizontal="15dp"
+            android:paddingVertical="8dp"
+            android:text="@string/learn_more"
+            android:textColor="@android:color/white"
+            app:layout_constraintStart_toStartOf="@id/woozoora_text"
+            app:layout_constraintTop_toBottomOf="@id/woozoora_text" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/more_text" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

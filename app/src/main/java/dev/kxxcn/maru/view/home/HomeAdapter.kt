@@ -21,6 +21,7 @@ class HomeAdapter(
         return when (viewType) {
             TYPE_WELCOME -> WelcomeHolder.from(parent)
             TYPE_ACCOUNT -> AccountHolder.from(parent)
+            TYPE_WOOZOORA -> WoozooraHolder.from(parent)
             TYPE_TASK -> TaskHolder.from(parent)
             TYPE_BANNER_AD -> BannerAdHolder.from(parent, activity)
             else -> DaysHolder.from(parent)
@@ -39,6 +40,10 @@ class HomeAdapter(
             TYPE_ACCOUNT -> {
                 val h = holder as? AccountHolder ?: return
                 h.bind(item)
+            }
+            TYPE_WOOZOORA -> {
+                val h = holder as? WoozooraHolder ?: return
+                h.bind(viewModel)
             }
             TYPE_TASK -> {
                 val h = holder as? TaskHolder ?: return
@@ -100,14 +105,16 @@ class HomeAdapter(
 
         const val TYPE_WELCOME = 0
         const val TYPE_ACCOUNT = 1
-        const val TYPE_TASK = 2
-        const val TYPE_BANNER_AD = 3
-        const val TYPE_DAYS = 4
+        const val TYPE_WOOZOORA = 2
+        const val TYPE_TASK = 3
+        const val TYPE_BANNER_AD = 4
+        const val TYPE_DAYS = 5
 
         fun makeItems(content: Summary): List<SummaryItem> {
             return mutableListOf<SummaryItem>().apply {
                 add(SummaryItem(TYPE_WELCOME, content))
                 add(SummaryItem(TYPE_ACCOUNT, content))
+                add(SummaryItem(TYPE_WOOZOORA, content))
                 add(SummaryItem(TYPE_TASK, content))
                 if (content.user?.premium == false) add(SummaryItem(TYPE_BANNER_AD, content))
                 add(SummaryItem(TYPE_DAYS, content))

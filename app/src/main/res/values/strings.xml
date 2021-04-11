@@ -392,4 +392,9 @@
     <string name="backup_current_data">현재 데이터를 백업하시겠습니까?</string>
     <string name="backup_overwrite_data">기존 데이터를 덮어쓰시겠습니까?</string>
     <string name="backup_restore_no_data">복원 데이터가 없습니다.</string>
+
+    <string name="woozoora">우주라이트</string>
+    <string name="woozoora_package_name">dev.kxxcn.woozoora</string>
+    <string name="learn_more">더 알아보기</string>
+    <string name="launched_application_to_be_used_together">"함께 쓰는\n공용 가계부 앱 런칭"</string>
 </resources>
