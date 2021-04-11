@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -58,6 +59,9 @@ abstract class BaseFragment : DaggerFragment() {
             it.woozooraEvent.observe(viewLifecycleOwner, EventObserver {
                 openApp()
             })
+            it.toastText.observe(viewLifecycleOwner, EventObserver { message ->
+                toast(message)
+            })
         }
     }
 
@@ -93,4 +97,11 @@ abstract class BaseFragment : DaggerFragment() {
             ?: openStore(packageName)
     }
 
+    private fun toast(any: Any) {
+        if (any is Int) {
+            Toast.makeText(context, any, Toast.LENGTH_SHORT).show()
+        } else if (any is String) {
+            Toast.makeText(context, any, Toast.LENGTH_SHORT).show()
+        }
+    }
 }

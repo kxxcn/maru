@@ -230,7 +230,19 @@
     <fragment
         android:id="@+id/sort_fragment"
         android:name="dev.kxxcn.maru.view.sort.SortFragment"
-        android:label="@string/nav_label_sort" />
+        android:label="@string/nav_label_sort">
+
+        <action
+            android:id="@+id/action_sort_fragment_to_edit_dialog_fragment"
+            app:destination="@id/edit_dialog_fragment">
+
+            <argument
+                android:name="register_type"
+                app:argType=".view.register.RegisterFilterType" />
+
+        </action>
+
+    </fragment>
 
     <fragment
         android:id="@+id/order_fragment"

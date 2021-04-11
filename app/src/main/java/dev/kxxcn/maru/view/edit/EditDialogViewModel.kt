@@ -7,6 +7,7 @@ import com.squareup.inject.assisted.AssistedInject
 import dev.kxxcn.maru.Event
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.data.Result.Success
+import dev.kxxcn.maru.data.Task
 import dev.kxxcn.maru.data.source.DataRepository
 import dev.kxxcn.maru.data.succeeded
 import dev.kxxcn.maru.di.AssistedSavedStateViewModelFactory
@@ -75,6 +76,7 @@ class EditDialogViewModel @AssistedInject constructor(
             REGISTER_NAME -> R.string.edit_dialog_title_name to R.string.edit_dialog_title_name_hint
             REGISTER_WEDDING -> R.string.edit_dialog_title_wedding to R.string.edit_dialog_title_wedding_hint
             REGISTER_BUDGET -> R.string.edit_dialog_title_budget to R.string.edit_dialog_title_budget_hint
+            REGISTER_TASK -> R.string.edit_dialog_title_task to R.string.edit_dialog_title_task_hint
             REGISTER_COMPLETE,
             null -> throw RuntimeException("Invalid Filter Type.")
         }.also { (title, hint) ->
@@ -91,6 +93,7 @@ class EditDialogViewModel @AssistedInject constructor(
             val result = when (savedStateHandle.get<RegisterFilterType>(KEY_REGISTER_TYPE)) {
                 REGISTER_NAME -> repository.editName(content)
                 REGISTER_BUDGET -> repository.editBudget(content.replace(",", "").toLong())
+                REGISTER_TASK -> repository.addTask(Task(content))
                 REGISTER_WEDDING,
                 REGISTER_COMPLETE,
                 null -> throw RuntimeException("Invalid Filter Type.")
@@ -105,9 +108,26 @@ class EditDialogViewModel @AssistedInject constructor(
                             ?: false
                     }
                     .takeIf { it == true }
-                    ?.let { close() }
+                    ?.let { toastAndClose() }
                     ?: ad()
             }
+        }
+    }
+
+    private fun toastAndClose() {
+        val res = findMessageResByFilterType()
+        toast(res)
+        close()
+    }
+
+    private fun findMessageResByFilterType(): Int {
+        return when (savedStateHandle.get<RegisterFilterType>(KEY_REGISTER_TYPE)) {
+            REGISTER_NAME -> R.string.edit_dialog_name_toast
+            REGISTER_BUDGET -> R.string.edit_dialog_budget_toast
+            REGISTER_TASK -> R.string.edit_dialog_task_toast
+            REGISTER_WEDDING,
+            REGISTER_COMPLETE,
+            null -> throw RuntimeException("Invalid Filter Type.")
         }
     }
 

@@ -18,6 +18,8 @@ abstract class BaseViewModel : ViewModel() {
     private val _snackbarText = MutableLiveData<Event<String?>>()
     val snackbarText: LiveData<Event<String?>> = _snackbarText
 
+    private val _toastText = MutableLiveData<Event<Any>>()
+    val toastText: LiveData<Event<Any>> = _toastText
 
     private val _woozooraEvent = MutableLiveData<Event<Unit>>()
     val woozooraEvent: LiveData<Event<Unit>> = _woozooraEvent
@@ -31,5 +33,13 @@ abstract class BaseViewModel : ViewModel() {
             messageRes?.let { _snackbarRes.value = Event(it) }
             messageText?.let { _snackbarText.value = Event(it) }
         }
+    }
+
+    fun toast(any: Any) {
+        _toastText.value = Event(any)
+    }
+
+    fun woozoora() {
+        _woozooraEvent.value = Event(Unit)
     }
 }

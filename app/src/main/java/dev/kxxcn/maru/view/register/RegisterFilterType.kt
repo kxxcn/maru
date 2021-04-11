@@ -20,5 +20,10 @@ enum class RegisterFilterType {
     /**
      * 완료
      */
-    REGISTER_COMPLETE
+    REGISTER_COMPLETE,
+
+    /**
+     * 체크리스트
+     */
+    REGISTER_TASK,
 }

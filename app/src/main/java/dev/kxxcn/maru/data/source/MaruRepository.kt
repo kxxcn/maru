@@ -107,6 +107,10 @@ class MaruRepository @Inject constructor(
         return localDataSource.editBudget(budget)
     }
 
+    override suspend fun addTask(task: Task): Result<Any?> {
+        return localDataSource.addTask(task)
+    }
+
     override suspend fun savePremium(email: String?, purchase: Purchase): Result<Any?> {
         return localDataSource.savePremium(purchase = purchase).also {
             if (it.succeeded) {

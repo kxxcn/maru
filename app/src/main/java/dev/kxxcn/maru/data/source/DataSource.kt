@@ -52,6 +52,8 @@ interface DataSource {
 
     suspend fun editBudget(budget: Long): Result<Any?>
 
+    suspend fun addTask(task: Task): Result<Any?>
+
     suspend fun savePremium(email: String? = null, purchase: Purchase? = null): Result<Any?>
 
     suspend fun isPremium(email: String?): Result<Boolean>

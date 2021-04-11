@@ -376,10 +376,15 @@
 
     <string name="edit_dialog_title_name">이름 변경</string>
     <string name="edit_dialog_title_name_hint">이름을 입력하세요.</string>
+    <string name="edit_dialog_name_toast">이름이 변경되었습니다.</string>
     <string name="edit_dialog_title_wedding">결혼 예정일 변경</string>
     <string name="edit_dialog_title_wedding_hint">결혼 예정일을 입력하세요.</string>
     <string name="edit_dialog_title_budget">예산 변경</string>
     <string name="edit_dialog_title_budget_hint">예산을 입력하세요.</string>
+    <string name="edit_dialog_budget_toast">예산이 변경되었습니다.</string>
+    <string name="edit_dialog_title_task">체크리스트 추가</string>
+    <string name="edit_dialog_title_task_hint">체크리스트 이름을 입력하세요.</string>
+    <string name="edit_dialog_task_toast">체크리스트가 추가되었습니다.</string>
 
     <string name="purchase_title">프리미엄 이용권</string>
     <string name="purchase_premium">프리미엄 이용권이 구매되었습니다.</string>

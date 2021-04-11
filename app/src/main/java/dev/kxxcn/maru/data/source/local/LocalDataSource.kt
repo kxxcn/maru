@@ -196,6 +196,21 @@ class LocalDataSource(
         }
     }
 
+    override suspend fun addTask(task: Task): Result<Any?> = withContext(ioDispatcher) {
+        return@withContext try {
+            val user = userDao.getUsers().first()
+            val newTask = task.copy(
+                name = task.name,
+                priority = taskDao.getTasks().size.toLong(),
+                iconId = "ic_love",
+                userId = user.id
+            )
+            Success(taskDao.insertTask(newTask))
+        } catch (e: Exception) {
+            Error(e)
+        }
+    }
+
     override suspend fun savePremium(email: String?, purchase: Purchase?): Result<Any?> =
         withContext(ioDispatcher) {
             return@withContext try {

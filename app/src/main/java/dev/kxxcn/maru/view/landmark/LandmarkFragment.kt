@@ -102,16 +102,8 @@ class LandmarkFragment : BaseFragment(), OnMapReadyCallback, LocationListener {
         setupLocation()
     }
 
-    override fun onLocationChanged(location: Location?) {
-    }
+    override fun onLocationChanged(p0: Location) {
 
-    override fun onStatusChanged(p0: String?, p1: Int, p2: Bundle?) {
-    }
-
-    override fun onProviderEnabled(p0: String?) {
-    }
-
-    override fun onProviderDisabled(p0: String?) {
     }
 
     private fun setupLifecycle() {

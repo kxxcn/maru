@@ -50,6 +50,8 @@ interface DataRepository {
 
     suspend fun editBudget(budget: Long): Result<Any?>
 
+    suspend fun addTask(task: Task): Result<Any?>
+
     suspend fun savePremium(email: String?, purchase: Purchase): Result<Any?>
 
     suspend fun isPremium(email: String?): Result<Boolean>

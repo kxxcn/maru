@@ -4,15 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import dev.kxxcn.maru.EventObserver
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.databinding.SortFragmentBinding
 import dev.kxxcn.maru.di.MaruSavedStateViewModelFactory
 import dev.kxxcn.maru.util.extension.openDialog
 import dev.kxxcn.maru.view.base.BaseFragment
+import dev.kxxcn.maru.view.register.RegisterFilterType
 import javax.inject.Inject
 
 class SortFragment : BaseFragment() {
@@ -36,7 +37,7 @@ class SortFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = SortFragmentBinding.inflate(
             inflater,
             container,
@@ -73,8 +74,8 @@ class SortFragment : BaseFragment() {
         viewModel.deleteEvent.observe(viewLifecycleOwner, EventObserver {
             showDialog(it)
         })
-        viewModel.toastText.observe(viewLifecycleOwner, EventObserver {
-            Toast.makeText(context, it, Toast.LENGTH_LONG).show()
+        viewModel.addTaskEvent.observe(viewLifecycleOwner, EventObserver {
+            addTask()
         })
     }
 
@@ -101,5 +102,10 @@ class SortFragment : BaseFragment() {
     private fun handlePositiveClick() {
         alertDialog?.dismiss()
         viewModel.deleteTasks()
+    }
+
+    private fun addTask() {
+        SortFragmentDirections.actionSortFragmentToEditDialogFragment(RegisterFilterType.REGISTER_TASK)
+            .also { findNavController().navigate(it) }
     }
 }

@@ -58,6 +58,18 @@
             app:layout_constraintTop_toTopOf="@id/title_text"
             tools:ignore="ContentDescription" />
 
+        <ImageView
+            android:id="@+id/add_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:onClick="@{() -> viewModel.handleTasksAddition()}"
+            android:padding="10dp"
+            android:src="@drawable/ic_plus"
+            app:layout_constraintBottom_toBottomOf="@id/title_text"
+            app:layout_constraintEnd_toStartOf="@id/delete_icon"
+            app:layout_constraintTop_toTopOf="@id/title_text"
+            tools:ignore="ContentDescription" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/tasks_list"
             android:layout_width="0dp"

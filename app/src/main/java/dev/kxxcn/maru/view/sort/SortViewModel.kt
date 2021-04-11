@@ -30,11 +30,13 @@ class SortViewModel @AssistedInject constructor(
     private val _deleteEvent = MutableLiveData<Event<Int>>()
     val deleteEvent: LiveData<Event<Int>> = _deleteEvent
 
-    private val _toastText = MutableLiveData<Event<Int>>()
-    val toastText: LiveData<Event<Int>> = _toastText
+    private val _addTaskEvent = MutableLiveData<Event<Unit>>()
+    val addTaskEvent: LiveData<Event<Unit>> = _addTaskEvent
 
     val items: LiveData<List<Summary>> = _forceUpdate.switchMap {
-        repository.observeSummary().switchMap { liveData { emit(value = it) } }
+        repository.observeSummary()
+            .distinctUntilChanged()
+            .switchMap { liveData { emit(value = it) } }
     }
 
     val tasks: LiveData<List<Task?>> = items.map {
@@ -135,7 +137,7 @@ class SortViewModel @AssistedInject constructor(
                     // DB 업데이트 후 체크리스트 목록
                     val name = source.map { it?.name }
                     // 전후를 비교해서 변경되었을 때 토스트 메시지 표시
-                    if (origin != name) _toastText.value = Event(R.string.sort_tasks_update)
+                    if (origin != name) toast(R.string.sort_tasks_update)
                     close()
                 }
             }
@@ -146,6 +148,10 @@ class SortViewModel @AssistedInject constructor(
         deletableSet.value
             ?.takeUnless { it.isEmpty() }
             ?.let { _deleteEvent.value = Event(it.size) }
+    }
+
+    fun handleTasksAddition() {
+        _addTaskEvent.value = Event(Unit)
     }
 
     fun deleteTasks() {

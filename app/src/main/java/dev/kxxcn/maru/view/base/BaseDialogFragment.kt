@@ -2,6 +2,7 @@ package dev.kxxcn.maru.view.base
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -32,6 +33,9 @@ abstract class BaseDialogFragment : DaggerDialogFragment() {
             it.closeEvent.observe(viewLifecycleOwner, EventObserver {
                 findNavController().popBackStack()
             })
+            it.toastText.observe(viewLifecycleOwner, EventObserver { message ->
+                toast(message)
+            })
         }
     }
 
@@ -55,6 +59,14 @@ abstract class BaseDialogFragment : DaggerDialogFragment() {
                 AnalyticsUtils.screenName(clazz.name),
                 null
             )
+        }
+    }
+
+    private fun toast(any: Any) {
+        if (any is Int) {
+            Toast.makeText(context, any, Toast.LENGTH_SHORT).show()
+        } else if (any is String) {
+            Toast.makeText(context, any, Toast.LENGTH_SHORT).show()
         }
     }
 }

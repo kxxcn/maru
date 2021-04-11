@@ -111,6 +111,10 @@ class FakeRepository : DataRepository {
         TODO("Not yet implemented")
     }
 
+    override suspend fun addTask(task: Task): Result<Any?> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun savePremium(email: String?, purchase: Purchase): Result<Any?> {
         TODO("Not yet implemented")
     }
