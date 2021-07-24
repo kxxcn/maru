@@ -116,6 +116,7 @@
     <string name="congratulations_on_your_wedding">결혼을 축하합니다! :)</string>
     <string name="save_to_gallery">사진첩에 저장되었습니다.</string>
     <string name="requires_permission">"해당 기능은 권한이 필요합니다."</string>
+    <string name="use_after_registering_as_a_member">회원가입 후 이용해 주세요.</string>
 
     <string name="register_hello">안녕하세요.</string>
     <string name="register_welcome">마루에 오신 것을\n환영합니다.</string>

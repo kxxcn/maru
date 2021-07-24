@@ -56,9 +56,7 @@ class IntroFragment : SignInFragment() {
     }
 
     override fun handleSignInSuccess() {
-        IntroFragmentDirections.actionIntroFragmentToBackupFragment().also {
-            findNavController().navigate(it)
-        }
+        viewModel.isPremium(auth.currentUser?.email)
     }
 
     override fun handleSignInFailure() {
@@ -93,6 +91,9 @@ class IntroFragment : SignInFragment() {
                 signInDialog()
             }
         })
+        viewModel.backupEvent.observe(viewLifecycleOwner, EventObserver {
+            backup()
+        })
     }
 
     private fun start() {
@@ -107,6 +108,12 @@ class IntroFragment : SignInFragment() {
             negative = { handleNegativeSelection() },
             positive = { handleSignInSelection() }
         )
+    }
+
+    private fun backup() {
+        IntroFragmentDirections.actionIntroFragmentToBackupFragment().also {
+            findNavController().navigate(it)
+        }
     }
 
     private fun handleNegativeSelection() {
