@@ -129,7 +129,7 @@ class FirebaseDataSource(
                     FILED_ORDER_TIME to purchase.purchaseTime,
                     FILED_ORDER_TOKEN to purchase.purchaseToken,
                     FILED_SIGNATURE to purchase.signature,
-                    FILED_SKU to purchase.sku
+                    FILED_SKU to purchase.skus.toString()
                 )
                 val data = firestore
                     .collection(COLLECTION_PURCHASE)

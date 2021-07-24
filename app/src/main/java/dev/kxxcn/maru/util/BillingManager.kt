@@ -27,12 +27,12 @@ class BillingManager(
         enablePurchase = false
     }
 
-    override fun onBillingSetupFinished(result: BillingResult?) {
-        enablePurchase = result?.responseCode == BillingClient.BillingResponseCode.OK
+    override fun onBillingSetupFinished(result: BillingResult) {
+        enablePurchase = result.responseCode == BillingClient.BillingResponseCode.OK
     }
 
-    override fun onPurchasesUpdated(result: BillingResult?, purchases: MutableList<Purchase>?) {
-        if (result?.responseCode == BillingClient.BillingResponseCode.OK) {
+    override fun onPurchasesUpdated(result: BillingResult, purchases: MutableList<Purchase>?) {
+        if (result.responseCode == BillingClient.BillingResponseCode.OK) {
             // acknowledgePurchase(purchases)
             consumePurchase(purchases)
             handlePurchase?.invoke(purchases?.toList() ?: emptyList())
