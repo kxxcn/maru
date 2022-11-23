@@ -6,15 +6,15 @@ object Versions {
     const val coroutinesVersion = "1.3.7"
     const val constraintVersion = "2.0.0-beta3"
     const val cardVersion = "1.0.0"
-    const val roomVersion = "2.2.4"
+    const val roomVersion = "2.4.0"
     const val archLifecycleVersion = "2.2.0"
     const val navigationVersion = "2.2.1"
     const val fragmentVersion = "1.2.0-rc02"
     const val androidXTestCoreVersion = "1.5.0"
     const val recyclerViewVersion = "1.1.0"
     const val glideVersion = "4.11.0"
-    const val daggerVersion = "2.28.3"
-    const val daggerAssistedVersion = "0.5.2"
+    const val daggerVersion = "2.44"
+    const val daggerAssistedVersion = "0.8.1"
     const val ankoVersion = "0.10.8"
     const val indicatorVersion = "4.1.2"
     const val bottomBarVersion = "1.7"
@@ -127,9 +127,9 @@ object Dependencies {
     const val lifecycleExtensions =
         "androidx.lifecycle:lifecycle-extensions:${Versions.archLifecycleVersion}"
     const val lifecycleViewModelKtx =
-        "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.archLifecycleVersion}"
+        "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
     const val lifecycleLiveDataKtx =
-        "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.archLifecycleVersion}"
+        "androidx.lifecycle:lifecycle-livedata-ktx:2.5.1"
     const val lifecycleRuntimeKtx =
         "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.archLifecycleVersion}"
 
