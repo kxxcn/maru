@@ -10,7 +10,7 @@ object Versions {
     const val archLifecycleVersion = "2.2.0"
     const val navigationVersion = "2.2.1"
     const val fragmentVersion = "1.2.0-rc02"
-    const val androidXTestCoreVersion = "1.3.0"
+    const val androidXTestCoreVersion = "1.5.0"
     const val recyclerViewVersion = "1.1.0"
     const val glideVersion = "4.11.0"
     const val daggerVersion = "2.28.3"

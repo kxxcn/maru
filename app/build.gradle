@@ -11,8 +11,8 @@ android {
         applicationId "dev.kxxcn.maru"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 20
-        versionName "1.4.2"
+        versionCode 21
+        versionName "1.5.0"
 
         testInstrumentationRunner 'dev.kxxcn.maru.CustomTestRunner'
 

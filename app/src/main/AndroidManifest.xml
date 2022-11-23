@@ -34,6 +34,7 @@
 
         <activity
             android:name="dev.kxxcn.maru.MaruActivity"
+            android:exported="true"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
