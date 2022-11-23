@@ -145,6 +145,7 @@ class MoreViewModel @Inject constructor(
                 when (filterType) {
                     AD -> message(R.string.apply_ad_removal_function)
                     BACKUP -> _premiumEvent.value = Event(Unit)
+                    else -> {}
                 }
             } else {
                 _purchaseEvent.value = Event(Unit)

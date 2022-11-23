@@ -2,7 +2,7 @@ object Versions {
 
     const val compatVersion = "1.1.0"
     const val coreVersion = "1.3.0"
-    const val kotlinVersion = "1.4.10"
+    const val kotlinVersion = "1.7.20"
     const val coroutinesVersion = "1.3.7"
     const val constraintVersion = "2.0.0-beta3"
     const val cardVersion = "1.0.0"

@@ -104,6 +104,7 @@ class RegisterViewModel @Inject constructor(
                 R.string.register_complete
             )
             REGISTER_COMPLETE -> return
+            else -> {}
         }
     }
 
