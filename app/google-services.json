@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "167051273013",
+    "firebase_url": "https://maru-774cb.firebaseio.com",
+    "project_id": "maru-774cb",
+    "storage_bucket": "maru-774cb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:167051273013:android:d98a101b339a7bae82a27c",
+        "android_client_info": {
+          "package_name": "dev.kxxcn.maru"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "167051273013-v0kqtjh89n7l5pj6261fap4l7t78a92g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dev.kxxcn.maru",
+            "certificate_hash": "dc74d1546b1926c82c26e2009a049a4061854ea5"
+          }
+        },
+        {
+          "client_id": "167051273013-5e2a05dpl7ne6c44f7t67qdgl8bh9djh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkppRprHCorRGwhFQe7E5yZFFp6P_9ZFc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "167051273013-5e2a05dpl7ne6c44f7t67qdgl8bh9djh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
