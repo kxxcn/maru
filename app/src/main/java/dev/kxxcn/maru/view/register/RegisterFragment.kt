@@ -7,7 +7,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import dagger.android.support.DaggerFragment
@@ -69,7 +68,7 @@ class RegisterFragment : DaggerFragment() {
         setupFilterType()
         setupMotionLayout()
         setupEditText()
-        setupBackPressed()
+        setupListener()
     }
 
     override fun onDestroyView() {
@@ -114,7 +113,7 @@ class RegisterFragment : DaggerFragment() {
                 }
             }
         }
-        viewModel.motion.observe(viewLifecycleOwner, Observer {
+        viewModel.motion.observe(viewLifecycleOwner) {
             hideKeyboard()
             if (filterType == REGISTER_BUDGET) {
                 val iconIds = resources.getStringArray(R.array.task_icons)
@@ -132,16 +131,14 @@ class RegisterFragment : DaggerFragment() {
                         )
                     }
                 )
-                RegisterFragmentDirections.actionRegisterFragmentToHomeFragment().also {
-                    findNavController().navigate(it)
+            } else {
+                editable = true
+                binding.registerMotion.transitionToStart()
+                if (filterType == REGISTER_NAME) {
+                    name = binding.infoEdit.text.toString()
                 }
-                return@Observer
-            } else if (filterType == REGISTER_NAME) {
-                name = binding.infoEdit.text.toString()
             }
-            editable = true
-            binding.registerMotion.transitionToStart()
-        })
+        }
     }
 
     private fun setupEditText() {
@@ -168,10 +165,15 @@ class RegisterFragment : DaggerFragment() {
         binding.infoEdit.text = null
     }
 
-    private fun setupBackPressed() {
-        viewModel.backPressedEvent.observe(viewLifecycleOwner, {
+    private fun setupListener() {
+        viewModel.backPressedEvent.observe(viewLifecycleOwner) {
             findNavController().popBackStack()
-        })
+        }
+        viewModel.navigationEvent.observe(viewLifecycleOwner) {
+            RegisterFragmentDirections.actionRegisterFragmentToHomeFragment().also {
+                findNavController().navigate(it)
+            }
+        }
     }
 
     private fun showDatePicker() {

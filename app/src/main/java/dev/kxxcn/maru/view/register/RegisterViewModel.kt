@@ -43,6 +43,9 @@ class RegisterViewModel @Inject constructor(
     private val _backPressedEvent = MutableLiveData<Unit>()
     val backPressedEvent: LiveData<Unit> = _backPressedEvent
 
+    private val _navigationEvent = MutableLiveData<Unit>()
+    val navigationEvent: LiveData<Unit> = _navigationEvent
+
     var infoText = MutableLiveData<String?>()
 
     val moneyText = infoText.map {
@@ -135,7 +138,12 @@ class RegisterViewModel @Inject constructor(
             val result = repository.saveUser(user)
             if (result.succeeded) {
                 repository.replaceTasks(items)
+                complete()
             }
         }
+    }
+
+    private fun complete() {
+        _navigationEvent.value = Unit
     }
 }
