@@ -3,7 +3,7 @@
     "project_number": "167051273013",
     "firebase_url": "https://maru-774cb.firebaseio.com",
     "project_id": "maru-774cb",
-    "storage_bucket": "maru-774cb.appspot.com"
+    "storage_bucket": "maru-774cb.firebasestorage.app"
   },
   "client": [
     {
@@ -14,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "167051273013-gge3mt74q60g1tkc4magrchqorkj9c8q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dev.kxxcn.maru",
+            "certificate_hash": "76ae41fc4f4e69277e33bb1baa5424bd8effd9a7"
+          }
+        },
         {
           "client_id": "167051273013-v0kqtjh89n7l5pj6261fap4l7t78a92g.apps.googleusercontent.com",
           "client_type": 1,
@@ -41,7 +49,8 @@
             }
           ]
         }
-      }
+      },
+      "admob_app_id": "ca-app-pub-1655234429103343~2479415104"
     }
   ],
   "configuration_version": "1"

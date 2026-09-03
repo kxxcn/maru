@@ -367,6 +367,11 @@
     <string name="setting_notification_notice">공지사항 알림</string>
     <string name="setting_my_profile_edit">프로필 편집</string>
     <string name="setting_my_tasks_edit">체크리스트 편집</string>
+    <string name="setting_delete_account">계정 및 데이터 삭제</string>
+    <string name="setting_delete_account_confirm">계정과 백업 데이터를 삭제하시겠습니까?</string>
+    <string name="setting_delete_account_succeeded">계정 데이터가 삭제되었습니다.</string>
+    <string name="setting_delete_account_failed">계정 데이터 삭제를 실패했습니다.</string>
+    <string name="setting_delete_account_sign_in_required">계정 삭제는 다시 로그인 후 완료할 수 있습니다.</string>
     <string name="setting_terms_location_based_service">위치기반 서비스 이용약관</string>
     <string name="setting_terms_license">오픈소스 라이선스</string>
 

@@ -256,4 +256,12 @@ class LocalDataSource(
             Error(e)
         }
     }
+
+    override suspend fun deleteAccountData(email: String?): Result<Any?> = withContext(ioDispatcher) {
+        return@withContext try {
+            Success(userDao.deleteUsers())
+        } catch (e: Exception) {
+            Error(e)
+        }
+    }
 }

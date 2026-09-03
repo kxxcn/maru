@@ -140,4 +140,12 @@ class MaruRepository @Inject constructor(
     override suspend fun restore(summary: Summary): Result<Any?> {
         return localDataSource.restore(summary)
     }
+
+    override suspend fun deleteAccountData(email: String?): Result<Any?> {
+        return firebaseDataSource.deleteAccountData(email).also {
+            if (it.succeeded) {
+                localDataSource.deleteAccountData()
+            }
+        }
+    }
 }

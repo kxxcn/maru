@@ -63,4 +63,6 @@ interface DataSource {
     suspend fun findRestore(email: String): Result<Restore?>
 
     suspend fun restore(summary: Summary): Result<Any?>
+
+    suspend fun deleteAccountData(email: String? = null): Result<Any?>
 }

@@ -8,21 +8,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import dev.kxxcn.maru.EventObserver
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.databinding.SettingFragmentBinding
 import dev.kxxcn.maru.util.NotificationUtils
+import dev.kxxcn.maru.util.extension.openDialog
 import dev.kxxcn.maru.view.base.BaseFragment
+import javax.inject.Inject
 
 class SettingFragment : BaseFragment() {
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private lateinit var binding: SettingFragmentBinding
 
     override val clazz: Class<*>
         get() = this::class.java
 
-    override val viewModel by viewModels<SettingViewModel>()
+    override val viewModel by viewModels<SettingViewModel> { viewModelFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,6 +66,12 @@ class SettingFragment : BaseFragment() {
         })
         viewModel.license.observe(viewLifecycleOwner, EventObserver {
             license()
+        })
+        viewModel.deleteAccount.observe(viewLifecycleOwner, EventObserver {
+            deleteAccount()
+        })
+        viewModel.accountDeleted.observe(viewLifecycleOwner, EventObserver {
+            requireActivity().recreate()
         })
     }
 
@@ -102,5 +114,18 @@ class SettingFragment : BaseFragment() {
             R.raw.license,
             R.string.setting_terms_license
         ).also { findNavController().navigate(it) }
+    }
+
+    private fun deleteAccount() {
+        alertDialog?.dismiss()
+        alertDialog = openDialog(
+            R.drawable.ic_delete,
+            getString(R.string.setting_delete_account_confirm),
+            negative = { alertDialog?.dismiss() },
+            positive = {
+                alertDialog?.dismiss()
+                viewModel.confirmDeleteAccount()
+            }
+        )
     }
 }

@@ -128,4 +128,8 @@ class RemoteDataSource(
     override suspend fun restore(summary: Summary): Result<Any?> {
         TODO("Not yet implemented")
     }
+
+    override suspend fun deleteAccountData(email: String?): Result<Any?> {
+        TODO("Not yet implemented")
+    }
 }

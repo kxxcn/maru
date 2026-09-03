@@ -3,10 +3,8 @@ package dev.kxxcn.maru.view.intro
 import androidx.lifecycle.*
 import dev.kxxcn.maru.Event
 import dev.kxxcn.maru.R
-import dev.kxxcn.maru.data.Result
 import dev.kxxcn.maru.data.source.DataRepository
 import dev.kxxcn.maru.view.base.BaseViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class IntroViewModel @Inject constructor(
@@ -38,22 +36,11 @@ class IntroViewModel @Inject constructor(
         _signInEvent.value = Event(Unit)
     }
 
+    fun openRestore() {
+        _backupEvent.value = Event(Unit)
+    }
+
     fun handleSignInFailure() {
         message(R.string.failure_sign_in)
-    }
-
-    fun isPremium(email: String?) {
-        viewModelScope.launch {
-            val result = repository.isPremium(email)
-            if (result is Result.Success && result.data) {
-                backup()
-            } else {
-                message(R.string.use_after_registering_as_a_member)
-            }
-        }
-    }
-
-    private fun backup() {
-        _backupEvent.value = Event(Unit)
     }
 }

@@ -5,7 +5,6 @@ import com.android.billingclient.api.Purchase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query.Direction.DESCENDING
 import com.google.firebase.firestore.QuerySnapshot
-import com.google.firebase.firestore.ktx.toObject
 import dev.kxxcn.maru.data.*
 import dev.kxxcn.maru.data.Result.Error
 import dev.kxxcn.maru.data.Result.Success
@@ -129,7 +128,7 @@ class FirebaseDataSource(
                     FILED_ORDER_TIME to purchase.purchaseTime,
                     FILED_ORDER_TOKEN to purchase.purchaseToken,
                     FILED_SIGNATURE to purchase.signature,
-                    FILED_SKU to purchase.skus.toString()
+                    FILED_SKU to purchase.products.toString()
                 )
                 val data = firestore
                     .collection(COLLECTION_PURCHASE)
@@ -181,7 +180,7 @@ class FirebaseDataSource(
                     .document(email)
                     .get()
                     .await()
-                    .run { toObject<Restore>() }
+                    .run { toObject(Restore::class.java) }
                 Success(data)
             } catch (e: Exception) {
                 Error(e)
@@ -191,4 +190,24 @@ class FirebaseDataSource(
     override suspend fun restore(summary: Summary): Result<Any?> {
         TODO("Not yet implemented")
     }
+
+    override suspend fun deleteAccountData(email: String?): Result<Any?> =
+        withContext(ioDispatcher) {
+            return@withContext try {
+                if (email == null) throw NullPointerException("Invalid email address.")
+                val batch = firestore.batch()
+                firestore
+                    .collection(COLLECTION_PURCHASE)
+                    .whereEqualTo(FILED_EMAIL, email)
+                    .get()
+                    .await()
+                    .documents
+                    .forEach { batch.delete(it.reference) }
+                batch.delete(firestore.collection(COLLECTION_BACKUP).document(email))
+                batch.commit().await()
+                Success(Unit)
+            } catch (e: Exception) {
+                Error(e)
+            }
+        }
 }
