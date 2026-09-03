@@ -106,6 +106,12 @@ output.json
 .runtimeconfig.json
 .firebase/
 
+# Local signing credentials and OS metadata
+keystore/
+*.jks
+*.keystore
+.DS_Store
+
 ### Kotlin ###
 # Compiled class file
 
