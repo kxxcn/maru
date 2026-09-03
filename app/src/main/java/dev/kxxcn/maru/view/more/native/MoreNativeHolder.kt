@@ -10,17 +10,19 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.VideoOptions
-import com.google.android.gms.ads.formats.NativeAdOptions
-import com.google.android.gms.ads.formats.UnifiedNativeAd
-import com.google.android.gms.ads.formats.UnifiedNativeAdView
+import com.google.android.gms.ads.nativead.MediaView
+import com.google.android.gms.ads.nativead.NativeAd
+import com.google.android.gms.ads.nativead.NativeAdOptions
+import com.google.android.gms.ads.nativead.NativeAdView
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.util.AdHelper
 import dev.kxxcn.maru.util.extension.asTextView
 
 class MoreNativeHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    private var currentNativeAd: UnifiedNativeAd? = null
+    private var currentNativeAd: NativeAd? = null
 
     private val container: FrameLayout = itemView.findViewById(R.id.native_ad_container)
 
@@ -39,17 +41,17 @@ class MoreNativeHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         return adHelper.createNativeAd(
             context.getString(R.string.admob_native_more_id)
-        ).forUnifiedNativeAd { unifiedNativeAd ->
+        ).forNativeAd { nativeAd ->
             val inflater = LayoutInflater.from(context)
             val adView = inflater.inflate(R.layout.more_native_view, null)
-                    as? UnifiedNativeAdView
-                ?: return@forUnifiedNativeAd
-            populateUnifiedNativeAdView(unifiedNativeAd, adView)
+                    as? NativeAdView
+                ?: return@forNativeAd
+            populateNativeAdView(nativeAd, adView)
             container.removeAllViews()
             container.addView(adView)
         }.withAdListener(object : AdListener() {
-            override fun onAdFailedToLoad(p0: Int) {
-                super.onAdFailedToLoad(p0)
+            override fun onAdFailedToLoad(loadAdError: LoadAdError) {
+                super.onAdFailedToLoad(loadAdError)
                 container.removeAllViews()
             }
         }).withNativeAdOptions(adOptions).build().also { adLoader ->
@@ -57,25 +59,29 @@ class MoreNativeHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         }.run { { release() } }
     }
 
-    private fun populateUnifiedNativeAdView(
-        nativeAd: UnifiedNativeAd,
-        adView: UnifiedNativeAdView
+    private fun populateNativeAdView(
+        nativeAd: NativeAd,
+        adView: NativeAdView
     ) {
         currentNativeAd?.destroy()
         currentNativeAd = nativeAd
 
         with(adView) {
-            mediaView = findViewById(R.id.ad_media)
-            bodyView = findViewById(R.id.ad_body)
-            callToActionView = findViewById(R.id.ad_call_to_action)
+            val media = findViewById<MediaView>(R.id.ad_media)
+            val body = findViewById<View>(R.id.ad_body)
+            val callToAction = findViewById<View>(R.id.ad_call_to_action)
 
-            mediaView.setImageScaleType(ImageView.ScaleType.CENTER_CROP)
+            mediaView = media
+            bodyView = body
+            callToActionView = callToAction
 
-            bodyView.isVisible = nativeAd.body
-                ?.let { bodyView.asTextView().text = it }
+            media.setImageScaleType(ImageView.ScaleType.CENTER_CROP)
+
+            body.isVisible = nativeAd.body
+                ?.let { body.asTextView().text = it }
                 ?.run { true }
                 ?: false
-            callToActionView.asTextView().text =
+            callToAction.asTextView().text =
                 nativeAd.callToAction ?: context.getString(R.string.menu_more)
 
             setNativeAd(nativeAd)

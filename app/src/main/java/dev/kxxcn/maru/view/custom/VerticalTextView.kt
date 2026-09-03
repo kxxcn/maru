@@ -22,15 +22,15 @@ class VerticalTextView @JvmOverloads constructor(
         setMeasuredDimension(measuredHeight, measuredWidth)
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         val textPaint = paint
         textPaint.color = currentTextColor
         textPaint.drawableState = drawableState
-        canvas?.save()
-        canvas?.translate(0f, height.toFloat())
-        canvas?.rotate(270f)
-        canvas?.translate(compoundPaddingLeft.toFloat(), extendedPaddingTop.toFloat())
+        canvas.save()
+        canvas.translate(0f, height.toFloat())
+        canvas.rotate(270f)
+        canvas.translate(compoundPaddingLeft.toFloat(), extendedPaddingTop.toFloat())
         layout.draw(canvas)
-        canvas?.restore()
+        canvas.restore()
     }
 }

@@ -1,8 +1,11 @@
 package dev.kxxcn.maru.util
 
+import android.app.Activity
 import android.content.Context
 import androidx.lifecycle.LifecycleObserver
 import com.google.android.gms.ads.*
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.util.AdHelper.AdMobFilterType.*
 import dev.kxxcn.maru.util.extension.or
@@ -22,7 +25,7 @@ class AdHelper(private val context: Context) : LifecycleObserver {
         get() = refCount > 0
 
     val isLoaded: Boolean
-        get() = interstitialAd?.isLoaded == true
+        get() = interstitialAd != null
 
     private fun getAdUnitId(filterType: AdMobFilterType, id: String): String {
         return when (filterType) {
@@ -35,7 +38,7 @@ class AdHelper(private val context: Context) : LifecycleObserver {
     fun createBannerAd(id: String, size: AdSize?): AdView {
         return adViewRef?.get() ?: AdView(context).apply {
             adUnitId = getAdUnitId(BANNER, id)
-            adSize = size
+            size?.let(::setAdSize)
         }.also { adViewRef = WeakReference(it) }
     }
 
@@ -46,22 +49,54 @@ class AdHelper(private val context: Context) : LifecycleObserver {
         ).also { adBuilderRef = WeakReference(it) }
     }
 
-    fun loadInterstitialAd(id: String, listener: AdListener) {
-        interstitialAd ?: InterstitialAd(context).apply {
-            adUnitId = getAdUnitId(INTERSTITIAL, id)
-            adListener = listener
-        }.also { ad ->
-            interstitialAd = ad
-            ad.loadAd(AdRequest.Builder().build())
-        }
+    fun loadInterstitialAd(
+        id: String,
+        onLoaded: () -> Unit = {},
+        onShowed: () -> Unit = {},
+        onDismissed: () -> Unit = {},
+        onFailedToShow: () -> Unit = {}
+    ) {
+        if (interstitialAd != null) return
+
+        InterstitialAd.load(
+            context,
+            getAdUnitId(INTERSTITIAL, id),
+            AdRequest.Builder().build(),
+            object : InterstitialAdLoadCallback() {
+                override fun onAdLoaded(ad: InterstitialAd) {
+                    interstitialAd = ad.apply {
+                        fullScreenContentCallback = object : FullScreenContentCallback() {
+                            override fun onAdShowedFullScreenContent() {
+                                onShowed()
+                            }
+
+                            override fun onAdDismissedFullScreenContent() {
+                                interstitialAd = null
+                                onDismissed()
+                            }
+
+                            override fun onAdFailedToShowFullScreenContent(adError: AdError) {
+                                interstitialAd = null
+                                onFailedToShow()
+                            }
+                        }
+                    }
+                    onLoaded()
+                }
+
+                override fun onAdFailedToLoad(loadAdError: LoadAdError) {
+                    interstitialAd = null
+                }
+            }
+        )
     }
 
     fun request() {
         refCount++
     }
 
-    fun show() {
-        interstitialAd?.show()
+    fun show(activity: Activity) {
+        interstitialAd?.show(activity)
     }
 
     enum class AdMobFilterType {

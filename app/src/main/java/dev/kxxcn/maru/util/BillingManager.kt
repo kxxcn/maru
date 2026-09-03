@@ -6,6 +6,8 @@ import com.android.billingclient.api.*
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.view.base.BaseCoroutineScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlin.coroutines.resume
 
 class BillingManager(
     private val context: Context,
@@ -14,12 +16,19 @@ class BillingManager(
 
     private var billingClient: BillingClient = BillingClient
         .newBuilder(context)
-        .enablePendingPurchases()
+        .enablePendingPurchases(
+            PendingPurchasesParams.newBuilder()
+                .enableOneTimeProducts()
+                .build()
+        )
+        .enableAutoServiceReconnection()
         .setListener(this)
         .build()
         .also { it.startConnection(this) }
 
     private var handlePurchase: ((List<Purchase>) -> Unit)? = null
+
+    private var handleFailure: (() -> Unit)? = null
 
     private var enablePurchase = false
 
@@ -33,30 +42,36 @@ class BillingManager(
 
     override fun onPurchasesUpdated(result: BillingResult, purchases: MutableList<Purchase>?) {
         if (result.responseCode == BillingClient.BillingResponseCode.OK) {
-            // acknowledgePurchase(purchases)
-            consumePurchase(purchases)
-            handlePurchase?.invoke(purchases?.toList() ?: emptyList())
-        }
-        handlePurchase = null
-    }
-
-    private fun acknowledgePurchase(purchases: MutableList<Purchase>?) {
-        purchases?.forEach { purchase ->
-            AcknowledgePurchaseParams.newBuilder()
-                .setPurchaseToken(purchase.purchaseToken)
-                .build()
-                .also { billingClient.acknowledgePurchase(it) { } }
+            handlePurchases(purchases.orEmpty())
+        } else {
+            handleFailure?.invoke()
+            clearHandlers()
         }
     }
 
-    private fun consumePurchase(purchases: MutableList<Purchase>?) {
+    private fun handlePurchases(purchases: List<Purchase>) {
         launch {
-            purchases?.forEach {
-                val params = ConsumeParams
-                    .newBuilder()
-                    .setPurchaseToken(it.purchaseToken)
-                    .build()
-                billingClient.consumePurchase(params)
+            val purchased = purchases.filter {
+                it.purchaseState == Purchase.PurchaseState.PURCHASED
+            }
+            val acknowledged = purchased.all { acknowledgePurchase(it) }
+            if (purchased.isNotEmpty() && acknowledged) {
+                handlePurchase?.invoke(purchased)
+            } else {
+                handleFailure?.invoke()
+            }
+            clearHandlers()
+        }
+    }
+
+    private suspend fun acknowledgePurchase(purchase: Purchase): Boolean {
+        if (purchase.isAcknowledged) return true
+        val params = AcknowledgePurchaseParams.newBuilder()
+            .setPurchaseToken(purchase.purchaseToken)
+            .build()
+        return suspendCancellableCoroutine { continuation ->
+            billingClient.acknowledgePurchase(params) {
+                continuation.resume(it.responseCode == BillingClient.BillingResponseCode.OK)
             }
         }
     }
@@ -69,28 +84,69 @@ class BillingManager(
         if (activity == null || !enablePurchase) {
             onFailure()
         } else {
-            launch {
-                val skuList = context
-                    .resources
-                    .getStringArray(R.array.purchase_items)
-                    .toList()
-                val params = SkuDetailsParams
-                    .newBuilder()
-                    .setSkusList(skuList)
-                    .setType(BillingClient.SkuType.INAPP)
-                billingClient.querySkuDetails(params.build())
-                    .skuDetailsList
-                    ?.firstOrNull()
-                    ?.let {
-                        handlePurchase = onSuccess
-                        val flowParams = BillingFlowParams
-                            .newBuilder()
-                            .setSkuDetails(it)
-                            .build()
-                        billingClient.launchBillingFlow(activity, flowParams)
-                    }
-            }
+            queryProductDetails(activity, onSuccess, onFailure)
         }
+    }
+
+    private fun queryProductDetails(
+        activity: Activity,
+        onSuccess: (List<Purchase>) -> Unit,
+        onFailure: () -> Unit
+    ) {
+        val products = context
+            .resources
+            .getStringArray(R.array.purchase_items)
+            .map {
+                QueryProductDetailsParams.Product.newBuilder()
+                    .setProductId(it)
+                    .setProductType(BillingClient.ProductType.INAPP)
+                    .build()
+            }
+        val params = QueryProductDetailsParams.newBuilder()
+            .setProductList(products)
+            .build()
+        billingClient.queryProductDetailsAsync(params) { result, detailsResult ->
+            if (result.responseCode != BillingClient.BillingResponseCode.OK) {
+                onFailure()
+                return@queryProductDetailsAsync
+            }
+            detailsResult.productDetailsList.firstOrNull()
+                ?.let {
+                    launchBillingFlow(activity, it, onSuccess, onFailure)
+                }
+                ?: onFailure()
+        }
+    }
+
+    private fun launchBillingFlow(
+        activity: Activity,
+        productDetails: ProductDetails,
+        onSuccess: (List<Purchase>) -> Unit,
+        onFailure: () -> Unit
+    ) {
+        val productDetailsParams = BillingFlowParams.ProductDetailsParams.newBuilder()
+            .setProductDetails(productDetails)
+            .also { builder ->
+                productDetails.oneTimePurchaseOfferDetails?.offerToken
+                    ?.takeIf { it.isNotBlank() }
+                    ?.let { builder.setOfferToken(it) }
+            }
+            .build()
+        val flowParams = BillingFlowParams.newBuilder()
+            .setProductDetailsParamsList(listOf(productDetailsParams))
+            .build()
+        handlePurchase = onSuccess
+        handleFailure = onFailure
+        val result = billingClient.launchBillingFlow(activity, flowParams)
+        if (result.responseCode != BillingClient.BillingResponseCode.OK) {
+            handleFailure?.invoke()
+            clearHandlers()
+        }
+    }
+
+    private fun clearHandlers() {
+        handlePurchase = null
+        handleFailure = null
     }
 
     fun release() {

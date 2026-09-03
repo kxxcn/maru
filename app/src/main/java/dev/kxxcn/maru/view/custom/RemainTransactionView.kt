@@ -34,9 +34,8 @@ class RemainTransactionView @JvmOverloads constructor(
         lifecycleRegistry.currentState = Lifecycle.State.INITIALIZED
     }
 
-    override fun getLifecycle(): Lifecycle {
-        return lifecycleRegistry
-    }
+    override val lifecycle: Lifecycle
+        get() = lifecycleRegistry
 
     fun bind(taskDetail: TaskDetail) {
         binding.lifecycleOwner = this

@@ -42,6 +42,10 @@
         <attr name="underline_text" format="string" />
     </declare-styleable>
 
+    <attr name="tbBorderWidth" format="dimension" />
+    <attr name="tbOffBorderColor" format="color" />
+    <attr name="tbOnColor" format="color" />
+
     <declare-styleable name="MaruTheme">
         <attr name="maruBackgroundColor" format="reference" />
         <attr name="maruSecondaryBackgroundColor" format="reference" />

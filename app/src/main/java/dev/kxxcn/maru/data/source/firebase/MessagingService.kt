@@ -37,7 +37,7 @@ class MessagingService : FirebaseMessagingService() {
                 this@MessagingService,
                 requestCode,
                 this,
-                PendingIntent.FLAG_ONE_SHOT
+                PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE
             )
         }
 

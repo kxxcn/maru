@@ -6,12 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import dev.kxxcn.maru.GlideApp
-import dev.kxxcn.maru.R
+import dev.kxxcn.maru.databinding.DescriptionPagerFragmentBinding
 import dev.kxxcn.maru.util.KEY_PRESENT_IMAGE_RES
 import dev.kxxcn.maru.util.extension.displayWidth
-import kotlinx.android.synthetic.main.description_pager_fragment.*
 
 class DescriptionPagerFragment : Fragment() {
+
+    private var _binding: DescriptionPagerFragmentBinding? = null
+    private val binding get() = _binding!!
 
     private var imageRes: Int? = null
 
@@ -20,7 +22,8 @@ class DescriptionPagerFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.description_pager_fragment, container, false)
+        _binding = DescriptionPagerFragmentBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -30,8 +33,13 @@ class DescriptionPagerFragment : Fragment() {
     }
 
     override fun onStop() {
-        GlideApp.with(this).clear(desc_pager_image)
+        _binding?.let { GlideApp.with(this).clear(it.descPagerImage) }
         super.onStop()
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 
     private fun setupArguments() {
@@ -43,6 +51,6 @@ class DescriptionPagerFragment : Fragment() {
             .load(imageRes)
             .centerCrop()
             .override(displayWidth() / 2)
-            .into(desc_pager_image)
+            .into(binding.descPagerImage)
     }
 }

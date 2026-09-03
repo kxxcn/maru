@@ -2,8 +2,9 @@ package dev.kxxcn.maru.view.backup
 
 import androidx.lifecycle.*
 import com.google.firebase.auth.FirebaseAuth
-import com.squareup.inject.assisted.Assisted
-import com.squareup.inject.assisted.AssistedInject
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import dev.kxxcn.maru.Event
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.data.Restore
@@ -28,7 +29,7 @@ class BackupViewModel @AssistedInject constructor(
     @Assisted private val savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
 
-    @AssistedInject.Factory
+    @AssistedFactory
     interface Factory : AssistedSavedStateViewModelFactory<BackupViewModel>
 
     val filterType = savedStateHandle

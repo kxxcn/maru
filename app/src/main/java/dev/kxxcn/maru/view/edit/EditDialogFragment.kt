@@ -6,7 +6,6 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.viewModels
-import com.google.android.gms.ads.AdListener
 import dev.kxxcn.maru.EventObserver
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.databinding.EditDialogFragmentBinding
@@ -92,26 +91,27 @@ class EditDialogFragment : BaseDialogFragment() {
 
     private fun setupInterstitial() {
         val id = getString(R.string.admob_interstitial_edit_id)
-        adHelper.loadInterstitialAd(id, object : AdListener() {
-            override fun onAdLoaded() {
-                super.onAdLoaded()
+        adHelper.loadInterstitialAd(
+            id = id,
+            onLoaded = {
                 if (adHelper.isRequested) {
-                    adHelper.show()
+                    adHelper.show(requireActivity())
                 }
-            }
-
-            override fun onAdClosed() {
-                super.onAdClosed()
+            },
+            onDismissed = {
+                viewModel.close()
+            },
+            onFailedToShow = {
                 viewModel.close()
             }
-        })
+        )
     }
 
     private fun requestAd() {
         with(adHelper) {
             request()
             if (isLoaded) {
-                show()
+                show(requireActivity())
             } else {
                 viewModel.close()
             }

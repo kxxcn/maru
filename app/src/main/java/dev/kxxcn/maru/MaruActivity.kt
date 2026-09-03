@@ -13,6 +13,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
+import dev.kxxcn.maru.databinding.MaruActivityBinding
 import dev.kxxcn.maru.util.*
 import dev.kxxcn.maru.util.extension.setupSnackbar
 import dev.kxxcn.maru.util.preference.PreferenceUtils
@@ -21,15 +22,15 @@ import dev.kxxcn.maru.view.base.Signinable
 import dev.kxxcn.maru.view.home.HomeFragment
 import dev.kxxcn.maru.view.more.MoreFragment
 import dev.kxxcn.maru.view.tasks.TasksFragment
-import kotlinx.android.synthetic.main.maru_activity.*
 import kotlinx.coroutines.*
 import me.ibrahimsn.lib.OnItemReselectedListener
 import me.ibrahimsn.lib.OnItemSelectedListener
-import org.jetbrains.anko.contentView
 
 @FlowPreview
 @ExperimentalCoroutinesApi
 class MaruActivity : AppCompatActivity() {
+
+    private lateinit var binding: MaruActivityBinding
 
     private val viewModel by viewModels<MaruViewModel>()
 
@@ -37,17 +38,21 @@ class MaruActivity : AppCompatActivity() {
 
     private var navigatorJob: Job? = null
 
+    private val navHostFragment: NavHostFragment
+        get() = supportFragmentManager.findFragmentById(R.id.host_fragment) as NavHostFragment
+
     private val navOptions by lazy {
         NavOptions.Builder()
             .setLaunchSingleTop(true)
-            .setPopUpTo(host_fragment.findNavController().graph.startDestination, false)
+            .setPopUpTo(navHostFragment.findNavController().graph.startDestinationId, false)
             .build()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setupTheme()
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.maru_activity)
+        binding = MaruActivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setupNavController()
         setupBottomNavigator(savedInstanceState)
         setupSnackbar()
@@ -56,7 +61,7 @@ class MaruActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putInt(BOTTOM_NAVIGATOR_SAVED_STATE_KEY, bottom_navigator.getActiveItem())
+        outState.putInt(BOTTOM_NAVIGATOR_SAVED_STATE_KEY, binding.bottomNavigator.getActiveItem())
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -89,7 +94,7 @@ class MaruActivity : AppCompatActivity() {
         if (current() is HomeFragment) {
             viewModel.onBackPressed()
         } else if (current() is TasksFragment || current() is MoreFragment) {
-            bottom_navigator.setActiveItem(NAV_HOME)
+            binding.bottomNavigator.setActiveItem(NAV_HOME)
             navigate(NAV_HOME)
         } else {
             super.onBackPressed()
@@ -111,7 +116,7 @@ class MaruActivity : AppCompatActivity() {
     }
 
     private fun setupNavController() {
-        host_fragment.findNavController().addOnDestinationChangedListener { _, destination, _ ->
+        navHostFragment.findNavController().addOnDestinationChangedListener { _, destination, _ ->
             when (destination.label) {
                 getString(R.string.nav_label_splash),
                 getString(R.string.nav_label_intro),
@@ -136,14 +141,14 @@ class MaruActivity : AppCompatActivity() {
                 getString(R.string.nav_label_backup) -> false
                 else -> true
             }.also {
-                navigator_layout.isVisible = it
+                binding.navigatorLayout.isVisible = it
                 openNavigator(it)
             }
         }
     }
 
     private fun setupBottomNavigator(savedInstanceState: Bundle?) {
-        with(bottom_navigator) {
+        with(binding.bottomNavigator) {
             setOnItemSelectedListener(object : OnItemSelectedListener {
                 override fun onItemSelect(pos: Int) {
                     navigate(pos)
@@ -159,7 +164,7 @@ class MaruActivity : AppCompatActivity() {
     }
 
     private fun setupSnackbar() {
-        contentView?.setupSnackbar(this, viewModel.snackbarRes, Snackbar.LENGTH_SHORT)
+        binding.root.setupSnackbar(this, viewModel.snackbarRes, Snackbar.LENGTH_SHORT)
     }
 
     private fun setupListener() {
@@ -169,13 +174,12 @@ class MaruActivity : AppCompatActivity() {
     }
 
     private fun current(): Fragment? {
-        val host = host_fragment as? NavHostFragment
-        return host?.childFragmentManager?.fragments?.get(0)
+        return navHostFragment.childFragmentManager.fragments.getOrNull(0)
     }
 
     fun navigate(pos: Int) {
-        bottom_navigator.setActiveItem(pos)
-        with(host_fragment.findNavController()) {
+        binding.bottomNavigator.setActiveItem(pos)
+        with(navHostFragment.findNavController()) {
             when (pos) {
                 NAV_HOME -> R.id.home_fragment
                 NAV_TASKS -> R.id.tasks_fragment
@@ -190,12 +194,12 @@ class MaruActivity : AppCompatActivity() {
     fun openNavigator(isShowing: Boolean) {
         if (navigatorVisible == isShowing) return
         navigatorVisible = isShowing
-        val value = if (navigatorVisible) 0f else navigator_layout.height.toFloat()
+        val value = if (navigatorVisible) 0f else binding.navigatorLayout.height.toFloat()
         navigatorJob?.cancel()
         navigatorJob = GlobalScope.launch(Dispatchers.Main) {
             delay(NAV_ANIMATE_DELAY)
             ObjectAnimator.ofFloat(
-                navigator_layout,
+                binding.navigatorLayout,
                 "translationY",
                 value
             ).apply { duration = NAV_ANIMATE_DURATION }.also { it.start() }

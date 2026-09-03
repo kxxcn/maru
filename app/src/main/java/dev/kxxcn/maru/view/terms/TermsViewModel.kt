@@ -18,7 +18,7 @@ class TermsViewModel(
     val contentRes: LiveData<Int> = _contentRes
 
     init {
-        _contentRes.value = savedStateHandle.get<Int>(KEY_TERMS_TYPE)
-        _titleRes.value = savedStateHandle.get<Int>(KEY_TERMS_TITLE)
+        _contentRes.value = requireNotNull(savedStateHandle.get<Int>(KEY_TERMS_TYPE))
+        _titleRes.value = requireNotNull(savedStateHandle.get<Int>(KEY_TERMS_TITLE))
     }
 }

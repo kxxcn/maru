@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="maru_web_client_id" tools:ignore="TypographyDashes">167051273013-5kcdgel8ja60ghbequpttdk63e8k454i.apps.googleusercontent.com</string>
-
     <string name="admob_app_id">ca-app-pub-1655234429103343~2479415104</string>
     <string name="admob_banner_test_id">ca-app-pub-3940256099942544/6300978111</string>
     <string name="admob_banner_home_id">ca-app-pub-1655234429103343/2981977982</string>
@@ -21,4 +19,5 @@
     <item name="tag_notice_item_content_expand" type="id" />
     <item name="tag_notice_item_content_animator" type="id" />
     <item name="tag_notice_item_rotate_animator" type="id" />
+    <item name="textWatcher" type="id" />
 </resources>

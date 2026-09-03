@@ -1,13 +1,12 @@
 apply plugin: 'com.android.library'
 
 android {
+    namespace 'com.google.android.ads.nativetemplates'
     compileSdkVersion rootProject.compileSdkVersion
 
     defaultConfig {
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -21,7 +20,7 @@ android {
         }
     }
 
-    lintOptions {
+    lint {
         resourcePrefix 'gnt_'
     }
 }
@@ -34,6 +33,6 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
-    implementation 'com.google.android.gms:play-services-ads:18.3.0'
+    implementation "com.google.android.gms:play-services-ads:${Versions.playServicesAdsVersion}"
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 }

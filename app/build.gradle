@@ -1,18 +1,57 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: "androidx.navigation.safeargs.kotlin"
 
+def loadReleaseSigningInfo() {
+    def infoFile = rootProject.file("keystore/key_information.txt")
+    if (!infoFile.exists()) {
+        throw new GradleException("Release signing info file is missing: ${infoFile}")
+    }
+
+    def signingInfo = infoFile.text.split(/\r?\n\r?\n/)
+        .collect { section ->
+            def fields = [:]
+            section.readLines().each { line ->
+                def matcher = line =~ /^\s*([^:]+?)\s*:\s*(.*?)\s*$/
+                if (matcher.matches()) {
+                    fields[matcher.group(1).trim()] = matcher.group(2).trim()
+                }
+            }
+            fields
+        }
+        .find { fields ->
+            fields.KEY == "key_maru" || fields.PATH?.endsWith("/key_maru.jks")
+        }
+
+    if (signingInfo == null) {
+        throw new GradleException("Release signing info for key_maru is missing.")
+    }
+
+    def keyName = signingInfo.KEY
+    def keyFileName = keyName.endsWith(".jks") ? keyName : "${keyName}.jks"
+    def keyFile = signingInfo.PATH ? rootProject.file(signingInfo.PATH) : rootProject.file("keystore/${keyFileName}")
+    if (!keyFile.exists()) {
+        throw new GradleException("Release keystore file is missing: ${keyFile}")
+    }
+
+    return [
+        storeFile: keyFile,
+        alias    : signingInfo.ALIAS,
+        password : signingInfo.PASS
+    ]
+}
+
 android {
+    namespace 'dev.kxxcn.maru'
     compileSdkVersion rootProject.compileSdkVersion
 
     defaultConfig {
         applicationId "dev.kxxcn.maru"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 21
-        versionName "1.5.0"
+        versionCode 31
+        versionName "2.0.0"
 
         testInstrumentationRunner 'dev.kxxcn.maru.CustomTestRunner'
 
@@ -20,6 +59,16 @@ android {
             annotationProcessorOptions {
                 arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
             }
+        }
+    }
+
+    signingConfigs {
+        release {
+            def signingInfo = loadReleaseSigningInfo()
+            storeFile signingInfo.storeFile
+            storePassword signingInfo.password
+            keyAlias signingInfo.alias
+            keyPassword signingInfo.password
         }
     }
 
@@ -32,23 +81,26 @@ android {
             proguardFile 'proguard-firebase.pro'
             proguardFile 'proguard-retrofit.pro'
             proguardFile 'proguard-gson.pro'
-            proguardFile 'proguard-glide.pro'
+            proguardFile 'proguard_glide.pro'
             proguardFile 'proguard-debug.pro'
         }
 
         release {
             minifyEnabled true
+            signingConfig signingConfigs.release
             proguardFile getDefaultProguardFile('proguard-android-optimize.txt')
             proguardFile 'proguard-rules.pro'
             proguardFile 'proguard-firebase.pro'
             proguardFile 'proguard-retrofit.pro'
             proguardFile 'proguard-gson.pro'
-            proguardFile 'proguard-glide.pro'
+            proguardFile 'proguard_glide.pro'
         }
     }
 
     buildFeatures {
+        buildConfig = true
         dataBinding = true
+        viewBinding = true
     }
 
     compileOptions {
@@ -73,82 +125,76 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation Dependencies.kotlin
-    implementation Dependencies.coroutines
-    implementation Dependencies.appCompat
-    implementation Dependencies.coreKtx
-    implementation Dependencies.cardView
-    implementation Dependencies.constraintLayout
-    implementation Dependencies.fragment
-    implementation Dependencies.recyclerView
-    implementation Dependencies.anko
-    implementation Dependencies.googlePlay
-    implementation Dependencies.googlePlayKtx
-    implementation Dependencies.playServicesAd
-    implementation Dependencies.playServicesAuth
-    implementation Dependencies.firebaseAuth
-    implementation Dependencies.firebaseStore
-    implementation Dependencies.firebaseStoreKtx
-    implementation Dependencies.firebaseAnalytics
-    implementation Dependencies.firebaseMessaging
-    implementation Dependencies.firebaseCrashlytics
-    implementation Dependencies.gson
+    implementation BuildDependencies.kotlin
+    implementation BuildDependencies.coroutines
+    implementation BuildDependencies.appCompat
+    implementation BuildDependencies.coreKtx
+    implementation BuildDependencies.cardView
+    implementation BuildDependencies.constraintLayout
+    implementation BuildDependencies.fragment
+    implementation BuildDependencies.recyclerView
+    implementation BuildDependencies.googlePlayReview
+    implementation BuildDependencies.googlePlayReviewKtx
+    implementation BuildDependencies.playServicesAd
+    implementation BuildDependencies.playServicesAuth
+    implementation BuildDependencies.firebaseAuth
+    implementation BuildDependencies.firebaseStore
+    implementation BuildDependencies.firebaseAnalytics
+    implementation BuildDependencies.firebaseMessaging
+    implementation BuildDependencies.firebaseCrashlytics
+    implementation BuildDependencies.gson
 
-    implementation Dependencies.retrofit
-    implementation Dependencies.gsonConverter
-    implementation Dependencies.loggingInterceptor
+    implementation BuildDependencies.retrofit
+    implementation BuildDependencies.gsonConverter
+    implementation BuildDependencies.loggingInterceptor
 
-    implementation Dependencies.billing
-    implementation Dependencies.billingKtx
+    implementation BuildDependencies.billing
+    implementation BuildDependencies.billingKtx
 
-    implementation Dependencies.roomRuntime
-    kapt Dependencies.roomCompiler
-    implementation Dependencies.roomKtx
+    implementation BuildDependencies.roomRuntime
+    kapt BuildDependencies.roomCompiler
+    implementation BuildDependencies.roomKtx
 
-    implementation Dependencies.lifecycleExtensions
-    implementation Dependencies.lifecycleViewModelKtx
-    implementation Dependencies.lifecycleLiveDataKtx
-    implementation Dependencies.lifecycleRuntimeKtx
+    implementation BuildDependencies.lifecycleExtensions
+    implementation BuildDependencies.lifecycleViewModelKtx
+    implementation BuildDependencies.lifecycleLiveDataKtx
+    implementation BuildDependencies.lifecycleRuntimeKtx
 
-    implementation Dependencies.navigationFragmentKtx
-    implementation Dependencies.navigationUiKtx
+    implementation BuildDependencies.navigationFragmentKtx
+    implementation BuildDependencies.navigationUiKtx
 
-    implementation Dependencies.glideRuntime
-    kapt Dependencies.glideCompiler
+    implementation BuildDependencies.glideRuntime
+    kapt BuildDependencies.glideCompiler
 
-    implementation Dependencies.dagger
-    kapt Dependencies.daggerCompiler
-    kaptAndroidTest Dependencies.daggerCompiler
-    kaptTest Dependencies.daggerCompiler
-    implementation Dependencies.daggerAndroidSupport
-    kapt Dependencies.daggerAndroidProcessor
-    implementation Dependencies.daggerAssistedAnnotations
-    kapt Dependencies.daggerAssistedProcessor
+    implementation BuildDependencies.dagger
+    kapt BuildDependencies.daggerCompiler
+    kaptAndroidTest BuildDependencies.daggerCompiler
+    kaptTest BuildDependencies.daggerCompiler
+    implementation BuildDependencies.daggerAndroidSupport
+    kapt BuildDependencies.daggerAndroidProcessor
 
-    implementation Dependencies.viewPagerDotsIndicator
-    implementation Dependencies.smoothBottomBar
-    implementation Dependencies.roundCornerProgressBar
-    implementation Dependencies.waveView
-    implementation Dependencies.circleProgressView
-    implementation Dependencies.mpChart
-    implementation Dependencies.logger
-    implementation Dependencies.naverMap
-    implementation Dependencies.lottie
-    implementation Dependencies.toggle
+    implementation BuildDependencies.viewPagerDotsIndicator
+    implementation BuildDependencies.smoothBottomBar
+    implementation BuildDependencies.roundCornerProgressBar
+    implementation BuildDependencies.circleProgressView
+    implementation BuildDependencies.mpChart
+    implementation BuildDependencies.logger
+    implementation BuildDependencies.naverMap
+    implementation BuildDependencies.lottie
 
     implementation project(':nativetemplates')
 
-    implementation Dependencies.fragmentTesting
-    implementation Dependencies.androidXTestCore
+    implementation BuildDependencies.fragmentTesting
+    implementation BuildDependencies.androidXTestCore
 
-    testImplementation Dependencies.junit
-    testImplementation Dependencies.mockitoInline
-    androidTestImplementation Dependencies.junitExt
-    androidTestImplementation Dependencies.espressoCore
-    androidTestImplementation Dependencies.espressoContrib
-    androidTestImplementation Dependencies.roomTesting
-    androidTestImplementation Dependencies.mockitoAndroid
-    androidTestImplementation Dependencies.mockkAndroid
+    testImplementation BuildDependencies.junit
+    testImplementation BuildDependencies.mockitoInline
+    androidTestImplementation BuildDependencies.junitExt
+    androidTestImplementation BuildDependencies.espressoCore
+    androidTestImplementation BuildDependencies.espressoContrib
+    androidTestImplementation BuildDependencies.roomTesting
+    androidTestImplementation BuildDependencies.mockitoAndroid
+    androidTestImplementation BuildDependencies.mockkAndroid
 }
 
 apply plugin: 'com.google.gms.google-services'

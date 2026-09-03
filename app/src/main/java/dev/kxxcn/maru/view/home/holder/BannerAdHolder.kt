@@ -31,7 +31,7 @@ class BannerAdHolder(
             }
 
             val adWidth = (adWidthPixels / density).toInt()
-            return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(activity, adWidth)
+            return AdSize.getLargeAnchoredAdaptiveBannerAdSize(activity, adWidth)
         }
 
     private var adView: AdView? = null

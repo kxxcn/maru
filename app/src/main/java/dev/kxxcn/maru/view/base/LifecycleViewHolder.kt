@@ -7,28 +7,44 @@ import androidx.lifecycle.LifecycleRegistry
 import androidx.recyclerview.widget.RecyclerView
 
 abstract class LifecycleViewHolder(
-        binding: ViewDataBinding
+        private val binding: ViewDataBinding
 ) : RecyclerView.ViewHolder(binding.root), LifecycleOwner {
 
-    private val lifecycleRegistry by lazy { LifecycleRegistry(this) }
+    private var lifecycleRegistry = LifecycleRegistry(this)
 
     init {
         lifecycleRegistry.currentState = Lifecycle.State.INITIALIZED
     }
 
-    override fun getLifecycle(): Lifecycle {
-        return lifecycleRegistry
-    }
+    override val lifecycle: Lifecycle
+        get() {
+            ensureReusableLifecycle()
+            return lifecycleRegistry
+        }
 
     fun onAttach() {
+        ensureReusableLifecycle()
         lifecycleRegistry.currentState = Lifecycle.State.STARTED
     }
 
     fun onDetach() {
-        lifecycleRegistry.currentState = Lifecycle.State.CREATED
+        if (lifecycleRegistry.currentState != Lifecycle.State.DESTROYED) {
+            lifecycleRegistry.currentState = Lifecycle.State.CREATED
+        }
     }
 
     fun onDestroy() {
-        lifecycleRegistry.currentState = Lifecycle.State.DESTROYED
+        if (lifecycleRegistry.currentState != Lifecycle.State.DESTROYED) {
+            lifecycleRegistry.currentState = Lifecycle.State.DESTROYED
+        }
+        binding.lifecycleOwner = null
+    }
+
+    private fun ensureReusableLifecycle() {
+        if (lifecycleRegistry.currentState == Lifecycle.State.DESTROYED) {
+            lifecycleRegistry = LifecycleRegistry(this).apply {
+                currentState = Lifecycle.State.INITIALIZED
+            }
+        }
     }
 }

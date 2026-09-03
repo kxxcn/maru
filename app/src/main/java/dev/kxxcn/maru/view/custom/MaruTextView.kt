@@ -76,11 +76,11 @@ class MaruTextView @JvmOverloads constructor(
         }
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         val r = rect
         if (highlight && r != null) {
-            canvas?.drawRect(r, paint)
+            canvas.drawRect(r, paint)
         }
     }
 }

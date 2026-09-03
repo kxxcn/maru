@@ -4,8 +4,7 @@ import androidx.room.Room
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -74,7 +73,7 @@ object ApplicationModule {
     @FirebaseDataSource
     @Provides
     fun provideFirebaseDataSource(): DataSource {
-        return FirebaseDataSource(Firebase.firestore)
+        return FirebaseDataSource(FirebaseFirestore.getInstance())
     }
 
     @Singleton

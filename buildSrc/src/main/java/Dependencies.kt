@@ -1,57 +1,51 @@
 object Versions {
 
     const val compatVersion = "1.1.0"
-    const val coreVersion = "1.3.0"
-    const val kotlinVersion = "1.7.20"
+    const val coreVersion = "1.13.1"
+    const val kotlinVersion = "2.3.21"
     const val coroutinesVersion = "1.3.7"
     const val constraintVersion = "2.0.0-beta3"
     const val cardVersion = "1.0.0"
-    const val roomVersion = "2.4.0"
+    const val roomVersion = "2.8.4"
     const val archLifecycleVersion = "2.2.0"
-    const val navigationVersion = "2.2.1"
+    const val navigationVersion = "2.9.8"
     const val fragmentVersion = "1.2.0-rc02"
     const val androidXTestCoreVersion = "1.5.0"
     const val recyclerViewVersion = "1.1.0"
     const val glideVersion = "4.11.0"
-    const val daggerVersion = "2.44"
-    const val daggerAssistedVersion = "0.8.1"
-    const val ankoVersion = "0.10.8"
-    const val indicatorVersion = "4.1.2"
+    const val daggerVersion = "2.60.1"
+    const val indicatorVersion = "4.3"
     const val bottomBarVersion = "1.7"
-    const val roundProgressVersion = "2.1.1"
-    const val waveViewVersion = "1.0.0"
+    const val roundProgressVersion = "2.1.2"
     const val circleProgressVersion = "1.4"
     const val mpchartVersion = "v3.1.0"
     const val gsonVersion = "2.8.6"
     const val retrofitVersion = "2.9.0"
     const val loggerVersion = "2.2.0"
-    const val firebaseAuthVersion = "19.1.0"
-    const val firebaseStoreVersion = "21.2.1"
-    const val firebaseStoreKtxVersion = "21.5.0"
-    const val firebaseAnalyticsVersion = "17.4.4"
-    const val firebaseMessagingVersion = "20.2.0"
-    const val firebaseCrashlyticsVersion = "17.1.1"
-    const val playServicesAuthVersion = "17.0.0"
-    const val playServicesAdsVersion = "19.1.0"
-    const val googleServicesVersion = "4.3.3"
-    const val googlePlayVersion = "1.8.0"
-    const val googlePlayKtxVersion = "1.8.1"
-    const val crashlyticsGradleVersion = "2.2.0"
-    const val billingVersion = "4.0.0"
-    const val naverMapVersion = "3.12.0"
+    const val firebaseAuthVersion = "24.2.0"
+    const val firebaseStoreVersion = "26.6.0"
+    const val firebaseAnalyticsVersion = "23.2.0"
+    const val firebaseMessagingVersion = "25.1.2"
+    const val firebaseCrashlyticsVersion = "20.1.0"
+    const val playServicesAuthVersion = "21.6.0"
+    const val playServicesAdsVersion = "25.4.0"
+    const val googleServicesVersion = "4.4.2"
+    const val googlePlayReviewVersion = "2.0.2"
+    const val crashlyticsGradleVersion = "3.0.2"
+    const val billingVersion = "9.1.0"
+    const val naverMapVersion = "3.23.3"
     const val interceptorVersion = "3.11.0"
     const val lottieVersion = "3.4.1"
-    const val toggleVersion = "1.0.0"
     const val junitVersion = "4.12"
     const val junitExtVersion = "1.1.2"
     const val mockitoInlineVersion = "2.13.0"
     const val mockitoAndroidVersion = "3.6.0"
     const val espressoVersion = "3.3.0"
-    const val roomTestingVersion = "2.2.5"
+    const val roomTestingVersion = "2.8.4"
     const val mockkVersion = "1.10.2"
 }
 
-object Dependencies {
+object BuildDependencies {
 
     /**
      * AndroidX
@@ -71,16 +65,17 @@ object Dependencies {
      */
     const val constraintLayout =
         "androidx.constraintlayout:constraintlayout:${Versions.constraintVersion}"
-    const val cardView = "androidx.cardview:cardview:$${Versions.cardVersion}"
+    const val cardView = "androidx.cardview:cardview:${Versions.cardVersion}"
     const val fragment = "androidx.fragment:fragment:${Versions.fragmentVersion}"
     const val recyclerView = "androidx.recyclerview:recyclerview:${Versions.recyclerViewVersion}"
-    const val anko = "org.jetbrains.anko:anko:${Versions.ankoVersion}"
 
     /**
      * Google
      */
-    const val googlePlay = "com.google.android.play:core:${Versions.googlePlayVersion}"
-    const val googlePlayKtx = "com.google.android.play:core-ktx:${Versions.googlePlayKtxVersion}"
+    const val googlePlayReview =
+        "com.google.android.play:review:${Versions.googlePlayReviewVersion}"
+    const val googlePlayReviewKtx =
+        "com.google.android.play:review-ktx:${Versions.googlePlayReviewVersion}"
     const val playServicesAd =
         "com.google.android.gms:play-services-ads:${Versions.playServicesAdsVersion}"
     const val playServicesAuth =
@@ -88,8 +83,6 @@ object Dependencies {
     const val firebaseAuth = "com.google.firebase:firebase-auth:${Versions.firebaseAuthVersion}"
     const val firebaseStore =
         "com.google.firebase:firebase-firestore:${Versions.firebaseStoreVersion}"
-    const val firebaseStoreKtx =
-        "com.google.firebase:firebase-firestore-ktx:${Versions.firebaseStoreKtxVersion}"
     const val firebaseAnalytics =
         "com.google.firebase:firebase-analytics:${Versions.firebaseAnalyticsVersion}"
     const val firebaseMessaging =
@@ -156,28 +149,21 @@ object Dependencies {
         "com.google.dagger:dagger-android-support:${Versions.daggerVersion}"
     const val daggerAndroidProcessor =
         "com.google.dagger:dagger-android-processor:${Versions.daggerVersion}"
-    const val daggerAssistedAnnotations =
-        "com.squareup.inject:assisted-inject-annotations-dagger2:${Versions.daggerAssistedVersion}"
-    const val daggerAssistedProcessor =
-        "com.squareup.inject:assisted-inject-processor-dagger2:${Versions.daggerAssistedVersion}"
-
     /**
      * Open Source
      */
     const val viewPagerDotsIndicator =
-        "com.tbuonomo.andrui:viewpagerdotsindicator:${Versions.indicatorVersion}"
+        "com.tbuonomo:dotsindicator:${Versions.indicatorVersion}"
     const val smoothBottomBar =
         "com.github.ibrahimsn98:SmoothBottomBar:${Versions.bottomBarVersion}"
     const val roundCornerProgressBar =
         "com.akexorcist:round-corner-progress-bar:${Versions.roundProgressVersion}"
-    const val waveView = "com.gelitenight.waveview:waveview:${Versions.waveViewVersion}"
     const val circleProgressView =
         "com.github.jakob-grabner:Circle-Progress-View:${Versions.circleProgressVersion}"
     const val mpChart = "com.github.PhilJay:MPAndroidChart:${Versions.mpchartVersion}"
     const val logger = "com.orhanobut:logger:${Versions.loggerVersion}"
     const val naverMap = "com.naver.maps:map-sdk:${Versions.naverMapVersion}"
     const val lottie = "com.airbnb.android:lottie:${Versions.lottieVersion}"
-    const val toggle = "com.zcw:togglebutton-library:${Versions.toggleVersion}"
 
     /**
      * Testing

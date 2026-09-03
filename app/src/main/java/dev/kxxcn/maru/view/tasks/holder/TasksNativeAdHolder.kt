@@ -12,9 +12,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.VideoOptions
-import com.google.android.gms.ads.formats.NativeAdOptions
-import com.google.android.gms.ads.formats.UnifiedNativeAd
-import com.google.android.gms.ads.formats.UnifiedNativeAdView
+import com.google.android.gms.ads.nativead.MediaView
+import com.google.android.gms.ads.nativead.NativeAd
+import com.google.android.gms.ads.nativead.NativeAdOptions
+import com.google.android.gms.ads.nativead.NativeAdView
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.util.AdHelper
 import dev.kxxcn.maru.util.extension.asImageView
@@ -25,7 +26,7 @@ class TasksNativeAdHolder(
     private val requestManager: RequestManager
 ) : RecyclerView.ViewHolder(itemView) {
 
-    private var currentNativeAd: UnifiedNativeAd? = null
+    private var currentNativeAd: NativeAd? = null
 
     private val container: FrameLayout = itemView.findViewById(R.id.native_ad_container)
 
@@ -45,12 +46,12 @@ class TasksNativeAdHolder(
 
         adHelper.createNativeAd(
             context.getString(R.string.admob_native_task_id)
-        ).forUnifiedNativeAd { unifiedNativeAd ->
+        ).forNativeAd { nativeAd ->
             val inflater = LayoutInflater.from(context)
             val adView = inflater.inflate(R.layout.tasks_native_view, null)
-                    as? UnifiedNativeAdView
-                ?: return@forUnifiedNativeAd
-            populateUnifiedNativeAdView(unifiedNativeAd, adView)
+                    as? NativeAdView
+                ?: return@forNativeAd
+            populateNativeAdView(nativeAd, adView)
             container.removeAllViews()
             container.addView(adView)
         }.withNativeAdOptions(adOptions).build().also { adLoader ->
@@ -59,36 +60,43 @@ class TasksNativeAdHolder(
         return { release() }
     }
 
-    private fun populateUnifiedNativeAdView(
-        nativeAd: UnifiedNativeAd,
-        adView: UnifiedNativeAdView
+    private fun populateNativeAdView(
+        nativeAd: NativeAd,
+        adView: NativeAdView
     ) {
         currentNativeAd?.destroy()
         currentNativeAd = nativeAd
 
         with(adView) {
-            advertiserView = findViewById(R.id.ad_advertiser)
-            headlineView = findViewById(R.id.ad_headline)
-            bodyView = findViewById(R.id.ad_body)
-            iconView = findViewById(R.id.ad_icon)
-            mediaView = findViewById(R.id.ad_media)
-            callToActionView = findViewById(R.id.ad_call_to_action)
+            val advertiser = findViewById<View>(R.id.ad_advertiser)
+            val headline = findViewById<View>(R.id.ad_headline)
+            val body = findViewById<View>(R.id.ad_body)
+            val iconView = findViewById<View>(R.id.ad_icon)
+            val media = findViewById<MediaView>(R.id.ad_media)
+            val callToAction = findViewById<View>(R.id.ad_call_to_action)
 
-            mediaView.setImageScaleType(ImageView.ScaleType.CENTER_CROP)
-            advertiserView.visibility = nativeAd.advertiser
-                ?.let { advertiserView.asTextView().text = it }
+            advertiserView = advertiser
+            headlineView = headline
+            bodyView = body
+            this.iconView = iconView
+            mediaView = media
+            callToActionView = callToAction
+
+            media.setImageScaleType(ImageView.ScaleType.CENTER_CROP)
+            advertiser.visibility = nativeAd.advertiser
+                ?.let { advertiser.asTextView().text = it }
                 ?.run { View.VISIBLE }
                 ?: View.INVISIBLE
-            headlineView.isVisible = nativeAd.headline
-                ?.let { headlineView.asTextView().text = it }
+            headline.isVisible = nativeAd.headline
+                ?.let { headline.asTextView().text = it }
                 ?.run { true }
                 ?: false
-            bodyView.isVisible = nativeAd.body
-                ?.let { bodyView.asTextView().text = it }
+            body.isVisible = nativeAd.body
+                ?.let { body.asTextView().text = it }
                 ?.run { true }
                 ?: false
 
-            callToActionView.asTextView().text =
+            callToAction.asTextView().text =
                 nativeAd.callToAction ?: context.getString(R.string.menu_more)
 
             val icon = nativeAd.icon

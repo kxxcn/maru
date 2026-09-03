@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.firestore.ListenerRegistration
-import com.google.firebase.firestore.ktx.toObjects
 import dev.kxxcn.maru.data.Notice
 import dev.kxxcn.maru.data.Result
 import dev.kxxcn.maru.data.source.DataRepository
@@ -40,7 +39,7 @@ class NoticeViewModel @Inject constructor(
                         _items.value = emptyList()
                         return@addSnapshotListener
                     }
-                    _items.value = snapshot?.toObjects()
+                    _items.value = snapshot?.toObjects(Notice::class.java)
                 }
             }
         }

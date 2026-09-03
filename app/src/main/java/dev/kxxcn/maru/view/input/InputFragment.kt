@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.google.android.gms.ads.AdListener
 import dev.kxxcn.maru.EventObserver
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.databinding.InputFragmentBinding
@@ -72,19 +71,20 @@ class InputFragment : BaseFragment() {
 
     private fun setupInterstitial() {
         val id = getString(R.string.admob_interstitial_task_id)
-        adHelper.loadInterstitialAd(id, object : AdListener() {
-            override fun onAdLoaded() {
-                super.onAdLoaded()
+        adHelper.loadInterstitialAd(
+            id = id,
+            onLoaded = {
                 if (adHelper.isRequested) {
-                    adHelper.show()
+                    adHelper.show(requireActivity())
                 }
-            }
-
-            override fun onAdOpened() {
-                super.onAdOpened()
+            },
+            onShowed = {
+                openStatusFragment()
+            },
+            onFailedToShow = {
                 openStatusFragment()
             }
-        })
+        )
     }
 
     private fun showAd() {
@@ -92,7 +92,7 @@ class InputFragment : BaseFragment() {
             with(adHelper) {
                 request()
                 if (isLoaded) {
-                    show()
+                    show(requireActivity())
                 } else {
                     openStatusFragment()
                 }

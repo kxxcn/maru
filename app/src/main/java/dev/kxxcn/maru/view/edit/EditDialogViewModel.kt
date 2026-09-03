@@ -2,8 +2,9 @@ package dev.kxxcn.maru.view.edit
 
 import androidx.lifecycle.*
 import com.google.firebase.auth.FirebaseAuth
-import com.squareup.inject.assisted.Assisted
-import com.squareup.inject.assisted.AssistedInject
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import dev.kxxcn.maru.Event
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.data.Result.Success
@@ -27,7 +28,7 @@ class EditDialogViewModel @AssistedInject constructor(
     @Assisted private val savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
 
-    @AssistedInject.Factory
+    @AssistedFactory
     interface Factory : AssistedSavedStateViewModelFactory<EditDialogViewModel>
 
     private val numberFormat = NumberFormat.getInstance(Locale.KOREA)
