@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.databinding.OnboardFragmentBinding
+import dev.kxxcn.maru.util.extension.applySystemBarsPadding
 import dev.kxxcn.maru.view.onboard.page.OnboardPagerAdapter
 
 class OnboardFragment : Fragment(R.layout.onboard_fragment) {
@@ -35,6 +36,7 @@ class OnboardFragment : Fragment(R.layout.onboard_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        view.applySystemBarsPadding()
         setupLifecycle()
         setupPagerAdapter()
         setupBackPressed()

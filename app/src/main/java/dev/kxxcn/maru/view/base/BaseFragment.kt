@@ -14,6 +14,7 @@ import dagger.android.support.DaggerFragment
 import dev.kxxcn.maru.EventObserver
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.util.AnalyticsUtils
+import dev.kxxcn.maru.util.extension.applySystemBarsPadding
 import dev.kxxcn.maru.util.extension.setupSnackbar
 import javax.inject.Inject
 
@@ -30,6 +31,7 @@ abstract class BaseFragment : DaggerFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        view.applySystemBarsPadding()
         setupListener()
         setupSnackbar()
         setupAnalytics()

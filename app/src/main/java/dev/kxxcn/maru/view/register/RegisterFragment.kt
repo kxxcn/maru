@@ -63,6 +63,7 @@ class RegisterFragment : DaggerFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        view.applySystemBarsPadding()
         setupLifecycle()
         setupDatePicker()
         setupFilterType()

@@ -4,9 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updatePadding
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -54,7 +51,6 @@ class IntroFragment : SignInFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupLifecycle()
-        setupWindowInsets()
         setupMotionLayout()
         setupListener()
     }
@@ -69,15 +65,6 @@ class IntroFragment : SignInFragment() {
 
     private fun setupLifecycle() {
         binding.lifecycleOwner = viewLifecycleOwner
-    }
-
-    private fun setupWindowInsets() {
-        ViewCompat.setOnApplyWindowInsetsListener(binding.introMotion) { view, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            view.updatePadding(top = systemBars.top, bottom = systemBars.bottom)
-            insets
-        }
-        ViewCompat.requestApplyInsets(binding.introMotion)
     }
 
     private fun setupMotionLayout() {
