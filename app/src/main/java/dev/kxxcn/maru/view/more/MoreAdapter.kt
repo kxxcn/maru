@@ -3,6 +3,7 @@ package dev.kxxcn.maru.view.more
 import android.app.Activity
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import dev.kxxcn.maru.R
 import dev.kxxcn.maru.view.base.LifecycleViewHolder
 import dev.kxxcn.maru.view.home.holder.BannerAdHolder
 import dev.kxxcn.maru.view.home.holder.WoozooraHolder
@@ -22,7 +23,7 @@ class MoreAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             TYPE_SETTINGS -> MoreSettingHolder.from(parent)
-            TYPE_BANNER_AD -> BannerAdHolder.from(parent, activity)
+            TYPE_BANNER_AD -> BannerAdHolder.from(parent, activity, R.string.admob_banner_more_id)
             TYPE_CONTENTS -> MoreContentsHolder.from(parent)
             TYPE_WOOZOORA -> WoozooraHolder.from(parent)
             TYPE_NATIVE_AD -> MoreNativeHolder.from(parent)

@@ -6,11 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.VideoOptions
 import com.google.android.gms.ads.nativead.MediaView
 import com.google.android.gms.ads.nativead.NativeAd
@@ -49,12 +46,7 @@ class MoreNativeHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             populateNativeAdView(nativeAd, adView)
             container.removeAllViews()
             container.addView(adView)
-        }.withAdListener(object : AdListener() {
-            override fun onAdFailedToLoad(loadAdError: LoadAdError) {
-                super.onAdFailedToLoad(loadAdError)
-                container.removeAllViews()
-            }
-        }).withNativeAdOptions(adOptions).build().also { adLoader ->
+        }.withNativeAdOptions(adOptions).build().also { adLoader ->
             adLoader.loadAd(AdRequest.Builder().build())
         }.run { { release() } }
     }
@@ -68,19 +60,16 @@ class MoreNativeHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         with(adView) {
             val media = findViewById<MediaView>(R.id.ad_media)
-            val body = findViewById<View>(R.id.ad_body)
+            val headline = findViewById<View>(R.id.ad_headline)
             val callToAction = findViewById<View>(R.id.ad_call_to_action)
 
             mediaView = media
-            bodyView = body
+            headlineView = headline
             callToActionView = callToAction
 
             media.setImageScaleType(ImageView.ScaleType.CENTER_CROP)
 
-            body.isVisible = nativeAd.body
-                ?.let { body.asTextView().text = it }
-                ?.run { true }
-                ?: false
+            headline.asTextView().text = nativeAd.headline
             callToAction.asTextView().text =
                 nativeAd.callToAction ?: context.getString(R.string.menu_more)
 
