@@ -39,6 +39,7 @@ class BannerAdHolder(
     private val adHelper = AdHelper(itemView.context)
 
     fun loadAd(): () -> Unit {
+        release()
         return adHelper.createBannerAd(
             id,
             adSize
@@ -54,16 +55,21 @@ class BannerAdHolder(
 
     fun release() {
         adView?.destroy()
+        adView = null
         container.removeAllViews()
     }
 
     companion object {
 
-        fun from(parent: ViewGroup, activity: Activity): BannerAdHolder {
+        fun from(
+            parent: ViewGroup,
+            activity: Activity,
+            adUnitId: Int = R.string.admob_banner_home_id
+        ): BannerAdHolder {
             val context = parent.context
             val inflater = LayoutInflater.from(context)
             val view = inflater.inflate(R.layout.admob_item, parent, false)
-            return BannerAdHolder(view, activity, context.getString(R.string.admob_banner_home_id))
+            return BannerAdHolder(view, activity, context.getString(adUnitId))
         }
     }
 }

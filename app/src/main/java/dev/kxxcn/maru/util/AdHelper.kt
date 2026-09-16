@@ -2,6 +2,7 @@ package dev.kxxcn.maru.util
 
 import android.app.Activity
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LifecycleObserver
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.interstitial.InterstitialAd
@@ -9,13 +10,8 @@ import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.util.AdHelper.AdMobFilterType.*
 import dev.kxxcn.maru.util.extension.or
-import java.lang.ref.WeakReference
 
 class AdHelper(private val context: Context) : LifecycleObserver {
-
-    private var adViewRef: WeakReference<AdView>? = null
-
-    private var adBuilderRef: WeakReference<AdLoader.Builder>? = null
 
     private var interstitialAd: InterstitialAd? = null
 
@@ -36,17 +32,27 @@ class AdHelper(private val context: Context) : LifecycleObserver {
     }
 
     fun createBannerAd(id: String, size: AdSize?): AdView {
-        return adViewRef?.get() ?: AdView(context).apply {
+        return AdView(context).apply {
             adUnitId = getAdUnitId(BANNER, id)
             size?.let(::setAdSize)
-        }.also { adViewRef = WeakReference(it) }
+            adListener = createAdListener(BANNER, adUnitId)
+        }
     }
 
     fun createNativeAd(id: String): AdLoader.Builder {
-        return adBuilderRef?.get() ?: AdLoader.Builder(
-            context,
-            getAdUnitId(NATIVE, id)
-        ).also { adBuilderRef = WeakReference(it) }
+        val adUnitId = getAdUnitId(NATIVE, id)
+        return AdLoader.Builder(context, adUnitId)
+            .withAdListener(createAdListener(NATIVE, adUnitId))
+    }
+
+    private fun createAdListener(type: AdMobFilterType, id: String) = object : AdListener() {
+        override fun onAdLoaded() {
+            Log.d("AdMob", "$type loaded: $id")
+        }
+
+        override fun onAdFailedToLoad(error: LoadAdError) {
+            Log.w("AdMob", "$type failed to load: $id\n$error")
+        }
     }
 
     fun loadInterstitialAd(
@@ -76,6 +82,7 @@ class AdHelper(private val context: Context) : LifecycleObserver {
                             }
 
                             override fun onAdFailedToShowFullScreenContent(adError: AdError) {
+                                Log.w("AdMob", "INTERSTITIAL failed to show: $id\n$adError")
                                 interstitialAd = null
                                 onFailedToShow()
                             }
@@ -85,6 +92,7 @@ class AdHelper(private val context: Context) : LifecycleObserver {
                 }
 
                 override fun onAdFailedToLoad(loadAdError: LoadAdError) {
+                    Log.w("AdMob", "INTERSTITIAL failed to load: ${getAdUnitId(INTERSTITIAL, id)}\n$loadAdError")
                     interstitialAd = null
                 }
             }
