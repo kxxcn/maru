@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -16,6 +17,7 @@ import dev.kxxcn.maru.data.source.DataRepository
 import dev.kxxcn.maru.data.succeeded
 import dev.kxxcn.maru.di.AssistedSavedStateViewModelFactory
 import dev.kxxcn.maru.util.COMPLETED_TASK
+import dev.kxxcn.maru.util.DateUtils
 import dev.kxxcn.maru.util.KEY_IS_PREMIUM
 import dev.kxxcn.maru.util.KEY_TASK_ID
 import dev.kxxcn.maru.util.extension.moneyToLong
@@ -25,6 +27,7 @@ import kotlinx.coroutines.launch
 import java.text.NumberFormat
 import java.util.Calendar
 import java.util.Locale
+import java.util.UUID
 
 class InputViewModel @AssistedInject constructor(
     private val repository: DataRepository,
@@ -35,6 +38,7 @@ class InputViewModel @AssistedInject constructor(
     interface Factory : AssistedSavedStateViewModelFactory<InputViewModel>
 
     private var taskId: String? = null
+    private var accountId: String? = null
 
     private val decimalFormat = NumberFormat.getInstance(Locale.KOREA)
 
@@ -53,6 +57,13 @@ class InputViewModel @AssistedInject constructor(
     private val _recordedDate = MutableLiveData<Long?>()
     val recordedDate: LiveData<Long?> = _recordedDate
 
+    private val _selectedDate = MutableLiveData(startOfToday())
+    val selectedDate: LiveData<Long> = _selectedDate
+
+    val selectedDateText: LiveData<String> = _selectedDate.map {
+        DateUtils.DATE_FORMAT_8.format(it)
+    }
+
     private val _taskHusband = MutableLiveData(decimalFormat.format(0))
     val taskHusband: LiveData<String> = _taskHusband
 
@@ -61,6 +72,9 @@ class InputViewModel @AssistedInject constructor(
 
     private val _taskRemain = MutableLiveData(decimalFormat.format(0))
     val taskRemain: LiveData<String> = _taskRemain
+
+    private val _memo = MutableLiveData("")
+    val memo: LiveData<String> = _memo
 
     val taskTotal: LiveData<String> = MediatorLiveData<String>().apply {
         fun update() {
@@ -91,18 +105,43 @@ class InputViewModel @AssistedInject constructor(
                 with(result.data) {
                     _taskName.value = task?.name
                     _taskIcon.value = task?.iconId
+                    accountId = account?.id
                     _recordedDate.value = account?.date
+                    _selectedDate.value = account?.date?.let(::startOfDay) ?: startOfToday()
                     _taskHusband.value = decimalFormat.format(account?.husband ?: 0L)
                     _taskWife.value = decimalFormat.format(account?.wife ?: 0L)
                     _taskRemain.value = decimalFormat.format(account?.remain ?: 0L)
+                    _memo.value = account?.memo.orEmpty()
                 }
             }
         }
         this.taskId = taskId
     }
 
+    fun selectDate(timeInMillis: Long) {
+        _selectedDate.value = startOfDay(timeInMillis)
+    }
+
+    fun setMemo(value: String) {
+        _memo.value = value
+    }
+
     fun selectField(type: InputMoneyType) {
         _selectedField.value = type
+    }
+
+    fun setAmount(type: InputMoneyType, input: String) {
+        val digits = input.filter(Char::isDigit)
+        if (digits.isEmpty()) {
+            target(type).value = ""
+            return
+        }
+        val value = digits.toLongOrNull() ?: return
+        target(type).value = if (value > MAX_AMOUNT) {
+            decimalFormat.format(MAX_AMOUNT)
+        } else {
+            decimalFormat.format(value)
+        }
     }
 
     fun appendDigit(digit: String) {
@@ -129,7 +168,11 @@ class InputViewModel @AssistedInject constructor(
     }
 
     private fun target(): MutableLiveData<String> {
-        return when (_selectedField.value ?: InputMoneyType.HUSBAND) {
+        return target(_selectedField.value ?: InputMoneyType.HUSBAND)
+    }
+
+    private fun target(type: InputMoneyType): MutableLiveData<String> {
+        return when (type) {
             InputMoneyType.HUSBAND -> _taskHusband
             InputMoneyType.WIFE -> _taskWife
             InputMoneyType.REMAIN -> _taskRemain
@@ -155,11 +198,13 @@ class InputViewModel @AssistedInject constructor(
             } else {
                 val result = repository.saveAccount(
                     Account(
+                        id = accountId ?: UUID.randomUUID().toString(),
                         taskId = id,
                         husband = husband ?: 0,
                         wife = wife ?: 0,
                         remain = remain,
-                        date = Calendar.getInstance().timeInMillis
+                        date = selectedDate.value ?: startOfToday(),
+                        memo = memo.value.orEmpty().trim()
                     )
                 )
                 if (result.succeeded) {
@@ -182,5 +227,15 @@ class InputViewModel @AssistedInject constructor(
 
     companion object {
         private const val MAX_AMOUNT = 999_999_999_999L
+
+        private fun startOfToday(): Long = startOfDay(System.currentTimeMillis())
+
+        private fun startOfDay(timeInMillis: Long): Long = Calendar.getInstance().apply {
+            this.timeInMillis = timeInMillis
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }.timeInMillis
     }
 }

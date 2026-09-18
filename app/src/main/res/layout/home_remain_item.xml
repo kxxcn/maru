@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:onClick="@{() -> viewModel.tasks()}"
                 android:padding="4dp"
-                android:text="@{content.hasRemainTasks ? @string/home_remain_more(content.remainTasks.size() - 1) : @string/home_next_more}"
+                android:text="@{content.hasRemainTasks ? @string/home_remain_more(content.remainTasks.size() - 1) : @string/home_view_all}"
                 android:textColor="@color/maru_muted"
                 android:textSize="13sp"
                 android:visibility="@{content.showHomeActionMore ? View.VISIBLE : View.GONE}"

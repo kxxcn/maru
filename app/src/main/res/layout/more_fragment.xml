@@ -324,7 +324,7 @@
                 android:layout_height="24dp"
                 android:importantForAccessibility="no"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_contents_event" />
+                android:src="@drawable/ic_material_event" />
 
             <dev.kxxcn.maru.view.custom.MaruTextView
                 android:layout_width="0dp"
@@ -362,7 +362,7 @@
                 android:layout_height="24dp"
                 android:importantForAccessibility="no"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_contents_landmark" />
+                android:src="@drawable/ic_material_place" />
 
             <dev.kxxcn.maru.view.custom.MaruTextView
                 android:layout_width="0dp"
@@ -400,7 +400,7 @@
                 android:layout_height="24dp"
                 android:importantForAccessibility="no"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_contents_backup" />
+                android:src="@drawable/ic_material_backup" />
 
             <dev.kxxcn.maru.view.custom.MaruTextView
                 android:layout_width="0dp"
@@ -507,7 +507,7 @@
                 android:layout_height="24dp"
                 android:importantForAccessibility="no"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_contents_night" />
+                android:src="@drawable/ic_material_night" />
 
             <dev.kxxcn.maru.view.custom.MaruTextView
                 android:layout_width="0dp"
@@ -548,7 +548,7 @@
                 android:layout_height="24dp"
                 android:importantForAccessibility="no"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_settings" />
+                android:src="@drawable/ic_material_settings" />
 
             <dev.kxxcn.maru.view.custom.MaruTextView
                 android:layout_width="0dp"
@@ -587,7 +587,7 @@
                 android:layout_height="24dp"
                 android:importantForAccessibility="no"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_notice" />
+                android:src="@drawable/ic_material_notifications" />
 
             <dev.kxxcn.maru.view.custom.MaruTextView
                 android:layout_width="0dp"
@@ -626,7 +626,7 @@
                 android:layout_height="24dp"
                 android:importantForAccessibility="no"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_email" />
+                android:src="@drawable/ic_material_email" />
 
             <dev.kxxcn.maru.view.custom.MaruTextView
                 android:layout_width="0dp"
@@ -664,7 +664,7 @@
                 android:layout_height="24dp"
                 android:importantForAccessibility="no"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_contents_review" />
+                android:src="@drawable/ic_material_star" />
 
             <dev.kxxcn.maru.view.custom.MaruTextView
                 android:layout_width="0dp"

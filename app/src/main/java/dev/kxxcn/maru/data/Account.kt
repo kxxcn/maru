@@ -22,6 +22,7 @@ data class Account(
     @ColumnInfo(name = "wife") var wife: Long = 0L,
     @ColumnInfo(name = "remain") var remain: Long = 0L,
     @ColumnInfo(name = "date") var date: Long = 0L,
+    @ColumnInfo(name = "memo") var memo: String = "",
     @ColumnInfo(name = "taskId") var taskId: String = "",
     @PrimaryKey @ColumnInfo(name = "id") var id: String = UUID.randomUUID().toString()
 )

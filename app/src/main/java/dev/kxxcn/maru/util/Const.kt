@@ -68,4 +68,4 @@ const val ANIMATION_ONBOARD_TASKS = "animation_onboard_tasks.json"
 const val ANIMATION_ONBOARD_ACCOUNT = "animation_onboard_account.json"
 const val ANIMATION_ONBOARD_WELCOME = "animation_onboard_welcome.json"
 
-const val ROOM_VERSION = 2
+const val ROOM_VERSION = 3

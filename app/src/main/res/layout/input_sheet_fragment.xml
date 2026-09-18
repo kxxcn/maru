@@ -9,8 +9,6 @@
 
         <import type="dev.kxxcn.maru.view.input.InputMoneyType" />
 
-        <import type="dev.kxxcn.maru.view.input.InputFilterType" />
-
         <import type="dev.kxxcn.maru.util.ConvertUtils" />
 
         <variable
@@ -154,15 +152,23 @@
                 android:textColor="@color/maru_ink_2"
                 android:textSize="14sp" />
 
-            <dev.kxxcn.maru.view.custom.MaruTextView
+            <EditText
                 android:id="@+id/input_husband_money"
-                android:layout_width="wrap_content"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:fontFeatureSettings="tnum"
+                android:background="@null"
+                android:gravity="end"
+                android:hint="0"
+                android:importantForAutofill="no"
+                android:inputType="number"
+                android:imeOptions="actionNext"
+                android:padding="0dp"
+                android:selectAllOnFocus="true"
                 android:text="@{viewModel.taskHusband}"
                 android:textColor="@color/maru_ink"
                 android:textSize="20sp"
-                app:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="0" />
 
             <dev.kxxcn.maru.view.custom.MaruTextView
                 android:layout_width="wrap_content"
@@ -200,15 +206,23 @@
                 android:textColor="@color/maru_ink_2"
                 android:textSize="14sp" />
 
-            <dev.kxxcn.maru.view.custom.MaruTextView
+            <EditText
                 android:id="@+id/input_wife_money"
-                android:layout_width="wrap_content"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:fontFeatureSettings="tnum"
+                android:background="@null"
+                android:gravity="end"
+                android:hint="0"
+                android:importantForAutofill="no"
+                android:inputType="number"
+                android:imeOptions="actionNext"
+                android:padding="0dp"
+                android:selectAllOnFocus="true"
                 android:text="@{viewModel.taskWife}"
                 android:textColor="@color/maru_ink"
                 android:textSize="20sp"
-                app:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="0" />
 
             <dev.kxxcn.maru.view.custom.MaruTextView
                 android:layout_width="wrap_content"
@@ -246,15 +260,23 @@
                 android:textColor="@color/maru_ink_2"
                 android:textSize="14sp" />
 
-            <dev.kxxcn.maru.view.custom.MaruTextView
+            <EditText
                 android:id="@+id/input_remain_money"
-                android:layout_width="wrap_content"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:fontFeatureSettings="tnum"
+                android:background="@null"
+                android:gravity="end"
+                android:hint="0"
+                android:importantForAutofill="no"
+                android:inputType="number"
+                android:imeOptions="actionDone"
+                android:padding="0dp"
+                android:selectAllOnFocus="true"
                 android:text="@{viewModel.taskRemain}"
                 android:textColor="@color/maru_ink"
                 android:textSize="20sp"
-                app:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="0" />
 
             <dev.kxxcn.maru.view.custom.MaruTextView
                 android:layout_width="wrap_content"
@@ -267,146 +289,62 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/input_date_field"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginTop="12dp"
-            android:orientation="horizontal">
+            android:background="@drawable/bg_field"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
 
             <dev.kxxcn.maru.view.custom.MaruTextView
-                android:id="@+id/input_unit_ten_thousand"
-                style="@style/Widget.Maru.Chip"
                 android:layout_width="0dp"
-                android:layout_height="38dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:onClick="@{() -> viewModel.addUnit(InputFilterType.TEN_THOUSAND)}"
-                android:text="@string/input_unit1" />
+                android:text="@string/input_expense_date"
+                android:textColor="@color/maru_ink_2"
+                android:textSize="14sp" />
 
             <dev.kxxcn.maru.view.custom.MaruTextView
-                android:id="@+id/input_unit_one_hundred_thousand"
-                style="@style/Widget.Maru.Chip"
-                android:layout_width="0dp"
-                android:layout_height="38dp"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
-                android:onClick="@{() -> viewModel.addUnit(InputFilterType.HUNDRED_THOUSAND)}"
-                android:text="@string/input_unit2" />
-
-            <dev.kxxcn.maru.view.custom.MaruTextView
-                android:id="@+id/input_unit_one_million"
-                style="@style/Widget.Maru.Chip"
-                android:layout_width="0dp"
-                android:layout_height="38dp"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
-                android:onClick="@{() -> viewModel.addUnit(InputFilterType.ONE_MILLION)}"
-                android:text="@string/input_unit3" />
-
-            <dev.kxxcn.maru.view.custom.MaruTextView
-                android:id="@+id/input_unit_ten_million"
-                style="@style/Widget.Maru.Chip"
-                android:layout_width="0dp"
-                android:layout_height="38dp"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
-                android:onClick="@{() -> viewModel.addUnit(InputFilterType.TEN_MILLION)}"
-                android:text="@string/input_unit4" />
+                android:id="@+id/input_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.selectedDateText}"
+                android:textColor="@color/maru_ink"
+                android:textSize="15sp"
+                app:textStyle="bold"
+                tools:text="2026년 9월 18일" />
 
         </LinearLayout>
 
-        <GridLayout
-            android:id="@+id/input_keypad"
-            android:layout_width="match_parent"
+        <dev.kxxcn.maru.view.custom.MaruTextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:columnCount="3">
+            android:layout_marginTop="14dp"
+            android:text="@string/input_memo"
+            android:textAppearance="@style/TextAppearance.Maru.Meta" />
 
-            <dev.kxxcn.maru.view.custom.MaruTextView
-                style="@style/Widget.Maru.Key"
-                android:layout_width="0dp"
-                android:layout_columnWeight="1"
-                android:onClick="@{() -> viewModel.appendDigit(`1`)}"
-                android:text="1" />
-
-            <dev.kxxcn.maru.view.custom.MaruTextView
-                style="@style/Widget.Maru.Key"
-                android:layout_width="0dp"
-                android:layout_columnWeight="1"
-                android:onClick="@{() -> viewModel.appendDigit(`2`)}"
-                android:text="2" />
-
-            <dev.kxxcn.maru.view.custom.MaruTextView
-                style="@style/Widget.Maru.Key"
-                android:layout_width="0dp"
-                android:layout_columnWeight="1"
-                android:onClick="@{() -> viewModel.appendDigit(`3`)}"
-                android:text="3" />
-
-            <dev.kxxcn.maru.view.custom.MaruTextView
-                style="@style/Widget.Maru.Key"
-                android:layout_width="0dp"
-                android:layout_columnWeight="1"
-                android:onClick="@{() -> viewModel.appendDigit(`4`)}"
-                android:text="4" />
-
-            <dev.kxxcn.maru.view.custom.MaruTextView
-                style="@style/Widget.Maru.Key"
-                android:layout_width="0dp"
-                android:layout_columnWeight="1"
-                android:onClick="@{() -> viewModel.appendDigit(`5`)}"
-                android:text="5" />
-
-            <dev.kxxcn.maru.view.custom.MaruTextView
-                style="@style/Widget.Maru.Key"
-                android:layout_width="0dp"
-                android:layout_columnWeight="1"
-                android:onClick="@{() -> viewModel.appendDigit(`6`)}"
-                android:text="6" />
-
-            <dev.kxxcn.maru.view.custom.MaruTextView
-                style="@style/Widget.Maru.Key"
-                android:layout_width="0dp"
-                android:layout_columnWeight="1"
-                android:onClick="@{() -> viewModel.appendDigit(`7`)}"
-                android:text="7" />
-
-            <dev.kxxcn.maru.view.custom.MaruTextView
-                style="@style/Widget.Maru.Key"
-                android:layout_width="0dp"
-                android:layout_columnWeight="1"
-                android:onClick="@{() -> viewModel.appendDigit(`8`)}"
-                android:text="8" />
-
-            <dev.kxxcn.maru.view.custom.MaruTextView
-                style="@style/Widget.Maru.Key"
-                android:layout_width="0dp"
-                android:layout_columnWeight="1"
-                android:onClick="@{() -> viewModel.appendDigit(`9`)}"
-                android:text="9" />
-
-            <dev.kxxcn.maru.view.custom.MaruTextView
-                style="@style/Widget.Maru.Key"
-                android:layout_width="0dp"
-                android:layout_columnWeight="1"
-                android:onClick="@{() -> viewModel.appendDigit(`00`)}"
-                android:text="00" />
-
-            <dev.kxxcn.maru.view.custom.MaruTextView
-                style="@style/Widget.Maru.Key"
-                android:layout_width="0dp"
-                android:layout_columnWeight="1"
-                android:onClick="@{() -> viewModel.appendDigit(`0`)}"
-                android:text="0" />
-
-            <dev.kxxcn.maru.view.custom.MaruTextView
-                android:id="@+id/input_delete"
-                style="@style/Widget.Maru.Key"
-                android:layout_width="0dp"
-                android:layout_columnWeight="1"
-                android:onClick="@{() -> viewModel.deleteDigit()}"
-                android:text="@string/input_delete_digit"
-                android:textSize="15sp" />
-
-        </GridLayout>
+        <EditText
+            android:id="@+id/input_memo"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/bg_field"
+            android:gravity="top|start"
+            android:hint="@string/input_memo_hint"
+            android:importantForAutofill="no"
+            android:inputType="textCapSentences|textMultiLine"
+            android:maxLength="200"
+            android:padding="12dp"
+            android:text="@{viewModel.memo}"
+            android:textColor="@color/maru_ink"
+            android:textColorHint="@color/maru_muted"
+            android:textSize="14sp"
+            tools:text="계약금 결제 완료" />
 
         <LinearLayout
             android:layout_width="match_parent"

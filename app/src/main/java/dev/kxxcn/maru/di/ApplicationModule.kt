@@ -107,6 +107,11 @@ object ApplicationModule {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("ALTER TABLE users ADD COLUMN premium INTEGER default 0 NOT NULL")
             }
+        },
+        object : Migration(2, 3) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE accounts ADD COLUMN memo TEXT NOT NULL DEFAULT ''")
+            }
         }
     )
 }

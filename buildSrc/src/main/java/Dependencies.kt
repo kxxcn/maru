@@ -34,7 +34,7 @@ object Versions {
     const val crashlyticsGradleVersion = "3.0.2"
     const val billingVersion = "9.1.0"
     const val naverMapVersion = "3.23.3"
-    const val interceptorVersion = "3.11.0"
+    const val interceptorVersion = "4.10.0"
     const val lottieVersion = "3.4.1"
     const val junitVersion = "4.12"
     const val junitExtVersion = "1.1.2"

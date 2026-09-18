@@ -153,7 +153,7 @@
     <string name="home_progress_summary">체크리스트 %1$d/%2$d 완료</string>
     <string name="home_budget_title">예산</string>
     <string name="home_budget_of">/ %1$s</string>
-    <string name="home_budget_detail">자세히</string>
+    <string name="home_view_all">전체 보기</string>
     <string name="home_budget_remaining">남은 %1$s</string>
     <string name="home_groom_amount">신랑 %1$s</string>
     <string name="home_bride_amount">신부 %1$s</string>
@@ -161,12 +161,10 @@
     <string name="home_remain_more">외 %1$d건</string>
     <string name="home_remain_paid">%1$s 지불, %2$s 기록</string>
     <string name="home_next_title">다음 준비</string>
-    <string name="home_next_more">전체 보기</string>
     <string name="home_next_task_label">다음 준비 항목</string>
     <string name="home_next_empty_title">모든 준비를 완료했어요</string>
     <string name="home_next_empty_description">체크리스트에서 새로운 항목을 추가해보세요.</string>
     <string name="home_days_title">디데이</string>
-    <string name="home_days_all">전체</string>
     <string name="home_days_add">디데이 등록하기</string>
     <string name="home_welcome_card_name">%1$s님</string>
     <string name="home_welcome_card_greeting">안녕하세요.</string>
@@ -217,6 +215,9 @@
     <string name="input_field_husband">신랑</string>
     <string name="input_field_wife">신부</string>
     <string name="input_total">총 지출</string>
+    <string name="input_expense_date">지출일</string>
+    <string name="input_memo">메모</string>
+    <string name="input_memo_hint">메모를 입력하세요 (선택)</string>
     <string name="input_save">저장하기</string>
     <string name="input_delete_digit">지우기</string>
     <string name="input_auto_complete">잔금이 0원이 되면 완료로 표시</string>
@@ -443,12 +444,16 @@
     <string name="edit_dialog_name_toast">이름이 변경되었습니다.</string>
     <string name="edit_dialog_title_wedding">결혼 예정일 변경</string>
     <string name="edit_dialog_title_wedding_hint">결혼 예정일을 입력하세요.</string>
+    <string name="edit_dialog_wedding_toast">결혼 예정일이 변경되었습니다.</string>
     <string name="edit_dialog_title_budget">예산 변경</string>
     <string name="edit_dialog_title_budget_hint">예산을 입력하세요.</string>
     <string name="edit_dialog_budget_toast">예산이 변경되었습니다.</string>
     <string name="edit_dialog_title_task">체크리스트 추가</string>
     <string name="edit_dialog_title_task_hint">체크리스트 이름을 입력하세요.</string>
     <string name="edit_dialog_task_toast">체크리스트가 추가되었습니다.</string>
+    <string name="edit_dialog_title_task_edit">체크리스트 이름 수정</string>
+    <string name="edit_dialog_task_edit_toast">체크리스트 이름이 변경되었습니다.</string>
+    <string name="sort_tasks_edit">체크리스트 항목 수정</string>
 
     <string name="purchase_title">프리미엄 이용권</string>
     <string name="purchase_premium">프리미엄 이용권이 구매되었습니다.</string>

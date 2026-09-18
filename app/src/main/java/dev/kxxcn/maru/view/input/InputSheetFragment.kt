@@ -1,10 +1,12 @@
 package dev.kxxcn.maru.view.input
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doAfterTextChanged
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
@@ -17,9 +19,10 @@ import dev.kxxcn.maru.di.MaruSavedStateViewModelFactory
 import dev.kxxcn.maru.util.AdHelper
 import dev.kxxcn.maru.view.base.BaseDialogFragment
 import javax.inject.Inject
+import java.util.Calendar
 
 /**
- * 지출 입력 하단 시트. 신랑, 신부, 잔금 필드를 골라 키패드와 단위 칩으로 입력한다.
+ * 지출 입력 하단 시트. 신랑, 신부, 잔금 금액과 지출일·메모를 입력한다.
  */
 class InputSheetFragment : BaseDialogFragment() {
 
@@ -30,6 +33,8 @@ class InputSheetFragment : BaseDialogFragment() {
     lateinit var viewModelFactory: MaruSavedStateViewModelFactory
 
     private lateinit var binding: InputSheetFragmentBinding
+
+    private var datePicker: DatePickerDialog? = null
 
     override val clazz: Class<*>
         get() = this::class.java
@@ -58,8 +63,15 @@ class InputSheetFragment : BaseDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = viewLifecycleOwner
         setupInsets()
+        setupInputFields()
         setupListener()
         setupInterstitial()
+    }
+
+    override fun onDestroyView() {
+        datePicker?.dismiss()
+        datePicker = null
+        super.onDestroyView()
     }
 
     override fun onStart() {
@@ -82,12 +94,53 @@ class InputSheetFragment : BaseDialogFragment() {
     }
 
     private fun setupListener() {
+        binding.inputDateField.setOnClickListener { showDatePicker() }
         viewModel.doneEvent.observe(viewLifecycleOwner, EventObserver {
             openStatusFragment()
         })
         viewModel.adEvent.observe(viewLifecycleOwner, EventObserver {
             showAd()
         })
+    }
+
+    private fun setupInputFields() {
+        bindAmountInput(binding.inputHusbandMoney, InputMoneyType.HUSBAND)
+        bindAmountInput(binding.inputWifeMoney, InputMoneyType.WIFE)
+        bindAmountInput(binding.inputRemainMoney, InputMoneyType.REMAIN)
+        binding.inputMemo.doAfterTextChanged { text ->
+            viewModel.setMemo(text?.toString().orEmpty())
+        }
+    }
+
+    private fun bindAmountInput(
+        input: android.widget.EditText,
+        type: InputMoneyType
+    ) {
+        input.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) viewModel.selectField(type)
+        }
+        input.doAfterTextChanged { text ->
+            viewModel.setAmount(type, text?.toString().orEmpty())
+        }
+    }
+
+    private fun showDatePicker() {
+        val selected = Calendar.getInstance().apply {
+            timeInMillis = viewModel.selectedDate.value ?: System.currentTimeMillis()
+        }
+        datePicker?.dismiss()
+        datePicker = DatePickerDialog(
+            requireContext(),
+            { _, year, month, dayOfMonth ->
+                Calendar.getInstance().apply {
+                    set(year, month, dayOfMonth, 0, 0, 0)
+                    set(Calendar.MILLISECOND, 0)
+                }.also { viewModel.selectDate(it.timeInMillis) }
+            },
+            selected.get(Calendar.YEAR),
+            selected.get(Calendar.MONTH),
+            selected.get(Calendar.DAY_OF_MONTH)
+        ).also { it.show() }
     }
 
     private fun setupInterstitial() {
