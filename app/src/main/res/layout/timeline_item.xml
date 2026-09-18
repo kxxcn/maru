@@ -5,71 +5,102 @@
 
     <data>
 
+        <import type="android.view.View" />
+
+        <import type="dev.kxxcn.maru.view.timeline.TimelineState" />
+
         <variable
             name="viewModel"
             type="dev.kxxcn.maru.view.timeline.TimelineViewModel" />
 
         <variable
-            name="item"
-            type="dev.kxxcn.maru.view.timeline.TimelineItem" />
-
+            name="row"
+            type="dev.kxxcn.maru.view.timeline.TimelineRow" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingBottom="20dp">
+
+        <View
+            android:id="@+id/timeline_rail"
+            android:layout_width="2dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="14dp"
+            android:background="@color/maru_line"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/timeline_dot"
+            app:layout_constraintStart_toStartOf="@id/timeline_dot"
+            app:layout_constraintTop_toTopOf="@id/timeline_dot" />
+
+        <View
+            android:id="@+id/timeline_dot"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_marginTop="2dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/timeline_day"
+            app:timelineDot="@{row.state}" />
+
+        <dev.kxxcn.maru.view.custom.MaruTextView
+            android:id="@+id/timeline_today"
+            android:layout_width="wrap_content"
+            android:layout_height="26dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/bg_button_primary"
+            android:gravity="center"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:text="@{@string/timeline_today(Integer.parseInt(row.todayText ?? `0`))}"
+            android:textColor="@color/maru_on_yellow"
+            android:textSize="12sp"
+            android:visibility="@{row.state == TimelineState.NOW ? View.VISIBLE : View.GONE}"
+            app:layout_constraintStart_toEndOf="@id/timeline_dot"
+            app:layout_constraintTop_toTopOf="parent"
+            app:textStyle="bold"
+            tools:text="오늘 D-129" />
 
         <dev.kxxcn.maru.view.custom.MaruTextView
             android:id="@+id/timeline_day"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:text="@{@string/home_welcome_card_remain(item.days)}"
-            android:textColor="?maruFontColor"
-            app:layout_constraintEnd_toStartOf="@id/timeline_task_parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:textStyle="bold" />
+            android:layout_marginStart="14dp"
+            android:fontFeatureSettings="tnum"
+            android:text="@{row.item.days == 0 ? @string/home_dday_today : @string/home_dday_format(row.item.days)}"
+            android:textColor="@{row.state == TimelineState.PAST ? @color/maru_muted : @color/maru_ink}"
+            android:textSize="17sp"
+            app:layout_constraintStart_toEndOf="@id/timeline_dot"
+            app:layout_constraintTop_toBottomOf="@id/timeline_today"
+            app:textStyle="bold"
+            tools:text="D-120" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/timeline_task_parent"
-            android:layout_width="0dp"
+        <dev.kxxcn.maru.view.custom.MaruTextView
+            android:id="@+id/timeline_date"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            app:cardBackgroundColor="@color/timelineCardBackground"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="8dp"
+            android:text="@{row.item.days == 0 ? row.dateText : @string/timeline_until(row.dateText)}"
+            android:textColor="@{row.state == TimelineState.NOW ? @color/maru_yellow_ink : @color/maru_muted}"
+            android:textSize="12sp"
+            android:visibility="@{row.dateText == null ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBaseline_toBaselineOf="@id/timeline_day"
             app:layout_constraintStart_toEndOf="@id/timeline_day"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.7">
+            tools:text="9월 25일까지" />
 
-            <LinearLayout
-                android:id="@+id/timeline_task_group"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:paddingHorizontal="20dp"
-                android:paddingBottom="20dp"
-                app:timelineView="@{item.tasks}"
-                tools:ignore="UselessLeaf" />
-
-        </androidx.cardview.widget.CardView>
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="0dp"
-            android:layout_marginVertical="20dp"
-            android:background="@color/timelineLineBackground"
-            android:minHeight="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/timeline_day"
-            app:layout_constraintStart_toStartOf="@id/timeline_day"
-            app:layout_constraintTop_toBottomOf="@id/timeline_day" />
+        <LinearLayout
+            android:id="@+id/timeline_task_group"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="6dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/timeline_dot"
+            app:layout_constraintTop_toBottomOf="@id/timeline_day"
+            app:timelineState="@{row.state}"
+            app:timelineTasks="@{row.item.tasks}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

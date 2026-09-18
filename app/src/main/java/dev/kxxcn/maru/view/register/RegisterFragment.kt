@@ -44,8 +44,6 @@ class RegisterFragment : DaggerFragment() {
 
     private var wedding = 0L
 
-    private var editable = false
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -67,7 +65,7 @@ class RegisterFragment : DaggerFragment() {
         setupLifecycle()
         setupDatePicker()
         setupFilterType()
-        setupMotionLayout()
+        setupStage()
         setupEditText()
         setupListener()
     }
@@ -103,16 +101,9 @@ class RegisterFragment : DaggerFragment() {
         }
     }
 
-    private fun setupMotionLayout() {
-        binding.registerMotion.apply {
-            transitionToEnd()
-            setTransitionCompleteListener { _, _ ->
-                if (editable) {
-                    editable = false
-                    setFiltering()
-                    transitionToEnd()
-                }
-            }
+    private fun setupStage() {
+        viewModel.isBudget.observe(viewLifecycleOwner) {
+            updateBudgetControlsVisibility()
         }
         viewModel.motion.observe(viewLifecycleOwner) {
             hideKeyboard()
@@ -133,11 +124,10 @@ class RegisterFragment : DaggerFragment() {
                     }
                 )
             } else {
-                editable = true
-                binding.registerMotion.transitionToStart()
                 if (filterType == REGISTER_NAME) {
                     name = binding.infoEdit.text.toString()
                 }
+                setFiltering()
             }
         }
     }
@@ -154,6 +144,16 @@ class RegisterFragment : DaggerFragment() {
         }
     }
 
+    private fun updateBudgetControlsVisibility() {
+        if (!::binding.isInitialized) return
+        binding.budgetControls.visibility =
+            if (::filterType.isInitialized && filterType == REGISTER_BUDGET) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
+    }
+
     private fun setFiltering() {
         when (filterType) {
             REGISTER_NAME -> REGISTER_WEDDING
@@ -162,6 +162,8 @@ class RegisterFragment : DaggerFragment() {
         }.also {
             filterType = it
             viewModel.setFiltering(it)
+            viewModel.setInputText(null)
+            updateBudgetControlsVisibility()
         }
         binding.infoEdit.text = null
     }
@@ -184,4 +186,5 @@ class RegisterFragment : DaggerFragment() {
         }
         datePicker?.show()
     }
+
 }

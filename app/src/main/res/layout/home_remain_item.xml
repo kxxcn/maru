@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="dev.kxxcn.maru.util.ConvertUtils" />
+
+        <variable
+            name="content"
+            type="dev.kxxcn.maru.data.Summary" />
+
+        <variable
+            name="viewModel"
+            type="dev.kxxcn.maru.view.home.HomeViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="20dp"
+        android:paddingTop="26dp"
+        android:paddingEnd="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@{content.hasRemainTasks ? @string/home_remain_title : @string/home_next_title}"
+                android:textAppearance="@style/TextAppearance.Maru.SectionTitle" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> viewModel.tasks()}"
+                android:padding="4dp"
+                android:text="@{content.hasRemainTasks ? @string/home_remain_more(content.remainTasks.size() - 1) : @string/home_next_more}"
+                android:textColor="@color/maru_muted"
+                android:textSize="13sp"
+                android:visibility="@{content.showHomeActionMore ? View.VISIBLE : View.GONE}"
+                tools:text="외 3건" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/home_remain_row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_card"
+            android:gravity="center_vertical"
+            android:onClick="@{() -> viewModel.tasks()}"
+            android:orientation="horizontal"
+            android:paddingStart="14dp"
+            android:paddingTop="12dp"
+            android:paddingEnd="14dp"
+            android:paddingBottom="12dp"
+            android:visibility="@{content.hasRemainTasks ? View.VISIBLE : View.GONE}">
+
+            <ImageView
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="@drawable/bg_tile_active"
+                android:importantForAccessibility="no"
+                android:padding="8dp"
+                android:scaleType="fitCenter"
+                app:resourceId="@{content.firstRemainTask.task.iconId}" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <dev.kxxcn.maru.view.custom.MaruTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{content.firstRemainTask.task.name}"
+                    android:textColor="@color/maru_ink"
+                    android:textSize="14.5sp"
+                    app:textStyle="bold"
+                    tools:text="웨딩홀" />
+
+                <dev.kxxcn.maru.view.custom.MaruTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:text="@{@string/home_remain_paid(ConvertUtils.INSTANCE.moneyText(content.firstRemainTask.totalAccounts), ConvertUtils.INSTANCE.shortDate(content.firstRemainTask.account.date))}"
+                    android:textAppearance="@style/TextAppearance.Maru.Meta"
+                    tools:text="800만원 지불, 6월 2일 기록" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:gravity="end"
+                android:orientation="vertical">
+
+                <dev.kxxcn.maru.view.custom.MaruTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFeatureSettings="tnum"
+                    android:text="@{ConvertUtils.INSTANCE.moneyText(content.firstRemainTask.account.remain)}"
+                    android:textColor="@color/maru_ink"
+                    android:textSize="19sp"
+                    app:textStyle="bold"
+                    tools:text="1,200만원" />
+
+                <dev.kxxcn.maru.view.custom.MaruTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/input_remain_money"
+                    android:textColor="@color/maru_muted"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/home_next_row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_card"
+            android:gravity="center_vertical"
+            android:onClick="@{() -> viewModel.tasks()}"
+            android:orientation="horizontal"
+            android:paddingStart="14dp"
+            android:paddingTop="12dp"
+            android:paddingEnd="14dp"
+            android:paddingBottom="12dp"
+            android:visibility="@{!content.hasRemainTasks &amp;&amp; content.hasNextTask ? View.VISIBLE : View.GONE}">
+
+            <ImageView
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="@drawable/bg_tile_ready"
+                android:importantForAccessibility="no"
+                android:padding="8dp"
+                android:scaleType="fitCenter"
+                app:resourceId="@{content.nextTask.task.iconId}" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <dev.kxxcn.maru.view.custom.MaruTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/home_next_task_label"
+                    android:textColor="@color/maru_muted"
+                    android:textSize="12sp" />
+
+                <dev.kxxcn.maru.view.custom.MaruTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="@{content.nextTask.task.name}"
+                    android:textColor="@color/maru_ink"
+                    android:textSize="15sp"
+                    app:textStyle="bold"
+                    tools:text="웨딩홀" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_arrow_right"
+                app:tint="@color/maru_muted" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/home_next_empty_row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_card_yellow_tint"
+            android:gravity="center_vertical"
+            android:onClick="@{() -> viewModel.tasks()}"
+            android:orientation="horizontal"
+            android:paddingStart="14dp"
+            android:paddingTop="14dp"
+            android:paddingEnd="14dp"
+            android:paddingBottom="14dp"
+            android:visibility="@{!content.hasRemainTasks &amp;&amp; !content.hasNextTask ? View.VISIBLE : View.GONE}">
+
+            <ImageView
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="@drawable/bg_tile_done"
+                android:importantForAccessibility="no"
+                android:padding="10dp"
+                android:src="@drawable/ic_check_mark"
+                app:tint="@color/maru_done" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <dev.kxxcn.maru.view.custom.MaruTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/home_next_empty_title"
+                    android:textColor="@color/maru_ink"
+                    android:textSize="15sp"
+                    app:textStyle="bold" />
+
+                <dev.kxxcn.maru.view.custom.MaruTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/home_next_empty_description"
+                    android:textColor="@color/maru_ink_2"
+                    android:textSize="12.5sp" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_arrow_right"
+                app:tint="@color/maru_yellow_ink" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

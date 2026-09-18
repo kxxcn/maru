@@ -36,6 +36,10 @@ class MaruRepository @Inject constructor(
         return localDataSource.updateTasks(tasks)
     }
 
+    override suspend fun updateTask(taskId: String, isCompleted: Int) {
+        localDataSource.updateTask(taskId, isCompleted)
+    }
+
     override suspend fun deleteTasks(tasks: List<Task>): Result<Any?> {
         return localDataSource.deleteTasks(tasks)
     }

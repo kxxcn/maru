@@ -14,7 +14,7 @@
         android:id="@+id/intro_motion"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white"
+        android:background="@color/maru_paper"
         app:layoutDescription="@xml/scene_intro">
 
         <dev.kxxcn.maru.view.custom.MaruTextView
@@ -29,14 +29,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="20dp"
-            android:textColor="?maruFontColor"
+            android:textColor="@color/maru_ink"
             app:underline="@{@string/restore}" />
 
         <View
             android:id="@+id/line_view"
             android:layout_width="70dp"
             android:layout_height="1dp"
-            android:background="@color/colorSecondary" />
+            android:background="@color/maru_surface_2" />
 
         <dev.kxxcn.maru.view.custom.MaruTextView
             android:id="@+id/hello_text"
@@ -56,16 +56,19 @@
             android:id="@+id/start_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/intro_start_button"
             android:gravity="center"
             android:onClick="@{() -> viewModel.start()}"
-            android:paddingStart="50dp"
-            android:paddingTop="35dp"
-            android:paddingEnd="50dp"
-            android:paddingBottom="35dp"
+            android:minHeight="52dp"
+            android:paddingStart="32dp"
+            android:paddingTop="14dp"
+            android:paddingEnd="32dp"
+            android:paddingBottom="14dp"
             android:text="@string/register_start"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
+            android:textColor="@color/maru_on_yellow"
+            android:textSize="16sp"
             app:textStyle="bold" />
 
     </androidx.constraintlayout.motion.widget.MotionLayout>

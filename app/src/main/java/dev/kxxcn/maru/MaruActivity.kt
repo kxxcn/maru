@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.WindowManager
+import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -26,9 +27,6 @@ import dev.kxxcn.maru.util.extension.setupSnackbar
 import dev.kxxcn.maru.util.preference.PreferenceUtils
 import dev.kxxcn.maru.view.base.Scrollable
 import dev.kxxcn.maru.view.base.Signinable
-import dev.kxxcn.maru.view.home.HomeFragment
-import dev.kxxcn.maru.view.more.MoreFragment
-import dev.kxxcn.maru.view.tasks.TasksFragment
 import kotlinx.coroutines.*
 import me.ibrahimsn.lib.OnItemReselectedListener
 import me.ibrahimsn.lib.OnItemSelectedListener
@@ -55,7 +53,9 @@ class MaruActivity : AppCompatActivity() {
     private val navOptions by lazy {
         NavOptions.Builder()
             .setLaunchSingleTop(true)
-            .setPopUpTo(navHostFragment.findNavController().graph.startDestinationId, false)
+            // Bottom navigation destinations are top-level screens. Keep Home as their
+            // common root so switching tabs does not create a browser-like history.
+            .setPopUpTo(R.id.home_fragment, false)
             .build()
     }
 
@@ -67,6 +67,7 @@ class MaruActivity : AppCompatActivity() {
         setContentView(binding.root)
         setupWindowInsets()
         setupNavController()
+        setupBackPressed()
         setupBottomNavigator(savedInstanceState)
         setupSnackbar()
         setupListener()
@@ -104,13 +105,26 @@ class MaruActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (current() is HomeFragment) {
-            viewModel.onBackPressed()
-        } else if (current() is TasksFragment || current() is MoreFragment) {
-            binding.bottomNavigator.setActiveItem(NAV_HOME)
-            navigate(NAV_HOME)
-        } else {
-            super.onBackPressed()
+        handleBackPressed()
+    }
+
+    private fun setupBackPressed() {
+        onBackPressedDispatcher.addCallback(this) {
+            handleBackPressed()
+        }
+    }
+
+    private fun handleBackPressed() {
+        val navController = navHostFragment.findNavController()
+        when (navController.currentDestination?.id) {
+            R.id.home_fragment -> viewModel.onBackPressed()
+            R.id.tasks_fragment, R.id.more_fragment -> {
+                binding.bottomNavigator.setActiveItem(NAV_HOME)
+                if (!navController.popBackStack(R.id.home_fragment, false)) {
+                    navController.navigate(R.id.home_fragment, null, navOptions)
+                }
+            }
+            else -> if (!navController.popBackStack()) finish()
         }
     }
 
@@ -120,12 +134,8 @@ class MaruActivity : AppCompatActivity() {
     }
 
     private fun setupTheme() {
-        val themeRes = if (PreferenceUtils.useDarkMode) R.style.AppDarkTheme else R.style.AppTheme
-        setTheme(themeRes)
-
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.statusBarColor = AttrsUtils.getColor(this, R.attr.statusBarColor)
     }
 
     private fun setupEdgeToEdge() {
@@ -162,6 +172,13 @@ class MaruActivity : AppCompatActivity() {
 
     private fun setupNavController() {
         navHostFragment.findNavController().addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.home_fragment -> NAV_HOME
+                R.id.tasks_fragment -> NAV_TASKS
+                R.id.more_fragment -> NAV_SETTINGS
+                else -> null
+            }?.let { syncBottomNavigator(it) }
+
             when (destination.label) {
                 getString(R.string.nav_label_splash),
                 getString(R.string.nav_label_intro),
@@ -193,6 +210,12 @@ class MaruActivity : AppCompatActivity() {
         }
     }
 
+    private fun syncBottomNavigator(pos: Int) {
+        if (binding.bottomNavigator.getActiveItem() != pos) {
+            binding.bottomNavigator.setActiveItem(pos)
+        }
+    }
+
     private fun setupBottomNavigator(savedInstanceState: Bundle?) {
         with(binding.bottomNavigator) {
             setOnItemSelectedListener(object : OnItemSelectedListener {
@@ -220,7 +243,7 @@ class MaruActivity : AppCompatActivity() {
     }
 
     private fun current(): Fragment? {
-        return navHostFragment.childFragmentManager.fragments.getOrNull(0)
+        return navHostFragment.childFragmentManager.primaryNavigationFragment
     }
 
     fun navigate(pos: Int) {

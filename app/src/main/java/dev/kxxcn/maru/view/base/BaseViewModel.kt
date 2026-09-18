@@ -21,9 +21,6 @@ abstract class BaseViewModel : ViewModel() {
     private val _toastText = MutableLiveData<Event<Any>>()
     val toastText: LiveData<Event<Any>> = _toastText
 
-    private val _woozooraEvent = MutableLiveData<Event<Unit>>()
-    val woozooraEvent: LiveData<Event<Unit>> = _woozooraEvent
-
     fun close() {
         _closeEvent.value = Event(Unit)
     }
@@ -39,7 +36,4 @@ abstract class BaseViewModel : ViewModel() {
         _toastText.value = Event(any)
     }
 
-    fun woozoora() {
-        _woozooraEvent.value = Event(Unit)
-    }
 }

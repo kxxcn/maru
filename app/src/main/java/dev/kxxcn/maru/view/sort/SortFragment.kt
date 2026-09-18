@@ -82,6 +82,7 @@ class SortFragment : BaseFragment() {
     private fun setupOnBackPressed() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             viewModel.saveTasks()
+            findNavController().popBackStack()
         }
     }
 

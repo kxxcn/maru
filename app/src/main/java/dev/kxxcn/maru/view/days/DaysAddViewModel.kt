@@ -9,7 +9,6 @@ import dev.kxxcn.maru.R
 import dev.kxxcn.maru.data.Day
 import dev.kxxcn.maru.data.source.DataRepository
 import dev.kxxcn.maru.data.succeeded
-import dev.kxxcn.maru.util.ColorUtils
 import dev.kxxcn.maru.util.ConvertUtils
 import dev.kxxcn.maru.util.DateUtils
 import dev.kxxcn.maru.util.extension.msToDate
@@ -57,10 +56,9 @@ class DaysAddViewModel @Inject constructor(
     private val _dayCount = MutableLiveData<Int>()
     val dayCount: LiveData<Int> = _dayCount
 
-    val whiteColorRes = android.R.color.white
-    val blackColorRes =
-        if (PreferenceUtils.useDarkMode) R.color.maruFontColorNight else android.R.color.black
-    val grayColorRes = android.R.color.darker_gray
+    val whiteColorRes = R.color.maru_ink
+    val blackColorRes = R.color.maru_ink_2
+    val grayColorRes = R.color.maru_muted
 
     val content = MutableLiveData<String>()
 
@@ -117,7 +115,7 @@ class DaysAddViewModel @Inject constructor(
                         content = content,
                         date = timeMs,
                         type = if (selectCount.value == true) COUNT else REMAIN,
-                        color = ColorUtils.getDaysColor()
+                        color = 0
                     )
                 )
                 if (result.succeeded) {

@@ -25,7 +25,7 @@
             android:id="@+id/landmark_bottom_parent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?bottomSheetBackgroundDrawable"
+            android:background="@drawable/bg_sheet"
             android:paddingBottom="20dp"
             app:behavior_peekHeight="0dp"
             app:layout_behavior="@string/bottom_sheet_behavior">
@@ -35,7 +35,7 @@
                 android:layout_width="60dp"
                 android:layout_height="5dp"
                 android:layout_marginTop="10dp"
-                android:background="?bottomSheetHandleBackgroundDrawable"
+                android:background="@drawable/bg_sheet_handle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:text="@{viewModel.bottomTitle}"
-                android:textColor="?maruFontColor"
+                android:textColor="@color/maru_ink"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/landmark_bottom_handle"
@@ -57,12 +57,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
-                android:textColor="?maruFontColor"
+                android:textColor="@color/maru_ink"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toStartOf="@id/landmark_bottom_divider"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/landmark_bottom_title"
-                app:unitText="@{@string/landmark_distance(viewModel.bottomDistance)}" />
+                app:distanceText="@{viewModel.bottomDistance}" />
 
             <dev.kxxcn.maru.view.custom.MaruTextView
                 android:id="@+id/landmark_bottom_distance_desc"
@@ -90,12 +90,12 @@
                 android:id="@+id/landmark_bottom_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="?maruFontColor"
+                android:textColor="@color/maru_ink"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/landmark_bottom_divider"
                 app:layout_constraintTop_toTopOf="@id/landmark_bottom_distance"
-                app:unitText="@{@string/landmark_time(viewModel.bottomTime)}" />
+                app:timeText="@{viewModel.bottomTime}" />
 
             <dev.kxxcn.maru.view.custom.MaruTextView
                 android:id="@+id/landmark_bottom_time_desc"
@@ -125,7 +125,7 @@
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="10dp"
                 android:text="@string/landmark_taxi_fare"
-                android:textColor="?maruFontColor"
+                android:textColor="@color/maru_ink"
                 app:layout_constraintBottom_toBottomOf="@id/landmark_bottom_taxi_icon"
                 app:layout_constraintStart_toEndOf="@id/landmark_bottom_taxi_icon"
                 app:layout_constraintTop_toTopOf="@id/landmark_bottom_taxi_icon" />
@@ -137,7 +137,7 @@
                 android:ellipsize="end"
                 android:gravity="end"
                 android:maxLines="1"
-                android:textColor="?maruFontColor"
+                android:textColor="@color/maru_ink"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="@id/landmark_bottom_taxi_icon"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -162,7 +162,7 @@
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="10dp"
                 android:text="@string/landmark_toll_fare"
-                android:textColor="?maruFontColor"
+                android:textColor="@color/maru_ink"
                 app:layout_constraintBottom_toBottomOf="@id/landmark_bottom_toll_icon"
                 app:layout_constraintStart_toEndOf="@id/landmark_bottom_toll_icon"
                 app:layout_constraintTop_toTopOf="@id/landmark_bottom_toll_icon" />
@@ -174,7 +174,7 @@
                 android:ellipsize="end"
                 android:gravity="end"
                 android:maxLines="1"
-                android:textColor="?maruFontColor"
+                android:textColor="@color/maru_ink"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="@id/landmark_bottom_toll_icon"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -199,7 +199,7 @@
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="10dp"
                 android:text="@string/landmark_fuel_price"
-                android:textColor="?maruFontColor"
+                android:textColor="@color/maru_ink"
                 app:layout_constraintBottom_toBottomOf="@id/landmark_bottom_fuel_icon"
                 app:layout_constraintStart_toEndOf="@id/landmark_bottom_fuel_icon"
                 app:layout_constraintTop_toTopOf="@id/landmark_bottom_fuel_icon" />
@@ -211,7 +211,7 @@
                 android:ellipsize="end"
                 android:gravity="end"
                 android:maxLines="1"
-                android:textColor="?maruFontColor"
+                android:textColor="@color/maru_ink"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="@id/landmark_bottom_fuel_icon"
                 app:layout_constraintEnd_toEndOf="parent"

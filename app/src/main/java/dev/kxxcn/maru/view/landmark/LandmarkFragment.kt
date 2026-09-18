@@ -73,6 +73,7 @@ class LandmarkFragment : BaseFragment(), OnMapReadyCallback, LocationListener {
         setupLifecycle()
         setupListener()
         setupOnBackPressed()
+        setupBottomSheet()
         setupLocationManager()
         setupMap()
     }
@@ -132,6 +133,26 @@ class LandmarkFragment : BaseFragment(), OnMapReadyCallback, LocationListener {
             adapter = LandmarkPagerAdapter(childFragmentManager, location)
             this.setPadding(10.px, 0, 30.px, 0)
             this.pageMargin = 10.px
+        }
+    }
+
+    private fun setupBottomSheet() {
+        BottomSheetBehavior.from(binding.landmarkBottomSheet.landmarkBottomParent).apply {
+            isHideable = true
+            state = BottomSheetBehavior.STATE_HIDDEN
+            setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+                override fun onSlide(view: View, offset: Float) {
+                    if (!::map.isInitialized) return
+                    val bottom = displayHeight() - view.top
+                    map.setContentPadding(0, 0, 0, bottom.coerceAtLeast(0))
+                }
+
+                override fun onStateChanged(view: View, newState: Int) {
+                    if (newState == BottomSheetBehavior.STATE_HIDDEN && ::map.isInitialized) {
+                        map.setContentPadding(0, 0, 0, 0)
+                    }
+                }
+            })
         }
     }
 
@@ -211,7 +232,7 @@ class LandmarkFragment : BaseFragment(), OnMapReadyCallback, LocationListener {
             val startCoords = LatLng(start[1], start[0])
             val endCoords = LatLng(end[1], end[0])
             PathOverlay().apply {
-                color = ContextCompat.getColor(context, R.color.colorSecondary)
+                color = ContextCompat.getColor(context, R.color.maru_yellow_tint)
                 coords = path
                     .map { LatLng(it[1], it[0]) }
                     .toMutableList()
@@ -244,17 +265,6 @@ class LandmarkFragment : BaseFragment(), OnMapReadyCallback, LocationListener {
     private fun expandBottomSheet() {
         with(BottomSheetBehavior.from(binding.landmarkBottomSheet.landmarkBottomParent)) {
             state = BottomSheetBehavior.STATE_EXPANDED
-            setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
-                override fun onSlide(view: View, offset: Float) {
-                    val bottom =
-                        displayHeight() - binding.landmarkBottomSheet.landmarkBottomParent.top
-                    map.setContentPadding(0, 0, 0, bottom)
-                }
-
-                override fun onStateChanged(view: View, newState: Int) {
-
-                }
-            })
         }
     }
 
@@ -268,8 +278,8 @@ class LandmarkFragment : BaseFragment(), OnMapReadyCallback, LocationListener {
     private fun onBackPressed() {
         val behavior =
             BottomSheetBehavior.from(binding.landmarkBottomSheet.landmarkBottomParent)
-        if (behavior != null && behavior.state == BottomSheetBehavior.STATE_EXPANDED) {
-            behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        if (behavior.state != BottomSheetBehavior.STATE_HIDDEN) {
+            behavior.state = BottomSheetBehavior.STATE_HIDDEN
         } else {
             findNavController().popBackStack()
         }

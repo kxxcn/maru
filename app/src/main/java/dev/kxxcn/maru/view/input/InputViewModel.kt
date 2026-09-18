@@ -1,6 +1,10 @@
 package dev.kxxcn.maru.view.input
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -11,6 +15,7 @@ import dev.kxxcn.maru.data.Result.Success
 import dev.kxxcn.maru.data.source.DataRepository
 import dev.kxxcn.maru.data.succeeded
 import dev.kxxcn.maru.di.AssistedSavedStateViewModelFactory
+import dev.kxxcn.maru.util.COMPLETED_TASK
 import dev.kxxcn.maru.util.KEY_IS_PREMIUM
 import dev.kxxcn.maru.util.KEY_TASK_ID
 import dev.kxxcn.maru.util.extension.moneyToLong
@@ -18,7 +23,8 @@ import dev.kxxcn.maru.util.preference.PreferenceUtils
 import dev.kxxcn.maru.view.base.BaseViewModel
 import kotlinx.coroutines.launch
 import java.text.NumberFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Locale
 
 class InputViewModel @AssistedInject constructor(
     private val repository: DataRepository,
@@ -41,49 +47,39 @@ class InputViewModel @AssistedInject constructor(
     private val _taskName = MutableLiveData<String>()
     val taskName: LiveData<String> = _taskName
 
-    private val _taskHusband = MutableLiveData<String>()
+    private val _taskIcon = MutableLiveData<String?>()
+    val taskIcon: LiveData<String?> = _taskIcon
+
+    private val _recordedDate = MutableLiveData<Long?>()
+    val recordedDate: LiveData<Long?> = _recordedDate
+
+    private val _taskHusband = MutableLiveData(decimalFormat.format(0))
     val taskHusband: LiveData<String> = _taskHusband
 
-    private val _taskWife = MutableLiveData<String>()
+    private val _taskWife = MutableLiveData(decimalFormat.format(0))
     val taskWife: LiveData<String> = _taskWife
 
-    private val _taskRemain = MutableLiveData<String>()
+    private val _taskRemain = MutableLiveData(decimalFormat.format(0))
     val taskRemain: LiveData<String> = _taskRemain
 
     val taskTotal: LiveData<String> = MediatorLiveData<String>().apply {
-        addSource(taskHusband) {
-            val husband = taskHusband.value.moneyToLong()
-            val wife = taskWife.value.moneyToLong()
-            value = decimalFormat.format(husband + wife)
+        fun update() {
+            value = decimalFormat.format(taskHusband.value.moneyToLong() + taskWife.value.moneyToLong())
         }
-        addSource(taskWife) {
-            val husband = taskHusband.value.moneyToLong()
-            val wife = taskWife.value.moneyToLong()
-            value = decimalFormat.format(husband + wife)
-        }
+        addSource(taskHusband) { update() }
+        addSource(taskWife) { update() }
     }
 
-    private val _unitType = MutableLiveData<Int>()
-    val unitType: LiveData<Int> = _unitType
+    private val _selectedField = MutableLiveData(InputMoneyType.HUSBAND)
+    val selectedField: LiveData<InputMoneyType> = _selectedField
 
-    private val _selectDrawableRes = MutableLiveData<Int>()
-    val selectDrawableRes: LiveData<Int> = _selectDrawableRes
+    private val _autoComplete = MutableLiveData(PreferenceUtils.autoComplete)
+    val autoComplete: LiveData<Boolean> = _autoComplete
 
-    private val _deselectDrawableRes = MutableLiveData<Int>()
-    val deselectDrawableRes: LiveData<Int> = _deselectDrawableRes
-
-    private val _progress = MutableLiveData<Boolean>()
+    private val _progress = MutableLiveData(false)
     val progress: LiveData<Boolean> = _progress
 
-    val selectedFontColorRes = android.R.color.black
-    val deselectedFontColorRes =
-        if (PreferenceUtils.useDarkMode) R.color.maruFontColorNight else android.R.color.black
-
     init {
-        _unitType.value = PreferenceUtils.unitType
-        _selectDrawableRes.value = R.drawable.input_unit_select
-        _deselectDrawableRes.value = R.drawable.input_unit_deselect
-        _progress.value = false
         start(savedStateHandle.get(KEY_TASK_ID))
     }
 
@@ -94,52 +90,56 @@ class InputViewModel @AssistedInject constructor(
             if (result is Success) {
                 with(result.data) {
                     _taskName.value = task?.name
-                    val husband = account?.husband ?: 0
-                    val wife = account?.wife ?: 0
-                    val remain = account?.remain ?: 0
-                    _taskHusband.value = decimalFormat.format(husband)
-                    _taskWife.value = decimalFormat.format(wife)
-                    _taskRemain.value = decimalFormat.format(remain)
+                    _taskIcon.value = task?.iconId
+                    _recordedDate.value = account?.date
+                    _taskHusband.value = decimalFormat.format(account?.husband ?: 0L)
+                    _taskWife.value = decimalFormat.format(account?.wife ?: 0L)
+                    _taskRemain.value = decimalFormat.format(account?.remain ?: 0L)
                 }
             }
         }
         this.taskId = taskId
     }
 
-    private fun getUnit(): Int? {
-        val id = unitType.value ?: return null
-        val type = InputFilterType.values()[id]
-        return type.unit
+    fun selectField(type: InputMoneyType) {
+        _selectedField.value = type
     }
 
-    fun increment(moneyType: InputMoneyType) {
-        when (moneyType) {
-            InputMoneyType.HUSBAND -> taskHusband.value.moneyToLong() to _taskHusband
-            InputMoneyType.WIFE -> taskWife.value.moneyToLong() to _taskWife
-            InputMoneyType.REMAIN -> taskRemain.value.moneyToLong() to _taskRemain
-        }.also { (money, liveData) ->
-            val unit = getUnit() ?: return
-            val calc = money + unit
-            liveData.value = decimalFormat.format(calc)
-        }
+    fun appendDigit(digit: String) {
+        val next = ("${currentValue()}$digit").toLongOrNull() ?: return
+        if (next > MAX_AMOUNT) return
+        setValue(next)
     }
 
-    fun decrement(moneyType: InputMoneyType) {
-        when (moneyType) {
-            InputMoneyType.HUSBAND -> taskHusband.value.moneyToLong() to _taskHusband
-            InputMoneyType.WIFE -> taskWife.value.moneyToLong() to _taskWife
-            InputMoneyType.REMAIN -> taskRemain.value.moneyToLong() to _taskRemain
-        }.also { (money, liveData) ->
-            val unit = getUnit() ?: return
-            val calc = money - unit
-            if (money <= 0 || calc < 0) return
-            liveData.value = decimalFormat.format(calc)
-        }
+    fun deleteDigit() {
+        setValue(currentValue() / 10)
     }
 
-    fun handleUnitSelection(type: InputFilterType) {
+    fun addUnit(type: InputFilterType) {
         PreferenceUtils.unitType = type.id
-        _unitType.value = type.id
+        val next = currentValue() + type.unit
+        if (next > MAX_AMOUNT) return
+        setValue(next)
+    }
+
+    fun setAutoComplete(enabled: Boolean) {
+        if (_autoComplete.value == enabled) return
+        PreferenceUtils.autoComplete = enabled
+        _autoComplete.value = enabled
+    }
+
+    private fun target(): MutableLiveData<String> {
+        return when (_selectedField.value ?: InputMoneyType.HUSBAND) {
+            InputMoneyType.HUSBAND -> _taskHusband
+            InputMoneyType.WIFE -> _taskWife
+            InputMoneyType.REMAIN -> _taskRemain
+        }
+    }
+
+    private fun currentValue(): Long = target().value.moneyToLong()
+
+    private fun setValue(value: Long) {
+        target().value = decimalFormat.format(value.coerceAtLeast(0L))
     }
 
     fun complete() {
@@ -163,6 +163,9 @@ class InputViewModel @AssistedInject constructor(
                     )
                 )
                 if (result.succeeded) {
+                    if ((autoComplete.value ?: true) && remain == 0L) {
+                        repository.updateTask(id, COMPLETED_TASK)
+                    }
                     if (savedStateHandle.get<Boolean>(KEY_IS_PREMIUM) == true) {
                         _doneEvent
                     } else {
@@ -170,8 +173,14 @@ class InputViewModel @AssistedInject constructor(
                     }.also {
                         it.value = Event(Unit)
                     }
+                } else {
+                    _progress.value = false
                 }
             }
         }
+    }
+
+    companion object {
+        private const val MAX_AMOUNT = 999_999_999_999L
     }
 }

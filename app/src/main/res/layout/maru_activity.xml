@@ -6,7 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/maruBackgroundColor">
+        android:background="@color/maru_paper">
 
         <fragment
             android:id="@+id/host_fragment"
@@ -25,7 +25,7 @@
             android:id="@+id/navigator_layout"
             android:layout_width="0dp"
             android:layout_height="70dp"
-            android:background="?attr/navigatorBackgroundDrawable"
+            android:background="@color/maru_surface"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
@@ -36,14 +36,14 @@
                 android:layout_height="match_parent"
                 app:backgroundColor="@android:color/transparent"
                 app:iconSize="24dp"
-                app:iconTint="@color/bottomIconTint"
-                app:iconTintActive="?navigatorTint"
-                app:indicatorRadius="10dp"
-                app:itemFontFamily="@font/nixgon"
+                app:iconTint="@color/maru_muted"
+                app:iconTintActive="@color/maru_on_yellow"
+                app:indicatorColor="@color/maru_yellow"
+                app:indicatorRadius="14dp"
                 app:itemPadding="10dp"
                 app:menu="@menu/menu_bottom"
                 app:sideMargins="10dp"
-                app:textColor="?navigatorTint"
+                app:textColor="@color/maru_on_yellow"
                 app:textSize="14sp" />
 
         </FrameLayout>

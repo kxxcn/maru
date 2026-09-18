@@ -5,114 +5,195 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="dev.kxxcn.maru.view.days.DaysViewModel" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/maru_paper">
 
         <ImageView
             android:id="@+id/back_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="6dp"
+            android:contentDescription="@string/cancel"
             android:onClick="@{() -> viewModel.close()}"
-            android:padding="10dp"
+            android:padding="8dp"
             android:src="@drawable/ic_arrow_left"
-            android:tint="?maruFontColor"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="ContentDescription" />
+            app:tint="@color/maru_ink" />
+
+        <ImageView
+            android:id="@+id/days_add"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/bg_icon_button"
+            android:contentDescription="@string/home_days_add"
+            android:onClick="@{() -> viewModel.add()}"
+            android:padding="10dp"
+            android:src="@drawable/ic_add"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/maru_ink" />
 
         <dev.kxxcn.maru.view.custom.MaruTextView
             android:id="@+id/days_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
             android:text="@string/more_contents_event"
-            android:textColor="?maruFontColor"
-            android:textSize="@dimen/title_text_size"
-            app:highlight="true"
+            android:textAppearance="@style/TextAppearance.Maru.ScreenTitle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/back_icon"
             app:textStyle="bold" />
 
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginEnd="10dp"
-            android:onClick="@{() -> viewModel.add()}"
-            android:padding="10dp"
-            android:src="@drawable/ic_add"
-            android:tint="?maruFontColor"
-            app:layout_constraintBottom_toBottomOf="@id/days_title"
+        <dev.kxxcn.maru.view.custom.MaruTextView
+            android:id="@+id/days_subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="@string/days_subtitle"
+            android:textAppearance="@style/TextAppearance.Maru.Meta"
+            app:layout_constraintStart_toStartOf="@id/days_title"
+            app:layout_constraintTop_toBottomOf="@id/days_title" />
+
+        <LinearLayout
+            android:id="@+id/days_wedding"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/bg_card_yellow"
+            android:gravity="bottom"
+            android:orientation="horizontal"
+            android:paddingStart="20dp"
+            android:paddingTop="18dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="18dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/days_title"
-            tools:ignore="ContentDescription" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/days_subtitle">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <dev.kxxcn.maru.view.custom.MaruTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/wedding"
+                    android:textColor="@color/maru_on_yellow"
+                    android:textSize="15sp"
+                    app:textStyle="bold" />
+
+                <dev.kxxcn.maru.view.custom.MaruTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:alpha="0.75"
+                    android:text="@{viewModel.summary.weddingDateText}"
+                    android:textColor="@color/maru_on_yellow"
+                    android:textSize="12.5sp"
+                    tools:text="2027년 1월 23일 토요일" />
+
+            </LinearLayout>
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFeatureSettings="tnum"
+                android:letterSpacing="-0.02"
+                android:text="@{viewModel.summary.weddingPassed ? @string/home_dday_passed : (viewModel.summary.weddingRemainDays > 0 ? @string/home_dday_format(viewModel.summary.weddingRemainDays) : @string/home_dday_today)}"
+                android:textColor="@color/maru_on_yellow"
+                android:textSize="@{viewModel.summary.weddingPassed ? 20f : 46f}"
+                app:textStyle="bold"
+                tools:text="D-129" />
+
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/days_list"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="6dp"
+            android:clipToPadding="false"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="24dp"
             app:daysList="@{viewModel.days}"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/days_title"
-            app:spanCount="2" />
+            app:layout_constraintTop_toBottomOf="@id/days_wedding" />
 
-        <ScrollView
+        <LinearLayout
             android:id="@+id/days_empty"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:fillViewport="true"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingStart="40dp"
+            android:paddingEnd="40dp"
+            android:visibility="@{viewModel.isEmpty ? View.VISIBLE : View.GONE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/days_title">
+            app:layout_constraintTop_toBottomOf="@id/days_wedding">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_tile_active"
+                android:importantForAccessibility="no"
+                android:padding="10dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_contents_event" />
 
-                <com.airbnb.lottie.LottieAnimationView
-                    android:id="@+id/empty_image"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_constraintBottom_toTopOf="@id/empty_desc"
-                    app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_chainStyle="packed"
-                    app:lottie_autoPlay="true"
-                    app:lottie_fileName="animation_empty_1.json"
-                    app:lottie_loop="true" />
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:id="@+id/empty_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:text="@string/home_day_card_management_schedule"
+                android:textColor="@color/maru_ink"
+                android:textSize="15.5sp"
+                app:textStyle="bold" />
 
-                <dev.kxxcn.maru.view.custom.MaruTextView
-                    android:id="@+id/empty_desc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="20dp"
-                    android:text="@string/home_day_card_management_schedule"
-                    android:textColor="?maruFontColor"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/empty_image" />
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:gravity="center"
+                android:text="@string/days_empty_desc"
+                android:textColor="@color/maru_muted"
+                android:textSize="13sp" />
 
+            <Button
+                style="@style/Widget.Maru.Button.Ink"
+                android:layout_width="wrap_content"
+                android:layout_height="44dp"
+                android:layout_marginTop="18dp"
+                android:minHeight="44dp"
+                android:onClick="@{() -> viewModel.add()}"
+                android:text="@string/home_days_add"
+                android:textSize="14sp" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </ScrollView>
-
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

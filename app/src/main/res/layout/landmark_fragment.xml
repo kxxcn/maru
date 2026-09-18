@@ -25,7 +25,7 @@
             android:onClick="@{() -> viewModel.close()}"
             android:padding="10dp"
             android:src="@drawable/ic_arrow_left"
-            android:tint="?maruFontColor"
+            android:tint="@color/maru_ink"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="ContentDescription" />
@@ -36,9 +36,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:text="@string/more_contents_landmark"
-            android:textColor="?maruFontColor"
-            android:textSize="@dimen/title_text_size"
-            app:highlight="true"
+            android:textColor="@color/maru_ink"
+            android:textAppearance="@style/TextAppearance.Maru.ScreenTitle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/back_icon"
             app:textStyle="bold" />

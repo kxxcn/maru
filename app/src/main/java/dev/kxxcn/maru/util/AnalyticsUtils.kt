@@ -5,7 +5,7 @@ import dev.kxxcn.maru.view.days.DaysFragment
 import dev.kxxcn.maru.view.edit.EditDialogFragment
 import dev.kxxcn.maru.view.edit.EditFragment
 import dev.kxxcn.maru.view.home.HomeFragment
-import dev.kxxcn.maru.view.input.InputFragment
+import dev.kxxcn.maru.view.input.InputSheetFragment
 import dev.kxxcn.maru.view.landmark.LandmarkFragment
 import dev.kxxcn.maru.view.more.MoreFragment
 import dev.kxxcn.maru.view.notice.NoticeFragment
@@ -29,7 +29,7 @@ object AnalyticsUtils {
         DaysAddFragment::class.java.name to "디데이 입력 화면",
         EditFragment::class.java.name to "프로필 정보 화면",
         EditDialogFragment::class.java.name to "프로필 편집 화면",
-        InputFragment::class.java.name to "체크리스트 입력/수정 화면",
+        InputSheetFragment::class.java.name to "체크리스트 입력/수정 화면",
         StatusFragment::class.java.name to "체크리스트 상태 화면",
         SortFragment::class.java.name to "체크리스트 편집 화면",
         LandmarkFragment::class.java.name to "셀프웨딩 화면",

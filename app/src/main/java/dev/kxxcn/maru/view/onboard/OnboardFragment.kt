@@ -55,6 +55,8 @@ class OnboardFragment : Fragment(R.layout.onboard_fragment) {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             if (binding.onboardPager.currentItem != 0) {
                 viewModel.onPrevious()
+            } else {
+                findNavController().popBackStack()
             }
         }
 

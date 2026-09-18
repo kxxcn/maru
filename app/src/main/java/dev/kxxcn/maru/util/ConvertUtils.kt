@@ -16,20 +16,20 @@ object ConvertUtils {
 
     fun moneyText(money: Long): String {
         if (money == 0L) return "0원"
+        val numberFormat = NumberFormat.getInstance(Locale.KOREA)
+        val eok = money / ONE_HUNDREDS_MILLION
+        val man = (money % ONE_HUNDREDS_MILLION) / TEN_THOUSAND
+        val won = money % TEN_THOUSAND
         return buildString {
-            val oneHundredsMillion = money / ONE_HUNDREDS_MILLION
-            val tenThousand = (money - oneHundredsMillion * ONE_HUNDREDS_MILLION) / TEN_THOUSAND
-            val other =
-                (money - oneHundredsMillion * ONE_HUNDREDS_MILLION) - tenThousand * TEN_THOUSAND
-
-            if (oneHundredsMillion != 0L) append("${oneHundredsMillion}억")
-            if (tenThousand != 0L) append("${tenThousand}만")
-            if (other != 0L) {
-                if (tenThousand != 0L || money < 10000L) {
-                    append(other)
-                }
+            if (eok != 0L) append("${numberFormat.format(eok)}억")
+            if (man != 0L) {
+                if (isNotEmpty()) append(' ')
+                append("${numberFormat.format(man)}만")
             }
-
+            if (won != 0L && eok == 0L) {
+                if (isNotEmpty()) append(' ')
+                append(numberFormat.format(won))
+            }
             append("원")
         }
     }
@@ -94,6 +94,10 @@ object ConvertUtils {
 
     fun inverseDateFormat(time: String): Long? {
         return DateUtils.DATE_FORMAT_5.parse(time)?.time
+    }
+
+    fun shortDate(time: Long?): String? {
+        return time?.let { DateUtils.DATE_FORMAT_6.format(it) }
     }
 
     fun getDaysCount(selection: Long, filterType: DaysFilterType): Pair<Int, Int> {

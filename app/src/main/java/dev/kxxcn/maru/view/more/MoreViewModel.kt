@@ -2,15 +2,15 @@ package dev.kxxcn.maru.view.more
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import dev.kxxcn.maru.Event
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.data.Result.Success
+import dev.kxxcn.maru.data.Summary
 import dev.kxxcn.maru.data.source.DataRepository
+import dev.kxxcn.maru.util.preference.PreferenceUtils
 import dev.kxxcn.maru.view.base.BaseViewModel
-import dev.kxxcn.maru.view.more.contents.ContentsItem
-import dev.kxxcn.maru.view.more.contents.ContentsItem.*
-import dev.kxxcn.maru.view.more.contents.MoreContentsAdapter
 import dev.kxxcn.maru.view.present.PresentFilterType
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,6 +18,14 @@ import javax.inject.Inject
 class MoreViewModel @Inject constructor(
     private val repository: DataRepository
 ) : BaseViewModel() {
+
+    val summary: LiveData<Summary?> = repository.observeSummary().map { it.firstOrNull() }
+
+    /** 광고 노출 여부의 단일 기준. Room의 User.premium. */
+    val isPremium: LiveData<Boolean> = summary.map { it?.user?.premium ?: false }
+
+    private val _useDarkMode = MutableLiveData(PreferenceUtils.useDarkMode)
+    val useDarkMode: LiveData<Boolean> = _useDarkMode
 
     private val _settingEvent = MutableLiveData<Event<Unit>>()
     val settingEvent: LiveData<Event<Unit>> = _settingEvent
@@ -40,8 +48,8 @@ class MoreViewModel @Inject constructor(
     private val _backupEvent = MutableLiveData<Event<Unit>>()
     val backupEvent: LiveData<Event<Unit>> = _backupEvent
 
-    private val _nightEvent = MutableLiveData<Event<Unit>>()
-    val nightEvent: LiveData<Event<Unit>> = _nightEvent
+    private val _nightEvent = MutableLiveData<Event<Boolean>>()
+    val nightEvent: LiveData<Event<Boolean>> = _nightEvent
 
     private val _daysEvent = MutableLiveData<Event<Unit>>()
     val daysEvent: LiveData<Event<Unit>> = _daysEvent
@@ -61,10 +69,6 @@ class MoreViewModel @Inject constructor(
     private val _premiumEvent = MutableLiveData<Event<Unit>>()
     val premiumEvent: LiveData<Event<Unit>> = _premiumEvent
 
-    val moreItems: List<MoreAdapter.MoreItem> = MoreAdapter.makeItems()
-
-    val contentsItems: List<ContentsItem> = MoreContentsAdapter.makeItems()
-
     fun settings() {
         _settingEvent.value = Event(Unit)
     }
@@ -77,57 +81,43 @@ class MoreViewModel @Inject constructor(
         _noticeEvent.value = Event(Unit)
     }
 
-    private fun review() {
+    fun review() {
         _storeEvent.value = Event(Unit)
     }
 
-    private fun order() {
+    fun order() {
         _orderEvent.value = Event(Unit)
     }
 
-    private fun ad() {
+    fun premium() {
         _adEvent.value = Event(Unit)
     }
 
-    private fun backup() {
+    fun backup() {
         _backupEvent.value = Event(Unit)
     }
 
-    private fun night() {
-        _nightEvent.value = Event(Unit)
+    /** 야간모드 토글. 확인 다이얼로그 없이 바로 바꾼다. */
+    fun setNight(enabled: Boolean) {
+        if (_useDarkMode.value == enabled) return
+        _useDarkMode.value = enabled
+        _nightEvent.value = Event(enabled)
     }
 
-    private fun days() {
+    fun days() {
         _daysEvent.value = Event(Unit)
     }
 
-    private fun timeline() {
+    fun timeline() {
         _timelineEvent.value = Event(Unit)
     }
 
-    private fun present(filterType: PresentFilterType) {
+    fun present(filterType: PresentFilterType) {
         _presentEvent.value = Event(filterType)
     }
 
-    private fun landmark() {
+    fun landmark() {
         _landmarkEvent.value = Event(Unit)
-    }
-
-    fun contents(filterType: ContentsItem) {
-        when (filterType) {
-            AD -> ad()
-            BACKUP -> backup()
-            NIGHT -> night()
-            REVIEW -> review()
-            DAYS -> days()
-            TIMELINE -> timeline()
-            ORDER -> order()
-            RING -> present(PresentFilterType.RING)
-            DRESS -> present(PresentFilterType.DRESS)
-            TUXEDO -> present(PresentFilterType.TUXEDO)
-            HANBOK -> present(PresentFilterType.HANBOK)
-            LANDMARK -> landmark()
-        }
     }
 
     fun handleSignInSuccess() {
@@ -138,14 +128,18 @@ class MoreViewModel @Inject constructor(
         message(R.string.failure_sign_in)
     }
 
-    fun isPremium(email: String?, filterType: ContentsItem) {
+    /**
+     * 프리미엄 여부를 확인해 백업 화면 또는 구매 화면으로 보낸다.
+     * 프리미엄 카드에서 왔고 이미 프리미엄이면 안내만 한다.
+     */
+    fun checkPremium(email: String?, forBackup: Boolean) {
         viewModelScope.launch {
             val result = repository.isPremium(email)
             if (result is Success && result.data) {
-                when (filterType) {
-                    AD -> message(R.string.apply_ad_removal_function)
-                    BACKUP -> _premiumEvent.value = Event(Unit)
-                    else -> {}
+                if (forBackup) {
+                    _premiumEvent.value = Event(Unit)
+                } else {
+                    message(R.string.apply_ad_removal_function)
                 }
             } else {
                 _purchaseEvent.value = Event(Unit)

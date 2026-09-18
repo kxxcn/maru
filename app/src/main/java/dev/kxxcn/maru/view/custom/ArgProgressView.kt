@@ -54,7 +54,7 @@ class ArcProgressView @JvmOverloads constructor(
     private lateinit var textPaint: Paint
     private lateinit var paint: Paint
 
-    private val typeface = Typeface.createFromAsset(context.assets, "nixgon.ttf")
+    private val typeface: Typeface = Typeface.DEFAULT_BOLD
 
     private var max = 0
         set(max) {

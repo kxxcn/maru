@@ -1,5 +1,7 @@
 package dev.kxxcn.maru.data
 
+import dev.kxxcn.maru.util.DateUtils
+import dev.kxxcn.maru.util.ConvertUtils
 import androidx.room.Embedded
 import androidx.room.Relation
 import java.text.NumberFormat
@@ -145,6 +147,56 @@ class Summary {
         get() {
             return totalTasks.account?.husband != 0L || totalTasks.account?.wife != 0L
         }
+
+    /** 잔금이 남은 미완료 항목. 잔금이 큰 순. */
+    val remainTasks: List<TaskDetail>
+        get() = tasks
+            .filter { it.task?.isCompleted == false && (it.account?.remain ?: 0L) > 0L }
+            .sortedByDescending { it.account?.remain ?: 0L }
+
+    val firstRemainTask: TaskDetail?
+        get() = remainTasks.firstOrNull()
+
+    val hasRemainTasks: Boolean
+        get() = remainTasks.isNotEmpty()
+
+    /** 잔금과 관계없이 우선순위가 가장 높은 미완료 준비 항목. */
+    val nextTask: TaskDetail?
+        get() = tasks
+            .filter { it.task?.isCompleted == false }
+            .minByOrNull { it.task?.priority ?: Long.MAX_VALUE }
+
+    val hasNextTask: Boolean
+        get() = nextTask != null
+
+    val showHomeActionMore: Boolean
+        get() = !hasRemainTasks || remainTasks.size > 1
+
+    val taskProgressPercent: Int
+        get() = if (totalTasksCount == 0) 0 else completedTasksCount * 100 / totalTasksCount
+
+    val groomBudgetRatio: Float
+        get() = ratioOfBudget(husbandAccounts)
+
+    val brideBudgetRatio: Float
+        get() = ratioOfBudget(wifeAccounts)
+
+    private fun ratioOfBudget(value: Long): Float {
+        val budget = user?.budget ?: 0L
+        return if (budget <= 0L) 0f else (value.toDouble() / budget.toDouble()).toFloat().coerceIn(0f, 1f)
+    }
+
+    val weddingRemainDays: Long
+        get() = ConvertUtils.computeRemain(user?.wedding) ?: 0L
+
+    val weddingPassed: Boolean
+        get() = weddingRemainDays < 0L
+
+    val weddingDateText: String
+        get() = user?.wedding?.let { DateUtils.DATE_FORMAT_7.format(it) } ?: ""
+
+    val weddingDateShort: String
+        get() = user?.wedding?.let { DateUtils.DATE_FORMAT_8.format(it) } ?: ""
 
     override fun equals(other: Any?): Boolean {
         if (other !is Summary) return false

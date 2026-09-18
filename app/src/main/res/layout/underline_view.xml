@@ -27,7 +27,7 @@
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_marginTop="10dp"
-            android:background="@color/colorTertiary"
+            android:background="@color/maru_yellow"
             app:layout_constraintEnd_toEndOf="@id/underline_text"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@id/underline_text"

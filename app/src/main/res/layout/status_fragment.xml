@@ -29,8 +29,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="@string/status_message"
-                android:textColor="?maruFontColor"
+                android:text="@{viewModel.nextTaskName == null ? @string/status_message : @string/status_next_task(viewModel.nextTaskName)}"
+                android:textColor="@color/maru_ink"
                 android:textSize="20sp" />
 
             <com.airbnb.lottie.LottieAnimationView
@@ -47,11 +47,11 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:arcProgress="@{viewModel.tasksProgress}"
-                app:arc_finished_color="@color/statusProgressFinished"
+                app:arc_finished_color="@color/maru_done"
                 app:arc_max="100"
-                app:arc_text_color="@color/statusProgressFinished"
+                app:arc_text_color="@color/maru_done"
                 app:arc_text_size="40sp"
-                app:arc_unfinished_color="@color/statusProgressUnfinished"
+                app:arc_unfinished_color="@color/maru_surface_2"
                 tools:arc_progress="25" />
 
             <dev.kxxcn.maru.view.custom.MaruTextView
@@ -59,7 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{Integer.toString(viewModel.totalTasksCount)}"
-                android:textColor="?maruFontColor"
+                android:textColor="@color/maru_ink"
                 android:textSize="25sp" />
 
             <dev.kxxcn.maru.view.custom.MaruTextView
@@ -67,21 +67,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/home_task_card_total_desc"
-                android:textColor="?maruFontColor"
+                android:textColor="@color/maru_ink"
                 android:textSize="12sp" />
 
             <View
                 android:id="@+id/status_divider_1"
                 android:layout_width="0.3dp"
                 android:layout_height="30dp"
-                android:background="@color/taskCardDivider" />
+                android:background="@color/maru_line" />
 
             <dev.kxxcn.maru.view.custom.MaruTextView
                 android:id="@+id/status_progress_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{Integer.toString(viewModel.progressTasksCount)}"
-                android:textColor="?maruFontColor"
+                android:textColor="@color/maru_ink"
                 android:textSize="25sp" />
 
             <dev.kxxcn.maru.view.custom.MaruTextView
@@ -89,21 +89,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/home_task_card_progress_desc"
-                android:textColor="?maruFontColor"
+                android:textColor="@color/maru_ink"
                 android:textSize="12sp" />
 
             <View
                 android:id="@+id/status_divider_2"
                 android:layout_width="0.3dp"
                 android:layout_height="30dp"
-                android:background="@color/taskCardDivider" />
+                android:background="@color/maru_line" />
 
             <dev.kxxcn.maru.view.custom.MaruTextView
                 android:id="@+id/status_remain_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{Integer.toString(viewModel.completedTasksCount)}"
-                android:textColor="?maruFontColor"
+                android:textColor="@color/maru_ink"
                 android:textSize="25sp" />
 
             <dev.kxxcn.maru.view.custom.MaruTextView
@@ -112,14 +112,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="@string/home_task_card_completed_desc"
-                android:textColor="?maruFontColor"
+                android:textColor="@color/maru_ink"
                 android:textSize="12sp" />
 
             <dev.kxxcn.maru.view.custom.MaruTextView
                 android:id="@+id/status_complete_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/status_complete_button"
+                android:background="@drawable/bg_button_primary"
                 android:gravity="center"
                 android:onClick="@{() -> viewModel.close()}"
                 android:padding="15dp"

@@ -89,8 +89,6 @@ class LocalDataSource(
 
     override suspend fun saveAccount(account: Account): Result<Any?> = withContext(ioDispatcher) {
         return@withContext try {
-            val isCompleted = if (account.remain == 0L) COMPLETED_TASK else UNCOMPLETED_TASK
-            updateTask(account.taskId, isCompleted)
             Success(accountDao.insertAccount(account))
         } catch (e: Exception) {
             Error(e)

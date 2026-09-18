@@ -24,6 +24,7 @@
     </data>
 
     <androidx.cardview.widget.CardView
+            app:cardBackgroundColor="@color/maru_surface"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="@{() -> viewModel.direction(longitude, latitude, item)}"

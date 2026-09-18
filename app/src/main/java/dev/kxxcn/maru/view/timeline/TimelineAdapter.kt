@@ -6,25 +6,24 @@ import dev.kxxcn.maru.view.base.LifecycleAdapter
 
 class TimelineAdapter(
     private val viewModel: TimelineViewModel
-) : LifecycleAdapter<TimelineItem, TimelineViewHolder>(TimelineCallback()) {
+) : LifecycleAdapter<TimelineRow, TimelineViewHolder>(TimelineCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TimelineViewHolder {
         return TimelineViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: TimelineViewHolder, position: Int) {
-        val item = getItem(position)
-        releasable.add(holder.bind(viewModel, item))
+        holder.bind(viewModel, getItem(position), isLast = position == itemCount - 1)
     }
 }
 
-class TimelineCallback : DiffUtil.ItemCallback<TimelineItem>() {
+class TimelineCallback : DiffUtil.ItemCallback<TimelineRow>() {
 
-    override fun areItemsTheSame(oldItem: TimelineItem, newItem: TimelineItem): Boolean {
-        return oldItem.days == newItem.days
+    override fun areItemsTheSame(oldItem: TimelineRow, newItem: TimelineRow): Boolean {
+        return oldItem.item.days == newItem.item.days
     }
 
-    override fun areContentsTheSame(oldItem: TimelineItem, newItem: TimelineItem): Boolean {
+    override fun areContentsTheSame(oldItem: TimelineRow, newItem: TimelineRow): Boolean {
         return oldItem == newItem
     }
 }

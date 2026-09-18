@@ -39,19 +39,24 @@ class AdHelper(private val context: Context) : LifecycleObserver {
         }
     }
 
-    fun createNativeAd(id: String): AdLoader.Builder {
+    fun createNativeAd(id: String, onFailed: () -> Unit = {}): AdLoader.Builder {
         val adUnitId = getAdUnitId(NATIVE, id)
         return AdLoader.Builder(context, adUnitId)
-            .withAdListener(createAdListener(NATIVE, adUnitId))
+            .withAdListener(createAdListener(NATIVE, adUnitId, onFailed))
     }
 
-    private fun createAdListener(type: AdMobFilterType, id: String) = object : AdListener() {
+    private fun createAdListener(
+        type: AdMobFilterType,
+        id: String,
+        onFailed: () -> Unit = {}
+    ) = object : AdListener() {
         override fun onAdLoaded() {
             Log.d("AdMob", "$type loaded: $id")
         }
 
         override fun onAdFailedToLoad(error: LoadAdError) {
             Log.w("AdMob", "$type failed to load: $id\n$error")
+            onFailed()
         }
     }
 

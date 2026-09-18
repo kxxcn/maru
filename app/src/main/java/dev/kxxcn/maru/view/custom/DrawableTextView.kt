@@ -7,7 +7,6 @@ import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.databinding.DrawableTextViewBinding
-import dev.kxxcn.maru.util.AttrsUtils
 import dev.kxxcn.maru.util.extension.setTint
 
 class DrawableTextView @JvmOverloads constructor(
@@ -41,10 +40,7 @@ class DrawableTextView @JvmOverloads constructor(
             .takeIf { it }
             ?.let {
                 binding?.drawableIcon?.setTint(
-                    AttrsUtils.getColor(
-                        context,
-                        R.attr.maruFontColor
-                    )
+                    ContextCompat.getColor(context, R.color.maru_ink)
                 )
             }
 

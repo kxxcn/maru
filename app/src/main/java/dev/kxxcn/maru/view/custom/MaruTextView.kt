@@ -18,7 +18,7 @@ class MaruTextView @JvmOverloads constructor(
 ) : AppCompatTextView(context, attrs, defStyleAttr) {
 
     private val paint = Paint().apply {
-        color = ContextCompat.getColor(context, R.color.colorPrimary)
+        color = ContextCompat.getColor(context, R.color.maru_yellow)
         alpha = 80
     }
 
@@ -45,9 +45,8 @@ class MaruTextView @JvmOverloads constructor(
 
         highlight = ta.getBoolean(R.styleable.MaruTextView_highlight, false)
 
-        val tf = Typeface.createFromAsset(context.assets, "nixgon.ttf")
         val style = if (value == normal) Typeface.NORMAL else Typeface.BOLD
-        setTypeface(tf, style)
+        setTypeface(Typeface.DEFAULT, style)
 
         ta.recycle()
 

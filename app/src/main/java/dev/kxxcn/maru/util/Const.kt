@@ -60,7 +60,9 @@ const val FILED_SKU = "sku"
 const val FILED_DATA = "data"
 const val FILED_TIME = "time"
 
-const val AD_INTERVAL = 7
+const val AD_FIRST_AFTER = 4
+const val AD_INTERVAL = 10
+const val AD_MAX = 2
 
 const val ANIMATION_ONBOARD_TASKS = "animation_onboard_tasks.json"
 const val ANIMATION_ONBOARD_ACCOUNT = "animation_onboard_account.json"

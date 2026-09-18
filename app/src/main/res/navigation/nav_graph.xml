@@ -94,6 +94,13 @@
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/fade_out" />
 
+        <action
+            android:id="@+id/action_home_fragment_to_notice_fragment"
+            app:destination="@id/notice_fragment"
+            app:enterAnim="@anim/slide_in_right_to_left"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+
     </fragment>
 
     <fragment
@@ -130,6 +137,16 @@
             app:enterAnim="@anim/slide_in_right_to_left"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/fade_out" />
+
+        <action
+            android:id="@+id/action_tasks_fragment_to_edit_dialog_fragment"
+            app:destination="@id/edit_dialog_fragment">
+
+            <argument
+                android:name="register_type"
+                app:argType=".view.register.RegisterFilterType" />
+
+        </action>
 
     </fragment>
 
@@ -210,9 +227,9 @@
 
     </fragment>
 
-    <fragment
+    <dialog
         android:id="@+id/input_fragment"
-        android:name="dev.kxxcn.maru.view.input.InputFragment"
+        android:name="dev.kxxcn.maru.view.input.InputSheetFragment"
         android:label="@string/nav_label_input">
 
         <action
@@ -222,7 +239,7 @@
             app:popUpTo="@id/input_fragment"
             app:popUpToInclusive="true" />
 
-    </fragment>
+    </dialog>
 
     <fragment
         android:id="@+id/status_fragment"

@@ -1,5 +1,7 @@
 package dev.kxxcn.maru
 
+import dev.kxxcn.maru.util.preference.PreferenceUtils
+import androidx.appcompat.app.AppCompatDelegate
 import com.bumptech.glide.Glide
 import com.google.android.gms.ads.MobileAds
 import com.google.firebase.FirebaseApp
@@ -18,6 +20,10 @@ open class MaruApplication : DaggerApplication() {
     override fun onCreate() {
         super.onCreate()
         PreferenceManager.init(this)
+        AppCompatDelegate.setDefaultNightMode(
+            if (PreferenceUtils.useDarkMode) AppCompatDelegate.MODE_NIGHT_YES
+            else AppCompatDelegate.MODE_NIGHT_NO
+        )
         NotificationUtils.init(this)
         FirebaseApp.initializeApp(this)
         FirebaseMessaging.getInstance().subscribeToTopic(getString(R.string.topic_notice))

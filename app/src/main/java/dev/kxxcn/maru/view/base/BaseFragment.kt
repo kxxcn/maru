@@ -58,9 +58,6 @@ abstract class BaseFragment : DaggerFragment() {
             it.closeEvent.observe(viewLifecycleOwner, EventObserver {
                 findNavController().popBackStack()
             })
-            it.woozooraEvent.observe(viewLifecycleOwner, EventObserver {
-                openApp()
-            })
             it.toastText.observe(viewLifecycleOwner, EventObserver { message ->
                 toast(message)
             })
@@ -88,15 +85,6 @@ abstract class BaseFragment : DaggerFragment() {
                 null
             )
         }
-    }
-
-    private fun openApp() {
-        val packageName = getString(R.string.woozoora_package_name)
-        requireActivity()
-            .packageManager
-            .getLaunchIntentForPackage(packageName)
-            ?.let { startActivity(it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) }
-            ?: openStore(packageName)
     }
 
     private fun toast(any: Any) {

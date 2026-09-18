@@ -8,9 +8,6 @@
         <attr name="highlight" format="boolean" />
     </declare-styleable>
 
-    <declare-styleable name="RotateSelectionView">
-        <attr name="text" format="string" />
-    </declare-styleable>
 
     <declare-styleable name="ArcProgress">
         <attr name="arc_progress" format="integer" />
@@ -46,28 +43,4 @@
     <attr name="tbOffBorderColor" format="color" />
     <attr name="tbOnColor" format="color" />
 
-    <declare-styleable name="MaruTheme">
-        <attr name="maruBackgroundColor" format="reference" />
-        <attr name="maruSecondaryBackgroundColor" format="reference" />
-        <attr name="maruFontColor" format="reference" />
-        <attr name="maruFontColorLight" format="reference" />
-        <attr name="maruSecondaryFontColor" format="reference" />
-        <attr name="statusBarColor" format="reference" />
-        <attr name="splashBackgroundDrawable" format="reference" />
-        <attr name="navigatorBackgroundDrawable" format="reference" />
-        <attr name="navigatorTint" format="reference" />
-        <attr name="rotateDefaultTextColor" format="reference" />
-        <attr name="tasksBackgroundDrawable" format="reference" />
-        <attr name="waveFontColor" format="reference" />
-        <attr name="daysAddButtonBackgroundDrawable" format="reference" />
-        <attr name="daysAddHintColor" format="reference" />
-        <attr name="tasksNativeBackgroundColor" format="reference" />
-        <attr name="tasksNativeFontColor" format="reference" />
-        <attr name="inputButtonBackgroundDrawable" format="reference" />
-        <attr name="rotateSelectionSelectText" format="reference" />
-        <attr name="rotateSelectionDefaultText" format="reference" />
-        <attr name="descriptionDividerColor" format="reference" />
-        <attr name="bottomSheetBackgroundDrawable" format="reference" />
-        <attr name="bottomSheetHandleBackgroundDrawable" format="reference" />
-    </declare-styleable>
 </resources>

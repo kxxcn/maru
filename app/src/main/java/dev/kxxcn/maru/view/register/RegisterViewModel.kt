@@ -115,6 +115,30 @@ class RegisterViewModel @Inject constructor(
         infoText.value = text
     }
 
+    fun appendBudgetDigit(digit: String) {
+        val current = infoText.value
+            ?.replace(",", "")
+            ?.toLongOrNull()
+            ?: 0L
+        val next = ("$current$digit").toLongOrNull() ?: return
+        if (next > ONE_THOUSAND_MILLION) return
+        infoText.value = numberFormat.format(next)
+    }
+
+    fun deleteBudgetDigit() {
+        val current = infoText.value
+            ?.replace(",", "")
+            ?.toLongOrNull()
+            ?: 0L
+        infoText.value = numberFormat.format(current / 10L)
+    }
+
+    fun setBudgetPreset(value: Long) {
+        if (value in 0L..ONE_THOUSAND_MILLION) {
+            infoText.value = numberFormat.format(value)
+        }
+    }
+
     private fun setFilter(
         @StringRes titleLabelString: Int,
         @StringRes currentHintLabelString: Int,

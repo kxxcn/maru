@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="maru_paper">#16181C</color>
+    <color name="maru_surface">#1F2227</color>
+    <color name="maru_surface_2">#262A30</color>
+    <color name="maru_line">#2E3339</color>
+    <color name="maru_ink">#ECEBE6</color>
+    <color name="maru_ink_2">#B7BCC4</color>
+    <color name="maru_muted">#7E848E</color>
+    <color name="maru_yellow">#FED669</color>
+    <color name="maru_yellow_ink">#F2CF6B</color>
+    <color name="maru_yellow_tint">#3A3320</color>
+    <color name="maru_groom">#8AA3EA</color>
+    <color name="maru_groom_tint">#26304A</color>
+    <color name="maru_bride">#F08A9B</color>
+    <color name="maru_bride_tint">#4A2A31</color>
+    <color name="maru_done">#6CC29B</color>
+    <color name="maru_done_tint">#22382E</color>
+    <color name="maru_on_yellow">#23262B</color>
+    <color name="maru_scrim">#80000000</color>
+</resources>

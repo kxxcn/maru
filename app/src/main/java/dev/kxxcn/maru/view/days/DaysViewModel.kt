@@ -1,13 +1,17 @@
 package dev.kxxcn.maru.view.days
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.map
+import androidx.lifecycle.switchMap
+import androidx.lifecycle.viewModelScope
 import dev.kxxcn.maru.Event
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.data.Day
+import dev.kxxcn.maru.data.Summary
 import dev.kxxcn.maru.data.source.DataRepository
 import dev.kxxcn.maru.data.succeeded
 import dev.kxxcn.maru.view.base.BaseViewModel
-import dev.kxxcn.maru.view.home.HomeAdapter
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,17 +27,14 @@ class DaysViewModel @Inject constructor(
     private val _deleteEvent = MutableLiveData<Event<Day>>()
     val deleteEvent: LiveData<Event<Day>> = _deleteEvent
 
-    private val items: LiveData<List<HomeAdapter.SummaryItem>> = _forceUpdate.switchMap { _ ->
-        repository.observeSummary().switchMap { liveData { emit(HomeAdapter.makeItems(it[0])) } }
+    val summary: LiveData<Summary?> = _forceUpdate.switchMap {
+        repository.observeSummary().map { it.firstOrNull() }
     }
 
-    val days = items.map {
-        it.firstOrNull()?.content?.days?.reversed()
-    }
+    /** 다가오는 날부터. */
+    val days: LiveData<List<Day>> = summary.map { it?.days?.sortedBy { day -> day.date } ?: emptyList() }
 
-    val isEmpty = items.map {
-        it.firstOrNull()?.content?.days?.isNullOrEmpty() ?: false
-    }
+    val isEmpty: LiveData<Boolean> = summary.map { it?.days.isNullOrEmpty() }
 
     init {
         start()
@@ -48,7 +49,7 @@ class DaysViewModel @Inject constructor(
     }
 
     fun delete(position: Int) {
-        val day = days.value?.get(position) ?: return
+        val day = days.value?.getOrNull(position) ?: return
         _deleteEvent.value = Event(day)
     }
 

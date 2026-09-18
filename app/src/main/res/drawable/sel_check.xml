@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_selected="true">
+        <layer-list>
+            <item>
+                <shape android:shape="oval">
+                    <solid android:color="@color/maru_done" />
+                </shape>
+            </item>
+            <item
+                android:width="16dp"
+                android:height="16dp"
+                android:drawable="@drawable/ic_check_mark"
+                android:gravity="center" />
+        </layer-list>
+    </item>
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="@android:color/transparent" />
+            <stroke android:width="1.5dp" android:color="@color/maru_muted" />
+        </shape>
+    </item>
+</selector>

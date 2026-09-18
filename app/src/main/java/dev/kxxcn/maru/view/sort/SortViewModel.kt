@@ -48,22 +48,22 @@ class SortViewModel @AssistedInject constructor(
 
     private val _basicColorRes = MutableLiveData<Int>().apply {
         value =
-            if (PreferenceUtils.useDarkMode) R.color.colorPrimaryDarkNight else R.color.editBasicBackground
+            R.color.maru_surface
     }
     val basicColorRes: LiveData<Int> = _basicColorRes
 
     private val _deletableColorRes = MutableLiveData<Int>().apply {
         value =
-            if (PreferenceUtils.useDarkMode) R.color.editDeletableBackgroundNight else R.color.editDeletableBackground
+            if (PreferenceUtils.useDarkMode) R.color.maru_yellow_tint else R.color.maru_yellow_tint
     }
     val deletableColorRes: LiveData<Int> = _deletableColorRes
 
     private val _deleteIconActiveColorRes =
-        MutableLiveData<Int>().apply { value = R.color.editDeleteIconActiveTint }
+        MutableLiveData<Int>().apply { value = R.color.maru_bride }
     val deleteIconActiveColorRes: LiveData<Int> = _deleteIconActiveColorRes
 
     private val _deleteIconInactiveColorRes =
-        MutableLiveData<Int>().apply { value = R.color.editDeleteIconInActiveTint }
+        MutableLiveData<Int>().apply { value = R.color.maru_muted }
     val deleteIconInactiveColorRes: LiveData<Int> = _deleteIconInactiveColorRes
 
     private val deletableSource: LiveData<String> =

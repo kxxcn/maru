@@ -4,57 +4,37 @@
 
     <data>
 
-        <import type="android.content.Context" />
-
         <variable
             name="stringRes"
             type="Integer" />
-
     </data>
 
-    <androidx.cardview.widget.CardView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/tasks_items_card_margin_start"
-        android:layout_marginEnd="@dimen/tasks_items_card_margin_end"
-        app:cardBackgroundColor="?maruBackgroundColor"
-        app:cardCornerRadius="30dp"
-        app:cardElevation="0dp">
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingTop="48dp"
+        android:paddingBottom="24dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/bg_tile_active"
+            android:importantForAccessibility="no"
+            android:padding="12dp"
+            android:src="@drawable/ic_tasks"
+            app:tint="@color/maru_yellow_ink" />
 
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/empty_image"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintDimensionRatio="1:1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:lottie_autoPlay="true"
-                app:lottie_fileName="animation_empty_1.json"
-                app:lottie_loop="true" />
+        <dev.kxxcn.maru.view.custom.MaruTextView
+            android:id="@+id/empty_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="@{stringRes != null ? context.getString(stringRes) : ``}"
+            android:textColor="@color/maru_ink_2"
+            android:textSize="15sp" />
 
-            <dev.kxxcn.maru.view.custom.MaruTextView
-                android:id="@+id/empty_text"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="20dp"
-                android:gravity="center"
-                android:lineSpacingExtra="5dp"
-                android:text="@{context.getString(stringRes)}"
-                android:textColor="?maruFontColor"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/empty_image" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.cardview.widget.CardView>
+    </LinearLayout>
 
 </layout>

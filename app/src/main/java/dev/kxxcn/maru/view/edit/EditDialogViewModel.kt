@@ -100,17 +100,9 @@ class EditDialogViewModel @AssistedInject constructor(
                 null -> throw RuntimeException("Invalid Filter Type.")
             }
             if (result.succeeded) {
-                auth.currentUser?.email
-                    ?.let { email ->
-                        val premiumResult = repository.isPremium(email)
-                        premiumResult
-                            .takeIf { it is Success }
-                            ?.let { (it as Success).data }
-                            ?: false
-                    }
-                    .takeIf { it == true }
-                    ?.let { toastAndClose() }
-                    ?: ad()
+                // 광고 게이트는 Room의 User.premium 하나로 판정한다.
+                val premium = (repository.getUsers() as? Success)?.data?.firstOrNull()?.premium == true
+                if (premium) toastAndClose() else ad()
             }
         }
     }

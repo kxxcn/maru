@@ -32,7 +32,7 @@
                 android:onClick="@{() -> viewModel.close()}"
                 android:padding="10dp"
                 android:src="@drawable/ic_arrow_left"
-                android:tint="?maruFontColor"
+                android:tint="@color/maru_ink"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="ContentDescription" />
@@ -43,14 +43,16 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:text="@string/backup_title"
-                android:textColor="?maruFontColor"
-                android:textSize="@dimen/title_text_size"
-                app:highlight="true"
+                android:textColor="@color/maru_ink"
+                android:textAppearance="@style/TextAppearance.Maru.ScreenTitle"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/back_icon"
                 app:textStyle="bold" />
 
-            <com.airbnb.lottie.LottieAnimationView
+            <ImageView
+            android:importantForAccessibility="no"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_contents_backup"
                 android:id="@+id/backup_image"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -58,10 +60,7 @@
                 app:layout_constraintDimensionRatio="16:9"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/backup_title"
-                app:lottie_autoPlay="true"
-                app:lottie_fileName="animation_backup.json"
-                app:lottie_loop="true" />
+                app:layout_constraintTop_toBottomOf="@id/backup_title" />
 
             <dev.kxxcn.maru.view.custom.MaruTextView
                 android:id="@+id/backup_email"
@@ -69,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@{viewModel.email}"
-                android:textColor="?maruFontColor"
+                android:textColor="@color/maru_ink"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -83,7 +82,7 @@
                 android:layout_marginTop="20dp"
                 android:gravity="center"
                 android:text="@string/backup_last_updated"
-                android:textColor="?maruFontColorLight"
+                android:textColor="@color/maru_muted"
                 android:textSize="18sp"
                 android:visibility="@{viewModel.noData ? View.INVISIBLE : View.VISIBLE}"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -97,7 +96,7 @@
                 android:layout_marginTop="5dp"
                 android:gravity="center"
                 android:text="@{viewModel.updatedTime}"
-                android:textColor="?maruFontColorLight"
+                android:textColor="@color/maru_muted"
                 android:textSize="14sp"
                 android:visibility="@{viewModel.noData ? View.INVISIBLE : View.VISIBLE}"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -117,7 +116,7 @@
                 android:onClick="@{() -> viewModel.ask(BackupFilterType.RESTORE)}"
                 android:padding="15dp"
                 android:text="@string/restore"
-                android:textColor="@android:color/white"
+                android:textColor="@color/maru_ink"
                 android:textSize="17sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/backup_button"
@@ -137,7 +136,7 @@
                 android:onClick="@{() -> viewModel.ask(BackupFilterType.BACKUP)}"
                 android:padding="15dp"
                 android:text="@string/backup"
-                android:textColor="@android:color/white"
+                android:textColor="@color/maru_on_yellow"
                 android:textSize="17sp"
                 android:visibility="@{viewModel.filterType == BackupFilterType.BACKUP ? View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toBottomOf="@id/restore_button"

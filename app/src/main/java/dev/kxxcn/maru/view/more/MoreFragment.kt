@@ -1,5 +1,15 @@
 package dev.kxxcn.maru.view.more
 
+import dev.kxxcn.maru.util.AdSlotBinder
+import dev.kxxcn.maru.util.AdHelper
+import dev.kxxcn.maru.GlideApp
+import com.google.android.gms.ads.nativead.NativeAdView
+import com.google.android.gms.ads.nativead.NativeAdOptions
+import com.google.android.gms.ads.nativead.NativeAd
+import com.google.android.gms.ads.VideoOptions
+import com.google.android.gms.ads.AdRequest
+import androidx.core.view.isVisible
+import androidx.appcompat.app.AppCompatDelegate
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -15,11 +25,9 @@ import dev.kxxcn.maru.EventObserver
 import dev.kxxcn.maru.MaruActivity
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.databinding.MoreFragmentBinding
-import dev.kxxcn.maru.util.LinearSpacingDecoration
 import dev.kxxcn.maru.util.REQUEST_CODE_PERMISSION_LOCATION
 import dev.kxxcn.maru.util.extension.openDialog
 import dev.kxxcn.maru.util.preference.PreferenceUtils
-import dev.kxxcn.maru.view.more.contents.ContentsItem
 import dev.kxxcn.maru.view.signin.SignInFragment
 import javax.inject.Inject
 
@@ -56,8 +64,8 @@ class MoreFragment : SignInFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupLifecycle()
-        setupListAdapter()
         setupListener()
+        setupAd()
     }
 
     override fun onRequestPermissionsResult(
@@ -72,9 +80,7 @@ class MoreFragment : SignInFragment() {
     }
 
     override fun onDestroyView() {
-        if (::binding.isInitialized) {
-            binding.moreList.adapter = null
-        }
+        releaseAd()
         super.onDestroyView()
     }
 
@@ -88,15 +94,6 @@ class MoreFragment : SignInFragment() {
 
     private fun setupLifecycle() {
         binding.lifecycleOwner = viewLifecycleOwner
-    }
-
-    private fun setupListAdapter() {
-        val viewModel = binding.viewModel ?: return
-        with(binding.moreList) {
-            addItemDecoration(LinearSpacingDecoration(), 0)
-            val activity = requireActivity() as MaruActivity
-            adapter = MoreAdapter(viewModel, activity)
-        }
     }
 
     private fun setupListener() {
@@ -123,20 +120,20 @@ class MoreFragment : SignInFragment() {
         })
         viewModel.adEvent.observe(viewLifecycleOwner, EventObserver {
             if (isSignedIn()) {
-                viewModel.isPremium(auth.currentUser?.email, ContentsItem.AD)
+                viewModel.checkPremium(auth.currentUser?.email, forBackup = false)
             } else {
                 signInDialog()
             }
         })
         viewModel.backupEvent.observe(viewLifecycleOwner, EventObserver {
             if (isSignedIn()) {
-                viewModel.isPremium(auth.currentUser?.email, ContentsItem.BACKUP)
+                viewModel.checkPremium(auth.currentUser?.email, forBackup = true)
             } else {
                 signInDialog()
             }
         })
-        viewModel.nightEvent.observe(viewLifecycleOwner, EventObserver {
-            nightDialog()
+        viewModel.nightEvent.observe(viewLifecycleOwner, EventObserver { enabled ->
+            applyNight(enabled)
         })
         viewModel.daysEvent.observe(viewLifecycleOwner, EventObserver {
             MoreFragmentDirections.actionMoreFragmentToDayFragment().also {
@@ -190,8 +187,64 @@ class MoreFragment : SignInFragment() {
     }
 
     private fun switch() {
-        PreferenceUtils.useDarkMode = !PreferenceUtils.useDarkMode
-        activity?.recreate()
+        applyNight(!PreferenceUtils.useDarkMode)
+    }
+
+    private fun applyNight(useDarkMode: Boolean) {
+        if (PreferenceUtils.useDarkMode == useDarkMode) return
+        PreferenceUtils.useDarkMode = useDarkMode
+        AppCompatDelegate.setDefaultNightMode(
+            if (useDarkMode) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
+        )
+    }
+
+    private var nativeAd: NativeAd? = null
+
+    /** 더보기 하단 미디어형 광고 슬롯. 프리미엄이면 싣지 않는다. */
+    private fun setupAd() {
+        viewModel.isPremium.observe(viewLifecycleOwner) { premium ->
+            if (premium) {
+                releaseAd()
+                binding.moreNativeAdContainer.isVisible = false
+            } else if (nativeAd == null) {
+                loadAd()
+            }
+        }
+    }
+
+    private fun loadAd() {
+        val context = context ?: return
+        val container = binding.moreNativeAdContainer
+        val adHelper = AdHelper(context)
+        val adOptions = NativeAdOptions.Builder()
+            .setVideoOptions(VideoOptions.Builder().setStartMuted(true).build())
+            .build()
+        adHelper.createNativeAd(
+            getString(R.string.admob_native_more_id),
+            onFailed = { container.isVisible = false }
+        ).forNativeAd { ad ->
+            if (!isAdded) {
+                ad.destroy()
+                return@forNativeAd
+            }
+            val adView = LayoutInflater.from(context)
+                .inflate(R.layout.ad_slot_view, container, false) as? NativeAdView
+                ?: return@forNativeAd
+            nativeAd?.destroy()
+            nativeAd = ad
+            AdSlotBinder.bind(adView, ad, GlideApp.with(this), showMedia = true)
+            container.removeAllViews()
+            container.addView(adView)
+            container.isVisible = true
+        }.withNativeAdOptions(adOptions).build().loadAd(AdRequest.Builder().build())
+    }
+
+    private fun releaseAd() {
+        nativeAd?.destroy()
+        nativeAd = null
+        if (::binding.isInitialized) {
+            binding.moreNativeAdContainer.removeAllViews()
+        }
     }
 
     private fun contactDialog() {

@@ -20,8 +20,18 @@ fun setLandmarkImage(view: ImageView, imageRes: Int) {
 }
 
 @BindingAdapter("app:unitText")
-fun setUnitText(view: TextView, text: String) {
+fun setUnitText(view: TextView, text: String?) {
+    if (text.isNullOrBlank() || text.contains("null", ignoreCase = true)) {
+        view.setText(R.string.landmark_value_not_found)
+        return
+    }
+
     val end = text.indexOf(" ")
+    if (end <= 0) {
+        view.text = text
+        return
+    }
+
     SpannableStringBuilder(text).apply {
         setSpan(
             RelativeSizeSpan(2f),
@@ -34,13 +44,32 @@ fun setUnitText(view: TextView, text: String) {
     }
 }
 
+@BindingAdapter("app:distanceText")
+fun setDistanceText(view: TextView, distance: Int?) {
+    setUnitText(
+        view,
+        distance?.let { view.context.getString(R.string.landmark_distance, it) }
+    )
+}
+
+@BindingAdapter("app:timeText")
+fun setTimeText(view: TextView, time: Long?) {
+    setUnitText(
+        view,
+        time?.let { view.context.getString(R.string.landmark_time, it) }
+    )
+}
+
 @BindingAdapter("app:priceText")
-fun setPriceText(view: TextView, price: Int) {
-    val context = view.context ?: return
-    view.text = try {
-        val numberFormat = NumberFormat.getInstance(Locale.KOREA)
-        context.getString(R.string.landmark_fare_format, numberFormat.format(price))
-    } catch (e: Exception) {
-        context.getString(R.string.landmark_fare_not_found)
+fun setPriceText(view: TextView, price: Int?) {
+    view.text = if (price == null) {
+        view.context.getString(R.string.landmark_value_not_found)
+    } else {
+        try {
+            val numberFormat = NumberFormat.getInstance(Locale.KOREA)
+            view.context.getString(R.string.landmark_fare_format, numberFormat.format(price))
+        } catch (e: Exception) {
+            view.context.getString(R.string.landmark_fare_not_found)
+        }
     }
 }

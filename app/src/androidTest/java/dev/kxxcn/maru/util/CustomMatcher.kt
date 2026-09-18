@@ -5,31 +5,10 @@ import android.content.res.Resources.NotFoundException
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.matcher.BoundedMatcher
-import dev.kxxcn.maru.view.custom.RotateSelectionView
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.TypeSafeMatcher
 
-
-class RotateSelectionViewMatcher {
-
-    companion object {
-
-        fun withText(expected: String) =
-            object : BoundedMatcher<View, RotateSelectionView>(RotateSelectionView::class.java) {
-                override fun describeTo(description: Description?) {
-                    description?.let {
-                        it.appendText("Checking the matcher on received view")
-                        it.appendText("With expectedStatus= $expected")
-                    }
-                }
-
-                override fun matchesSafely(view: RotateSelectionView?): Boolean {
-                    return view?.getSelectionContent() == expected
-                }
-            }
-    }
-}
 
 class RecyclerViewMatcher {
 

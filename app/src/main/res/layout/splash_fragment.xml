@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?colorPrimary">
+    android:background="@color/maru_yellow">
 
     <ImageView
         android:layout_width="130dp"
         android:layout_height="130dp"
         android:alpha="0.5"
-        android:background="?splashBackgroundDrawable"
+        android:background="@color/maru_paper"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription" />
@@ -30,7 +30,7 @@
         android:layout_width="130dp"
         android:layout_height="130dp"
         android:alpha="0.5"
-        android:background="?splashBackgroundDrawable"
+        android:background="@color/maru_paper"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="ContentDescription" />

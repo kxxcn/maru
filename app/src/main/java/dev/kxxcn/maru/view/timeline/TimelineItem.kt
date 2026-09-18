@@ -1,5 +1,7 @@
 package dev.kxxcn.maru.view.timeline
 
+import java.util.concurrent.TimeUnit
+import dev.kxxcn.maru.util.DateUtils
 import androidx.annotation.StringRes
 import dev.kxxcn.maru.R
 
@@ -177,3 +179,33 @@ data class TimelineTask(
     @StringRes val nameRes: Int,
     @StringRes val contentRes: Int
 )
+
+enum class TimelineState { PAST, NOW, FUTURE }
+
+/**
+ * 화면에 그리는 시기 묶음. 결혼 예정일과 오늘 남은 일수로 지남/현재/예정을 정한다.
+ */
+data class TimelineRow(
+    val item: TimelineItem,
+    val state: TimelineState,
+    val dateText: String?,
+    val todayText: String?
+) {
+    companion object {
+        fun build(items: List<TimelineItem>, wedding: Long?, remainDays: Long?): List<TimelineRow> {
+            val remain = remainDays ?: Long.MAX_VALUE
+            val nowDays = items.map { it.days }.filter { it <= remain }.maxOrNull()
+            return items.map { item ->
+                val state = when {
+                    item.days > remain -> TimelineState.PAST
+                    item.days == nowDays -> TimelineState.NOW
+                    else -> TimelineState.FUTURE
+                }
+                val dateText = wedding?.let { w ->
+                    DateUtils.DATE_FORMAT_6.format(w - TimeUnit.DAYS.toMillis(item.days.toLong()))
+                }
+                TimelineRow(item, state, dateText, if (state == TimelineState.NOW) remain.toString() else null)
+            }
+        }
+    }
+}

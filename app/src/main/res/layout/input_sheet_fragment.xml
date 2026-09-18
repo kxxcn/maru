@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="dev.kxxcn.maru.view.input.InputMoneyType" />
+
+        <import type="dev.kxxcn.maru.view.input.InputFilterType" />
+
+        <import type="dev.kxxcn.maru.util.ConvertUtils" />
+
+        <variable
+            name="viewModel"
+            type="dev.kxxcn.maru.view.input.InputViewModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/input_sheet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_sheet"
+        android:orientation="vertical"
+        android:paddingStart="20dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="24dp">
+
+        <View
+            android:layout_width="40dp"
+            android:layout_height="4dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_sheet_handle" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/input_icon"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="@drawable/bg_tile_active"
+                android:importantForAccessibility="no"
+                android:padding="8dp"
+                android:scaleType="fitCenter"
+                app:resourceId="@{viewModel.taskIcon}" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <dev.kxxcn.maru.view.custom.MaruTextView
+                    android:id="@+id/input_task_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.taskName}"
+                    android:textColor="@color/maru_ink"
+                    android:textSize="17sp"
+                    app:textStyle="bold"
+                    tools:text="웨딩홀" />
+
+                <dev.kxxcn.maru.view.custom.MaruTextView
+                    android:id="@+id/input_recorded"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:text="@{viewModel.recordedDate == null ? @string/input_no_record : @string/input_first_recorded(ConvertUtils.INSTANCE.shortDate(viewModel.recordedDate))}"
+                    android:textAppearance="@style/TextAppearance.Maru.Meta"
+                    tools:text="6월 2일 처음 기록" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/input_close_icon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:contentDescription="@string/cancel"
+                android:onClick="@{() -> viewModel.close()}"
+                android:padding="10dp"
+                android:src="@drawable/ic_close"
+                app:tint="@color/maru_ink" />
+
+        </LinearLayout>
+
+        <dev.kxxcn.maru.view.custom.MaruTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/input_total"
+            android:textAppearance="@style/TextAppearance.Maru.Meta" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:id="@+id/input_task_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFeatureSettings="tnum"
+                android:letterSpacing="-0.01"
+                android:text="@{viewModel.taskTotal}"
+                android:textColor="@color/maru_ink"
+                android:textSize="32sp"
+                app:textStyle="bold"
+                tools:text="8,000,000" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginBottom="6dp"
+                android:text="@string/won"
+                android:textColor="@color/maru_ink"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/input_husband_field"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="14dp"
+            android:background="@{viewModel.selectedField == InputMoneyType.HUSBAND ? @drawable/bg_field_on : @drawable/bg_field}"
+            android:gravity="center_vertical"
+            android:onClick="@{() -> viewModel.selectField(InputMoneyType.HUSBAND)}"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
+
+            <View
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:background="@drawable/dot_groom" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:text="@string/input_field_husband"
+                android:textColor="@color/maru_ink_2"
+                android:textSize="14sp" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:id="@+id/input_husband_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFeatureSettings="tnum"
+                android:text="@{viewModel.taskHusband}"
+                android:textColor="@color/maru_ink"
+                android:textSize="20sp"
+                app:textStyle="bold" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:text="@string/won"
+                android:textColor="@color/maru_ink"
+                android:textSize="13sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/input_wife_field"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            android:background="@{viewModel.selectedField == InputMoneyType.WIFE ? @drawable/bg_field_on : @drawable/bg_field}"
+            android:gravity="center_vertical"
+            android:onClick="@{() -> viewModel.selectField(InputMoneyType.WIFE)}"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
+
+            <View
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:background="@drawable/dot_bride" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:text="@string/input_field_wife"
+                android:textColor="@color/maru_ink_2"
+                android:textSize="14sp" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:id="@+id/input_wife_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFeatureSettings="tnum"
+                android:text="@{viewModel.taskWife}"
+                android:textColor="@color/maru_ink"
+                android:textSize="20sp"
+                app:textStyle="bold" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:text="@string/won"
+                android:textColor="@color/maru_ink"
+                android:textSize="13sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/input_remain_field"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            android:background="@{viewModel.selectedField == InputMoneyType.REMAIN ? @drawable/bg_field_on : @drawable/bg_field}"
+            android:gravity="center_vertical"
+            android:onClick="@{() -> viewModel.selectField(InputMoneyType.REMAIN)}"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
+
+            <View
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:background="@drawable/dot_yellow" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:text="@string/input_remain_money"
+                android:textColor="@color/maru_ink_2"
+                android:textSize="14sp" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:id="@+id/input_remain_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFeatureSettings="tnum"
+                android:text="@{viewModel.taskRemain}"
+                android:textColor="@color/maru_ink"
+                android:textSize="20sp"
+                app:textStyle="bold" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:text="@string/won"
+                android:textColor="@color/maru_ink"
+                android:textSize="13sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:id="@+id/input_unit_ten_thousand"
+                style="@style/Widget.Maru.Chip"
+                android:layout_width="0dp"
+                android:layout_height="38dp"
+                android:layout_weight="1"
+                android:onClick="@{() -> viewModel.addUnit(InputFilterType.TEN_THOUSAND)}"
+                android:text="@string/input_unit1" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:id="@+id/input_unit_one_hundred_thousand"
+                style="@style/Widget.Maru.Chip"
+                android:layout_width="0dp"
+                android:layout_height="38dp"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:onClick="@{() -> viewModel.addUnit(InputFilterType.HUNDRED_THOUSAND)}"
+                android:text="@string/input_unit2" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:id="@+id/input_unit_one_million"
+                style="@style/Widget.Maru.Chip"
+                android:layout_width="0dp"
+                android:layout_height="38dp"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:onClick="@{() -> viewModel.addUnit(InputFilterType.ONE_MILLION)}"
+                android:text="@string/input_unit3" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:id="@+id/input_unit_ten_million"
+                style="@style/Widget.Maru.Chip"
+                android:layout_width="0dp"
+                android:layout_height="38dp"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:onClick="@{() -> viewModel.addUnit(InputFilterType.TEN_MILLION)}"
+                android:text="@string/input_unit4" />
+
+        </LinearLayout>
+
+        <GridLayout
+            android:id="@+id/input_keypad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:columnCount="3">
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                style="@style/Widget.Maru.Key"
+                android:layout_width="0dp"
+                android:layout_columnWeight="1"
+                android:onClick="@{() -> viewModel.appendDigit(`1`)}"
+                android:text="1" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                style="@style/Widget.Maru.Key"
+                android:layout_width="0dp"
+                android:layout_columnWeight="1"
+                android:onClick="@{() -> viewModel.appendDigit(`2`)}"
+                android:text="2" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                style="@style/Widget.Maru.Key"
+                android:layout_width="0dp"
+                android:layout_columnWeight="1"
+                android:onClick="@{() -> viewModel.appendDigit(`3`)}"
+                android:text="3" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                style="@style/Widget.Maru.Key"
+                android:layout_width="0dp"
+                android:layout_columnWeight="1"
+                android:onClick="@{() -> viewModel.appendDigit(`4`)}"
+                android:text="4" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                style="@style/Widget.Maru.Key"
+                android:layout_width="0dp"
+                android:layout_columnWeight="1"
+                android:onClick="@{() -> viewModel.appendDigit(`5`)}"
+                android:text="5" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                style="@style/Widget.Maru.Key"
+                android:layout_width="0dp"
+                android:layout_columnWeight="1"
+                android:onClick="@{() -> viewModel.appendDigit(`6`)}"
+                android:text="6" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                style="@style/Widget.Maru.Key"
+                android:layout_width="0dp"
+                android:layout_columnWeight="1"
+                android:onClick="@{() -> viewModel.appendDigit(`7`)}"
+                android:text="7" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                style="@style/Widget.Maru.Key"
+                android:layout_width="0dp"
+                android:layout_columnWeight="1"
+                android:onClick="@{() -> viewModel.appendDigit(`8`)}"
+                android:text="8" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                style="@style/Widget.Maru.Key"
+                android:layout_width="0dp"
+                android:layout_columnWeight="1"
+                android:onClick="@{() -> viewModel.appendDigit(`9`)}"
+                android:text="9" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                style="@style/Widget.Maru.Key"
+                android:layout_width="0dp"
+                android:layout_columnWeight="1"
+                android:onClick="@{() -> viewModel.appendDigit(`00`)}"
+                android:text="00" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                style="@style/Widget.Maru.Key"
+                android:layout_width="0dp"
+                android:layout_columnWeight="1"
+                android:onClick="@{() -> viewModel.appendDigit(`0`)}"
+                android:text="0" />
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:id="@+id/input_delete"
+                style="@style/Widget.Maru.Key"
+                android:layout_width="0dp"
+                android:layout_columnWeight="1"
+                android:onClick="@{() -> viewModel.deleteDigit()}"
+                android:text="@string/input_delete_digit"
+                android:textSize="15sp" />
+
+        </GridLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/input_auto_complete"
+                android:textColor="@color/maru_ink_2"
+                android:textSize="13.5sp" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/input_auto_complete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@{viewModel.autoComplete}"
+                android:onCheckedChanged="@{(v, checked) -> viewModel.setAutoComplete(checked)}"
+                app:thumbTint="@color/maru_surface"
+                app:trackTint="@color/sel_switch_track" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="12dp">
+
+            <Button
+                android:id="@+id/input_task_complete"
+                style="@style/Widget.Maru.Button.Primary"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:onClick="@{() -> viewModel.complete()}"
+                android:text="@string/input_save" />
+
+            <ProgressBar
+                android:id="@+id/input_progress"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:visibility="@{viewModel.progress ? View.VISIBLE : View.GONE}" />
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+</layout>

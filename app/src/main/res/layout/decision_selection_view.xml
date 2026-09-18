@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardBackgroundColor="?maruBackgroundColor"
-    app:cardCornerRadius="30dp">
+    app:cardBackgroundColor="@color/maru_paper"
+    app:cardCornerRadius="20dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginTop="20dp"
-            android:tint="@color/colorAccent"
+            android:tint="@color/maru_yellow"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -29,7 +29,7 @@
             android:gravity="center"
             android:lineSpacingExtra="5dp"
             android:padding="10dp"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/maru_yellow"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/decision_icon"
@@ -42,7 +42,7 @@
             android:gravity="center"
             android:paddingVertical="20dp"
             android:text="@string/no"
-            android:textColor="?maruFontColor"
+            android:textColor="@color/maru_ink"
             app:layout_constraintEnd_toStartOf="@id/decision_yes"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/decision_text" />
@@ -54,7 +54,7 @@
             android:gravity="center"
             android:paddingVertical="20dp"
             android:text="@string/yes"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/maru_yellow"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/decision_no"
             app:layout_constraintTop_toTopOf="@id/decision_no"

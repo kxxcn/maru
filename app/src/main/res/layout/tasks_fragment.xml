@@ -5,100 +5,114 @@
 
     <data>
 
-        <import type="dev.kxxcn.maru.view.tasks.TasksFilterType" />
-
         <variable
             name="viewModel"
             type="dev.kxxcn.maru.view.tasks.TasksViewModel" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?maruBackgroundColor"
-        android:onClick="@{() -> viewModel.showNavigator()}">
+        android:background="@color/maru_paper">
 
         <dev.kxxcn.maru.view.custom.MaruTextView
             android:id="@+id/tasks_title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
             android:text="@string/menu_tasks"
-            android:textColor="?maruFontColor"
-            android:textSize="@dimen/title_text_size"
-            app:highlight="true"
+            android:textAppearance="@style/TextAppearance.Maru.ScreenTitle"
+            app:layout_constraintEnd_toStartOf="@id/tasks_edit"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:textStyle="bold" />
+
+        <dev.kxxcn.maru.view.custom.MaruTextView
+            android:id="@+id/tasks_subtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="@{@string/tasks_completed_summary(viewModel.totalCount, viewModel.completedCount)}"
+            android:textAppearance="@style/TextAppearance.Maru.Meta"
+            app:layout_constraintEnd_toEndOf="@id/tasks_title"
+            app:layout_constraintStart_toStartOf="@id/tasks_title"
+            app:layout_constraintTop_toBottomOf="@id/tasks_title"
+            tools:text="18개 중 5개 완료" />
 
         <ImageView
             android:id="@+id/tasks_edit"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="20dp"
-            android:background="@drawable/task_base_oval"
+            android:background="@drawable/bg_icon_button"
+            android:contentDescription="@string/tasks_sort"
             android:onClick="@{() -> viewModel.edit()}"
             android:padding="10dp"
-            android:src="@drawable/ic_edit"
-            android:tint="@color/colorSecondary"
-            app:layout_constraintBottom_toBottomOf="@id/tasks_title"
+            android:src="@drawable/ic_sort"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tasks_title"
-            tools:ignore="ContentDescription" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/maru_ink" />
 
-        <FrameLayout
-            android:id="@+id/tasks_content_parent"
+        <ProgressBar
+            android:id="@+id/tasks_progress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="6dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="20dp"
+            android:max="100"
+            android:progress="@{viewModel.progressPercent}"
+            android:progressDrawable="@drawable/progress_done"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tasks_subtitle" />
+
+        <dev.kxxcn.maru.view.custom.SegmentView
+            android:id="@+id/tasks_segment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tasks_progress" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/tasks_list"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="20dp"
-            android:background="?tasksBackgroundDrawable"
+            android:layout_marginTop="6dp"
+            android:clipToPadding="false"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="120dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tasks_total_desc"
-            app:layout_constraintTop_toBottomOf="@id/tasks_edit">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/tasks_list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:tasks="@{viewModel.tasks}" />
-
-        </FrameLayout>
-
-        <dev.kxxcn.maru.view.custom.RotateSelectionView
-            android:id="@+id/tasks_total_desc"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:onClick="@{() -> viewModel.setFiltering(TasksFilterType.ALL_TASKS)}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tasks_content_parent"
-            app:selection="@{viewModel.filterType == TasksFilterType.ALL_TASKS}"
-            app:text="@string/tasks_total_desc" />
+            app:layout_constraintTop_toBottomOf="@id/tasks_segment"
+            app:tasks="@{viewModel.tasks}" />
 
-        <dev.kxxcn.maru.view.custom.RotateSelectionView
-            android:id="@+id/tasks_progress_desc"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:onClick="@{() -> viewModel.setFiltering(TasksFilterType.ACTIVE_TASKS)}"
-            app:layout_constraintStart_toStartOf="@id/tasks_total_desc"
-            app:layout_constraintTop_toBottomOf="@id/tasks_total_desc"
-            app:selection="@{viewModel.filterType == TasksFilterType.ACTIVE_TASKS}"
-            app:text="@string/tasks_progress_desc" />
-
-        <dev.kxxcn.maru.view.custom.RotateSelectionView
-            android:id="@+id/tasks_completed_desc"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:onClick="@{() -> viewModel.setFiltering(TasksFilterType.COMPLETED_TASKS)}"
-            app:layout_constraintStart_toStartOf="@id/tasks_total_desc"
-            app:layout_constraintTop_toBottomOf="@id/tasks_progress_desc"
-            app:selection="@{viewModel.filterType == TasksFilterType.COMPLETED_TASKS}"
-            app:text="@string/tasks_completed_desc" />
+        <ImageView
+            android:id="@+id/tasks_add"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/bg_fab"
+            android:contentDescription="@string/tasks_add"
+            android:elevation="8dp"
+            android:onClick="@{() -> viewModel.add()}"
+            android:padding="16dp"
+            android:src="@drawable/ic_add"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:tint="@color/maru_paper" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

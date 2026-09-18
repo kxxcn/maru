@@ -16,4 +16,10 @@ object DateUtils {
     val DATE_FORMAT_4 = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
     val DATE_FORMAT_5 = SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault())
+
+    val DATE_FORMAT_6 = SimpleDateFormat("M월 d일", Locale.getDefault())
+
+    val DATE_FORMAT_7 = SimpleDateFormat("yyyy년 M월 d일 EEEE", Locale.KOREAN)
+
+    val DATE_FORMAT_8 = SimpleDateFormat("yyyy년 M월 d일", Locale.KOREAN)
 }

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/task_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:minHeight="72dp"
+        android:paddingTop="14dp"
+        android:paddingBottom="14dp">
+
+        <ImageView
+            android:id="@+id/task_check"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@null"
+            android:contentDescription="@string/tasks_row_complete"
+            android:padding="11dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/sel_check"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/task_tile"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_marginStart="4dp"
+            android:background="@drawable/bg_tile_ready"
+            android:importantForAccessibility="no"
+            android:padding="8dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/task_check"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_hall" />
+
+        <dev.kxxcn.maru.view.custom.MaruTextView
+            android:id="@+id/task_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="8dp"
+            android:textColor="@color/maru_ink"
+            android:textSize="15.5sp"
+            app:layout_constraintEnd_toStartOf="@id/task_chevron"
+            app:layout_constraintStart_toEndOf="@id/task_tile"
+            app:layout_constraintTop_toTopOf="parent"
+            app:textStyle="bold"
+            tools:text="웨딩홀" />
+
+        <dev.kxxcn.maru.view.custom.MaruTextView
+            android:id="@+id/task_meta"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:textAppearance="@style/TextAppearance.Maru.Meta"
+            app:layout_constraintEnd_toEndOf="@id/task_name"
+            app:layout_constraintStart_toStartOf="@id/task_name"
+            app:layout_constraintTop_toBottomOf="@id/task_name"
+            tools:text="800만원   잔금 1,200만원" />
+
+        <dev.kxxcn.maru.view.custom.SplitBarView
+            android:id="@+id/task_split"
+            android:layout_width="0dp"
+            android:layout_height="6dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="40dp"
+            app:layout_constraintEnd_toEndOf="@id/task_name"
+            app:layout_constraintStart_toStartOf="@id/task_name"
+            app:layout_constraintTop_toBottomOf="@id/task_meta"
+            app:layout_constraintWidth_max="180dp" />
+
+        <ImageView
+            android:id="@+id/task_chevron"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_arrow_right"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/maru_muted" />
+
+        <View
+            android:id="@+id/task_divider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="14dp"
+            android:background="@color/maru_line"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintVertical_bias="1" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

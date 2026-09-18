@@ -274,7 +274,7 @@ suspend fun RecyclerView.capture(): Bitmap? {
             .let {
                 val canvas = Canvas(it)
                 val color = if (PreferenceUtils.useDarkMode) {
-                    ContextCompat.getColor(context, R.color.colorPrimaryDarkNight)
+                    ContextCompat.getColor(context, R.color.maru_surface)
                 } else {
                     Color.WHITE
                 }

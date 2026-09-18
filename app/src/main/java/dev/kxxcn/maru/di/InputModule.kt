@@ -5,14 +5,14 @@ import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import dagger.multibindings.IntoMap
-import dev.kxxcn.maru.view.input.InputFragment
+import dev.kxxcn.maru.view.input.InputSheetFragment
 import dev.kxxcn.maru.view.input.InputViewModel
 
 @Module
 abstract class InputModule {
 
     @ContributesAndroidInjector(modules = [ViewModelBuilder::class])
-    internal abstract fun inputFragment(): InputFragment
+    internal abstract fun inputSheetFragment(): InputSheetFragment
 
     @Binds
     @IntoMap

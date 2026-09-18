@@ -1,5 +1,6 @@
 package dev.kxxcn.maru.view.custom
 
+import androidx.core.content.ContextCompat
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -7,7 +8,6 @@ import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import dev.kxxcn.maru.R
 import dev.kxxcn.maru.databinding.UnderlineViewBinding
-import dev.kxxcn.maru.util.AttrsUtils
 import org.jetbrains.anko.textColor
 
 class UnderlineTextView @JvmOverloads constructor(
@@ -32,10 +32,10 @@ class UnderlineTextView @JvmOverloads constructor(
     fun handleFilterSelection(isSelect: Boolean) {
         if (isSelect) {
             binding.underline.visibility = View.VISIBLE
-            AttrsUtils.getColor(context, R.attr.rotateSelectionSelectText)
+            ContextCompat.getColor(context, R.color.maru_ink)
         } else {
             binding.underline.visibility = View.INVISIBLE
-            AttrsUtils.getColor(context, R.attr.rotateSelectionDefaultText)
+            ContextCompat.getColor(context, R.color.maru_muted)
         }.also {
             binding.underlineText.textColor = it
         }

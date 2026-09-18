@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:orientation="vertical"
+    android:paddingTop="6dp"
+    android:paddingBottom="6dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/timeline_task_icon"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_arrow_right"
+            app:tint="@color/maru_muted" />
+
+        <dev.kxxcn.maru.view.custom.MaruTextView
+            android:id="@+id/timeline_task_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_weight="1"
+            android:textColor="@color/maru_ink_2"
+            android:textSize="14.5sp" />
+
+    </LinearLayout>
+
+    <dev.kxxcn.maru.view.custom.MaruTextView
+        android:id="@+id/timeline_task_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_card_flat"
+        android:lineSpacingExtra="3dp"
+        android:padding="12dp"
+        android:textColor="@color/maru_ink_2"
+        android:textSize="13sp"
+        android:visibility="gone" />
+
+</LinearLayout>

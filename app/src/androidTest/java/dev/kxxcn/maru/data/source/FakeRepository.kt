@@ -1,5 +1,6 @@
 package dev.kxxcn.maru.data.source
 
+import dev.kxxcn.maru.util.COMPLETED_TASK
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -64,6 +65,13 @@ class FakeRepository : DataRepository {
 
     override suspend fun saveAccount(account: Account): Result<Any?> {
         return Success(Any())
+    }
+
+    override suspend fun updateTask(taskId: String, isCompleted: Int) {
+        val completed = isCompleted == COMPLETED_TASK
+        taskData[taskId]?.isCompleted = completed
+        taskDetailsData[taskId]?.task?.isCompleted = completed
+        taskData = LinkedHashMap(taskData)
     }
 
     override suspend fun replaceTasks(items: List<Task>) {

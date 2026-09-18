@@ -17,7 +17,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/onboardBackground">
+        android:background="@color/maru_paper">
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/onboard_pager"
@@ -33,8 +33,8 @@
             android:id="@+id/dots_indicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            app:dotsColor="@color/onboardIndicatorDots"
+            android:layout_marginStart="20dp"
+            app:dotsColor="@color/maru_line"
             app:dotsCornerRadius="8dp"
             app:dotsSize="10dp"
             app:dotsSpacing="5dp"
@@ -43,7 +43,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/next_text"
             app:progressMode="true"
-            app:selectedDotColor="@color/onboardIndicatorSelectedDots" />
+            app:selectedDotColor="@color/maru_yellow" />
 
         <dev.kxxcn.maru.view.custom.MaruTextView
             android:id="@+id/next_text"
@@ -52,13 +52,16 @@
             android:background="@{viewModel.isLastPage ? ContextCompat.getDrawable(context, viewModel.completeDrawable) : ContextCompat.getDrawable(context, viewModel.nextDrawable)}"
             android:gravity="center"
             android:onClick="@{() -> viewModel.onNext()}"
-            android:paddingStart="50dp"
-            android:paddingTop="35dp"
-            android:paddingEnd="50dp"
-            android:paddingBottom="35dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:minHeight="52dp"
+            android:paddingStart="32dp"
+            android:paddingTop="14dp"
+            android:paddingEnd="32dp"
+            android:paddingBottom="14dp"
             android:text="@{viewModel.isLastPage ? context.getString(viewModel.completeLabel) : context.getString(viewModel.nextLabel)}"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
+            android:textColor="@color/maru_on_yellow"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:textStyle="bold" />

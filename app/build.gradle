@@ -50,8 +50,8 @@ android {
         applicationId "dev.kxxcn.maru"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 33
-        versionName "2.0.2"
+        versionCode 34
+        versionName "2.0.3"
 
         testInstrumentationRunner 'dev.kxxcn.maru.CustomTestRunner'
 
@@ -175,14 +175,9 @@ dependencies {
 
     implementation BuildDependencies.viewPagerDotsIndicator
     implementation BuildDependencies.smoothBottomBar
-    implementation BuildDependencies.roundCornerProgressBar
-    implementation BuildDependencies.circleProgressView
-    implementation BuildDependencies.mpChart
     implementation BuildDependencies.logger
     implementation BuildDependencies.naverMap
     implementation BuildDependencies.lottie
-
-    implementation project(':nativetemplates')
 
     implementation BuildDependencies.fragmentTesting
     implementation BuildDependencies.androidXTestCore

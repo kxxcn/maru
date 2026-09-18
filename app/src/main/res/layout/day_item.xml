@@ -5,82 +5,101 @@
 
     <data>
 
-        <import type="dev.kxxcn.maru.util.ConvertUtils" />
+        <import type="android.view.View" />
 
-        <import type="androidx.core.content.ContextCompat" />
+        <import type="dev.kxxcn.maru.util.DateUtils" />
+
+        <import type="dev.kxxcn.maru.view.days.DaysFilterType" />
 
         <variable
             name="day"
             type="dev.kxxcn.maru.data.Day" />
-
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:orientation="vertical">
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:cardBackgroundColor="@{ContextCompat.getColor(context, day.color)}"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="3dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-                <dev.kxxcn.maru.view.custom.MaruTextView
-                    android:id="@+id/day_content"
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:ellipsize="end"
-                    android:text="@{day.content}"
-                    android:textSize="18sp"
-                    app:layout_constrainedHeight="true"
-                    app:layout_constraintBottom_toTopOf="@id/day_date"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0"
-                    app:layout_constraintVertical_chainStyle="packed" />
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <dev.kxxcn.maru.view.custom.MaruTextView
+                        android:id="@+id/day_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@{day.content}"
+                        android:textColor="@color/maru_ink"
+                        android:textSize="15.5sp"
+                        app:textStyle="bold"
+                        tools:text="웨딩 촬영" />
+
+                    <dev.kxxcn.maru.view.custom.MaruTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="6dp"
+                        android:background="@drawable/bg_chip"
+                        android:gravity="center"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:text="@string/days_add_count"
+                        android:textColor="@color/maru_muted"
+                        android:textSize="11sp"
+                        android:visibility="@{day.type == DaysFilterType.COUNT ? View.VISIBLE : View.GONE}" />
+
+                </LinearLayout>
 
                 <dev.kxxcn.maru.view.custom.MaruTextView
                     android:id="@+id/day_date"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="@{ConvertUtils.INSTANCE.dateFormat(day.date)}"
-                    android:textSize="11sp"
-                    app:layout_constraintBottom_toTopOf="@id/day_remain"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@id/day_content"
-                    app:layout_constraintTop_toBottomOf="@id/day_content"
-                    tools:ignore="SmallSp" />
+                    android:layout_marginTop="3dp"
+                    android:text="@{DateUtils.INSTANCE.DATE_FORMAT_7.format(day.date)}"
+                    android:textAppearance="@style/TextAppearance.Maru.Meta"
+                    tools:text="2026년 10월 24일 토요일" />
 
-                <dev.kxxcn.maru.view.custom.MaruTextView
-                    android:id="@+id/day_remain"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:maxLines="1"
-                    android:textSize="40sp"
-                    app:days="@{day}"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
+            </LinearLayout>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <dev.kxxcn.maru.view.custom.MaruTextView
+                android:id="@+id/day_remain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:fontFeatureSettings="tnum"
+                android:letterSpacing="-0.01"
+                android:maxLines="1"
+                android:textSize="27sp"
+                app:days="@{day}"
+                app:textStyle="bold"
+                tools:text="D-38" />
 
-        </androidx.cardview.widget.CardView>
+        </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/maru_line" />
+
+    </LinearLayout>
 
 </layout>

@@ -29,6 +29,9 @@ class StatusViewModel @Inject constructor(
     private val _tasksProgress = MutableLiveData<Double>()
     val tasksProgress: LiveData<Double> = _tasksProgress
 
+    private val _nextTaskName = MutableLiveData<String?>()
+    val nextTaskName: LiveData<String?> = _nextTaskName
+
     init {
         start()
     }
@@ -44,6 +47,7 @@ class StatusViewModel @Inject constructor(
                 _progressTasksCount.value = tasks.filter { !it.isCompleted }.size
                 _completedTasksCount.value = completedCount
                 _tasksProgress.value = (completedCount.toDouble() / totalCount) * 100
+                _nextTaskName.value = tasks.filter { !it.isCompleted }.minByOrNull { it.priority }?.name
                 _motionEvent.value = Event(Unit)
             }
         }

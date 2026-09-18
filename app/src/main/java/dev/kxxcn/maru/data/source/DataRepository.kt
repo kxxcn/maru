@@ -16,6 +16,8 @@ interface DataRepository {
 
     suspend fun updateTasks(tasks: List<Task>): Result<Any?>
 
+    suspend fun updateTask(taskId: String, isCompleted: Int)
+
     suspend fun deleteTasks(tasks: List<Task>): Result<Any?>
 
     suspend fun getTaskDetail(taskId: String): Result<TaskDetail>

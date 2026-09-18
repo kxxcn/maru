@@ -57,6 +57,13 @@ object PreferenceUtils {
         set(value) = "notifyNoticeSound".putBoolean(value)
 
     /**
+     * 잔금 0원으로 저장하면 자동 완료
+     */
+    var autoComplete: Boolean
+        get() = "autoComplete".getBoolean(true)
+        set(value) = "autoComplete".putBoolean(value)
+
+    /**
      * 스크롤 강제 여부
      */
     var forceScroll: Boolean

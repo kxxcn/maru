@@ -1,25 +1,13 @@
 package dev.kxxcn.maru.view.register
 
 import android.text.SpannableStringBuilder
-import android.view.View
 import android.widget.EditText
-import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
 import androidx.databinding.adapters.ListenerUtil
 import dev.kxxcn.maru.R
-
-@BindingAdapter("app:visibility")
-fun setVisibility(v: View, isShowing: Boolean) {
-    val parent = v.parent as? MotionLayout ?: return
-    val visibility = if (isShowing) View.VISIBLE else View.GONE
-    for (id in parent.constraintSetIds) {
-        val c = parent.getConstraintSet(id)
-        c?.setVisibility(v.id, visibility)
-    }
-}
 
 @BindingAdapter("app:infoText")
 fun setInfoText(v: EditText, value: String?) {
