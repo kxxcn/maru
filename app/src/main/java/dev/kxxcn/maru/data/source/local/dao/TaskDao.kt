@@ -12,6 +12,9 @@ interface TaskDao {
     @Update
     suspend fun updateTask(vararg task: Task): Int
 
+    @Query("UPDATE Tasks SET name = :name WHERE id = :taskId")
+    suspend fun updateTaskName(taskId: String, name: String): Int
+
     @Delete
     suspend fun deleteTask(vararg task: Task): Int
 

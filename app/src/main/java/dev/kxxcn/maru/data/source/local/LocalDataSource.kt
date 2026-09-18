@@ -63,6 +63,14 @@ class LocalDataSource(
         }
     }
 
+    override suspend fun updateTaskName(taskId: String, name: String): Result<Any?> {
+        return try {
+            Success(taskDao.updateTaskName(taskId, name))
+        } catch (e: Exception) {
+            Error(e)
+        }
+    }
+
     override suspend fun deleteTasks(tasks: List<Task>): Result<Any?> {
         return try {
             Success(taskDao.deleteTask(*tasks.toTypedArray()))
@@ -177,6 +185,17 @@ class LocalDataSource(
             userDao.getUsers()
                 .first()
                 .apply { this.name = name }
+                .run { Success(userDao.updateUser(this)) }
+        } catch (e: Exception) {
+            Error(e)
+        }
+    }
+
+    override suspend fun editWedding(wedding: Long): Result<Any?> = withContext(ioDispatcher) {
+        return@withContext try {
+            userDao.getUsers()
+                .first()
+                .apply { this.wedding = wedding }
                 .run { Success(userDao.updateUser(this)) }
         } catch (e: Exception) {
             Error(e)

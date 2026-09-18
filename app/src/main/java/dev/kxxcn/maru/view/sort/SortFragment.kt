@@ -77,6 +77,9 @@ class SortFragment : BaseFragment() {
         viewModel.addTaskEvent.observe(viewLifecycleOwner, EventObserver {
             addTask()
         })
+        viewModel.editTaskEvent.observe(viewLifecycleOwner, EventObserver { taskId ->
+            editTask(taskId)
+        })
     }
 
     private fun setupOnBackPressed() {
@@ -108,5 +111,12 @@ class SortFragment : BaseFragment() {
     private fun addTask() {
         SortFragmentDirections.actionSortFragmentToEditDialogFragment(RegisterFilterType.REGISTER_TASK)
             .also { findNavController().navigate(it) }
+    }
+
+    private fun editTask(taskId: String) {
+        SortFragmentDirections.actionSortFragmentToEditTaskDialogFragment(
+            RegisterFilterType.REGISTER_TASK_EDIT,
+            taskId
+        ).also { findNavController().navigate(it) }
     }
 }

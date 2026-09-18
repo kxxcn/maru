@@ -17,6 +17,7 @@ import dev.kxxcn.maru.util.monitorFragment
 import dev.kxxcn.maru.view.base.BaseFragmentTest
 import dev.kxxcn.maru.view.register.RegisterFilterType.REGISTER_BUDGET
 import dev.kxxcn.maru.view.register.RegisterFilterType.REGISTER_NAME
+import dev.kxxcn.maru.view.register.RegisterFilterType.REGISTER_WEDDING
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -44,6 +45,7 @@ class EditFragmentTest : BaseFragmentTest() {
         ).also { dataBindingIdlingResource.monitorFragment(it) }
 
         onView(withId(R.id.edit_name)).check(matches(withText(expectedUserNameText)))
+        onView(withId(R.id.edit_wedding)).check(matches(isDisplayed()))
         onView(withId(R.id.edit_budget)).check(matches(withText(expectedUserBudgetText)))
     }
 
@@ -105,6 +107,37 @@ class EditFragmentTest : BaseFragmentTest() {
         verify(navController).navigate(
             EditFragmentDirections.actionEditFragmentToEditDialogFragment(
                 REGISTER_BUDGET
+            )
+        )
+    }
+
+    @Test
+    fun clickUserWeddingNavigateToEditDialogFragment() {
+        val navController = mock(NavController::class.java)
+
+        runBlocking {
+            val wedding = System.currentTimeMillis() + TimeUnit.DAYS.toMillis(5)
+            val user = User(name = "New", budget = 50000000L, wedding = wedding)
+            (repository as? FakeRepository)?.replaceUser(user)
+        }
+
+        launchFragmentInContainer<EditFragment>(
+            themeResId = R.style.AppTheme
+        ).apply {
+            onFragment {
+                it.view?.let { view ->
+                    Navigation.setViewNavController(
+                        view,
+                        navController
+                    )
+                }
+            }
+        }.also { dataBindingIdlingResource.monitorFragment(it) }
+
+        onView(withId(R.id.edit_wedding_parent)).perform(click())
+        verify(navController).navigate(
+            EditFragmentDirections.actionEditFragmentToEditDialogFragment(
+                REGISTER_WEDDING
             )
         )
     }

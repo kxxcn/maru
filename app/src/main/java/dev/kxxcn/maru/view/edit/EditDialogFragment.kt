@@ -1,6 +1,7 @@
 package dev.kxxcn.maru.view.edit
 
 import android.app.Dialog
+import android.app.DatePickerDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -15,6 +16,7 @@ import dev.kxxcn.maru.util.extension.displayHeight
 import dev.kxxcn.maru.view.base.BaseDialogFragment
 import org.jetbrains.anko.matchParent
 import org.jetbrains.anko.wrapContent
+import java.util.Calendar
 import javax.inject.Inject
 
 class EditDialogFragment : BaseDialogFragment() {
@@ -26,6 +28,8 @@ class EditDialogFragment : BaseDialogFragment() {
     lateinit var viewModelFactory: MaruSavedStateViewModelFactory
 
     private lateinit var binding: EditDialogFragmentBinding
+
+    private var weddingDatePicker: DatePickerDialog? = null
 
     override val clazz: Class<*>
         get() = this::class.java
@@ -75,12 +79,53 @@ class EditDialogFragment : BaseDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupLifecycle()
+        setupWeddingDatePicker()
         setupListener()
         setupInterstitial()
     }
 
+    override fun onDestroyView() {
+        weddingDatePicker?.dismiss()
+        weddingDatePicker = null
+        super.onDestroyView()
+    }
+
     private fun setupLifecycle() {
         binding.lifecycleOwner = viewLifecycleOwner
+    }
+
+    private fun setupWeddingDatePicker() {
+        if (!viewModel.isWedding) return
+
+        viewModel.weddingDate.observe(viewLifecycleOwner) { wedding ->
+            if (weddingDatePicker != null) return@observe
+
+            val selected = Calendar.getInstance().apply {
+                timeInMillis = wedding
+            }
+            weddingDatePicker = DatePickerDialog(
+                requireContext(),
+                { _, year, month, day ->
+                    Calendar.getInstance().apply {
+                        set(year, month, day, 0, 0, 0)
+                        set(Calendar.MILLISECOND, 0)
+                        viewModel.setWeddingDate(timeInMillis)
+                    }
+                },
+                selected.get(Calendar.YEAR),
+                selected.get(Calendar.MONTH),
+                selected.get(Calendar.DAY_OF_MONTH)
+            )
+            binding.editInput.setOnClickListener { showWeddingDatePicker() }
+        }
+    }
+
+    private fun showWeddingDatePicker() {
+        if (weddingDatePicker?.isShowing == true) {
+            weddingDatePicker?.dismiss()
+        } else {
+            weddingDatePicker?.show()
+        }
     }
 
     private fun setupListener() {

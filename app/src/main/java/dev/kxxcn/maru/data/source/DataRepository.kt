@@ -16,6 +16,8 @@ interface DataRepository {
 
     suspend fun updateTasks(tasks: List<Task>): Result<Any?>
 
+    suspend fun updateTaskName(taskId: String, name: String): Result<Any?>
+
     suspend fun updateTask(taskId: String, isCompleted: Int)
 
     suspend fun deleteTasks(tasks: List<Task>): Result<Any?>
@@ -49,6 +51,8 @@ interface DataRepository {
     suspend fun getNotices(): Result<QuerySnapshot?>
 
     suspend fun editName(name: String): Result<Any?>
+
+    suspend fun editWedding(wedding: Long): Result<Any?>
 
     suspend fun editBudget(budget: Long): Result<Any?>
 

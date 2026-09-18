@@ -13,7 +13,9 @@ import dev.kxxcn.maru.data.source.DataRepository
 import dev.kxxcn.maru.data.succeeded
 import dev.kxxcn.maru.di.AssistedSavedStateViewModelFactory
 import dev.kxxcn.maru.util.ConvertUtils
+import dev.kxxcn.maru.util.DateUtils
 import dev.kxxcn.maru.util.KEY_REGISTER_TYPE
+import dev.kxxcn.maru.util.KEY_TASK_ID
 import dev.kxxcn.maru.util.ONE_THOUSAND_MILLION
 import dev.kxxcn.maru.view.base.BaseViewModel
 import dev.kxxcn.maru.view.register.RegisterFilterType
@@ -32,6 +34,7 @@ class EditDialogViewModel @AssistedInject constructor(
     interface Factory : AssistedSavedStateViewModelFactory<EditDialogViewModel>
 
     private val numberFormat = NumberFormat.getInstance(Locale.KOREA)
+    private val filterType = savedStateHandle.get<RegisterFilterType>(KEY_REGISTER_TYPE)
 
     private val _titleRes = MutableLiveData<Int>()
     val titleRes: LiveData<Int> = _titleRes
@@ -40,6 +43,8 @@ class EditDialogViewModel @AssistedInject constructor(
     val hintRes: LiveData<Int> = _hintRes
 
     val content = MutableLiveData<String?>()
+
+    val weddingDate = MutableLiveData<Long>()
 
     private val _adEvent = MutableLiveData<Event<Unit>>()
     val adEvent: LiveData<Event<Unit>> = _adEvent
@@ -63,7 +68,7 @@ class EditDialogViewModel @AssistedInject constructor(
     }
 
     val isContentFull = content.map {
-        it?.isNotEmpty()
+        it?.isNotBlank() == true
     }
 
     val enableButtonRes = R.drawable.edit_dialog_enable_button
@@ -72,12 +77,16 @@ class EditDialogViewModel @AssistedInject constructor(
     val isBudget =
         liveData { emit(savedStateHandle.get<RegisterFilterType>(KEY_REGISTER_TYPE) == REGISTER_BUDGET) }
 
+    val isWedding: Boolean
+        get() = filterType == REGISTER_WEDDING
+
     init {
-        when (savedStateHandle.get<RegisterFilterType>(KEY_REGISTER_TYPE)) {
+        when (filterType) {
             REGISTER_NAME -> R.string.edit_dialog_title_name to R.string.edit_dialog_title_name_hint
             REGISTER_WEDDING -> R.string.edit_dialog_title_wedding to R.string.edit_dialog_title_wedding_hint
             REGISTER_BUDGET -> R.string.edit_dialog_title_budget to R.string.edit_dialog_title_budget_hint
             REGISTER_TASK -> R.string.edit_dialog_title_task to R.string.edit_dialog_title_task_hint
+            REGISTER_TASK_EDIT -> R.string.edit_dialog_title_task_edit to R.string.edit_dialog_title_task_hint
             REGISTER_COMPLETE,
             null -> throw RuntimeException("Invalid Filter Type.")
         }.also { (title, hint) ->
@@ -86,20 +95,64 @@ class EditDialogViewModel @AssistedInject constructor(
         }
 
         content.value = null
+
+        if (isWedding) {
+            loadWeddingDate()
+        }
+        if (filterType == REGISTER_TASK_EDIT) {
+            loadTaskName()
+        }
+    }
+
+    private fun loadTaskName() {
+        val taskId = savedStateHandle.get<String>(KEY_TASK_ID) ?: return
+        viewModelScope.launch {
+            val task = (repository.getTaskDetail(taskId) as? Success)?.data?.task
+            content.value = task?.name
+        }
+    }
+
+    private fun loadWeddingDate() {
+        viewModelScope.launch {
+            val wedding = (repository.getUsers() as? Success)
+                ?.data
+                ?.firstOrNull()
+                ?.wedding
+                ?.takeIf { it > 0L }
+                ?: System.currentTimeMillis()
+            weddingDate.value = wedding
+            content.value = DateUtils.DATE_FORMAT_3.format(wedding)
+        }
+    }
+
+    fun setWeddingDate(wedding: Long) {
+        weddingDate.value = wedding
+        content.value = DateUtils.DATE_FORMAT_3.format(wedding)
     }
 
     fun save() {
-        val content = content.value ?: return
+        val content = content.value?.trim()?.takeIf { it.isNotEmpty() } ?: return
         viewModelScope.launch {
-            val result = when (savedStateHandle.get<RegisterFilterType>(KEY_REGISTER_TYPE)) {
+            val result = when (filterType) {
                 REGISTER_NAME -> repository.editName(content)
+                REGISTER_WEDDING -> DateUtils.DATE_FORMAT_3.parse(content)
+                    ?.time
+                    ?.let { repository.editWedding(it) }
+                    ?: return@launch
                 REGISTER_BUDGET -> repository.editBudget(content.replace(",", "").toLong())
                 REGISTER_TASK -> repository.addTask(Task(content))
-                REGISTER_WEDDING,
+                REGISTER_TASK_EDIT -> savedStateHandle.get<String>(KEY_TASK_ID)
+                    ?.let { repository.updateTaskName(it, content) }
+                    ?: return@launch
                 REGISTER_COMPLETE,
                 null -> throw RuntimeException("Invalid Filter Type.")
             }
             if (result.succeeded) {
+                if (filterType == REGISTER_TASK_EDIT) {
+                    toast(R.string.edit_dialog_task_edit_toast)
+                    close()
+                    return@launch
+                }
                 // 광고 게이트는 Room의 User.premium 하나로 판정한다.
                 val premium = (repository.getUsers() as? Success)?.data?.firstOrNull()?.premium == true
                 if (premium) toastAndClose() else ad()
@@ -114,11 +167,12 @@ class EditDialogViewModel @AssistedInject constructor(
     }
 
     private fun findMessageResByFilterType(): Int {
-        return when (savedStateHandle.get<RegisterFilterType>(KEY_REGISTER_TYPE)) {
+        return when (filterType) {
             REGISTER_NAME -> R.string.edit_dialog_name_toast
+            REGISTER_WEDDING -> R.string.edit_dialog_wedding_toast
             REGISTER_BUDGET -> R.string.edit_dialog_budget_toast
             REGISTER_TASK -> R.string.edit_dialog_task_toast
-            REGISTER_WEDDING,
+            REGISTER_TASK_EDIT -> R.string.edit_dialog_task_edit_toast
             REGISTER_COMPLETE,
             null -> throw RuntimeException("Invalid Filter Type.")
         }

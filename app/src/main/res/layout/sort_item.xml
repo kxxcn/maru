@@ -36,14 +36,31 @@
 
         <dev.kxxcn.maru.view.custom.MaruTextView
             android:id="@+id/task_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:text="@{task.name}"
             android:textColor="@color/maru_ink"
             android:textSize="17sp"
             app:layout_constraintBottom_toBottomOf="@id/task_icon"
+            app:layout_constraintEnd_toStartOf="@id/edit_icon"
             app:layout_constraintStart_toEndOf="@id/task_icon"
+            app:layout_constraintTop_toTopOf="@id/task_icon" />
+
+        <ImageView
+            android:id="@+id/edit_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:contentDescription="@string/sort_tasks_edit"
+            android:onClick="@{() -> viewModel.editTask(task)}"
+            android:padding="10dp"
+            android:src="@drawable/ic_edit"
+            android:tint="@color/maru_ink"
+            app:layout_constraintBottom_toBottomOf="@id/task_icon"
+            app:layout_constraintEnd_toStartOf="@id/sort_icon"
             app:layout_constraintTop_toTopOf="@id/task_icon" />
 
         <ImageView

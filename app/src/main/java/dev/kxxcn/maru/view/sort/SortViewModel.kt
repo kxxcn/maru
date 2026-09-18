@@ -34,6 +34,9 @@ class SortViewModel @AssistedInject constructor(
     private val _addTaskEvent = MutableLiveData<Event<Unit>>()
     val addTaskEvent: LiveData<Event<Unit>> = _addTaskEvent
 
+    private val _editTaskEvent = MutableLiveData<Event<String>>()
+    val editTaskEvent: LiveData<Event<String>> = _editTaskEvent
+
     val items: LiveData<List<Summary>> = _forceUpdate.switchMap {
         repository.observeSummary()
             .distinctUntilChanged()
@@ -48,7 +51,7 @@ class SortViewModel @AssistedInject constructor(
 
     private val _basicColorRes = MutableLiveData<Int>().apply {
         value =
-            R.color.maru_surface
+            R.color.maru_paper
     }
     val basicColorRes: LiveData<Int> = _basicColorRes
 
@@ -153,6 +156,10 @@ class SortViewModel @AssistedInject constructor(
 
     fun handleTasksAddition() {
         _addTaskEvent.value = Event(Unit)
+    }
+
+    fun editTask(task: Task) {
+        _editTaskEvent.value = Event(task.id)
     }
 
     fun deleteTasks() {

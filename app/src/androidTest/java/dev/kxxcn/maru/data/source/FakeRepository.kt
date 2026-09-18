@@ -46,6 +46,14 @@ class FakeRepository : DataRepository {
         TODO("Not yet implemented")
     }
 
+    override suspend fun updateTaskName(taskId: String, name: String): Result<Any?> {
+        val task = taskData[taskId] ?: return Success(0)
+        task.name = name
+        taskDetailsData[taskId]?.task?.name = name
+        taskData = LinkedHashMap(taskData)
+        return Success(1)
+    }
+
     override suspend fun deleteTasks(tasks: List<Task>): Result<Any?> {
         TODO("Not yet implemented")
     }
@@ -113,6 +121,11 @@ class FakeRepository : DataRepository {
 
     override suspend fun editName(name: String): Result<Any?> {
         TODO("Not yet implemented")
+    }
+
+    override suspend fun editWedding(wedding: Long): Result<Any?> {
+        user = user.apply { this.wedding = wedding }
+        return Success(Unit)
     }
 
     override suspend fun editBudget(budget: Long): Result<Any?> {

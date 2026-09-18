@@ -36,6 +36,10 @@ class MaruRepository @Inject constructor(
         return localDataSource.updateTasks(tasks)
     }
 
+    override suspend fun updateTaskName(taskId: String, name: String): Result<Any?> {
+        return localDataSource.updateTaskName(taskId, name)
+    }
+
     override suspend fun updateTask(taskId: String, isCompleted: Int) {
         localDataSource.updateTask(taskId, isCompleted)
     }
@@ -105,6 +109,10 @@ class MaruRepository @Inject constructor(
 
     override suspend fun editName(name: String): Result<Any?> {
         return localDataSource.editName(name)
+    }
+
+    override suspend fun editWedding(wedding: Long): Result<Any?> {
+        return localDataSource.editWedding(wedding)
     }
 
     override suspend fun editBudget(budget: Long): Result<Any?> {

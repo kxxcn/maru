@@ -37,6 +37,10 @@ class RemoteDataSource(
         TODO("Not yet implemented")
     }
 
+    override suspend fun updateTaskName(taskId: String, name: String): Result<Any?> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun deleteTasks(tasks: List<Task>): Result<Any?> {
         TODO("Not yet implemented")
     }
@@ -98,6 +102,10 @@ class RemoteDataSource(
     }
 
     override suspend fun editName(name: String): Result<Any?> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun editWedding(wedding: Long): Result<Any?> {
         TODO("Not yet implemented")
     }
 

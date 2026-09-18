@@ -18,6 +18,8 @@ interface DataSource {
 
     suspend fun updateTasks(tasks: List<Task>): Result<Any?>
 
+    suspend fun updateTaskName(taskId: String, name: String): Result<Any?>
+
     suspend fun deleteTasks(tasks: List<Task>): Result<Any?>
 
     suspend fun getTaskDetail(taskId: String): Result<TaskDetail>
@@ -49,6 +51,8 @@ interface DataSource {
     suspend fun getNotices(): Result<QuerySnapshot?>
 
     suspend fun editName(name: String): Result<Any?>
+
+    suspend fun editWedding(wedding: Long): Result<Any?>
 
     suspend fun editBudget(budget: Long): Result<Any?>
 

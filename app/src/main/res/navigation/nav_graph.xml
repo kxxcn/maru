@@ -261,6 +261,20 @@
 
         </action>
 
+        <action
+            android:id="@+id/action_sort_fragment_to_edit_task_dialog_fragment"
+            app:destination="@id/edit_dialog_fragment">
+
+            <argument
+                android:name="register_type"
+                app:argType=".view.register.RegisterFilterType" />
+
+            <argument
+                android:name="task_id"
+                app:argType="string" />
+
+        </action>
+
     </fragment>
 
     <fragment

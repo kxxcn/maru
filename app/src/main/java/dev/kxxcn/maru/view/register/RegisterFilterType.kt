@@ -26,4 +26,9 @@ enum class RegisterFilterType {
      * 체크리스트
      */
     REGISTER_TASK,
+
+    /**
+     * 체크리스트 이름 수정
+     */
+    REGISTER_TASK_EDIT,
 }
